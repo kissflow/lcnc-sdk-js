@@ -1,0 +1,8 @@
+{
+    "_id": "Account001",
+    "Name": "OS",
+    "UserDetails":{
+        "_id": "User001",
+        "Name": "Vivek",
+    }
+}

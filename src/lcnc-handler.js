@@ -32,7 +32,7 @@ class LCNCHandler {
 
     sendBack(sourceWindow, req, res) {
         if(req._id) {
-            sourceWindow.postMessage({_req :req, res}, "*")
+            sourceWindow.postMessage({_req :req, ...res}, "*")
         }
     }
     

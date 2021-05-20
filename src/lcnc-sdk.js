@@ -3,12 +3,14 @@ function generateId() {
 }
 
 function postMessage(args) {
-    window.parent.postMessage(args, "*");
+    if (window.parent !== window) {
+        window.parent.postMessage(args, "*");
+    }
 }
   
 class LcncSdk {
     constructor(props) {
-        console.log("Initializing LCNC SDK 123", props);
+        console.log("Initializing LCNC SDK", props);
         this._listeners = {};
         this._onMessage = this._onMessage.bind(this);
 
@@ -30,6 +32,7 @@ class LcncSdk {
 
     _fetch(command, args) {
         return new Promise((resolve, reject) => {
+            const _id = generateId();
             postMessage({_id, command, ...args});
             this._addListener(_id, (data) => {
               if (data.errorMessage) {
@@ -42,19 +45,22 @@ class LcncSdk {
       }
 
     _onMessage(event) {
-        console.log("child receives messsage", event);
-        const data = event.data;
-        const _req = data._req || {}
-        let listeners = this._listeners[_req._id] || [];
+        console.log(event.origin, "!==", location.origin);
+        if (event.origin !== location.origin) {
+            console.log("child receives messsage", event);
+            const data = event.data;
+            const _req = data._req || {}
+            let listeners = this._listeners[_req._id] || [];
 
-        if (listeners) {
-            listeners.forEach(listener => {
-                try {
-                    listener(data);
-                } catch (err) {
-                    console.error("Message callback error: ", err);
-                }
-            });
+            if (listeners) {
+                listeners.forEach(listener => {
+                    try {
+                        listener(data);
+                    } catch (err) {
+                        console.error("Message callback error: ", err);
+                    }
+                });
+            }
         }
     }
 }
