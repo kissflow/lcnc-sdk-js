@@ -1,8 +1,8 @@
 {
     "_id": "Account001",
     "Name": "OS",
-    "UserDetails":{
+    "UserDetails": {
         "_id": "User001",
-        "Name": "Vivek",
+        "Name": "Vivek"
     }
 }

@@ -17,7 +17,7 @@ class LCNCHandler {
                 this.sendBack(sourceWindow, data, {value: "message from parent"});
                 break;
             case "API":
-                fetch(data.url).then(async (resp) => {
+                fetch(data.url, data.args).then(async (resp) => {
                     const json = await resp.json();
                     this.sendBack(sourceWindow, data, json);
                 });
