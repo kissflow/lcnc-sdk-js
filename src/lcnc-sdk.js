@@ -45,8 +45,8 @@ class LcncSdk {
       }
 
     _onMessage(event) {
-        console.log(event.origin, "!==", location.origin);
-        if (event.origin !== location.origin) {
+        console.log(event.origin, "!==", window.location.origin);
+        if (event.origin !== window.location.origin) {
             console.log("child receives messsage", event);
             const data = event.data;
             const _req = data._req || {}
