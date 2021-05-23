@@ -1,4 +1,4 @@
-{
+export default {
     "_id": "Account001",
     "Name": "OS",
     "UserDetails": {
