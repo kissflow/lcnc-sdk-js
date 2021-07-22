@@ -3,26 +3,56 @@ function generateId() {
 }
 
 function postMessage(args) {
-    if (window.parent !== window) {
-        window.parent.postMessage(args, "*");
+    console.log("SDK : @postMessage ", args);
+    if (self.parent && self.parent !== self) {
+        self.parent.postMessage(args, "*");
+    } else {
+        self.postMessage(args);
     }
 }
-  
+
 class LcncSdk {
     constructor(props) {
-        console.log("Initializing LCNC SDK", props);
+        console.log("SDK : Initializing ", props);
         this._listeners = {};
         this._onMessage = this._onMessage.bind(this);
-
-        window.addEventListener("message", this._onMessage, false);
+        self.addEventListener("message", this._onMessage, false);
     }
 
-    api(url, args={}) {
+    api(url, args = {}) {
         return this._fetch("API", { url, args });
     }
 
-    watchParams(args={}) {
+    watchParams(args = {}) {
         return this._fetch("PARAMS", args);
+    }
+
+    showInfo(message) {
+        return this._fetch("MESSAGE", { message });
+    }
+
+    updateForm(args) {
+        return this._fetch("UPDATEFORM", { data: args });
+    }
+
+    showConfirm({
+        title,
+        content,
+        okText = "Ok",
+        cancelText = "Cancel"
+    }) {
+        return this._fetch("CONFIRM", {
+            data: {
+                title,
+                content,
+                okText,
+                cancelText
+            }
+        });
+    }
+
+    redirect(url, shouldConfirm) {
+        return this._fetch("REDIRECT", { url })
     }
 
     _addListener(_id, callback) {
@@ -33,27 +63,26 @@ class LcncSdk {
     _fetch(command, args) {
         return new Promise((resolve, reject) => {
             const _id = generateId();
-            postMessage({_id, command, ...args});
+            postMessage({ _id, command, ...args });
             this._addListener(_id, (data) => {
-              if (data.errorMessage) {
-                reject(data);
-              } else {
-                resolve(data);
-              }
+                if (data.errorMessage) {
+                    reject(data);
+                } else {
+                    resolve(data);
+                }
             });
-          });
-      }
+        });
+    }
 
     _onMessage(event) {
-        console.log(event.origin, "!==", window.location.origin);
-        if (event.origin !== window.location.origin) {
-            console.log("child receives messsage", event);
+        console.log("SDK : @onMessage", event.origin, "!==", self.location.origin);
+        if (event.origin !== self.location.origin) {
+            console.log("SDK : @onMessage ", event);
             const data = event.data;
-            const _req = data._req || {}
+            const _req = data._req || {};
             let listeners = this._listeners[_req._id] || [];
-
             if (listeners) {
-                listeners.forEach(listener => {
+                listeners.forEach((listener) => {
                     try {
                         listener(data);
                     } catch (err) {
@@ -66,7 +95,6 @@ class LcncSdk {
 }
 
 class ProcessSdk extends LcncSdk {
-    
 }
 
 function initSDK(config = {}) {
@@ -76,4 +104,4 @@ function initSDK(config = {}) {
     return new LcncSdk(config);
 }
 
-export default initSDK
+export default initSDK;
