@@ -2,7 +2,7 @@ function generateId() {
     return Math.floor(Date.now()).toString(36);
 }
 
-function postMessage(args:any) {
+function postMessage(args: any) {
     console.log("SDK : @postMessage ", args);
     if (self.parent && self.parent !== self) {
         self.parent.postMessage(args, "*");
@@ -12,16 +12,16 @@ function postMessage(args:any) {
 }
 
 class LcncSdk {
-  #listeners: any;
-  onMessage: (event: any) => void;
-    constructor(props:any) {
+    #listeners: any;
+    onMessage: (event: any) => void;
+    constructor(props: any) {
         console.log("SDK : Initializing ", props);
         this.#listeners = {};
         this.onMessage = this.#onMessage.bind(this);
         self.addEventListener("message", this.#onMessage, false);
     }
 
-    api(url:string, args = {}) {
+    api(url: string, args = {}) {
         return this.#fetch("API", { url, args });
     }
 
@@ -33,36 +33,36 @@ class LcncSdk {
         return this.#fetch("MESSAGE", { message });
     }
 
-    updateForm(args={}) {
+    updateForm(args = {}) {
         return this.#fetch("UPDATEFORM", { data: args });
     }
 
     showConfirm(args: {
-        title: string,
-        content: string,
-        okText:string,
-        cancelText:string
+        title: string;
+        content: string;
+        okText: string;
+        cancelText: string;
     }) {
         return this.#fetch("CONFIRM", {
             data: {
                 title: args.title,
                 content: args.content,
                 okText: args.okText || "Ok",
-                cancelText: args.cancelText || "Cancel"
-            }
+                cancelText: args.cancelText || "Cancel",
+            },
         });
     }
 
-    redirect(url:string, shouldConfirm:any) {
-        return this.#fetch("REDIRECT", { url })
+    redirect(url: string, shouldConfirm: any) {
+        return this.#fetch("REDIRECT", { url });
     }
 
-    #addListener(_id:string, callback:any) {
+    #addListener(_id: string, callback: any) {
         this.#listeners[_id] = this.#listeners[_id] || [];
         this.#listeners[_id].push(callback);
     }
 
-    #fetch(command:string, args:any) {
+    #fetch(command: string, args: any) {
         return new Promise((resolve, reject) => {
             const _id = generateId();
             postMessage({ _id, command, ...args });
@@ -76,7 +76,7 @@ class LcncSdk {
         });
     }
 
-    #onMessage(event:any) {
+    #onMessage(event: any) {
         console.log("SDK : @onMessage", event.origin, "!==", self.location.origin);
         if (event.origin !== self.location.origin) {
             console.log("SDK : @onMessage ", event);
@@ -84,7 +84,7 @@ class LcncSdk {
             const _req = data._req || {};
             let listeners = this.#listeners[_req._id] || [];
             if (listeners) {
-                listeners.forEach((listener:any) => {
+                listeners.forEach((listener: any) => {
                     try {
                         listener(data);
                     } catch (err) {
@@ -96,10 +96,9 @@ class LcncSdk {
     }
 }
 
-class ProcessSdk extends LcncSdk {
-}
+class ProcessSdk extends LcncSdk { }
 
-function initSDK(config:any = {}) {
+function initSDK(config: any = {}) {
     if (config.flow === "Process") {
         return new ProcessSdk(config);
     }

@@ -49,8 +49,8 @@ class LcncSdk {
                 title: args.title,
                 content: args.content,
                 okText: args.okText || "Ok",
-                cancelText: args.cancelText || "Cancel"
-            }
+                cancelText: args.cancelText || "Cancel",
+            },
         });
     }
     redirect(url, shouldConfirm) {
