@@ -13,12 +13,10 @@ function postMessage(args: any) {
 
 class LcncSdk {
     #listeners: any;
-    onMessage: (event: any) => void;
     constructor(props: any) {
         console.log("SDK : Initializing ", props);
         this.#listeners = {};
-        this.onMessage = this.#onMessage.bind(this);
-        self.addEventListener("message", this.#onMessage, false);
+        self.addEventListener("message", this.#onMessage.bind(this), false);
     }
 
     api(url: string, args = {}) {
@@ -33,8 +31,20 @@ class LcncSdk {
         return this.#fetch("MESSAGE", { message });
     }
 
+    getFormField(fieldId: string) {
+        return this.#fetch("GETFORMFIELD", { fieldId });
+    }
+
+    getFormTableField(tableId: string, rowIndex: number, fieldId: string) {
+        return this.#fetch("GETFORMTABLEFIELD", { tableId, rowIndex, fieldId });
+    }
+
     updateForm(args = {}) {
         return this.#fetch("UPDATEFORM", { data: args });
+    }
+
+    updateFormTable(args = {}) {
+        return this.#fetch("UPDATEFORMTABLE", { data: args });
     }
 
     showConfirm(args: {

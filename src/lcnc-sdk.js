@@ -28,8 +28,7 @@ class LcncSdk {
         _LcncSdk_listeners.set(this, void 0);
         console.log("SDK : Initializing ", props);
         __classPrivateFieldSet(this, _LcncSdk_listeners, {}, "f");
-        this.onMessage = __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_onMessage).bind(this);
-        self.addEventListener("message", __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_onMessage), false);
+        self.addEventListener("message", __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_onMessage).bind(this), false);
     }
     api(url, args = {}) {
         return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, "API", { url, args });
@@ -40,8 +39,17 @@ class LcncSdk {
     showInfo(message) {
         return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, "MESSAGE", { message });
     }
+    getFormField(fieldId) {
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, "GETFORMFIELD", { fieldId });
+    }
+    getFormTableField(tableId, rowIndex, fieldId) {
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, "GETFORMTABLEFIELD", { tableId, rowIndex, fieldId });
+    }
     updateForm(args = {}) {
         return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, "UPDATEFORM", { data: args });
+    }
+    updateFormTable(args = {}) {
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, "UPDATEFORMTABLE", { data: args });
     }
     showConfirm(args) {
         return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, "CONFIRM", {
