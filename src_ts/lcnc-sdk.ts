@@ -1,5 +1,8 @@
-function generateId() {
-    return Math.floor(Date.now()).toString(36);
+import { LISTENER_CMDS } from "./constants.js";
+
+function generateId(len: number) {
+    console.log("listener len", len);
+    return Math.floor(Date.now() + len).toString(36);
 }
 
 function postMessage(args: any) {
@@ -20,31 +23,39 @@ class LcncSdk {
     }
 
     api(url: string, args = {}) {
-        return this.#fetch("API", { url, args });
+        return this.#fetch(LISTENER_CMDS.API, { url, args });
     }
 
     watchParams(args = {}) {
-        return this.#fetch("PARAMS", args);
+        return this.#fetch(LISTENER_CMDS.PARAMS, args);
+    }
+
+    getAccountContext(args = {}) {
+        return this.#fetch(LISTENER_CMDS.ACCOUNTCONTEXT, args);
     }
 
     showInfo(message: string) {
-        return this.#fetch("MESSAGE", { message });
+        return this.#fetch(LISTENER_CMDS.MESSAGE, { message });
     }
 
     getFormField(fieldId: string) {
-        return this.#fetch("GETFORMFIELD", { fieldId });
+        return this.#fetch(LISTENER_CMDS.GETFORMFIELD, { fieldId });
     }
 
     getFormTableField(tableId: string, rowIndex: number, fieldId: string) {
-        return this.#fetch("GETFORMTABLEFIELD", { tableId, rowIndex, fieldId });
+        return this.#fetch(LISTENER_CMDS.GETFORMTABLEFIELD, {
+            tableId,
+            rowIndex,
+            fieldId
+        });
     }
 
     updateForm(args = {}) {
-        return this.#fetch("UPDATEFORM", { data: args });
+        return this.#fetch(LISTENER_CMDS.UPDATEFORM, { data: args });
     }
 
     updateFormTable(args = {}) {
-        return this.#fetch("UPDATEFORMTABLE", { data: args });
+        return this.#fetch(LISTENER_CMDS.UPDATEFORMTABLE, { data: args });
     }
 
     showConfirm(args: {
@@ -53,18 +64,18 @@ class LcncSdk {
         okText: string;
         cancelText: string;
     }) {
-        return this.#fetch("CONFIRM", {
+        return this.#fetch(LISTENER_CMDS.CONFIRM, {
             data: {
                 title: args.title,
                 content: args.content,
                 okText: args.okText || "Ok",
-                cancelText: args.cancelText || "Cancel",
-            },
+                cancelText: args.cancelText || "Cancel"
+            }
         });
     }
 
     redirect(url: string, shouldConfirm: any) {
-        return this.#fetch("REDIRECT", { url });
+        return this.#fetch(LISTENER_CMDS.REDIRECT, { url });
     }
 
     #addListener(_id: string, callback: any) {
@@ -74,7 +85,7 @@ class LcncSdk {
 
     #fetch(command: string, args: any) {
         return new Promise((resolve, reject) => {
-            const _id = generateId();
+            const _id = generateId(Object.keys(this.#listeners)?.length ?? 100);
             postMessage({ _id, command, ...args });
             this.#addListener(_id, (data: any) => {
                 if (data.errorMessage) {
@@ -87,7 +98,12 @@ class LcncSdk {
     }
 
     #onMessage(event: any) {
-        console.log("SDK : @onMessage", event.origin, "!==", self.location.origin);
+        console.log(
+            "SDK : @onMessage",
+            event.origin,
+            "!==",
+            self.location.origin
+        );
         if (event.origin !== self.location.origin) {
             console.log("SDK : @onMessage ", event);
             const data = event.data;
