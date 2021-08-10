@@ -9,10 +9,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _LcncSdk_instances, _LcncSdk_listeners, _LcncSdk_addListener, _LcncSdk_fetch, _LcncSdk_onMessage;
+var _LcncSdk_instances, _LcncSdk_listeners, _LcncSdk_addListener, _LcncSdk_postMessageUtil, _LcncSdk_onMessage;
 import { LISTENER_CMDS } from "./constants.js";
 function generateId(len) {
-    console.log("listener len", len);
     return Math.floor(Date.now() + len).toString(36);
 }
 function postMessage(args) {
@@ -33,35 +32,35 @@ class LcncSdk {
         self.addEventListener("message", __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_onMessage).bind(this), false);
     }
     api(url, args = {}) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.API, { url, args });
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.API, { url, args });
     }
     watchParams(args = {}) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.PARAMS, args);
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.PARAMS, args);
     }
     getAccountContext(args = {}) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.ACCOUNTCONTEXT, args);
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.ACCOUNTCONTEXT, args);
     }
     showInfo(message) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.MESSAGE, { message });
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.MESSAGE, { message });
     }
     getFormField(fieldId) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.GETFORMFIELD, { fieldId });
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.GETFORMFIELD, { fieldId });
     }
     getFormTableField(tableId, rowIndex, fieldId) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.GETFORMTABLEFIELD, {
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.GETFORMTABLEFIELD, {
             tableId,
             rowIndex,
             fieldId
         });
     }
     updateForm(args = {}) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.UPDATEFORM, { data: args });
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.UPDATEFORM, args);
     }
     updateFormTable(args = {}) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.UPDATEFORMTABLE, { data: args });
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.UPDATEFORMTABLE, args);
     }
     showConfirm(args) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.CONFIRM, {
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.CONFIRM, {
             data: {
                 title: args.title,
                 content: args.content,
@@ -71,13 +70,13 @@ class LcncSdk {
         });
     }
     redirect(url, shouldConfirm) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_fetch).call(this, LISTENER_CMDS.REDIRECT, { url });
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.REDIRECT, { url });
     }
 }
 _LcncSdk_listeners = new WeakMap(), _LcncSdk_instances = new WeakSet(), _LcncSdk_addListener = function _LcncSdk_addListener(_id, callback) {
     __classPrivateFieldGet(this, _LcncSdk_listeners, "f")[_id] = __classPrivateFieldGet(this, _LcncSdk_listeners, "f")[_id] || [];
     __classPrivateFieldGet(this, _LcncSdk_listeners, "f")[_id].push(callback);
-}, _LcncSdk_fetch = function _LcncSdk_fetch(command, args) {
+}, _LcncSdk_postMessageUtil = function _LcncSdk_postMessageUtil(command, args) {
     return new Promise((resolve, reject) => {
         var _a, _b;
         const _id = generateId((_b = (_a = Object.keys(__classPrivateFieldGet(this, _LcncSdk_listeners, "f"))) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 100);
