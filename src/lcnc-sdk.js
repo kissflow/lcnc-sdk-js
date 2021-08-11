@@ -54,10 +54,12 @@ class LcncSdk {
         });
     }
     updateForm(args = {}) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.UPDATEFORM, args);
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.UPDATEFORM, { data: args });
     }
     updateFormTable(args = {}) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.UPDATEFORMTABLE, args);
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.UPDATEFORMTABLE, {
+            data: args
+        });
     }
     showConfirm(args) {
         return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.CONFIRM, {

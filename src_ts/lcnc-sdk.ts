@@ -50,11 +50,13 @@ class LcncSdk {
 	}
 
 	updateForm(args = {}) {
-		return this.#postMessageUtil(LISTENER_CMDS.UPDATEFORM, args);
+		return this.#postMessageUtil(LISTENER_CMDS.UPDATEFORM, { data: args });
 	}
 
 	updateFormTable(args = {}) {
-		return this.#postMessageUtil(LISTENER_CMDS.UPDATEFORMTABLE, args);
+		return this.#postMessageUtil(LISTENER_CMDS.UPDATEFORMTABLE, {
+			data: args
+		});
 	}
 
 	showConfirm(args: {
