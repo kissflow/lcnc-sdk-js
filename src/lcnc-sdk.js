@@ -38,7 +38,7 @@ class LcncSdk {
         return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.PARAMS, args);
     }
     getAccountContext(args = {}) {
-        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.ACCOUNTCONTEXT, args);
+        return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.ACCOUNT_CONTEXT, args);
     }
     showInfo(message) {
         return __classPrivateFieldGet(this, _LcncSdk_instances, "m", _LcncSdk_postMessageUtil).call(this, LISTENER_CMDS.MESSAGE, { message });

@@ -30,7 +30,7 @@ class LcncSdk {
 	}
 
 	getAccountContext(args = {}) {
-		return this.#postMessageUtil(LISTENER_CMDS.ACCOUNTCONTEXT, args);
+		return this.#postMessageUtil(LISTENER_CMDS.ACCOUNT_CONTEXT, args);
 	}
 
 	showInfo(message: string) {
