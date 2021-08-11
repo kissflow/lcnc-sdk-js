@@ -13,7 +13,7 @@ function postMessage(args: any) {
 	}
 }
 
-class LcncSdk {
+class LcncSDK {
 	#listeners: any;
 	constructor(props: any) {
 		console.log("SDK : Initializing ", props);
@@ -33,47 +33,55 @@ class LcncSdk {
 		return this.#postMessageUtil(LISTENER_CMDS.ACCOUNT_CONTEXT, args);
 	}
 
-	showInfo(message: string) {
-		return this.#postMessageUtil(LISTENER_CMDS.MESSAGE, { message });
-	}
+	form = {
+		getField: (fieldId: string) => {
+			return this.#postMessageUtil(LISTENER_CMDS.GETFORMFIELD, {
+				fieldId
+			});
+		},
 
-	getFormField(fieldId: string) {
-		return this.#postMessageUtil(LISTENER_CMDS.GETFORMFIELD, { fieldId });
-	}
+		getTableField: (tableId: string, rowIndex: number, fieldId: string) => {
+			return this.#postMessageUtil(LISTENER_CMDS.GETFORMTABLEFIELD, {
+				tableId,
+				rowIndex,
+				fieldId
+			});
+		},
 
-	getFormTableField(tableId: string, rowIndex: number, fieldId: string) {
-		return this.#postMessageUtil(LISTENER_CMDS.GETFORMTABLEFIELD, {
-			tableId,
-			rowIndex,
-			fieldId
-		});
-	}
+		updateField: (args = {}) => {
+			return this.#postMessageUtil(LISTENER_CMDS.UPDATEFORM, {
+				data: args
+			});
+		},
 
-	updateForm(args = {}) {
-		return this.#postMessageUtil(LISTENER_CMDS.UPDATEFORM, { data: args });
-	}
+		updateTableField: (args = {}) => {
+			return this.#postMessageUtil(LISTENER_CMDS.UPDATEFORMTABLE, {
+				data: args
+			});
+		}
+	};
 
-	updateFormTable(args = {}) {
-		return this.#postMessageUtil(LISTENER_CMDS.UPDATEFORMTABLE, {
-			data: args
-		});
-	}
+	client = {
+		showInfo:(message: string) => {
+			return this.#postMessageUtil(LISTENER_CMDS.MESSAGE, { message });
+		},
 
-	showConfirm(args: {
-		title: string;
-		content: string;
-		okText: string;
-		cancelText: string;
-	}) {
-		return this.#postMessageUtil(LISTENER_CMDS.CONFIRM, {
-			data: {
-				title: args.title,
-				content: args.content,
-				okText: args.okText || "Ok",
-				cancelText: args.cancelText || "Cancel"
-			}
-		});
-	}
+		showConfirm:(args: {
+			title: string;
+			content: string;
+			okText: string;
+			cancelText: string;
+		}) => {
+			return this.#postMessageUtil(LISTENER_CMDS.CONFIRM, {
+				data: {
+					title: args.title,
+					content: args.content,
+					okText: args.okText || "Ok",
+					cancelText: args.cancelText || "Cancel"
+				}
+			});
+		}
+	};
 
 	redirect(url: string, shouldConfirm: any) {
 		return this.#postMessageUtil(LISTENER_CMDS.REDIRECT, { url });
@@ -99,12 +107,6 @@ class LcncSdk {
 	}
 
 	#onMessage(event: any) {
-		console.log(
-			"SDK : @onMessage",
-			event.origin,
-			"!==",
-			self.location.origin
-		);
 		if (event.origin !== self.location.origin) {
 			console.log("SDK : @onMessage ", event);
 			const data = event.data;
@@ -123,13 +125,9 @@ class LcncSdk {
 	}
 }
 
-class ProcessSdk extends LcncSdk {}
 
 function initSDK(config: any = {}) {
-	if (config.flow === "Process") {
-		return new ProcessSdk(config);
-	}
-	return new LcncSdk(config);
+	return new LcncSDK(config);
 }
 
 export default initSDK;
