@@ -76,8 +76,8 @@ class LcncSDK {
     watchParams(args = {}) {
         return __classPrivateFieldGet(this, _LcncSDK_instances, "m", _LcncSDK_postMessageUtil).call(this, LISTENER_CMDS.PARAMS, args);
     }
-    getAccountContext(args = {}) {
-        return __classPrivateFieldGet(this, _LcncSDK_instances, "m", _LcncSDK_postMessageUtil).call(this, LISTENER_CMDS.ACCOUNT_CONTEXT, args);
+    getAccountContext() {
+        return __classPrivateFieldGet(this, _LcncSDK_instances, "m", _LcncSDK_postMessageUtil).call(this, LISTENER_CMDS.ACCOUNT_CONTEXT, {});
     }
     redirect(url, shouldConfirm) {
         return __classPrivateFieldGet(this, _LcncSDK_instances, "m", _LcncSDK_postMessageUtil).call(this, LISTENER_CMDS.REDIRECT, { url });

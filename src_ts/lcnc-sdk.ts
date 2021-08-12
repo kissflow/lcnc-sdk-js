@@ -29,8 +29,8 @@ class LcncSDK {
 		return this.#postMessageUtil(LISTENER_CMDS.PARAMS, args);
 	}
 
-	getAccountContext(args = {}) {
-		return this.#postMessageUtil(LISTENER_CMDS.ACCOUNT_CONTEXT, args);
+	getAccountContext() {
+		return this.#postMessageUtil(LISTENER_CMDS.ACCOUNT_CONTEXT, {});
 	}
 
 	form = {

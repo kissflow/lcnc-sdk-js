@@ -1,8 +1,10 @@
 # _Kissflow LCNC JavaScript SDK_
-------------------------------
->JavaScript SDK for developing over the Kissflow LCNC platform
-------------------------------
+JavaScript SDK for developing over the Kissflow LCNC platform
+
 ### 1) Form Functions
+
+** Note: These function can be used only in the button and other events inside the kissflow forms
+
 #### 1.1) Get from field
 ```
 lcnc.form.getField(fieldId).then((res) => {...})
@@ -25,9 +27,30 @@ lcnc.form.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
 #### 2.1) Show Toast
 ```
 lcnc.client.showInfo(message)
+```
+#### 2.2) Show confirm
+```
 lcnc.client.showConfirm({title, content})
 ```
-#### 2.1) Show confirm
+------------------------------
+### 3) Get account context
+
+Give the current account information of the authenicated user.
+
 ```
-lcnc.client.showConfirm({title, content})
+lcnc.getAccountContext().then((res) => {...})
+or
+let resp = await lcnc.getAccountContext()
+```
+------------------------------
+### 4) Fetch Api through lcnc sdk
+
+Fetches any external api & other kissflow api using this method.
+
+> Note this method has a limit of 10 seconds for an api call
+
+```
+lcnc.api(url, config).then((res) => {...})
+or
+let resp = await lcnc.api(url, config)
 ```
