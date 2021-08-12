@@ -2,16 +2,13 @@
 JavaScript SDK for developing over the Kissflow LCNC platform
 
 ### 1) Form Functions
-
-** Note: These function can be used only in the button and other events inside the kissflow forms
-
+> Note: These function can be used only on button and other events inside the kissflow forms
 #### 1.1) Get from field
 ```
 lcnc.form.getField(fieldId).then((res) => {...})
 or  
 let value = await lcnc.form.getField(fieldId)
 ```
-
 #### 1.2) Get table field
 ```
 lcnc.form.getTableField(tableId, rowIndex, fieldId).then((res) => {...})
@@ -47,7 +44,7 @@ let resp = await lcnc.getAccountContext()
 
 Fetches any external api & other kissflow api using this method.
 
-> Note this method has a limit of 10 seconds for an api call
+> Note: This method has a limit of 10 seconds for an api call
 
 ```
 lcnc.api(url, config).then((res) => {...})
