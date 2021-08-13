@@ -13,7 +13,6 @@ import LCNC from "@kissflow/lcnc-sdk-js";
 const lcnc = LCNC();
 ```
 
-
 ### Use as a `<script>` tag directly in HTML
 SDK can also be loaded directly into HTML by adding:
 ```html
@@ -29,19 +28,20 @@ const lcnc = window.LCNC()
 > Note: These function can be used only on button and other events inside the kissflow forms
 #### 1.1) Get from field
 ```
-lcnc.form.getField(fieldId).then((res) => {...})
+lcnc.currentForm.getField(fieldId).then((res) => {...})
 or  
-let value = await lcnc.form.getField(fieldId)
+let value = await lcnc.currentForm.getField(fieldId)
 ```
 #### 1.2) Get table field
 ```
-lcnc.form.getTableField(tableId, rowIndex, fieldId).then((res) => {...})
+let tableInstance = lcnc.currentForm.getTable(tableId)
+tableInstance.getField(rowIndex, fieldId).then((res) => console.log(res))
 or  
-let value = await lcnc.form.getTableField(tableId, rowIndex, fieldId)
+let value = await tableInstance.getField(rowIndex, fieldId)
 ```
 #### 1.3) Update form field
 ```
-lcnc.form.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
+lcnc.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
 ```
 ------------------------------
 ### 2) Client Functions
