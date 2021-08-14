@@ -45,6 +45,12 @@ export class BaseSDK {
             });
         });
     }
+    _watchMessageUtil(command, watchFor, func) {
+        var _a, _b;
+        const _id = generateId((_b = (_a = Object.keys(__classPrivateFieldGet(this, _BaseSDK_listeners, "f"))) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 100);
+        postMessage({ _id, command, watchFor });
+        __classPrivateFieldGet(this, _BaseSDK_instances, "m", _BaseSDK_addListener).call(this, _id, (data) => func(data));
+    }
 }
 _BaseSDK_listeners = new WeakMap(), _BaseSDK_instances = new WeakSet(), _BaseSDK_addListener = function _BaseSDK_addListener(_id, callback) {
     __classPrivateFieldGet(this, _BaseSDK_listeners, "f")[_id] = __classPrivateFieldGet(this, _BaseSDK_listeners, "f")[_id] || [];

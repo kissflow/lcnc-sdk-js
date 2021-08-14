@@ -75,3 +75,10 @@ lcnc.api(url, config).then((res) => {...})
 or
 let resp = await lcnc.api(url, config)
 ```
+### 5) Watch params
+```
+let watchPoint = "onTabChange";
+lcnc.watchParams(watchPoint, function(data) {
+  console.log(data);
+});
+```

@@ -4,7 +4,6 @@ import { Client } from "./client.js";
 import { LISTENER_CMDS } from "./constants.js";
 
 export class LcncSDK extends BaseSDK {
-	
 	currentForm: Form;
 	client: Client;
 
@@ -18,8 +17,8 @@ export class LcncSDK extends BaseSDK {
 		return this._postMessageUtil(LISTENER_CMDS.API, { url, args });
 	}
 
-	watchParams(args = {}) {
-		return this._postMessageUtil(LISTENER_CMDS.PARAMS, args);
+	watchParams(watchFor: string, func: (data: any) => any) {
+		return this._watchMessageUtil(LISTENER_CMDS.PARAMS, watchFor, func);
 	}
 
 	getAccountContext() {
