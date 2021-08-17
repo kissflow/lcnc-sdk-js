@@ -76,9 +76,11 @@ or
 let resp = await lcnc.api(url, config)
 ```
 ### 5) Watch params
+
+Listens for changes in parameter given to custom components.
+
 ```
-let watchPoint = "onTabChange";
-lcnc.watchParams(watchPoint, function(data) {
+lcnc.watchParams(function(data) {
   console.log(data);
 });
 ```

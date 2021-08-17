@@ -11,8 +11,8 @@ export class LcncSDK extends BaseSDK {
     api(url, args = {}) {
         return this._postMessageUtil(LISTENER_CMDS.API, { url, args });
     }
-    watchParams(watchFor, func) {
-        return this._watchMessageUtil(LISTENER_CMDS.PARAMS, watchFor, func);
+    watchParams(func) {
+        return this._watchMessageUtil(LISTENER_CMDS.PARAMS, func);
     }
     getAccountContext() {
         return this._postMessageUtil(LISTENER_CMDS.ACCOUNT_CONTEXT, {});

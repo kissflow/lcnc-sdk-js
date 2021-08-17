@@ -1,5 +1,3 @@
-import { LISTENER_CMDS } from "./constants.js";
-
 function generateId(len: number) {
 	return Math.floor(Date.now() + len).toString(36);
 }
@@ -40,13 +38,9 @@ export class BaseSDK {
 		});
 	}
 
-	_watchMessageUtil(
-		command: string,
-		watchFor: string,
-		func: (data: any) => {}
-	) {
+	_watchMessageUtil(command: string, func: (data: any) => {}) {
 		const _id = generateId(Object.keys(this.#listeners)?.length ?? 100);
-		postMessage({ _id, command, watchFor });
+		postMessage({ _id, command });
 		this.#addListener(_id, (data: any) => func(data));
 	}
 
