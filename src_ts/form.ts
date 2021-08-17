@@ -2,14 +2,13 @@ import { BaseSDK } from "./base.js";
 import { LISTENER_CMDS } from "./constants.js";
 
 export class Form extends BaseSDK {
-	// tableId: string;
 	getField(fieldId: string) {
-		return this._postMessageUtil(LISTENER_CMDS.GETFORMFIELD, {
+		return this._postMessageUtil(LISTENER_CMDS.GET_FORM_FIELD, {
 			fieldId
 		});
 	}
 	updateField(args = {}) {
-		return this._postMessageUtil(LISTENER_CMDS.UPDATEFORM, {
+		return this._postMessageUtil(LISTENER_CMDS.UPDATE_FORM, {
 			data: args
 		});
 	}
@@ -25,18 +24,14 @@ class Table extends BaseSDK {
 		this.tableId = tableId;
 	}
 	getField(rowIndex: number, fieldId: string) {
-		return this._postMessageUtil(LISTENER_CMDS.GETFORMTABLEFIELD, {
+		return this._postMessageUtil(LISTENER_CMDS.GET_FORM_TABLE_FIELD, {
 			tableId: this.tableId,
 			rowIndex,
 			fieldId
 		});
 	}
-	updateField(
-		rowIndex: number,
-		fieldId: string,
-		fieldValue: string
-	) {
-		return this._postMessageUtil(LISTENER_CMDS.UPDATEFORMTABLE, {
+	updateField(rowIndex: number, fieldId: string, fieldValue: string) {
+		return this._postMessageUtil(LISTENER_CMDS.UPDATE_FORM_TABLE, {
 			data: {
 				tableId: this.tableId,
 				rowIndex,
