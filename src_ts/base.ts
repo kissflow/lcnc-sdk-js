@@ -24,23 +24,35 @@ export class BaseSDK {
 		this.#listeners[_id].push(callback);
 	}
 
-	_postMessageUtil(command: string, args: any) {
+	_postMessagePromise(
+		command: string,
+		args: any,
+		hasCallBack?: boolean,
+		callBack?: (data: any) => {}
+	) {
 		return new Promise((resolve, reject) => {
 			const _id = generateId(Object.keys(this.#listeners)?.length ?? 100);
 			postMessage({ _id, command, ...args });
-			this.#addListener(_id, (data: any) => {
+			this.#addListener(_id, async (data: any) => {
 				if (data.errorMessage) {
 					reject(data);
 				} else {
+					if (hasCallBack && callBack) {
+						data = await callBack(data);
+					}
 					resolve(data);
 				}
 			});
 		});
 	}
 
-	_watchMessageUtil(command: string, func: (data: any) => {}) {
+	_postMessageWithoutPromise(
+		command: string,
+		func: (data: any) => {},
+		args = {}
+	) {
 		const _id = generateId(Object.keys(this.#listeners)?.length ?? 100);
-		postMessage({ _id, command });
+		postMessage({ _id, command, ...args });
 		this.#addListener(_id, (data: any) => func(data));
 	}
 

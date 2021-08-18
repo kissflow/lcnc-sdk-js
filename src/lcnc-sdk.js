@@ -9,16 +9,16 @@ export class LcncSDK extends BaseSDK {
         this.client = new Client({});
     }
     api(url, args = {}) {
-        return this._postMessageUtil(LISTENER_CMDS.API, { url, args });
+        return this._postMessagePromise(LISTENER_CMDS.API, { url, args });
     }
     watchParams(func) {
-        return this._watchMessageUtil(LISTENER_CMDS.PARAMS, func);
+        return this._postMessageWithoutPromise(LISTENER_CMDS.PARAMS, func);
     }
     getAccountContext() {
-        return this._postMessageUtil(LISTENER_CMDS.ACCOUNT_CONTEXT, {});
+        return this._postMessagePromise(LISTENER_CMDS.ACCOUNT_CONTEXT, {});
     }
     redirect(url, shouldConfirm) {
-        return this._postMessageUtil(LISTENER_CMDS.REDIRECT, { url });
+        return this._postMessagePromise(LISTENER_CMDS.REDIRECT, { url });
     }
 }
 function initSDK(config = {}) {

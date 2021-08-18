@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
     if (kind === "m") throw new TypeError("Private method is not writable");
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
@@ -30,25 +39,28 @@ export class BaseSDK {
         __classPrivateFieldSet(this, _BaseSDK_listeners, {}, "f");
         self.addEventListener("message", __classPrivateFieldGet(this, _BaseSDK_instances, "m", _BaseSDK_onMessage).bind(this), false);
     }
-    _postMessageUtil(command, args) {
+    _postMessagePromise(command, args, hasCallBack, callBack) {
         return new Promise((resolve, reject) => {
             var _a, _b;
             const _id = generateId((_b = (_a = Object.keys(__classPrivateFieldGet(this, _BaseSDK_listeners, "f"))) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 100);
             postMessage(Object.assign({ _id, command }, args));
-            __classPrivateFieldGet(this, _BaseSDK_instances, "m", _BaseSDK_addListener).call(this, _id, (data) => {
+            __classPrivateFieldGet(this, _BaseSDK_instances, "m", _BaseSDK_addListener).call(this, _id, (data) => __awaiter(this, void 0, void 0, function* () {
                 if (data.errorMessage) {
                     reject(data);
                 }
                 else {
+                    if (hasCallBack && callBack) {
+                        data = yield callBack(data);
+                    }
                     resolve(data);
                 }
-            });
+            }));
         });
     }
-    _watchMessageUtil(command, func) {
+    _postMessageWithoutPromise(command, func, args = {}) {
         var _a, _b;
         const _id = generateId((_b = (_a = Object.keys(__classPrivateFieldGet(this, _BaseSDK_listeners, "f"))) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 100);
-        postMessage({ _id, command });
+        postMessage(Object.assign({ _id, command }, args));
         __classPrivateFieldGet(this, _BaseSDK_instances, "m", _BaseSDK_addListener).call(this, _id, (data) => func(data));
     }
 }
