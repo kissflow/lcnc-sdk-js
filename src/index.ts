@@ -1,9 +1,6 @@
 import LCNCSDK from "./lcnc.sdk";
 
-if (
-	(typeof _BUILD !== "undefined" && _BUILD)
-  //  || self?.accountDetails?._id !== ""
-) {
+if (typeof _BUILD !== "undefined" && _BUILD) {
 	self.LCNC = LCNCSDK;
 }
 
