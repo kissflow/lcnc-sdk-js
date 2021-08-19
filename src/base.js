@@ -39,7 +39,7 @@ export class BaseSDK {
         __classPrivateFieldSet(this, _BaseSDK_listeners, {}, "f");
         self.addEventListener("message", __classPrivateFieldGet(this, _BaseSDK_instances, "m", _BaseSDK_onMessage).bind(this), false);
     }
-    _postMessagePromise(command, args, hasCallBack, callBack) {
+    _postMessageAsync(command, args, hasCallBack, callBack) {
         return new Promise((resolve, reject) => {
             var _a, _b;
             const _id = generateId((_b = (_a = Object.keys(__classPrivateFieldGet(this, _BaseSDK_listeners, "f"))) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 100);
@@ -57,7 +57,7 @@ export class BaseSDK {
             }));
         });
     }
-    _postMessageWithoutPromise(command, func, args = {}) {
+    _postMessage(command, func, args = {}) {
         var _a, _b;
         const _id = generateId((_b = (_a = Object.keys(__classPrivateFieldGet(this, _BaseSDK_listeners, "f"))) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 100);
         postMessage(Object.assign({ _id, command }, args));

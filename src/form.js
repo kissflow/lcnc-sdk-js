@@ -2,17 +2,17 @@ import { BaseSDK } from "./base.js";
 import { LISTENER_CMDS } from "./constants.js";
 export class Form extends BaseSDK {
     getField(fieldId) {
-        return this._postMessagePromise(LISTENER_CMDS.GET_FORM_FIELD, {
+        return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
             fieldId
         });
     }
     updateField(args = {}) {
-        return this._postMessagePromise(LISTENER_CMDS.UPDATE_FORM, {
+        return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
             data: args
         });
     }
     getTable(tableId) {
-        return this._postMessagePromise(LISTENER_CMDS.GET_TABLE_DETAILS, { tableId: tableId }, true, // has callBack
+        return this._postMessageAsync(LISTENER_CMDS.GET_TABLE_DETAILS, { tableId: tableId }, true, // has callBack
         (data) => {
             return new Table(data.resp); // callBack function
         });
@@ -30,14 +30,14 @@ class Table extends BaseSDK {
         this.columns = tableData.columns;
     }
     getField(rowIndex, fieldId) {
-        return this._postMessagePromise(LISTENER_CMDS.GET_FORM_TABLE_FIELD, {
+        return this._postMessageAsync(LISTENER_CMDS.GET_FORM_TABLE_FIELD, {
             tableId: this.tableId,
             rowIndex,
             fieldId
         });
     }
     updateField(rowIndex, fieldId, fieldValue) {
-        return this._postMessagePromise(LISTENER_CMDS.UPDATE_FORM_TABLE, {
+        return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM_TABLE, {
             data: {
                 tableId: this.tableId,
                 rowIndex,

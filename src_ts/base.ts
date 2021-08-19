@@ -24,7 +24,7 @@ export class BaseSDK {
 		this.#listeners[_id].push(callback);
 	}
 
-	_postMessagePromise(
+	_postMessageAsync(
 		command: string,
 		args: any,
 		hasCallBack?: boolean,
@@ -46,7 +46,7 @@ export class BaseSDK {
 		});
 	}
 
-	_postMessageWithoutPromise(
+	_postMessage(
 		command: string,
 		func: (data: any) => {},
 		args = {}

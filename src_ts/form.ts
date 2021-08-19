@@ -3,17 +3,17 @@ import { LISTENER_CMDS } from "./constants.js";
 
 export class Form extends BaseSDK {
 	getField(fieldId: string) {
-		return this._postMessagePromise(LISTENER_CMDS.GET_FORM_FIELD, {
+		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
 			fieldId
 		});
 	}
 	updateField(args = {}) {
-		return this._postMessagePromise(LISTENER_CMDS.UPDATE_FORM, {
+		return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
 			data: args
 		});
 	}
 	getTable(tableId: string) {
-		return this._postMessagePromise(
+		return this._postMessageAsync(
 			LISTENER_CMDS.GET_TABLE_DETAILS,
 			{ tableId: tableId },
 			true, // has callBack
@@ -47,14 +47,14 @@ class Table extends BaseSDK {
 		this.columns = tableData.columns;
 	}
 	getField(rowIndex: number, fieldId: string) {
-		return this._postMessagePromise(LISTENER_CMDS.GET_FORM_TABLE_FIELD, {
+		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_TABLE_FIELD, {
 			tableId: this.tableId,
 			rowIndex,
 			fieldId
 		});
 	}
 	updateField(rowIndex: number, fieldId: string, fieldValue: string) {
-		return this._postMessagePromise(LISTENER_CMDS.UPDATE_FORM_TABLE, {
+		return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM_TABLE, {
 			data: {
 				tableId: this.tableId,
 				rowIndex,

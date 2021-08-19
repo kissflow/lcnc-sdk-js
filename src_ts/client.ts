@@ -3,7 +3,7 @@ import { LISTENER_CMDS } from "./constants.js";
 
 export class Client extends BaseSDK {
 	showInfo(message: string) {
-		return super._postMessagePromise(LISTENER_CMDS.MESSAGE, { message });
+		return super._postMessageAsync(LISTENER_CMDS.MESSAGE, { message });
 	}
 
 	showConfirm(args: {
@@ -12,7 +12,7 @@ export class Client extends BaseSDK {
 		okText: string;
 		cancelText: string;
 	}) {
-		return super._postMessagePromise(LISTENER_CMDS.CONFIRM, {
+		return super._postMessageAsync(LISTENER_CMDS.CONFIRM, {
 			data: {
 				title: args.title,
 				content: args.content,
