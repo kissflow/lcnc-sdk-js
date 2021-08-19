@@ -24,16 +24,25 @@ export class Form extends BaseSDK {
 	}
 }
 
+interface TABLE_DATA {
+	tableId: string;
+	minRow: number | null;
+	maxRow: number | null;
+	columns: string[];
+}
 class Table extends BaseSDK {
 	tableId: string;
-	rowLimits: any;
-	columns: [];
-	constructor(tableData: any) {
+	rowLimits: {
+		max: number;
+		min: number;
+	};
+	columns: string[];
+	constructor(tableData: TABLE_DATA) {
 		super({});
 		this.tableId = tableData.tableId;
 		this.rowLimits = {
-			max: tableData?.MaxRow ?? 99,
-			min: tableData?.MinRow ?? 0
+			max: tableData?.maxRow ?? 99,
+			min: tableData?.minRow ?? 0
 		};
 		this.columns = tableData.columns;
 	}

@@ -24,8 +24,8 @@ class Table extends BaseSDK {
         super({});
         this.tableId = tableData.tableId;
         this.rowLimits = {
-            max: (_a = tableData === null || tableData === void 0 ? void 0 : tableData.MaxRow) !== null && _a !== void 0 ? _a : 99,
-            min: (_b = tableData === null || tableData === void 0 ? void 0 : tableData.MinRow) !== null && _b !== void 0 ? _b : 0
+            max: (_a = tableData === null || tableData === void 0 ? void 0 : tableData.maxRow) !== null && _a !== void 0 ? _a : 99,
+            min: (_b = tableData === null || tableData === void 0 ? void 0 : tableData.minRow) !== null && _b !== void 0 ? _b : 0
         };
         this.columns = tableData.columns;
     }
