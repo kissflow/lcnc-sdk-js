@@ -1,5 +1,5 @@
-import { BaseSDK } from "./base.js";
-import { LISTENER_CMDS } from "./constants.js";
+import { BaseSDK } from "./base";
+import { LISTENER_CMDS } from "./constants";
 
 export class Form extends BaseSDK {
 	getField(fieldId: string) {

@@ -1,7 +1,7 @@
-import { BaseSDK } from "./base.js";
-import { Form } from "./form.js";
-import { Client } from "./client.js";
-import { LISTENER_CMDS } from "./constants.js";
+import { BaseSDK } from "./base";
+import { Form } from "./form";
+import { Client } from "./client";
+import { LISTENER_CMDS } from "./constants";
 
 export class LcncSDK extends BaseSDK {
 	currentForm: Form;
