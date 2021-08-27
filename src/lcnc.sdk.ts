@@ -2,15 +2,18 @@ import { BaseSDK } from "./base";
 import { Form } from "./form";
 import { Client } from "./client";
 import { LISTENER_CMDS } from "./constants";
+import { Formatter } from './formatter';
 
 export class LcncSDK extends BaseSDK {
 	currentForm: Form;
 	client: Client;
+	formatter: Formatter;
 
 	constructor(props: any) {
 		super({});
 		this.currentForm = new Form({});
 		this.client = new Client({});
+		this.formatter = new Formatter({});
 	}
 
 	api(url: string, args = {}) {
