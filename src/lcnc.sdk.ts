@@ -3,17 +3,20 @@ import { Form } from "./form";
 import { Client } from "./client";
 import { LISTENER_CMDS } from "./constants";
 import { Formatter } from './formatter';
+import { Variables } from './variables';
 
 export class LcncSDK extends BaseSDK {
 	currentForm: Form;
 	client: Client;
 	formatter: Formatter;
+	variables: Variables;
 
 	constructor(props: any) {
 		super({});
 		this.currentForm = new Form({});
 		this.client = new Client({});
 		this.formatter = new Formatter({});
+		this.variables = new Variables({});
 	}
 
 	api(url: string, args = {}) {

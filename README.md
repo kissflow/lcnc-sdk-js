@@ -67,7 +67,7 @@ let resp = await lcnc.getAccountContext()
 
 ### 4) Fetch Api through lcnc sdk
 
-Fetches any external api & other kissflow api using this method.
+Fetch any external api & other kissflow api using this method.
 
 > Note: This method has a limit of 10 seconds for an api call
 
