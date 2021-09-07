@@ -65,7 +65,7 @@ export class BaseSDK {
 			if (listeners) {
 				listeners.forEach((listener: any) => {
 					try {
-						listener(data);
+						listener(data.resp);
 					} catch (err) {
 						console.error("Message callback error: ", err);
 					}
