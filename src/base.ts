@@ -66,7 +66,7 @@ export class BaseSDK {
 				listeners.forEach((listener: any) => {
 					try {
 						if(data.resp){
-							if(Object.keys(data.resp).length === 0){
+							if(Object.keys(data.resp).length === 1){
 								listener(Object.values(data.resp)[0]);
 							}else{
 								listener(data.resp)
