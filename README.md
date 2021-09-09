@@ -53,6 +53,15 @@ lcnc.client.showInfo(message)
 ```
 lcnc.client.showConfirm({title, content})
 ```
+#### 2.3) Redirect to URL
+```
+lcnc.client.redirect(url)
+```
+#### 2.4) Open a page in lowcode application
+```
+lcnc.client.openPage(pageId)
+```
+
 ------------------------------
 ### 3) Get account context
 
@@ -127,5 +136,17 @@ let value = await lcnc.formatter.toBoolean("true");
 let value = await lcnc.formatter.toBoolean("no");
 let value = await lcnc.formatter.toBoolean("0");
 let value = await lcnc.formatter.toBoolean("false");
+```
+------------------------------
+
+### 7) Lowcode variables
+Setter and getters for lowcode variables
+#### 7.1) Set value to variable
+```
+lcnc.variables.set("variableId", value);
+```
+#### 7.2) Get value of variable
+```
+let value = await lcnc.variables.get("variableId");
 ```
 ------------------------------
