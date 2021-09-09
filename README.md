@@ -64,9 +64,10 @@ or
 let resp = await lcnc.getAccountContext()
 ```
 ------------------------------
+
 ### 4) Fetch Api through lcnc sdk
 
-Fetches any external api & other kissflow api using this method.
+Fetch any external api & other kissflow api using this method.
 
 > Note: This method has a limit of 10 seconds for an api call
 
@@ -75,6 +76,8 @@ lcnc.api(url, config).then((res) => {...})
 or
 let resp = await lcnc.api(url, config)
 ```
+------------------------------
+
 ### 5) Watch params
 
 Listens for changes in parameter given to custom components.
@@ -84,3 +87,45 @@ lcnc.watchParams(function(data) {
   console.log(data);
 });
 ```
+------------------------------
+
+### 6) Formatter Functions
+#### 6.1) Format to KF Date
+```
+lcnc.formatter.toKfDate("08-24-2021").then((res) => {...})
+or  
+let value = await lcnc.formatter.toKfDate("08-24-2021");
+```
+#### 6.2) Format to KF Date Time
+```
+lcnc.formatter.toKfDateTime("2021-08-26T14:30").then((res) => {...})
+or  
+let value = await lcnc.formatter.toKfDateTime("2021-08-26T14:30");
+```
+#### 6.3) Format to KF Number
+```
+lcnc.formatter.toKfNumber("1,00,000.500000").then((res) => {...})
+or  
+let value = await lcnc.formatter.toKfNumber("1,00,000.500000");
+```
+#### 6.4) Format to KF Currency
+```
+lcnc.formatter.toKfCurrency("1,00,000.500000", "USD").then((res) => {...})
+or  
+let value = await lcnc.formatter.toKfCurrency("1,00,000.500000", "USD");
+```
+#### 6.5) Format to KF Boolean
+```
+lcnc.formatter..toBoolean("yes").then((res) => {...})
+or  
+let value = await lcnc.formatter.toBoolean("yes");
+```
+#### Other supported Boolean values
+```
+let value = await lcnc.formatter.toBoolean("1");
+let value = await lcnc.formatter.toBoolean("true");
+let value = await lcnc.formatter.toBoolean("no");
+let value = await lcnc.formatter.toBoolean("0");
+let value = await lcnc.formatter.toBoolean("false");
+```
+------------------------------

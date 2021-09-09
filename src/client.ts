@@ -21,4 +21,8 @@ export class Client extends BaseSDK {
 			}
 		});
 	}
+
+	redirect(url) {
+		return super._postMessageAsync(LISTENER_CMDS.REDIRECT, { url });
+	}
 }
