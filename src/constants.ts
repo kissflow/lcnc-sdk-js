@@ -15,6 +15,7 @@ export const LISTENER_CMDS = {
 	CONFIRM: "CONFIRM",
 	ALERT: "ALERT",
 	REDIRECT: "REDIRECT",
+	OPEN_PAGE: "OPEN_PAGE",
 
 	//Formatter SDK Functions
 	FORMAT_DATE: "FORMAT_DATE",
