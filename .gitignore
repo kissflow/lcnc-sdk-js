@@ -8,6 +8,8 @@
 */**/bower_components
 */**/jspm_packages
 
+/.package.lock.json
+
 # Logs
 */**/logs
 */**/*.log
