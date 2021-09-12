@@ -1,5 +1,8 @@
-function generateId(len: number) {
-	return Math.floor(Date.now() + len).toString(36);
+const shortid = require("shortid");
+
+function generateId() {
+	// return Math.floor(Date.now() + len).toString(36);
+	return shortid.generate();
 }
 
 function postMessage(args: any) {
@@ -31,7 +34,7 @@ export class BaseSDK {
 		callBack?: (data: any) => {}
 	) {
 		return new Promise((resolve, reject) => {
-			const _id = generateId(Object.keys(this.#listeners)?.length ?? 100);
+			const _id = generateId();
 			postMessage({ _id, command, ...args });
 			this.#addListener(_id, async (data: any) => {
 				if (data.errorMessage) {
@@ -46,12 +49,8 @@ export class BaseSDK {
 		});
 	}
 
-	_postMessage(
-		command: string,
-		func: (data: any) => {},
-		args = {}
-	) {
-		const _id = generateId(Object.keys(this.#listeners)?.length ?? 100);
+	_postMessage(command: string, func: (data: any) => {}, args = {}) {
+		const _id = generateId();
 		postMessage({ _id, command, ...args });
 		this.#addListener(_id, (data: any) => func(data));
 	}
@@ -65,11 +64,11 @@ export class BaseSDK {
 			if (listeners) {
 				listeners.forEach((listener: any) => {
 					try {
-						if(data.resp){
-							if(Object.keys(data.resp).length === 1){
+						if (data.resp) {
+							if (Object.keys(data.resp).length === 1) {
 								listener(Object.values(data.resp)[0]);
-							}else{
-								listener(data.resp)
+							} else {
+								listener(data.resp);
 							}
 						}
 					} catch (err) {
