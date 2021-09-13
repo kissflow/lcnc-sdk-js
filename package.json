@@ -1,36 +1,38 @@
 {
-  "name": "@kissflow/lcnc-sdk-js",
-  "version": "1.0.2",
-  "description": "JavaScript SDK for developing over the Kissflow LCNC platform",
-  "main": "dist/lcnc.sdk.js",
-  "scripts": {
-    "start": "npm run server",
-    "server": "http-server .",
-    "build": "webpack",
-    "build:watch": "webpack --watch",
-    "serve": "webpack serve"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kissflow/lcnc-sdk-js.git"
-  },
-  "keywords": [],
-  "author": "Vivek Madurai<vivek@kissflow.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kissflow/lcnc-sdk-js/issues"
-  },
-  "homepage": "https://github.com/kissflow/lcnc-sdk-js#readme",
-  "devDependencies": {
-    "html-webpack-plugin": "^5.3.1",
-    "http-server": "^0.12.3",
-    "ts-loader": "^9.2.5",
-    "typescript": "^4.3.5",
-    "webpack": "^5.37.0",
-    "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^3.11.2"
-  },
-  "dependencies": {
-    "shortid": "^2.2.16"
-  }
+	"name": "@kissflow/lcnc-sdk-js",
+	"version": "1.0.2",
+	"description": "JavaScript SDK for developing over the Kissflow LCNC platform",
+	"main": "dist/lcnc.sdk.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"start": "npm run server",
+		"server": "http-server .",
+		"prepublish": "tsc --noResolve",
+		"build": "webpack",
+		"build:watch": "webpack --watch",
+		"serve": "webpack serve"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kissflow/lcnc-sdk-js.git"
+	},
+	"keywords": [],
+	"author": "Vivek Madurai<vivek@kissflow.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/kissflow/lcnc-sdk-js/issues"
+	},
+	"homepage": "https://github.com/kissflow/lcnc-sdk-js#readme",
+	"devDependencies": {
+		"html-webpack-plugin": "^5.3.1",
+		"http-server": "^0.12.3",
+		"ts-loader": "^9.2.5",
+		"typescript": "^4.3.5",
+		"webpack": "^5.52.1",
+		"webpack-cli": "^4.8.0",
+		"webpack-dev-server": "^3.11.2"
+	},
+	"dependencies": {
+		"shortid": "^2.2.16"
+	}
 }

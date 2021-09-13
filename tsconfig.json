@@ -1,7 +1,17 @@
 {
+	"include": [
+		"./src/"
+	],
+	"exclude": [
+		"./src/constants.ts","./src/index.ts", "./src/base.ts"
+	],
 	"compilerOptions": {
+		"baseUrl": ".",
 		"target": "es6",
 		"module": "es2015",
-		"lib": ["webworker"]
+		"lib": ["webworker"],
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"outFile": "dist/index.d.ts"
 	}
 }
