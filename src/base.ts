@@ -1,8 +1,8 @@
 const shortid = require("shortid");
 
-function generateId() {
+function generateId(prefix) {
 	// return Math.floor(Date.now() + len).toString(36);
-	return shortid.generate();
+	return `${prefix}-shortid.generate()`;
 }
 
 function postMessage(args: any) {
@@ -34,7 +34,7 @@ export class BaseSDK {
 		callBack?: (data: any) => {}
 	) {
 		return new Promise((resolve, reject) => {
-			const _id = generateId();
+			const _id = generateId(command.toLowerCase());
 			postMessage({ _id, command, ...args });
 			this.#addListener(_id, async (data: any) => {
 				if (data.errorMessage) {
@@ -50,7 +50,7 @@ export class BaseSDK {
 	}
 
 	_postMessage(command: string, func: (data: any) => {}, args = {}) {
-		const _id = generateId();
+		const _id = generateId(command.toLowerCase());
 		postMessage({ _id, command, ...args });
 		this.#addListener(_id, (data: any) => func(data));
 	}

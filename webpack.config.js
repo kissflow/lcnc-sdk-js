@@ -14,7 +14,6 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     
     library: {
-      // do not specify a `name` here
       type: 'module',
     },
   },
@@ -24,7 +23,7 @@ module.exports = {
     open: true
   },
   resolve: {
-    extensions: [".ts", ".js"]
+    extensions: [".ts", ".js"],
   },
   module: {
     rules: [
@@ -33,7 +32,7 @@ module.exports = {
         use: {
           loader: "ts-loader",
           options: {
-            transpileOnly: true
+            transpileOnly: true,
           }
         },
         exclude: /node_modules/
@@ -48,6 +47,6 @@ module.exports = {
       template: "./index.html",
       filename: "index.html",
       inject: "body"
-    })
+    }),
   ]
 };
