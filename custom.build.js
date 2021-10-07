@@ -69,9 +69,8 @@ function transfromTypings() {
 	fs.writeFile("./dist/index.d.ts", toWrite, function (err) {
 		if (err) return console.log(err);
 	});
-	// fs.unlink(filePath, (err) => {
-	// 	if (err) throw err;
-	// 	console.log(`successfully deleted ${filePath}`);
-	// });
-
+	fs.unlink(filePath, (err) => {
+		if (err) throw err;
+		console.log(`successfully deleted ${filePath}`);
+	});
 };
