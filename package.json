@@ -7,8 +7,8 @@
 	"scripts": {
 		"start": "npm run server",
 		"server": "http-server .",
-		"prepublish": "tsc --noResolve",
-		"build": "webpack",
+		"customBuild": "node custom.build.js",
+		"build": "npm run customBuild",
 		"build:watch": "webpack --watch",
 		"serve": "webpack serve"
 	},
@@ -33,6 +33,7 @@
 		"webpack-dev-server": "^3.11.2"
 	},
 	"dependencies": {
-		"shortid": "^2.2.16"
+		"shortid": "^2.2.16",
+		"ts-file-parser": "0.0.21"
 	}
 }

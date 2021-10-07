@@ -26,20 +26,14 @@ const lcnc = window.LCNC()
 
 ### 1) Form Functions
 > Note: These function can be used only on button and other events inside the kissflow forms
+> Use Table:: as a prefix while using TableId
 #### 1.1) Get from field
 ```
 lcnc.currentForm.getField(fieldId).then((res) => {...})
 or  
 let value = await lcnc.currentForm.getField(fieldId)
 ```
-#### 1.2) Get table field
-```
-let tableInstance = lcnc.currentForm.getTable(tableId)
-tableInstance.getField(rowIndex, fieldId).then((res) => console.log(res))
-or  
-let value = await tableInstance.getField(rowIndex, fieldId)
-```
-#### 1.3) Update form field
+#### 1.2) Update form field
 ```
 lcnc.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
 ```
