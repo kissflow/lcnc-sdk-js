@@ -2,8 +2,9 @@ const tsFileStruct = require("ts-file-parser");
 const fs = require("fs");
 
 const exec = require('child_process').exec;
-runCommand("webpack");
-runCommand("tsc", transfromTypings);
+runCommand("webpack", () => {
+	runCommand("tsc", transfromTypings);
+});
 
 function runCommand(command, callBack = null) {
 	const execCmd = exec(command)

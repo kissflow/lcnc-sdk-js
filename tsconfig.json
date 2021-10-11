@@ -10,7 +10,7 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"target": "es6",
-		"module": "system",
+		"module": "es2015",
 		"declaration": true,
 		"emitDeclarationOnly": true,
 		"outFile": "./src.index.d.ts"
