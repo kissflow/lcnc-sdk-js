@@ -30,7 +30,7 @@ export class LcncSDK extends BaseSDK {
 	getAccountContext() {
 		return this._postMessageAsync(LISTENER_CMDS.ACCOUNT_CONTEXT, {});
 	}
-	redirect(url: string, shouldConfirm: any) {
+	redirect(url: string) {
 		return this._postMessageAsync(LISTENER_CMDS.REDIRECT, { url });
 	}
 }

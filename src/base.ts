@@ -32,7 +32,7 @@ export class BaseSDK {
 		args: any,
 		hasCallBack?: boolean,
 		callBack?: (data: any) => {}
-	) {
+	):(object | string) {
 		return new Promise((resolve, reject) => {
 			const _id = generateId(command.toLowerCase());
 			postMessage({ _id, command, ...args });

@@ -10,9 +10,9 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"target": "es6",
-		"module": "es2015",
+		"module": "es2020",
 		"declaration": true,
 		"emitDeclarationOnly": true,
-		"outFile": "./src.index.d.ts"
+		"outFile": "./dist/index.d.ts"
 	}
 }
