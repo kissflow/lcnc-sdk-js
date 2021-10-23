@@ -7,12 +7,11 @@ runCommand("webpack", () => {
 });
 
 function runCommand(command, callBack = null) {
-	const execCmd = exec(command)
+	const execCmd = exec(command, () => {
+		callBack && callBack();
+	})
 	execCmd.stdout.on("data", (data) => {
 		console.log(data);
-		if (data && callBack) {
-			callBack();
-		}
 	})
 	execCmd.stderr.on("data", (data) => {
 		console.error(data);
@@ -20,10 +19,9 @@ function runCommand(command, callBack = null) {
 }
 
 function transfromTypings() {
-	const filePath = "./src.index.d.ts";
+	const filePath = "./dist/index.d.ts";
 	let srcFile = fs.readFileSync(filePath).toString();
 	let srcCode = tsFileStruct.parseStruct(srcFile, {}, filePath);
-
 	let allClasses = srcCode.classes; let LCNC = []; let func = "";
 	let indexClass = allClasses.find((_class) => _class.name === "LcncSDK");
 	let childClassMappings = {};
@@ -53,7 +51,7 @@ function transfromTypings() {
 		}
 	}
 
-	let toWrite = `declare class LCNC { \n`;
+	let toWrite = `declare class lcnc { \n`;
 	for (let i = 0; i < LCNC.length; i++) {
 		toWrite += `\tstatic ${LCNC[i]} \n`;
 	}
@@ -66,12 +64,7 @@ function transfromTypings() {
 		toWrite += `}\n`;
 	}
 	toWrite += `}`;
-
-	fs.writeFile("./dist/index.d.ts", toWrite, function (err) {
+	fs.writeFile("./dist/global.types.d.ts", toWrite, function (err) {
 		if (err) return console.log(err);
-	});
-	fs.unlink(filePath, (err) => {
-		if (err) throw err;
-		console.log(`successfully deleted ${filePath}`);
 	});
 };

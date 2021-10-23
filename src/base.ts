@@ -1,8 +1,7 @@
-const shortid = require("shortid");
+const { nanoid } = require("nanoid");
 
-function generateId(prefix) {
-	// return Math.floor(Date.now() + len).toString(36);
-	return `${prefix}-shortid.generate()`;
+function generateId(prefix = "lcncsdk") {
+	return `${prefix}-${nanoid()}`;
 }
 
 function postMessage(args: any) {
@@ -32,7 +31,7 @@ export class BaseSDK {
 		args: any,
 		hasCallBack?: boolean,
 		callBack?: (data: any) => {}
-	) {
+	): object | string {
 		return new Promise((resolve, reject) => {
 			const _id = generateId(command.toLowerCase());
 			postMessage({ _id, command, ...args });
