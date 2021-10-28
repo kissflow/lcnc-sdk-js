@@ -1,6 +1,6 @@
 {
 	"name": "@kissflow/lcnc-sdk-js",
-	"version": "1.1.6",
+	"version": "1.1.7",
 	"description": "JavaScript SDK for developing over the Kissflow LCNC platform",
 	"main": "dist/lcnc.sdk.js",
 	"types": "dist/index.d.ts",
