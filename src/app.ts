@@ -8,7 +8,7 @@ export class Application extends BaseSDK {
 		});
 	}
 
-	setVariable(key: string, value: any) {
+	setVariable(key: string | object, value: any) {
 		return this._postMessageAsync(LISTENER_CMDS.SET_APP_VARIABLE, {
 			key,
 			value
