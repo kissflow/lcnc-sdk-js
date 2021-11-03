@@ -19,7 +19,7 @@ Note specifying script type as "module" is must.
 Then SDK can be initialized anywhere by declaring:
 
 ```js
-const lcnc = window.LCNC
+const lcnc = window.LCNC()
 ```
 
 ### 1) Form Functions
