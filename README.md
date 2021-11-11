@@ -13,8 +13,9 @@ const lcnc = LCNC();
 ### Use as a `<script>` tag directly in HTML
 SDK can also be loaded directly into HTML by adding:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@kissflow/lcnc-sdk-js@1.0.5/src/index.min.js"></script>
+<script type="module" async src="https://cdn.jsdelivr.net/npm/@kissflow/lcnc-sdk-js@1/dist/lcnc.sdk.min.js"></script>
 ```
+Note specifying script type as "module" is must.
 Then SDK can be initialized anywhere by declaring:
 
 ```js
