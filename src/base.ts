@@ -1,3 +1,4 @@
+import { LISTENER_CMDS } from './constants';
 const { nanoid } = require("nanoid");
 
 function generateId(prefix = "lcncsdk") {
@@ -64,7 +65,7 @@ export class BaseSDK {
 				listeners.forEach((listener: any) => {
 					try {
 						if (data.resp) {
-							if (Object.keys(data.resp).length === 1) {
+							if (Object.keys(data.resp).length === 1 && _req.command !== LISTENER_CMDS.API) {
 								listener(Object.values(data.resp)[0]);
 							} else {
 								listener(data.resp);
