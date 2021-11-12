@@ -64,7 +64,7 @@ lcnc.client.openPage(pageId, pageInputParameters)
 Application variables has global context to application, 
 ##### Get value to application variable
 ```
-lcnc.app.getVariable("variableId");
+let value = await lcnc.app.getVariable("variableId");
 ```
 ##### set value of application variable
 ```
