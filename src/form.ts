@@ -12,4 +12,10 @@ export class Form extends BaseSDK {
 			data: args
 		});
 	}
+	addTableRow(tableId: string, rowObject: object) {
+		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROW, {
+			tableId,
+			rowObject
+		});
+	}
 }
