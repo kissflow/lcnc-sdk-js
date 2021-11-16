@@ -6,6 +6,7 @@ export const LISTENER_CMDS = {
 	//Forms SDK Functions
 	GET_FORM_FIELD: "GET_FORM_FIELD",
 	UPDATE_FORM: "UPDATE_FORM",
+	ADD_TABLE_ROW: "ADD_TABLE_ROW",
 
 	//Client SDK functions
 	MESSAGE: "MESSAGE",
