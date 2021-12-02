@@ -64,8 +64,14 @@ let pageInputParameters = {
 lcnc.client.openPage(pageId, pageInputParameters)
 ```
 ------------------------------
+### 3) Component Functions
+#### Refresh a component
+```
+lcnc.getComponent(componentId).refresh()
+```
+--------------------------------
 
-### 3) Lowcode application functions
+### 4) Lowcode application functions
 Application variables has global context to application, 
 ##### Get value to application variable
 ```
@@ -81,14 +87,14 @@ await lcnc.app.setVariable({
 })
 ```
 ------------------------------
-### 4) Lowcode page builder functions
+### 5) Lowcode page builder functions
 ##### Get values of page input parameters
 ```
 let value = await lcnc.page.getParameter();
 ```
 ------------------------------
 
-### 5) Get account context
+### 6) Get account context
 Give the current account information of the authenicated user.
 ```
 lcnc.getAccountContext().then((res) => {...})
@@ -97,7 +103,7 @@ let resp = await lcnc.getAccountContext()
 ```
 ------------------------------
 
-### 6) Fetch Api through lcnc sdk
+### 7) Fetch Api through lcnc sdk
 Fetch any external api & other kissflow api using this method.
 > Note: This method has a limit of 10 seconds for an api call
 ```
@@ -107,7 +113,7 @@ let resp = await lcnc.api(url, config)
 ```
 ------------------------------
 
-### 7) Watch params
+### 8) Watch params
 Listens for changes in parameter given to custom components in lowcode application.
 ```
 lcnc.watchParams(function(data) {
@@ -116,7 +122,7 @@ lcnc.watchParams(function(data) {
 ```
 ------------------------------
 
-### 8) Formatter Functions
+### 9) Formatter Functions
 ##### Format to KF Date
 ```
 lcnc.formatter.toKfDate("08-24-2021").then((res) => {...})
