@@ -35,6 +35,11 @@ let value = await lcnc.currentForm.getField(fieldId)
 ```
 lcnc.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
 ```
+#### Update tableField
+Appends row details to the end of table.
+```
+lcnc.currentForm.addTableRow("tableId", { "columnId1": value, "columnId2": value })
+```
 ------------------------------
 ### 2) Client Functions
 ##### Show Toast
