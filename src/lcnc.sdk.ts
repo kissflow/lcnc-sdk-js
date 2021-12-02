@@ -5,7 +5,7 @@ import { Client } from "./client";
 import { Formatter } from './formatter';
 import { Application } from "./app";
 import { Page } from "./page";
-
+import { Component } from "./component";
 export class LcncSDK extends BaseSDK {
 	currentForm: Form;
 	client: Client;
@@ -22,23 +22,21 @@ export class LcncSDK extends BaseSDK {
 		this.page = new Page({});
 	}
 
-	api(url: string, args = {}) {
+	api(url: string, args = {}): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
 	}
-
-	watchParams(func: (data: any) => any) {
-		return this._postMessage(LISTENER_CMDS.PARAMS, func);
+	watchParams(func: (data: any) => any){
+		this._postMessage(LISTENER_CMDS.PARAMS, func);
 	}
-
-	getAccountContext() {
+	getAccountContext(): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.ACCOUNT_CONTEXT, {});
 	}
-	redirect(url: string) {
-		return this._postMessageAsync(LISTENER_CMDS.REDIRECT, { url });
+	getComponent(componentId: string): Component {
+		return new Component(componentId);
 	}
 }
 
-function initSDK(config: any = {}) {
+function initSDK(config: any = {}): LcncSDK {
 	return new LcncSDK(config);
 }
 
