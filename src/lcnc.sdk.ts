@@ -4,14 +4,13 @@ import { Form } from "./form";
 import { Client } from "./client";
 import { Formatter } from './formatter';
 import { Application } from "./app";
-import { Page } from "./page";
 import { Component } from "./component";
+
 export class LcncSDK extends BaseSDK {
 	currentForm: Form;
 	client: Client;
 	formatter: Formatter;
 	app: Application;
-	page: Page;
 
 	constructor(props: any) {
 		super({});
@@ -19,17 +18,16 @@ export class LcncSDK extends BaseSDK {
 		this.client = new Client({});
 		this.formatter = new Formatter({});
 		this.app = new Application({});
-		this.page = new Page({});
 	}
 
 	api(url: string, args = {}): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
 	}
-	watchParams(func: (data: any) => any){
+	watchParams(func: (data: any) => any) {
 		this._postMessage(LISTENER_CMDS.PARAMS, func);
 	}
-	getAccountContext(): string | object {
-		return this._postMessageAsync(LISTENER_CMDS.ACCOUNT_CONTEXT, {});
+	getContext(): string | object {
+		return this._postMessageAsync(LISTENER_CMDS.GET_CONTEXT, {});
 	}
 	getComponent(componentId: string): Component {
 		return new Component(componentId);
