@@ -44,13 +44,13 @@ function transfromTypings() {
 			} { \n`;
 
 			// fields on Class
-			for (let i = 0; i < _class?.fields?.length; i++) {
+			for (let i = 0; i < _class.fields.length; i++) {
 				// if (_class.fields[i].type.modulePath) {
 				let className = _class.fields[i].type.typeName;
 				let fieldName = _class.fields[i].name;
 				// console.log(_class.fields[i]);
 				toWrite += `\t${
-					classMappings[_class.name]?.staticDeclarations
+					classMappings[_class.name].staticDeclarations
 						? "static "
 						: ""
 				}${fieldName}: ${className} \n`;
@@ -58,7 +58,7 @@ function transfromTypings() {
 			}
 
 			//methods of Class
-			for (j = 0; j < _class?.methods?.length; j++) {
+			for (j = 0; j < _class.methods.length; j++) {
 				func = _class.methods[j].text.trim().split("\n\t").join(" ");
 				toWrite += `\t${func} \n`;
 				// if (
