@@ -18,4 +18,18 @@ export class Page extends BaseSDK {
 			value
 		});
 	}
+	openPopup(
+		pageId: string,
+		inputParams: object,
+		popupProperties: { w: number; h: number }
+	) {
+		return this._postMessageAsync(LISTENER_CMDS.OPEN_POPUP_PAGE, {
+			pageId,
+			inputParams,
+			popupProperties: {
+				width: popupProperties.w,
+				height: popupProperties.h
+			}
+		});
+	}
 }

@@ -25,11 +25,4 @@ export class Client extends BaseSDK {
 	redirect(url: string) {
 		return super._postMessageAsync(LISTENER_CMDS.REDIRECT, { url });
 	}
-
-	openPage(pageId: string, pageParams: object) {
-		return super._postMessageAsync(LISTENER_CMDS.OPEN_PAGE, {
-			pageId,
-			pageParams
-		});
-	}
 }
