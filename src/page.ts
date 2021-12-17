@@ -2,6 +2,11 @@ import { BaseSDK } from "./base";
 import { LISTENER_CMDS } from "./constants";
 
 export class Page extends BaseSDK {
+	_id: string;
+	constructor(pageId: string) {
+		super({});
+		this._id = pageId;
+	}
 	getParameter(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_PAGE_PARAMS, {
 			key
@@ -23,13 +28,27 @@ export class Page extends BaseSDK {
 		inputParams: object,
 		popupProperties: { w: number; h: number }
 	) {
-		return this._postMessageAsync(LISTENER_CMDS.OPEN_POPUP_PAGE, {
+		let payload = {
 			pageId,
 			inputParams,
 			popupProperties: {
 				width: popupProperties.w,
 				height: popupProperties.h
 			}
+		};
+		return this._postMessageAsync(
+			LISTENER_CMDS.OPEN_POPUP_PAGE,
+			payload,
+			true,
+			() => {
+				return new Page(pageId);
+			}
+		);
+	}
+	onClose(callback: Function) {
+		this._postMessageAsync(LISTENER_CMDS.PAGE_ON_CLOSE, {
+			pageId: this._id,
+			callback: callback.toString()
 		});
 	}
 }
