@@ -1,5 +1,5 @@
 import { BaseSDK } from "./base";
-import { LISTENER_CMDS } from "./constants";
+import { LISTENER_CMDS, EVENT_TYPES } from "./constants";
 
 export class Page extends BaseSDK {
 	_id: string;
@@ -46,9 +46,6 @@ export class Page extends BaseSDK {
 		);
 	}
 	onClose(callback: Function) {
-		this._postMessageAsync(LISTENER_CMDS.PAGE_ON_CLOSE, {
-			pageId: this._id,
-			callback: callback.toString()
-		});
+		this._registerEventListener(this._id, EVENT_TYPES.ON_CLOSE, callback);
 	}
 }

@@ -36,3 +36,10 @@ export const LISTENER_CMDS = {
 
 	COMPONENT_REFRESH: "COMPONENT_REFRESH"
 };
+
+
+export const EVENT_TYPES = {
+	ON_CLOSE: "onClose",
+	ON_CHANGE: "onChange",
+	ON_LOAD: "onLoad",
+}
