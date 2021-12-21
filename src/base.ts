@@ -1,4 +1,4 @@
-import { LISTENER_CMDS } from './constants';
+import { LISTENER_CMDS } from "./constants";
 const { nanoid } = require("nanoid");
 
 function generateId(prefix = "lcncsdk") {
@@ -16,15 +16,24 @@ function postMessage(args: any) {
 
 export class BaseSDK {
 	#listeners: any;
+	#eventListeners: object;
 	constructor(props: any) {
 		console.log("SDK : Initializing ", props);
 		this.#listeners = {};
+		this.#eventListeners = {};
 		self.addEventListener("message", this.#onMessage.bind(this), false);
 	}
 
 	#addListener(_id: string, callback: any) {
 		this.#listeners[_id] = this.#listeners[_id] || [];
 		this.#listeners[_id].push(callback);
+	}
+
+	#appendEventListeners(_id: string, eventType: string, callback: any) {
+		if (!this.#eventListeners[_id]) {
+			this.#eventListeners[_id] = {};
+		}
+		this.#eventListeners[_id][eventType] = callback;
 	}
 
 	_postMessageAsync(
@@ -55,17 +64,36 @@ export class BaseSDK {
 		this.#addListener(_id, (data: any) => func(data));
 	}
 
+	_registerEventListener(_id: string, eventType: string, callback: any) {
+		this.#appendEventListeners(_id, eventType, callback);
+	}
+
+	#checkEvents(data: any) {
+		const { _id, eventType, eventParams } = data;
+		if(!_id || !eventType) return;
+		const eventListener = this.#eventListeners[_id] || {};
+		if (eventListener[eventType]) {
+			eventListener[eventType](eventParams || {});
+		}
+	}
+
 	#onMessage(event: any) {
 		if (event.origin !== self.location.origin) {
 			console.log("SDK : @onMessage ", event);
 			const data = event.data;
+			if (data.isEvent) {
+				return this.#checkEvents(data);
+			}
 			const _req = data?._req || {};
 			let listeners = this.#listeners[_req?._id] || [];
 			if (listeners) {
 				listeners.forEach((listener: any) => {
 					try {
 						if (data.resp) {
-							if (Object.keys(data.resp).length === 1 && _req.command !== LISTENER_CMDS.API) {
+							if (
+								Object.keys(data.resp).length === 1 &&
+								_req.command !== LISTENER_CMDS.API
+							) {
 								listener(Object.values(data.resp)[0]);
 							} else {
 								listener(data.resp);
