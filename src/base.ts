@@ -72,8 +72,7 @@ export class BaseSDK {
 		const { _id, eventType, eventParams } = data;
 		if(!_id || !eventType) return;
 		const eventListener = this.#eventListeners[_id] || {};
-		if (eventListener?.[eventType]) {
-			console.log("SDK : @checkEvents ", eventListener);
+		if (eventListener[eventType]) {
 			eventListener[eventType](eventParams || {});
 		}
 	}
