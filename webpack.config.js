@@ -2,21 +2,10 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
+let config = {
   devtool: "source-map",
   mode: "development",
   entry: "./src/index.ts",
-  experiments: {
-    outputModule: true,
-  },
-  output: {
-    filename: "lcnc.sdk.js",
-    path: path.resolve(__dirname, "dist"),
-    
-    library: {
-      type: 'module',
-    },
-  },
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     port: 3000,
@@ -50,3 +39,24 @@ module.exports = {
     }),
   ]
 };
+
+let moduleLib = Object.assign({}, config, {
+	experiments: {
+		outputModule: true
+	},
+	output: {
+		filename: "lcnc.sdk.module.js",
+		path: path.resolve(__dirname, "dist"),
+
+		library: {
+			type: "module"
+		}
+	}
+});
+let commonLib = Object.assign({}, config, {
+    output: {
+    filename: "lcnc.sdk.js",
+    path: path.resolve(__dirname, "dist"),
+  },
+})
+module.exports = [moduleLib, commonLib];
