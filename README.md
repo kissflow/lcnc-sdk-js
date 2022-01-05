@@ -74,8 +74,8 @@ lcnc.getComponent(componentId).refresh()
 ### 4) Lowcode application functions
 Application variables has global context to application, 
 ##### Get value to application variable
-```js
-lcnc.app.getVariable("variableId");
+```
+let value = await lcnc.app.getVariable("variableId");
 ```
 ##### Set value of application variable
 ```js
