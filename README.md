@@ -1,180 +1,200 @@
 # _Kissflow LCNC JavaScript SDK_
+
 JavaScript SDK for developing over the Kissflow LCNC platform
 
 ### Use as an `npm` module
-Install the SDK as a module:
-`npm i @kissflow/lcnc-sdk-js`
-Then import into your project:
+
+Install the SDK as a module: `npm i @kissflow/kf-sdk-js` Then import into your project:
+
 ```js
-import LCNC from "@kissflow/lcnc-sdk-js";
-const lcnc = LCNC();
+import KFLowcodeSDK from "@kissflow/lcnc-sdk-js";
+const kf = KFLowcodeSDK();
 ```
 
 ### Use as a `<script>` tag directly in HTML
-SDK can also be loaded directly into HTML by adding:
-```html
-<script type="module" async src="https://cdn.jsdelivr.net/npm/@kissflow/lcnc-sdk-js@1/dist/lcnc.sdk.min.js"></script>
-```
-Note specifying script type as "module" is must.
-Then SDK can be initialized anywhere by declaring:
 
+SDK can also be loaded directly into HTML by adding:
+
+```html
+<script type="module" async
+	src="https://cdn.jsdelivr.net/npm/@kissflow/lcnc-sdk-js@1/dist/kflowcode.sdk.module.js"
+></script>
+```
+
+> Note specifying script type as "module" is must. Then SDK can be initialized anywhere by declaring:
 ```js
-const lcnc = window.LCNC()
+const kf = window.KF();
 ```
 
 ### 1) Form Functions
+
 > Note: These function can be used only on button and other events inside the kissflow forms
 > Use Table:: as a prefix while using TableId
+
 ##### Get from field
 ```js
-lcnc.currentForm.getField(fieldId).then((res) => {...})
-// or  
-let value = await lcnc.currentForm.getField(fieldId)
+kf.currentForm.getField(fieldId).then((res) => {...})
+// or
+let value = await kf.currentForm.getField(fieldId)
 ```
 ##### Update form field
 ```js
-lcnc.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
+kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
 #### Update tableField
 Appends row details to the end of table.
 ```js
-lcnc.currentForm.addTableRow("tableId", { "columnId1": value, "columnId2": value })
+kf.currentForm.addTableRow("tableId", { columnId1: value, columnId2: value });
 ```
-------------------------------
+---
+
 ### 2) Client Functions
 ##### Show Toast
 ```js
-lcnc.client.showInfo(message)
+kf.client.showInfo(message);
 ```
 ##### Show confirm
 ```js
-lcnc.client.showConfirm({title, content})
+kf.client.showConfirm({ title, content });
 ```
 ##### Redirect to URL
 ```js
-lcnc.client.redirect(url)
+kf.client.redirect(url);
 ```
 ##### Open a page in lowcode application
-Note: Page Input parameters are optional..
+> Note: Page Input parameters are optional.
 ```js
 let pageInputParameters = {
-  param1: value,
-  param2: value
-}
-lcnc.client.openPage(pageId, pageInputParameters)
+	param1: value,
+	param2: value
+};
+kf.client.openPage(pageId, pageInputParameters);
 ```
-------------------------------
+
+---
 ### 3) Component Functions
 #### Refresh a component
 ```js
-lcnc.getComponent(componentId).refresh()
+kf.getComponent(componentId).refresh();
 ```
---------------------------------
+---
 
 ### 4) Lowcode application functions
-Application variables has global context to application, 
+Application variables has global context to application,
 ##### Get value to application variable
 ```
-let value = await lcnc.app.getVariable("variableId");
+let value = await kf.app.getVariable("variableId");
 ```
 ##### Set value of application variable
 ```js
-let value = await lcnc.app.setVariable("variableId", value);
+let value = await kf.app.setVariable("variableId", value);
 // or
-await lcnc.app.setVariable({
-    variableId_1: "value_1",
-    variableId_2: 3345
-})
+await kf.app.setVariable({
+	variableId_1: "value_1",
+	variableId_2: 3345
+});
 ```
 ##### Get values of page input parameters
 ```js
-let value = await lcnc.app.page.getParameter();
+let value = await kf.app.page.getParameter();
 ```
-##### Open a popup page 
+##### Open a popup page
 ```js
-let popupPage = await lcnc.app.page.openPopup(pageId, { inputParam1: 2 }, { w: 50; h: 50 }) 
+let popupPage = await kf.app.page.openPopup(pageId, { inputParam1: 2 }, { w: 50; h: 50 })
 ```
-Note: openPopup method returns the popup page class using which we can chain other functions in page, for eg: (cont. from above code snippet)
+> Note: openPopup method returns the popup page class using which we can chain other functions in page, for eg: (cont. from above code snippet)
 ```js
-popupPage.getVariable("variableName")
+let variableName = await popupPage.getVariable("variableName");
 popupPage.onClose(() => {});
 ```
 ##### Page onClose event
 ```js
-lcnc.app.page.onClose(() => {})
-```
-<!-- or -->
-```js
-let popupPage = await lcnc.app.page.openPopup(pageId, { inputParam1: 2 }, { w: 50; h: 50 }) 
-popupPage.onClose(() => {});
-```
-------------------------------
-
-### 6) Get account context
-Give the current account information of the authenicated user.
-```js
-lcnc.getAccountContext().then((res) => {...})
+kf.app.page.onClose(() => {});
 // or
-let resp = await lcnc.getAccountContext()
+let popupPage = await kf.app.page.openPopup(pageId, { inputParam1: 2 }, { w: 50; h: 50 })
+popupPage.onClose(() => {
+  console.log("popup onclose");
+  // ...
+});
 ```
-------------------------------
+---
 
-### 7) Fetch Api through lcnc sdk
+### 6) Get context
+Returns the current account, user, page, and application.
+```js
+kf.getContext().then((ctx) => {...})
+// or
+let ctx = await kf.getContext()
+/*
+returns the context object like. 
+ctx = {
+  app: {_id },
+  page: { _id },
+  user: { Name, Email, UserType, _id },
+  account: { _id }
+}
+*/
+```
+---
+
+### 7) Fetch Api through kf sdk
+
 Fetch any external api & other kissflow api using this method.
 > Note: This method has a limit of 10 seconds for an api call
 ```js
-lcnc.api(url, config).then((res) => {...})
+kf.api(url, config).then((res) => {...})
 // or
-let resp = await lcnc.api(url, config)
+let resp = await kf.api(url, config)
 ```
-------------------------------
+---
 
 ### 8) Watch params
-Listens for changes in parameter given to custom components in lowcode application.
+Listens for changes in parameter given to custom components in lowcode
+application.
 ```js
-lcnc.watchParams(function(data) {
-  console.log(data);
+kf.watchParams(function (data) {
+	console.log(data);
 });
 ```
-------------------------------
+---
 
 ### 9) Formatter Functions
 ##### Format to KF Date
 ```js
-lcnc.formatter.toKfDate("08-24-2021").then((res) => {...})
-// or  
-let value = await lcnc.formatter.toKfDate("08-24-2021");
+kf.formatter.toKfDate("08-24-2021").then((res) => {...})
+// or
+let value = await kf.formatter.toKfDate("08-24-2021");
 ```
 ##### Format to KF Date Time
 ```js
-lcnc.formatter.toKfDateTime("2021-08-26T14:30").then((res) => {...})
-// or  
-let value = await lcnc.formatter.toKfDateTime("2021-08-26T14:30");
+kf.formatter.toKfDateTime("2021-08-26T14:30").then((res) => {...})
+// or
+let value = await kf.formatter.toKfDateTime("2021-08-26T14:30");
 ```
 ##### Format to KF Number
 ```js
-lcnc.formatter.toKfNumber("1,00,000.500000").then((res) => {...})
-// or  
-let value = await lcnc.formatter.toKfNumber("1,00,000.500000");
+kf.formatter.toKfNumber("1,00,000.500000").then((res) => {...})
+// or
+let value = await kf.formatter.toKfNumber("1,00,000.500000");
 ```
 ##### Format to KF Currency
 ```js
-lcnc.formatter.toKfCurrency("1,00,000.500000", "USD").then((res) => {...})
-// or  
-let value = await lcnc.formatter.toKfCurrency("1,00,000.500000", "USD");
+kf.formatter.toKfCurrency("1,00,000.500000", "USD").then((res) => {...})
+// or
+let value = await kf.formatter.toKfCurrency("1,00,000.500000", "USD");
 ```
 ##### Format to KF Boolean
 ```js
-lcnc.formatter.toBoolean("yes").then((res) => {...})
-// or  
-let value = await lcnc.formatter.toBoolean("yes");
+kf.formatter.toBoolean("yes").then((res) => {...})
+// or
+let value = await kf.formatter.toBoolean("yes");
 ```
 ##### Other supported Boolean values
 ```js
-let value = await lcnc.formatter.toBoolean("1");
-let value = await lcnc.formatter.toBoolean("true");
-let value = await lcnc.formatter.toBoolean("no");
-let value = await lcnc.formatter.toBoolean("0");
-let value = await lcnc.formatter.toBoolean("false");
+let value = await kf.formatter.toBoolean("1");
+let value = await kf.formatter.toBoolean("true");
+let value = await kf.formatter.toBoolean("no");
+let value = await kf.formatter.toBoolean("0");
+let value = await kf.formatter.toBoolean("false");
 ```
-------------------------------
+---

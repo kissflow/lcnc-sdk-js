@@ -1,7 +1,7 @@
-import LCNCSDK from "./lcnc.sdk";
+import LowcodeSDK from "./lowcode.sdk";
 
 if (typeof _BUILD !== "undefined" && _BUILD) {
-	self.LCNC = LCNCSDK;
+	self.kf = LowcodeSDK;
 }
 
-export default LCNCSDK;
+export default LowcodeSDK;

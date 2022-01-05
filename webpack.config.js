@@ -45,7 +45,7 @@ let moduleLib = Object.assign({}, config, {
 		outputModule: true
 	},
 	output: {
-		filename: "lcnc.sdk.module.js",
+		filename: "kflowcode.sdk.module.js",
 		path: path.resolve(__dirname, "dist"),
 
 		library: {
@@ -54,9 +54,9 @@ let moduleLib = Object.assign({}, config, {
 	}
 });
 let commonLib = Object.assign({}, config, {
-    output: {
-    filename: "lcnc.sdk.js",
-    path: path.resolve(__dirname, "dist"),
-  },
-})
+	output: {
+		filename: "kflowcode.sdk.js",
+		path: path.resolve(__dirname, "dist")
+	}
+});
 module.exports = [moduleLib, commonLib];
