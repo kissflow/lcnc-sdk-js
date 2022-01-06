@@ -1,7 +1,7 @@
 {
-	"name": "@kissflow/lcnc-sdk-js",
-	"version": "1.2.3",
-	"description": "JavaScript SDK for developing over the Kissflow Lowcode platform",
+	"name": "@kissflow/lowcode-client-sdk",
+	"version": "1.0.0",
+	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
 	"main": "dist/kflowcode.sdk.js",
 	"types": "dist/index.d.ts",
 	"scripts": {

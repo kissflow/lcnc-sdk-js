@@ -3,47 +3,47 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 let config = {
-  devtool: "source-map",
-  mode: "development",
-  entry: "./src/index.ts",
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    port: 3000,
-    open: true
-  },
-  resolve: {
-    extensions: [".ts", ".js"],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.ts?/,
-        use: {
-          loader: "ts-loader",
-          options: {
-            transpileOnly: true,
-          }
-        },
-        exclude: /node_modules/
-      }
-    ]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      _BUILD: true
-    }),
-    new HtmlWebpackPlugin({
-      template: "./index.html",
-      filename: "index.html",
-      inject: "body"
-    }),
-  ]
+	devtool: "source-map",
+	mode: "development",
+	devServer: {
+		contentBase: path.join(__dirname, "dist"),
+		port: 3000,
+		open: true
+	},
+	resolve: {
+		extensions: [".ts", ".js"]
+	},
+	module: {
+		rules: [
+			{
+				test: /\.ts?/,
+				use: {
+					loader: "ts-loader",
+					options: {
+						transpileOnly: true
+					}
+				},
+				exclude: /node_modules/
+			}
+		]
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			_BUILD: true
+		}),
+		new HtmlWebpackPlugin({
+			template: "./index.html",
+			filename: "index.html",
+			inject: "body"
+		})
+	]
 };
 
 let moduleLib = Object.assign({}, config, {
 	experiments: {
 		outputModule: true
 	},
+	entry: "./src/lowcode.sdk.ts",
 	output: {
 		filename: "kflowcode.sdk.module.js",
 		path: path.resolve(__dirname, "dist"),
@@ -54,6 +54,7 @@ let moduleLib = Object.assign({}, config, {
 	}
 });
 let commonLib = Object.assign({}, config, {
+	entry: "./src/index.ts",
 	output: {
 		filename: "kflowcode.sdk.js",
 		path: path.resolve(__dirname, "dist")
