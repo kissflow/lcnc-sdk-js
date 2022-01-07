@@ -1,6 +1,6 @@
 {
 	"name": "@kissflow/lowcode-client-sdk",
-	"version": "1.0.0",
+	"version": "1.0.0-beta.4",
 	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
 	"main": "dist/kflowcode.sdk.js",
 	"types": "dist/index.d.ts",
@@ -10,7 +10,7 @@
 		"customBuild": "node custom.build.js",
 		"build": "npm run customBuild",
 		"build:watch": "webpack --watch",
-		"prepublish": "npm run build",
+		"prepare": "npm run build",
 		"serve": "webpack serve"
 	},
 	"repository": {
