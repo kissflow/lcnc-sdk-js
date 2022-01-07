@@ -12,7 +12,9 @@ let classMappings = {
 
 const exec = require("child_process").exec;
 runCommand("webpack", () => {
-	runCommand("tsc", transfromTypings);
+	runCommand("tsc", () => {
+		runCommand("tsc -p tsconfig.types.json", transfromTypings);
+	});
 });
 
 function runCommand(command, callBack = null) {
