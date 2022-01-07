@@ -45,7 +45,7 @@ let moduleLib = Object.assign({}, config, {
 	},
 	entry: "./src/lowcode.sdk.ts",
 	output: {
-		filename: "kflowcode.sdk.mjs",
+		filename: "kflowcode.sdk.module.js",
 		path: path.resolve(__dirname, "dist"),
 
 		library: {

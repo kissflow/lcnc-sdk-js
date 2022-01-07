@@ -16,10 +16,12 @@ const kf = KFLowcodeSDK();
 SDK can also be loaded directly into HTML by adding:
 
 ```html
-<script type="module" async src="https://cdn.jsdelivr.net/npm/@kissflow/lcnc-sdk-js@1/dist/kflowcode.sdk.module.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kflowcode.sdk.js"></script>
+<!-- or -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kflowcode.sdk.module.js"></script>
 ```
 
-> Note specifying script type as "module" is must. Then SDK can be initialized anywhere by declaring:
+> Then SDK can be initialized anywhere by declaring:
 ```js
 const kf = window.KF();
 ```
