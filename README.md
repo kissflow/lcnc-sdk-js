@@ -18,7 +18,7 @@ SDK can also be loaded directly into HTML by adding:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kflowcode.sdk.js"></script>
 <!-- or -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kflowcode.sdk.mjs"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kflowcode.sdk.module.js"></script>
 ```
 
 > Then SDK can be initialized anywhere by declaring:
