@@ -2,8 +2,9 @@
 	"name": "@kissflow/lowcode-client-sdk",
 	"version": "1.0.0",
 	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
-	"main": "dist/kflowcode.sdk.js",
+	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
+	"browser": "dist/kflowcode.sdk.js",
 	"scripts": {
 		"start": "npm run server",
 		"server": "http-server .",

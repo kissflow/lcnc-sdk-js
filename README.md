@@ -16,9 +16,7 @@ const kf = KFLowcodeSDK();
 SDK can also be loaded directly into HTML by adding:
 
 ```html
-<script type="module" async
-	src="https://cdn.jsdelivr.net/npm/@kissflow/lcnc-sdk-js@1/dist/kflowcode.sdk.module.js"
-></script>
+<script type="module" async src="https://cdn.jsdelivr.net/npm/@kissflow/lcnc-sdk-js@1/dist/kflowcode.sdk.module.js"></script>
 ```
 
 > Note specifying script type as "module" is must. Then SDK can be initialized anywhere by declaring:
@@ -61,16 +59,6 @@ kf.client.showConfirm({ title, content });
 ```js
 kf.client.redirect(url);
 ```
-##### Open a page in lowcode application
-> Note: Page Input parameters are optional.
-```js
-let pageInputParameters = {
-	param1: value,
-	param2: value
-};
-kf.client.openPage(pageId, pageInputParameters);
-```
-
 ---
 ### 3) Component Functions
 #### Refresh a component
@@ -93,6 +81,15 @@ await kf.app.setVariable({
 	variableId_1: "value_1",
 	variableId_2: 3345
 });
+```
+##### Open a page
+> Note: Page Input parameters are optional.
+```js
+let pageInputParameters = {
+	param1: value,
+	param2: value
+};
+kf.app.openPage(pageId, pageInputParameters);
 ```
 ##### Get values of page input parameters
 ```js

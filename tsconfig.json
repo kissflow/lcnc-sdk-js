@@ -1,18 +1,7 @@
 {
-	"include": [
-		"./src/"
-	],
-	"exclude": [
-		"./src/constants.ts",
-		"./src/index.ts",
-		"./src/base.ts"
-	],
-	"compilerOptions": {
-		"baseUrl": ".",
-		"target": "es6",
-		"module": "es2020",
-		"declaration": true,
-		"emitDeclarationOnly": true,
-		"outFile": "./dist/index.d.ts"
-	}
+  "compilerOptions": {
+    "lib": ["es2016"],
+    "rootDir": "./src",
+    "outDir": "./dist"
+  }
 }
