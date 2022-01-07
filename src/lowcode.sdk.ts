@@ -6,7 +6,7 @@ import { Formatter } from './formatter';
 import { Application } from "./app";
 import { Component } from "./component";
 
-export class LcncSDK extends BaseSDK {
+export class LowcodeSDK extends BaseSDK {
 	currentForm: Form;
 	client: Client;
 	formatter: Formatter;
@@ -34,8 +34,8 @@ export class LcncSDK extends BaseSDK {
 	}
 }
 
-function initSDK(config: any = {}): LcncSDK {
-	return new LcncSDK(config);
+function initSDK(config: any = {}): LowcodeSDK {
+	return new LowcodeSDK(config);
 }
 
 export default initSDK;
