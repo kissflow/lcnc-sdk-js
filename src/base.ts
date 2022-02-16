@@ -70,7 +70,7 @@ export class BaseSDK {
 
 	#checkEvents(data: any) {
 		const { _id, eventType, eventParams } = data;
-		if(!_id || !eventType) return;
+		if (!_id || !eventType) return;
 		const eventListener = this.#eventListeners[_id] || {};
 		if (eventListener[eventType]) {
 			eventListener[eventType](eventParams || {});
@@ -89,15 +89,14 @@ export class BaseSDK {
 			if (listeners) {
 				listeners.forEach((listener: any) => {
 					try {
-						if (data.resp) {
-							if (
-								Object.keys(data.resp).length === 1 &&
-								_req.command !== LISTENER_CMDS.API
-							) {
-								listener(Object.values(data.resp)[0]);
-							} else {
-								listener(data.resp);
-							}
+						if (
+							data.resp &&
+							Object.keys(data.resp).length === 1 &&
+							_req.command !== LISTENER_CMDS.API
+						) {
+							listener(Object.values(data.resp)[0]);
+						} else {
+							listener(data.resp);
 						}
 					} catch (err) {
 						console.error("Message callback error: ", err);
