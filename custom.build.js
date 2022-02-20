@@ -6,6 +6,8 @@ let classMappings = {
 	Client: { name: "Client" },
 	Component: { name: "Component" },
 	Form: { name: "Form" },
+	Table: { name: "Table" },
+	TableForm: { name: "TableForm", staticDeclarations: true },
 	Formatter: { name: "Formatter" },
 	LowcodeSDK: { name: "kf", staticDeclarations: true }
 };
@@ -35,6 +37,7 @@ function transfromTypings() {
 	let srcCode = tsFileStruct.parseStruct(srcFile, {}, filePath);
 
 	let allClasses = srcCode.classes;
+	console.log("allClasses in custom build", JSON.stringify(allClasses));
 	let func = "";
 	let toWrite = ``;
 
@@ -48,7 +51,18 @@ function transfromTypings() {
 			// fields on Class
 			for (let i = 0; i < _class.fields.length; i++) {
 				// if (_class.fields[i].type.modulePath) {
-				let className = _class.fields[i].type.typeName;
+				let className = "";
+				if(_class.fields[i].type.options) {
+					let options = _class.fields[i].type.options
+					for (let j = 0; j < options.length; j++) {
+						className += options[j].typeName;
+						if (j < options.length - 1) {
+							className += " | ";
+						}
+					}
+				} else {
+					className = _class.fields[i].type.typeName;
+				}
 				let fieldName = _class.fields[i].name;
 				// console.log(_class.fields[i]);
 				toWrite += `\t${

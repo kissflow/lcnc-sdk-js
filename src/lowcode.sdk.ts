@@ -1,20 +1,28 @@
 import { BaseSDK } from "./base";
 import { LISTENER_CMDS } from "./constants";
 import { Form } from "./form";
+import { TableForm } from "./form";
 import { Client } from "./client";
 import { Formatter } from './formatter';
 import { Application } from "./app";
 import { Component } from "./component";
 
-export class LowcodeSDK extends BaseSDK {
-	currentForm: Form;
+class LowcodeSDK extends BaseSDK {
+	currentForm: Form | TableForm;
 	client: Client;
 	formatter: Formatter;
 	app: Application;
 
 	constructor(props: any) {
 		super({});
-		this.currentForm = new Form({});
+		if (props.tableId) {
+			debugger;
+			this.currentForm = new TableForm(props.instanceId, props.tableId);
+		}
+		else if(props.instanceId) {
+			debugger;
+			this.currentForm = new Form(props.instanceId);
+		}
 		this.client = new Client({});
 		this.formatter = new Formatter({});
 		this.app = new Application({});
@@ -35,6 +43,7 @@ export class LowcodeSDK extends BaseSDK {
 }
 
 function initSDK(config: any = {}): LowcodeSDK {
+	debugger
 	return new LowcodeSDK(config);
 }
 
