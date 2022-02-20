@@ -15,12 +15,10 @@ class LowcodeSDK extends BaseSDK {
 
 	constructor(props: any) {
 		super({});
-		if (props.tableId) {
-			debugger;
-			this.currentForm = new TableForm(props.instanceId, props.tableId);
+		if (props.tableId && props.rowId) {
+			this.currentForm = new TableForm(props.instanceId, props.tableId, props.rowId);
 		}
 		else if(props.instanceId) {
-			debugger;
 			this.currentForm = new Form(props.instanceId);
 		}
 		this.client = new Client({});
@@ -43,7 +41,6 @@ class LowcodeSDK extends BaseSDK {
 }
 
 function initSDK(config: any = {}): LowcodeSDK {
-	debugger
 	return new LowcodeSDK(config);
 }
 

@@ -34,7 +34,6 @@ class Table extends BaseSDK {
 	tableId: string;
 	instanceId: string;
 	constructor(instanceId: string,tableId: string) {
-		// debugger;
 		super({});
 		this.tableId = tableId;
 		this.instanceId = instanceId
@@ -46,26 +45,32 @@ class Table extends BaseSDK {
 		});
 	}
 
-	getRow(rowIndex: number) {
-		return this._postMessageAsync(LISTENER_CMDS.GET_TABLE_ROW, {
-			tableId: this.tableId,
-			rowIndex
-		});
+	getRow(rowId: string) {
+		return this._postMessageAsync(
+			LISTENER_CMDS.GET_TABLE_ROW,
+			{ 
+				tableId: this.tableId,
+				rowId 
+			},
+			true, // has callBack
+			(data) => {
+				return new TableForm(this.instanceId, this.tableId, rowId); // callBack function
+			}
+		);
 	}
 	
 	// array of obj
 	addRow( rowObject: object) {
-		debugger;
 		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROW, {
 			tableId: this.tableId,
 			rowObject
 		});
 	}
 
-	deleteRow( rowIndex: number) {
+	deleteRow(rowId: string) {
 		return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
 			tableId: this.tableId,
-			rowIndex
+			rowId
 		});
 	}
 }
@@ -73,14 +78,15 @@ class Table extends BaseSDK {
 export class TableForm extends BaseSDK {
 	instanceId: string;
 	tableId: string;
+	rowId: string;
 	table: Table;
 	parent: Form;
 
-	constructor(instanceId: string, tableId: string) {
+	constructor(instanceId: string, tableId: string, rowId: string) {
 		super({});
-		debugger;
-		this.tableId = tableId;
 		this.instanceId = instanceId;
+		this.tableId = tableId;
+		this.rowId = rowId;
 		this.parent = new Form(instanceId);
 		this.table = new Table(instanceId, tableId);
 	}
@@ -89,6 +95,7 @@ export class TableForm extends BaseSDK {
 		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
 			instanceId: this.instanceId,
 			tableId: this.tableId,
+			rowId: this.rowId,
 			fieldId
 		});
 	}
@@ -97,6 +104,7 @@ export class TableForm extends BaseSDK {
 		return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
 			instanceId: this.instanceId,
 			tableId: this.tableId,
+			rowId: this.rowId,
 			data: args
 		});
 	}
