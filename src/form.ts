@@ -53,7 +53,6 @@ class Table extends BaseSDK {
 		);
 	}
 	
-	// array of obj
 	addRow( rowObject: object) {
 		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROW, {
 			tableId: this.tableId,
