@@ -5,9 +5,9 @@ let classMappings = {
 	Application: { name: "Application" },
 	Client: { name: "Client" },
 	Component: { name: "Component" },
-	Form: { name: "Form" },
-	Table: { name: "Table" },
-	TableForm: { name: "TableForm", staticDeclarations: true },
+	Form: { name: "Form",  staticDeclarations: true  },
+	Table: { name: "Table", staticDeclarations: true },
+	TableForm: { name: "TableForm", staticDeclarations: true  },
 	Formatter: { name: "Formatter" },
 	LowcodeSDK: { name: "kf", staticDeclarations: true }
 };
