@@ -37,7 +37,6 @@ function transfromTypings() {
 	let srcCode = tsFileStruct.parseStruct(srcFile, {}, filePath);
 
 	let allClasses = srcCode.classes;
-	console.log("allClasses in custom build", JSON.stringify(allClasses));
 	let func = "";
 	let toWrite = ``;
 
