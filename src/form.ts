@@ -39,12 +39,6 @@ class Table extends BaseSDK {
 		this.instanceId = instanceId
 	}
 
-	getRows() {
-		return this._postMessageAsync(LISTENER_CMDS.GET_TABLE_ROWS, {
-			tableId: this.tableId
-		});
-	}
-
 	getRow(rowId: string) {
 		return this._postMessageAsync(
 			LISTENER_CMDS.GET_TABLE_ROW,
