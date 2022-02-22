@@ -2,10 +2,20 @@ import { BaseSDK } from "./base";
 import { LISTENER_CMDS } from "./constants";
 
 export class Form extends BaseSDK {
-	instanceId: string;
+	private instanceId: string;
+	id: string;
 	constructor(instanceId: string) {
 		super({});
 		this.instanceId = instanceId;
+		this.id = instanceId;
+	}
+	toJSON() {
+		return this._postMessageAsync(
+			LISTENER_CMDS.TO_JSON,
+			{ 
+				instanceId: this.instanceId
+			},
+		);
 	}
 	getField(fieldId: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
@@ -19,41 +29,50 @@ export class Form extends BaseSDK {
 		});
 	}
 	getTable(tableId: string) {
-		return this._postMessageAsync(
-			LISTENER_CMDS.GET_TABLE,
-			{ tableId: tableId },
-			true, // has callBack
-			(data) => {
-				return new Table(this.instanceId, tableId); // callBack function
-			}
-		);
+		return new Table(this.instanceId, tableId);
 	}
 }
 
 class Table extends BaseSDK {
-	tableId: string;
-	instanceId: string;
+	private tableId: string;
+	private instanceId: string;
+	id: string;
+
 	constructor(instanceId: string,tableId: string) {
 		super({});
 		this.tableId = tableId;
 		this.instanceId = instanceId
+		this.id = tableId;
 	}
 
-	getRow(rowId: string) {
+	// list of obj of rows
+	toJSON() {
 		return this._postMessageAsync(
-			LISTENER_CMDS.GET_TABLE_ROW,
+			LISTENER_CMDS.TO_JSON,
 			{ 
-				tableId: this.tableId,
-				rowId 
+				tableId: this.tableId
 			},
+		);
+	}
+
+	getRows():TableForm[] {
+		// list of TableForm class
+		return this._postMessageAsync(
+			LISTENER_CMDS.GET_TABLE_ROWS,
+			{ tableId: this.tableId },
 			true, // has callBack
 			(data) => {
-				return new TableForm(this.instanceId, this.tableId, rowId); // callBack function
+				console.log(data);
+				return data.map((row) => new TableForm(this.instanceId, this.tableId, row.id))
 			}
 		);
 	}
+
+	getRow(rowId: string) {
+		return new TableForm(this.instanceId, this.tableId, rowId);
+	}
 	
-	addRow( rowObject: object) {
+	addRow(rowObject: object) {
 		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROW, {
 			tableId: this.tableId,
 			rowObject
@@ -69,9 +88,10 @@ class Table extends BaseSDK {
 }
 
 export class TableForm extends BaseSDK {
-	instanceId: string;
-	tableId: string;
-	rowId: string;
+	private instanceId: string;
+	private tableId: string;
+	private rowId: string;
+	id: string
 	table: Table;
 	parent: Form;
 
@@ -80,8 +100,21 @@ export class TableForm extends BaseSDK {
 		this.instanceId = instanceId;
 		this.tableId = tableId;
 		this.rowId = rowId;
+		this.id = rowId;
 		this.parent = new Form(instanceId);
 		this.table = new Table(instanceId, tableId);
+	}
+
+	
+	toJSON() {
+		return this._postMessageAsync(
+			LISTENER_CMDS.GET_TABLE_ROW,
+			{ 
+				tableId: this.tableId,
+				rowId: this.rowId
+			},
+		);
+
 	}
 	
 	getField(fieldId: string) {

@@ -5,9 +5,9 @@ let classMappings = {
 	Application: { name: "Application" },
 	Client: { name: "Client" },
 	Component: { name: "Component" },
-	Form: { name: "Form",  staticDeclarations: true  },
-	Table: { name: "Table", staticDeclarations: true },
-	TableForm: { name: "TableForm", staticDeclarations: true  },
+	Form: { name: "Form"  },
+	Table: { name: "Table" },
+	TableForm: { name: "TableForm"  },
 	Formatter: { name: "Formatter" },
 	LowcodeSDK: { name: "kf", staticDeclarations: true }
 };
@@ -51,17 +51,24 @@ function transfromTypings() {
 			for (let i = 0; i < _class.fields.length; i++) {
 				// if (_class.fields[i].type.modulePath) {
 				let className = "";
-				if(_class.fields[i].type.options) {
-					let options = _class.fields[i].type.options
-					for (let j = 0; j < options.length; j++) {
-						className += options[j].typeName;
-						if (j < options.length - 1) {
-							className += " | ";
-						}
-					}
+				if (!_class.fields[i].type) {
+					continue
+				} else if(_class.fields[i].type.options) {
+					// TODO: currently we add only the first typechecking
+					className = _class.fields[i].type.options[0].typeName;
+
+					// TODO: need to handle when there are multiple type
+					// let options = _class.fields[i].type.options
+					// for (let j = 0; j < options.length; j++) {
+					// 	className += options[j].typeName;
+					// 	if (j < options.length - 1) {
+					// 		className += " | ";
+					// 	}
+					// }
 				} else {
 					className = _class.fields[i].type.typeName;
 				}
+				
 				let fieldName = _class.fields[i].name;
 				// console.log(_class.fields[i]);
 				toWrite += `\t${
