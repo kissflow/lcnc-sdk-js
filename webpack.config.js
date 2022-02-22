@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 let config = {
 	devtool: "source-map",
 	mode: "development",
+	entry: "./src/index.ts",
 	devServer: {
 		contentBase: path.join(__dirname, "dist"),
 		port: 3000,
@@ -43,7 +44,6 @@ let moduleLib = Object.assign({}, config, {
 	experiments: {
 		outputModule: true
 	},
-	entry: "./src/lowcode.sdk.ts",
 	output: {
 		filename: "kflowcode.sdk.module.js",
 		path: path.resolve(__dirname, "dist"),
@@ -54,7 +54,6 @@ let moduleLib = Object.assign({}, config, {
 	}
 });
 let commonLib = Object.assign({}, config, {
-	entry: "./src/index.ts",
 	output: {
 		filename: "kflowcode.sdk.js",
 		path: path.resolve(__dirname, "dist")

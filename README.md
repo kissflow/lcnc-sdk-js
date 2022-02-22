@@ -1,13 +1,13 @@
-# _Kissflow LCNC JavaScript SDK_
+# _Kissflow Lowcode JavaScript SDK_
 
-JavaScript SDK for developing over the Kissflow LCNC platform
+JavaScript SDK for developing over the Kissflow lowcode platform
 
 ### Use as an `npm` module
 
-Install the SDK as a module: `npm i @kissflow/kf-sdk-js` Then import into your project:
+Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import into your project:
 
 ```js
-import KFLowcodeSDK from "@kissflow/lcnc-sdk-js";
+import KFLowcodeSDK from "@kissflow/lowcode-client-sdk";
 const kf = KFLowcodeSDK();
 ```
 
