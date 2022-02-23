@@ -108,7 +108,7 @@ export class TableForm extends BaseSDK {
 	
 	toJSON() {
 		return this._postMessageAsync(
-			LISTENER_CMDS.GET_TABLE_ROW,
+			LISTENER_CMDS.TO_JSON,
 			{ 
 				tableId: this.tableId,
 				rowId: this.rowId
