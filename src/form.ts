@@ -3,11 +3,9 @@ import { LISTENER_CMDS } from "./constants";
 
 export class Form extends BaseSDK {
 	private instanceId: string;
-	id: string;
 	constructor(instanceId: string) {
 		super({});
 		this.instanceId = instanceId;
-		this.id = instanceId;
 	}
 	toJSON() {
 		return this._postMessageAsync(
@@ -36,13 +34,11 @@ export class Form extends BaseSDK {
 class Table extends BaseSDK {
 	private tableId: string;
 	private instanceId: string;
-	id: string;
 
 	constructor(instanceId: string,tableId: string) {
 		super({});
 		this.tableId = tableId;
 		this.instanceId = instanceId
-		this.id = tableId;
 	}
 
 	// list of obj of rows
@@ -91,21 +87,18 @@ export class TableForm extends BaseSDK {
 	private instanceId: string;
 	private tableId: string;
 	private rowId: string;
-	id: string
-	table: Table;
-	parent: Form;
 
 	constructor(instanceId: string, tableId: string, rowId: string) {
 		super({});
 		this.instanceId = instanceId;
 		this.tableId = tableId;
 		this.rowId = rowId;
-		this.id = rowId;
-		this.parent = new Form(instanceId);
-		this.table = new Table(instanceId, tableId);
 	}
 
-	
+	getParent() {
+		return new Form(this.instanceId);
+	}
+
 	toJSON() {
 		return this._postMessageAsync(
 			LISTENER_CMDS.TO_JSON,
