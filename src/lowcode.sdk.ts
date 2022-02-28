@@ -35,9 +35,6 @@ class LowcodeSDK extends BaseSDK {
 	getContext(): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.GET_CONTEXT, {});
 	}
-	getComponent(componentId: string): Component {
-		return new Component(componentId);
-	}
 }
 
 function initSDK(config: any = {}): LowcodeSDK {
