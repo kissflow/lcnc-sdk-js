@@ -46,7 +46,7 @@ export class Page extends BaseSDK {
 			}
 		);
 	}
-	getComponent(componentId) {
+	getComponent(componentId: string): Component {
 		return new Component(componentId);
 	}
 	onClose(callback: Function) {
