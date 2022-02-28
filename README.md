@@ -111,15 +111,15 @@ kf.client.redirect(url);
 ### 3) Component Functions
 #### Refresh a component
 ```js
-kf.getComponent(componentId).refresh();
+kf.app.page.getComponent(componentId).refresh();
 ```
 #### Show a component
 ```js
-kf.getComponent(componentId).show();
+kf.app.page.getComponent(componentId).show();
 ```
 #### Hide a component
 ```js
-kf.getComponent(componentId).hide();
+kf.app.page.getComponent(componentId).hide();
 ```
 ---
 
