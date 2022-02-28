@@ -28,9 +28,8 @@ const kf = window.KF();
 
 ### 1) Form Functions
 
-> Note: These function can be used only on button and other events inside the kissflow forms
-> Use Table:: as a prefix while using TableId
-
+### Main form functions
+> Note: kf.currentForm cannot be used to access child tables
 ##### Get from field
 ```js
 kf.currentForm.getField(fieldId).then((res) => {...})
@@ -41,13 +40,60 @@ let value = await kf.currentForm.getField(fieldId)
 ```js
 kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
-#### Update tableField
-Appends row details to the end of table.
+##### Get JSON output of current form
 ```js
-kf.currentForm.addTableRow("tableId", { columnId1: value, columnId2: value });
+const json = await kf.currentForm.toJSON();
 ```
 ---
-
+### Table functions
+#### Add table row
+Appends row details to the end of table.
+```js
+kf.currentForm.getTable(tableId).addRow({ columnId1: value, columnId2: value });
+```
+#### Delete table row
+Deletes a row from the table based on the row id
+```js
+kf.currentForm.getTable(tableId).deleteRow(rowId);
+```
+#### Get table row
+Gets a row from the table based on the row id
+```js
+const row = kf.currentForm.getTable(tableId).getRow(rowId);
+```
+#### Get all rows in a table
+Gets all the rows of the table
+```js
+const rows = await kf.currentForm.getTable(tableId).getRows();
+```
+##### Get JSON output of child table
+```js
+const json = await kf.currentForm.getTable(tableId).toJSON();
+```
+---
+### Table Form functions
+> Note: kf.currentForm here refers to the current row of the child table.
+ 
+##### Get from field
+```js
+kf.currentForm.getField(fieldId).then((res) => {...})
+// or
+let value = await kf.currentForm.getField(fieldId)
+```
+##### Update form field
+```js
+kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
+```
+##### Get parent form functions
+Gets the parent form reference to help us access all the main form functions
+```js
+kf.currentForm.getParent().updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
+```
+##### Get JSON output of child table's row
+```js
+const json = await kf.currentForm.toJSON();
+```
+---
 ### 2) Client Functions
 ##### Show Toast
 ```js
@@ -66,6 +112,14 @@ kf.client.redirect(url);
 #### Refresh a component
 ```js
 kf.getComponent(componentId).refresh();
+```
+#### Show a component
+```js
+kf.getComponent(componentId).show();
+```
+#### Hide a component
+```js
+kf.getComponent(componentId).hide();
 ```
 ---
 
