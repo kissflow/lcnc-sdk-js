@@ -132,12 +132,12 @@ const json = await kf.currentForm.getTable(tableId).toJSON();
 }]
 ```
 ---
-### Table Form functions
+### Table Row functions
 `kf.currentForm` returns a `TableForm` class which has the following functions
  
 ##### a) getField()
 ###### Description:
-Use this function to get the current value of the current row
+Use this function to get the value of the table row
 ###### Syntax:
 ```js
 kf.currentForm.getField(fieldId).then((res) => {...})
@@ -146,7 +146,7 @@ let value = await kf.currentForm.getField(fieldId)
 ```
 ##### b) updateField()
 ###### Description:
-Use this function to get update any field in the current row
+Use this function to get update any field in the table row
 ###### Syntax:
 ```js
 kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
@@ -163,7 +163,7 @@ mainForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 Returns an instance of `Form` class using which we can perform any action on the main form
 ##### d) toJson()
 ##### Description:
-Get JSON output of current row
+Get JSON output of table row
 ##### Syntax:
 ```js
 const json = await kf.currentForm.toJSON();
