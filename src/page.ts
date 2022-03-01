@@ -1,3 +1,4 @@
+import { Component } from './component';
 import { BaseSDK } from "./base";
 import { LISTENER_CMDS, EVENT_TYPES } from "./constants";
 
@@ -44,6 +45,9 @@ export class Page extends BaseSDK {
 				return new Page(pageId);
 			}
 		);
+	}
+	getComponent(componentId: string): Component {
+		return new Component(componentId);
 	}
 	onClose(callback: Function) {
 		this._registerEventListener(this._id, EVENT_TYPES.ON_CLOSE, callback);
