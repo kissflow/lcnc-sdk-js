@@ -26,72 +26,157 @@ SDK can also be loaded directly into HTML by adding:
 const kf = window.KF();
 ```
 
-### 1) Form Functions
+## 1) Form Functions
 
 ### Main form functions
-> Note: kf.currentForm cannot be used to access child tables
-##### Get from field
+
+`kf.currentForm` returns a `Form` class which has the following functions
+
+##### a) getField()
+###### Description:
+Use this function to get the current value of a form field
+
+###### Syntax:
 ```js
 kf.currentForm.getField(fieldId).then((res) => {...})
 // or
 let value = await kf.currentForm.getField(fieldId)
 ```
-##### Update form field
+
+##### b) updateField()
+###### Description:
+Use this function to get update any field in the form
+###### Syntax:
 ```js
 kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
-##### Get JSON output of current form
+
+##### c) toJSON()
+###### Description:
+Use this function to get the JSON data of the current form
+###### Syntax:
 ```js
 const json = await kf.currentForm.toJSON();
+```
+###### Output:
+```
+{
+    "Untitled_Field": "testing",
+    "_created_at": "2022-03-01T03:04:09Z",
+    "_flow_name": "form events",
+    "_id": "Pk4_T1WGWuMe",
+    "_modified_at": "2022-03-01T03:04:09Z"
+}
 ```
 ---
 ### Table functions
-#### Add table row
+`kf.currentForm.getTable(tableId)` returns a `Table` class which has the following functions
+#### a) addRow()
+###### Description:
 Appends row details to the end of table.
+###### Syntax:
 ```js
-kf.currentForm.getTable(tableId).addRow({ columnId1: value, columnId2: value });
+const table = kf.currentForm.getTable(tableId);
+table.addRow({ columnId1: value, columnId2: value });
 ```
-#### Delete table row
+#### b) deleteRow()
+###### Description:
 Deletes a row from the table based on the row id
+###### Syntax:
 ```js
-kf.currentForm.getTable(tableId).deleteRow(rowId);
+const table = kf.currentForm.getTable(tableId);
+table.deleteRow(rowId);
 ```
-#### Get table row
-Gets a row from the table based on the row id
+#### c) getRow()
+###### Description:
+Use this function to perform form actions on any row inside a child table
+###### Syntax:
 ```js
-const row = kf.currentForm.getTable(tableId).getRow(rowId);
+const table = kf.currentForm.getTable(tableId);
+const row = table.getRow(rowId);
 ```
-#### Get all rows in a table
+###### Output:
+Returns an instance of `TableForm` class
+
+#### d) getRows()
+###### Description:
 Gets all the rows of the table
+###### Syntax:
 ```js
 const rows = await kf.currentForm.getTable(tableId).getRows();
 ```
-##### Get JSON output of child table
+###### Output:
+Returns an array of `TableForm` instances
+
+##### e) toJSON()
+###### Description:
+Use this function to get the JSON data of the child table
+###### Syntax:
 ```js
 const json = await kf.currentForm.getTable(tableId).toJSON();
 ```
+###### Output:
+```
+[{
+    "Untitled_Field": "row 1",
+    "_created_at": "2022-03-01T03:04:09Z",
+    "_flow_name": "form events",
+    "_id": "Pk4_T1WGWuMe",
+    "_modified_at": "2022-03-01T03:04:09Z"
+},{
+    "Untitled_Field": "row 2",
+    "_created_at": "2022-03-01T03:04:09Z",
+    "_flow_name": "form events",
+    "_id": "Pk4_T1WGWuMe",
+    "_modified_at": "2022-03-01T03:04:09Z"
+}]
+```
 ---
 ### Table Form functions
-> Note: kf.currentForm here refers to the current row of the child table.
+`kf.currentForm` returns a `TableForm` class which has the following functions
  
-##### Get from field
+##### a) getField()
+###### Description:
+Use this function to get the current value of the current row
+###### Syntax:
 ```js
 kf.currentForm.getField(fieldId).then((res) => {...})
 // or
 let value = await kf.currentForm.getField(fieldId)
 ```
-##### Update form field
+##### b) updateField()
+###### Description:
+Use this function to get update any field in the current row
+###### Syntax:
 ```js
 kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
-##### Get parent form functions
-Gets the parent form reference to help us access all the main form functions
+##### c) getParent()
+###### Description:
+Use this function to perform form actions on the main form
+###### Syntax:
 ```js
-kf.currentForm.getParent().updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
+const mainForm = kf.currentForm.getParent();
+mainForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
-##### Get JSON output of child table's row
+###### Output:
+Returns an instance of `Form` class using which we can perform any action on the main form
+##### d) toJson()
+##### Description:
+Get JSON output of current row
+##### Syntax:
 ```js
 const json = await kf.currentForm.toJSON();
+```
+###### Output:
+```
+{
+    "Untitled_Field": "testing",
+    "_created_at": "2022-03-01T03:04:09Z",
+    "_flow_name": "form events",
+    "_id": "Pk4_T1WGWuMe",
+    "_modified_at": "2022-03-01T03:04:09Z"
+}
 ```
 ---
 ### 2) Client Functions
