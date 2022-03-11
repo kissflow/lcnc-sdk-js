@@ -160,27 +160,27 @@ kf.watchParams(function (data) {
 ### 9) Formatter Functions
 ##### Format to KF Date
 ```js
-kf.formatter.toKfDate("08-24-2021").then((res) => {...})
+kf.formatter.toDate("08-24-2021").then((res) => {...})
 // or
-let value = await kf.formatter.toKfDate("08-24-2021");
+let value = await kf.formatter.toDate("08-24-2021");
 ```
 ##### Format to KF Date Time
 ```js
-kf.formatter.toKfDateTime("2021-08-26T14:30").then((res) => {...})
+kf.formatter.toDateTime("2021-08-26T14:30").then((res) => {...})
 // or
-let value = await kf.formatter.toKfDateTime("2021-08-26T14:30");
+let value = await kf.formatter.toDateTime("2021-08-26T14:30");
 ```
 ##### Format to KF Number
 ```js
-kf.formatter.toKfNumber("1,00,000.500000").then((res) => {...})
+kf.formatter.toNumber("1,00,000.500000").then((res) => {...})
 // or
-let value = await kf.formatter.toKfNumber("1,00,000.500000");
+let value = await kf.formatter.toNumber("1,00,000.500000");
 ```
 ##### Format to KF Currency
 ```js
-kf.formatter.toKfCurrency("1,00,000.500000", "USD").then((res) => {...})
+kf.formatter.toCurrency("1,00,000.500000", "USD").then((res) => {...})
 // or
-let value = await kf.formatter.toKfCurrency("1,00,000.500000", "USD");
+let value = await kf.formatter.toCurrency("1,00,000.500000", "USD");
 ```
 ##### Format to KF Boolean
 ```js
