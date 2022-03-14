@@ -29,7 +29,7 @@ let resp = await kf.api(url, config)
 ```
 ---
 
-### 9) Formatter Functions
+### 3) Formatter Functions
 ##### Format to KF Date
 ```js
 kf.formatter.toDate("08-24-2021").then((res) => {...})
