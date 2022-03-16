@@ -7,7 +7,7 @@ Returns the current account and application.
 ```js
 kf.getContext().then((ctx) => {...})
 // or
-let ctx = await kf.getContext()
+let ctx = kf.getContext()
 /*
 returns the context object like. 
 ctx = {
@@ -34,38 +34,38 @@ let resp = await kf.api(url, config)
 ```js
 kf.formatter.toDate("08-24-2021").then((res) => {...})
 // or
-let value = await kf.formatter.toDate("08-24-2021");
+let value = kf.formatter.toDate("08-24-2021");
 ```
 ##### Format to KF Date Time
 ```js
 kf.formatter.toDateTime("2021-08-26T14:30").then((res) => {...})
 // or
-let value = await kf.formatter.toDateTime("2021-08-26T14:30");
+let value = kf.formatter.toDateTime("2021-08-26T14:30");
 ```
 ##### Format to KF Number
 ```js
 kf.formatter.toNumber("1,00,000.500000").then((res) => {...})
 // or
-let value = await kf.formatter.toNumber("1,00,000.500000");
+let value = kf.formatter.toNumber("1,00,000.500000");
 ```
 ##### Format to KF Currency
 ```js
 kf.formatter.toCurrency("1,00,000.500000", "USD").then((res) => {...})
 // or
-let value = await kf.formatter.toCurrency("1,00,000.500000", "USD");
+let value = kf.formatter.toCurrency("1,00,000.500000", "USD");
 ```
 ##### Format to KF Boolean
 ```js
 kf.formatter.toBoolean("yes").then((res) => {...})
 // or
-let value = await kf.formatter.toBoolean("yes");
+let value = kf.formatter.toBoolean("yes");
 ```
 ##### Other supported Boolean values
 ```js
-let value = await kf.formatter.toBoolean("1");
-let value = await kf.formatter.toBoolean("true");
-let value = await kf.formatter.toBoolean("no");
-let value = await kf.formatter.toBoolean("0");
-let value = await kf.formatter.toBoolean("false");
+let value = kf.formatter.toBoolean("1");
+let value = kf.formatter.toBoolean("true");
+let value = kf.formatter.toBoolean("no");
+let value = kf.formatter.toBoolean("0");
+let value = kf.formatter.toBoolean("false");
 ```
 ---
