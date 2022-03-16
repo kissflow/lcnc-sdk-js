@@ -12,4 +12,14 @@ export class Component extends BaseSDK {
 			id: this.id
 		});
 	}
+	show() {
+		return this._postMessageAsync(LISTENER_CMDS.COMPONENT_SHOW, {
+			id: this.id
+		});
+	}
+	hide() {
+		return this._postMessageAsync(LISTENER_CMDS.COMPONENT_HIDE, {
+			id: this.id
+		});
+	}
 }
