@@ -46,6 +46,9 @@ export class Page extends BaseSDK {
 			}
 		);
 	}
+	closePopup() {
+		return this._postMessageAsync(LISTENER_CMDS.CLOSE_POPUP, {});
+	}
 	getComponent(componentId: string): Component {
 		return new Component(componentId);
 	}
