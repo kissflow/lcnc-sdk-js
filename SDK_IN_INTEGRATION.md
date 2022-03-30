@@ -1,15 +1,15 @@
-# _Kissflow Lowcode JavaScript SDK in integration_
+# _Kissflow Low-code JavaScript SDK_
 
-Kissflow Lowcode JavaScript SDK's supported functions in integration
+The JavaScript Software Development Kit (SDK) for Kissflow Low-code includes all the supported functions and code snippets that you can incorporate into your application while integrating with other services.
 
 ### 1) Get context
-Returns the current account and application.
+This function retrieves your account and application's context information, such as the **account ID** and **application ID**.
 ```js
 kf.getContext().then((ctx) => {...})
 // or
 let ctx = kf.getContext()
 /*
-returns the context object like. 
+fetches contextual information, such as: 
 ctx = {
   app: {_id },
   account: { _id }
@@ -18,10 +18,10 @@ ctx = {
 ```
 ---
 
-### 2) Fetch Api through kf sdk
+### 2) Get API via Kissflow Low-code SDK
 
-Fetch any external api & other kissflow api using this method. For accessing internal kissflow APIs,the url should be absolute(e.g. https://{your_sub_domain}.kissflow.com/user/2/{account_id}) and the access key secrets must have passed in headers. Refer [API keys](https://helpdocs.kissflow.com/user-settings/api-keys) to get kissflow api key secrets and [this](https://developers.kissflow.com) for more information.
-> Note: This method has a limit of 10 seconds for an api call
+This function lets you retrieve any external or Kissflow APIs. To access an internal Kissflow API, use an absolute URL, **(i.e., https://{your_sub_domain}.kissflow.com/user/2/{account_id})**. The Access key secret must be passed in the header. Refer **[Access keys](https://helpdocs.kissflow.com/user-settings/api-keys#access_keys)** to know how to locate your Kissflow API key and secret. Refer the developer guide to know more about our **[APIs](https://developers.kissflow.com)**.
+> Note: The API call timeout for this method is 10 seconds.
 ```js
 kf.api(url, config).then((res) => {...})
 // or
@@ -29,38 +29,45 @@ let resp = await kf.api(url, config)
 ```
 ---
 
-### 3) Formatter Functions
-##### Format to KF Date
+### 3) Formatter functions
+##### Convert to Kissflow date format
+This function lets you transform your date into Kissflow's date format. This conversion is based on the date format specified in your Kissflow account format settings.
+
 ```js
 kf.formatter.toDate("08-24-2021").then((res) => {...})
 // or
 let value = kf.formatter.toDate("08-24-2021");
 ```
-##### Format to KF Date Time
+##### Convert to Kissflow DateTime format
+This function lets you transform your date and time into Kissflow's DateTime format. This conversion is based on the time zone and date format specified in your Kissflow account format settings.
+
 ```js
 kf.formatter.toDateTime("2021-08-26T14:30").then((res) => {...})
 // or
 let value = kf.formatter.toDateTime("2021-08-26T14:30");
 ```
-##### Format to KF Number
+##### Convert to Kissflow number format
+This function lets you transform your number into Kissflow's number format.
 ```js
 kf.formatter.toNumber("1,00,000.500000").then((res) => {...})
 // or
 let value = kf.formatter.toNumber("1,00,000.500000");
 ```
-##### Format to KF Currency
+##### Convert to Kissflow currency format
+This function lets you transform your current values into Kissflow's currency format.
 ```js
 kf.formatter.toCurrency("1,00,000.500000", "USD").then((res) => {...})
 // or
 let value = kf.formatter.toCurrency("1,00,000.500000", "USD");
 ```
-##### Format to KF Boolean
+##### Convert to boolean
+This function converts your value to a boolean value.
 ```js
 kf.formatter.toBoolean("yes").then((res) => {...})
 // or
 let value = kf.formatter.toBoolean("yes");
 ```
-##### Other supported Boolean values
+##### Other supported boolean values
 ```js
 let value = kf.formatter.toBoolean("1");
 let value = kf.formatter.toBoolean("true");
