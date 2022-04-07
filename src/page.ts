@@ -1,4 +1,4 @@
-import { Component } from './component';
+import { Component } from "./component";
 import { BaseSDK } from "./base";
 import { LISTENER_CMDS, EVENT_TYPES } from "./constants";
 
@@ -24,27 +24,12 @@ export class Page extends BaseSDK {
 			value
 		});
 	}
-	openPopup(
-		pageId: string,
-		inputParams: object,
-		popupProperties: { w: number; h: number }
-	) {
-		let payload = {
-			pageId,
-			inputParams,
-			popupProperties: {
-				width: popupProperties.w,
-				height: popupProperties.h
-			}
-		};
-		return this._postMessageAsync(
-			LISTENER_CMDS.OPEN_POPUP_PAGE,
-			payload,
-			true,
-			() => {
-				return new Page(pageId);
-			}
-		);
+	openPopup(popupId: string, popupParams: object) {
+		//TODO: add popup class
+		return this._postMessageAsync(LISTENER_CMDS.OPEN_POPUP_PAGE, {
+			popupId,
+			popupParams
+		});
 	}
 	closePopup() {
 		return this._postMessageAsync(LISTENER_CMDS.CLOSE_POPUP, {});
