@@ -236,24 +236,18 @@ kf.app.openPage(pageId, pageInputParameters);
 ```js
 let value = await kf.app.page.getParameter();
 ```
-##### Open a popup page
+##### Open a popup
 ```js
-let popupPage = await kf.app.page.openPopup(pageId, { inputParam1: 2 }, { w: 50; h: 50 })
+kf.app.page.openPopup(popupId, { inputParam1: 2 })
 ```
-> Note: openPopup method returns the popup page class using which we can chain other functions in page, for eg: (cont. from above code snippet)
+##### Close popup
+> Closes the active popup in the page.
 ```js
-let variableName = await popupPage.getVariable("variableName");
-popupPage.onClose(() => {});
+kf.app.page.closePopup();
 ```
 ##### Page onClose event
 ```js
 kf.app.page.onClose(() => {});
-// or
-let popupPage = await kf.app.page.openPopup(pageId, { inputParam1: 2 }, { w: 50; h: 50 })
-popupPage.onClose(() => {
-  console.log("popup onclose");
-  // ...
-});
 ```
 ---
 
