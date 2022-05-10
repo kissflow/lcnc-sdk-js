@@ -13,6 +13,7 @@
 		"module": "es2020",
 		"declaration": true,
 		"emitDeclarationOnly": true,
-		"outFile": "./dist/index.d.ts"
+		"outFile": "./dist/index.d.ts",
+		"moduleResolution": "node"
 	}
 }

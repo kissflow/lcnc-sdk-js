@@ -7,17 +7,24 @@
   </head>
   <body>
     <h1 id="title">Kissflow SDK Check</h1>
-    <iframe id="component1" src="http://localhost:8080" width="500px" height="500px">
+    <!-- <iframe id="component1" src="http://localhost:8080" width="500px" height="500px">
       <p>Your browser does not support iframes.</p>
     </iframe>
 
     <iframe id="component2" src="http://localhost:3000" width="500px" height="500px">
       <p>Your browser does not support iframes.</p>
-    </iframe>
+    </iframe> -->
+    <script type="text/javascript" src="./dist/kfsdk.umd.js"></script>
+    <!-- <script type="module">
+      import LowcodeSDK from './dist/kfsdk.es.js';
+      let sdk = new LowcodeSDK();
+      console.log("new sdk instance", sdk);
+    </script> -->
+    Hello world
   </body>
-  <script type="module">
+  <!-- <script type="module">
     import MockAPI from './test/mock/api.js';
     import LCNCHandler from './test/lcnc-handler.js';
     LCNCHandler();
-  </script>
+  </script> -->
 </html>
