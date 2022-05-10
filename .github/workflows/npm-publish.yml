@@ -7,7 +7,10 @@ on:
   release:
     types: [created]
   pull_request:
-    types: [closed]
+    types: [opened, closed]
+  push:
+    branches:    
+      - 'beta'
 
 jobs:
   publish-npm:
