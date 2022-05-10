@@ -7,8 +7,7 @@ on:
   release:
     types: [created]
   pull_request:
-    types:
-      - [closed]
+    types: [closed]
 
 jobs:
   publish-npm:
