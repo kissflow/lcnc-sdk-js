@@ -1,5 +1,6 @@
-const tsFileStruct = require("ts-file-parser");
-const fs = require("fs");
+import tsFileStruct from "ts-file-parser";
+import fs from "fs";
+import { exec } from "child_process";
 let classMappings = {
 	Page: { name: "Page" },
 	Application: { name: "Application" },
@@ -12,11 +13,10 @@ let classMappings = {
 	LowcodeSDK: { name: "kf", staticDeclarations: true }
 };
 
-const exec = require("child_process").exec;
-runCommand("webpack", () => {
-	runCommand("tsc", () => {
-		runCommand("tsc -p tsconfig.types.json", transfromTypings);
-	});
+runCommand("vite build", () => {
+	// runCommand("tsc", () => {
+	runCommand("tsc -p tsconfig.types.json", transfromTypings);
+	// });
 });
 
 function runCommand(command, callBack = null) {
@@ -80,7 +80,7 @@ function transfromTypings() {
 			}
 
 			//methods of Class
-			for (j = 0; j < _class.methods.length; j++) {
+			for (let j = 0; j < _class.methods.length; j++) {
 				func = _class.methods[j].text.trim().split("\n\t").join(" ");
 				toWrite += `\t${func} \n`;
 				// if (

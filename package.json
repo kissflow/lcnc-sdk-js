@@ -2,16 +2,22 @@
 	"name": "@kissflow/lowcode-client-sdk",
 	"version": "1.0.5",
 	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
-	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
+	"files": ["dist"],
+  "main": "./dist/kfsdk.umd.js",
+  "module": "./dist/kfsdk.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/kfsdk.es.js",
+      "require": "./dist/kfsdk.umd.js"
+    }
+  },
 	"scripts": {
-		"start": "npm run server",
-		"server": "http-server .",
-		"customBuild": "node custom.build.js",
-		"build": "npm run customBuild",
-		"build:watch": "webpack --watch",
-		"prepare": "npm run build",
-		"serve": "webpack serve"
+		"start": "vite serve",
+		"customBuild": "node custom.build.mjs",
+		"build": "pnpm run customBuild",
+		"prepare": "vite build",
+		"serve": "http-server -p 8080"
 	},
 	"repository": {
 		"type": "git",
@@ -29,11 +35,14 @@
 		"http-server": "^0.12.3",
 		"ts-loader": "^9.2.5",
 		"typescript": "^4.3.5",
+		"vite": "^2.9.8",
 		"webpack": "^5.52.1",
 		"webpack-cli": "^4.8.0",
 		"webpack-dev-server": "^3.11.2"
 	},
 	"dependencies": {
+		"@lingui/cli": "^3.13.3",
+		"@lingui/react": "^2",
 		"nanoid": "^3.1.30",
 		"ts-file-parser": "0.0.21"
 	}

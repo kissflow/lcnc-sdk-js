@@ -1,5 +1,6 @@
+import { nanoid } from "nanoid";
+
 import { LISTENER_CMDS } from "./constants";
-const { nanoid } = require("nanoid");
 
 function generateId(prefix = "lcncsdk") {
 	return `${prefix}-${nanoid()}`;
