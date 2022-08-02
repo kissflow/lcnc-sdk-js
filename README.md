@@ -7,8 +7,8 @@ JavaScript SDK for developing over the Kissflow lowcode platform
 Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import into your project:
 
 ```js
-import KFLowcodeSDK from "@kissflow/lowcode-client-sdk";
-const kf = KFLowcodeSDK();
+import KFSDK from "@kissflow/lowcode-client-sdk";
+const kf = KFSDK();
 ```
 
 ### Use as a `<script>` tag directly in HTML
@@ -16,14 +16,14 @@ const kf = KFLowcodeSDK();
 SDK can also be loaded directly into HTML by adding:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kflowcode.sdk.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kfsdk.umd.js"></script>
 <!-- or -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kflowcode.sdk.module.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kfsdk.es.js"></script>
 ```
 
 > Then SDK can be initialized anywhere by declaring:
 ```js
-const kf = window.KF();
+const kf = window.KFSDK();
 ```
 
 ## 1) Form Functions

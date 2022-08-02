@@ -14,9 +14,7 @@ let classMappings = {
 };
 
 runCommand("vite build", () => {
-	// runCommand("tsc", () => {
 	runCommand("tsc -p tsconfig.types.json", transfromTypings);
-	// });
 });
 
 function runCommand(command, callBack = null) {
