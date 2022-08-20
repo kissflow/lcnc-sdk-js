@@ -1,12 +1,13 @@
 import { Component } from "./component";
 import { BaseSDK } from "./base";
 import { LISTENER_CMDS, EVENT_TYPES } from "./constants";
+import { PageContext } from "./sdk.types";
 
 export class Page extends BaseSDK {
 	_id: string;
-	constructor(pageId: string) {
+	constructor(props: PageContext) {
 		super({});
-		this._id = pageId;
+		this._id = props.pageId;
 	}
 	getParameter(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_PAGE_PARAMS, {
@@ -25,7 +26,6 @@ export class Page extends BaseSDK {
 		});
 	}
 	openPopup(popupId: string, popupParams: object) {
-		//TODO: add popup class
 		return this._postMessageAsync(LISTENER_CMDS.OPEN_POPUP_PAGE, {
 			popupId,
 			popupParams
@@ -35,7 +35,14 @@ export class Page extends BaseSDK {
 		return this._postMessageAsync(LISTENER_CMDS.CLOSE_POPUP, {});
 	}
 	getComponent(componentId: string): Component {
-		return new Component(componentId);
+		return this._postMessageAsync(
+			LISTENER_CMDS.GET_COMPONENT,
+			{ id: componentId, pageId: this._id },
+			true, // has callBack
+			(data) => {
+				return new Component(data);
+			}
+		);
 	}
 	onClose(callback: Function) {
 		this._registerEventListener(this._id, EVENT_TYPES.ON_CLOSE, callback);

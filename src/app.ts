@@ -1,13 +1,15 @@
 import { BaseSDK } from "./base";
 import { Page } from "./page";
 import { LISTENER_CMDS } from "./constants";
+import { AppContext } from "./sdk.types";
 
 export class Application extends BaseSDK {
 	page: Page;
-
-	constructor(props: any) {
+	_id: string;
+	constructor(props: AppContext) {
 		super({});
-		this.page = new Page({});
+		this._id = props.appId;
+		this.page = new Page(props);
 	}
 	getVariable(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_APP_VARIABLE, {

@@ -58,7 +58,6 @@ class Table extends BaseSDK {
 			{ tableId: this.tableId },
 			true, // has callBack
 			(data) => {
-				console.log(data);
 				return data.map((row) => new TableForm(this.instanceId, this.tableId, row.id))
 			}
 		);

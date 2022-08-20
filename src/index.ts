@@ -5,42 +5,44 @@ import { TableForm } from "./form";
 import { Client } from "./client";
 import { Formatter } from "./formatter";
 import { Application } from "./app";
-// import { Component } from "./component";
+import { Page } from "./page";
+import { Component } from "./component";
 
+import { SDKContext } from "./sdk.types";
 class LowcodeSDK extends BaseSDK {
-	currentForm: Form | TableForm;
+	context: Component | Form | TableForm | Page;
 	client: Client;
 	formatter: Formatter;
 	app: Application;
 
-	constructor(props: any) {
+	constructor(props: SDKContext) {
 		super({});
-		if (props.tableId && props.rowId) {
-			this.currentForm = new TableForm(
-				props.instanceId,
+		if (props.tableId && props.tableRowId) {
+			this.context = new TableForm(
+				props.formInstanceId,
 				props.tableId,
-				props.rowId
+				props.tableRowId
 			);
-		} else if (props.instanceId) {
-			this.currentForm = new Form(props.instanceId);
+		} else if (props.formInstanceId) {
+			this.context = new Form(props.formInstanceId);
+		} else if (props.componentId && props.pageId) {
+			this.context = new Component(props);
 		}
 		this.client = new Client({});
 		this.formatter = new Formatter({});
-		this.app = new Application({});
+		if (props.appId) {
+			this.app = new Application(props);
+		}
 	}
-
 	api(url: string, args = {}): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
 	}
-	watchParams(func: (data: any) => any) {
-		this._postMessage(LISTENER_CMDS.PARAMS, func);
-	}
-	getContext(): string | object {
-		return this._postMessageAsync(LISTENER_CMDS.GET_CONTEXT, {});
-	}
+	// getContext(): string | object {
+	// 	return this._postMessageAsync(LISTENER_CMDS.GET_CONTEXT, {});
+	// }
 }
 
-function initSDK(config: any = {}): LowcodeSDK {
+function initSDK(config: SDKContext): LowcodeSDK {
 	return new LowcodeSDK(config);
 }
 
