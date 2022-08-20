@@ -29,8 +29,8 @@ class LowcodeSDK extends BaseSDK {
 		this.client = new Client({});
 		this.formatter = new Formatter({});
 		this.app = new Application({});
-		this.user = props.details.user;
-		this.account = props.details.account;
+		this.user = props.user;
+		this.account = props.account;
 	}
 
 	api(url: string, args = {}): string | object {
