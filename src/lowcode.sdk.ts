@@ -3,27 +3,34 @@ import { LISTENER_CMDS } from "./constants";
 import { Form } from "./form";
 import { TableForm } from "./form";
 import { Client } from "./client";
-import { Formatter } from './formatter';
+import { Formatter } from "./formatter";
 import { Application } from "./app";
-import { Component } from "./component";
+import { userObject, accountObject } from "./sdk.types";
 
 class LowcodeSDK extends BaseSDK {
 	currentForm: Form | TableForm;
 	client: Client;
 	formatter: Formatter;
 	app: Application;
+	user: userObject;
+	account: accountObject;
 
 	constructor(props: any) {
 		super({});
 		if (props.tableId && props.rowId) {
-			this.currentForm = new TableForm(props.instanceId, props.tableId, props.rowId);
-		}
-		else if(props.instanceId) {
+			this.currentForm = new TableForm(
+				props.instanceId,
+				props.tableId,
+				props.rowId
+			);
+		} else if (props.instanceId) {
 			this.currentForm = new Form(props.instanceId);
 		}
 		this.client = new Client({});
 		this.formatter = new Formatter({});
 		this.app = new Application({});
+		this.user = props.user;
+		this.account = props.account;
 	}
 
 	api(url: string, args = {}): string | object {
