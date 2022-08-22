@@ -25,7 +25,9 @@ class LowcodeSDK extends BaseSDK {
 			);
 		} else if (props.formInstanceId) {
 			this.context = new Form(props.formInstanceId);
-		} else if (props.componentId && props.pageId) {
+		} else if (props.pageId && !props.componentId){
+			this.context = new Page(props);
+		} else if (props.componentId) {
 			this.context = new Component(props);
 		}
 		this.client = new Client({});
