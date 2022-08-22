@@ -8,12 +8,15 @@ import { Application } from "./app";
 import { Page } from "./page";
 import { Component } from "./component";
 
-import { SDKContext } from "./sdk.types";
+import { SDKContext, userObject, accountObject } from "./sdk.types";
+
 class LowcodeSDK extends BaseSDK {
 	context: Component | Form | TableForm | Page;
 	client: Client;
 	formatter: Formatter;
 	app: Application;
+	user: userObject;
+	account: accountObject;
 
 	constructor(props: SDKContext) {
 		super({});
@@ -25,7 +28,7 @@ class LowcodeSDK extends BaseSDK {
 			);
 		} else if (props.formInstanceId) {
 			this.context = new Form(props.formInstanceId);
-		} else if (props.pageId && !props.componentId){
+		} else if (props.pageId && !props.componentId) {
 			this.context = new Page(props);
 		} else if (props.componentId) {
 			this.context = new Component(props);
@@ -35,6 +38,8 @@ class LowcodeSDK extends BaseSDK {
 		if (props.appId) {
 			this.app = new Application(props);
 		}
+		this.user = props.user;
+		this.account = props.account;
 	}
 	api(url: string, args = {}): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });

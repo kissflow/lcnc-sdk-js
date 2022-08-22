@@ -6,9 +6,9 @@ let classMappings = {
 	Application: { name: "Application" },
 	Client: { name: "Client" },
 	Component: { name: "Component" },
-	Form: { name: "Form"  },
+	Form: { name: "Form" },
 	Table: { name: "Table" },
-	TableForm: { name: "TableForm"  },
+	TableForm: { name: "TableForm" },
 	Formatter: { name: "Formatter" },
 	LowcodeSDK: { name: "kf", staticDeclarations: true }
 };
@@ -50,8 +50,8 @@ function transfromTypings() {
 				// if (_class.fields[i].type.modulePath) {
 				let className = "";
 				if (!_class.fields[i].type) {
-					continue
-				} else if(_class.fields[i].type.options) {
+					continue;
+				} else if (_class.fields[i].type.options) {
 					// TODO: currently we add only the first typechecking
 					className = _class.fields[i].type.options[0].typeName;
 
@@ -66,7 +66,7 @@ function transfromTypings() {
 				} else {
 					className = _class.fields[i].type.typeName;
 				}
-				
+
 				let fieldName = _class.fields[i].name;
 				// console.log(_class.fields[i]);
 				toWrite += `\t${
@@ -91,6 +91,10 @@ function transfromTypings() {
 			toWrite += `}`;
 		}
 	}
+
+	let typesFile = fs.readFileSync("./src/sdk.types.ts").toString();
+	toWrite += `\n` + typesFile.replace(/export/gi, "declare");
+
 	fs.writeFile("./dist/global.types.d.ts", toWrite, function (err) {
 		if (err) return console.log(err);
 	});

@@ -6,6 +6,8 @@ export interface SDKContext {
 	manifestMethods?: manifestMethodsType[];
 	appId: string;
 	pageId: string;
+	user: userObject;
+	account: accountObject;
 }
 
 export interface manifestMethodsType {
@@ -28,3 +30,15 @@ export interface AppContext {
 export interface PageContext {
 	pageId: string;
 }
+
+export type userObject = {
+	_id: string;
+	Name: string;
+	Email: string;
+	UserType: string;
+	Role: string;
+};
+
+export type accountObject = {
+	_id: string;
+};
