@@ -4,7 +4,8 @@ JavaScript SDK for developing over the Kissflow lowcode platform
 
 ### Use as an `npm` module
 
-Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import into your project:
+Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import
+into your project:
 
 ```js
 import KFSDK from "@kissflow/lowcode-client-sdk";
@@ -17,48 +18,61 @@ SDK can also be loaded directly into HTML by adding:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kfsdk.umd.js"></script>
-<!-- or -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kfsdk.es.js"></script>
 ```
 
 > Then SDK can be initialized anywhere by declaring:
+
 ```js
 const kf = window.KFSDK();
 ```
 
-## 1) Form Functions
+## 1) Form Context Functions
 
 ### Main form functions
 
-`kf.currentForm` returns a `Form` class which has the following functions
+`kf.context` returns a `Form` class when it is executed inside a kissflow's form
+that could be either Process, case or Dataform.
 
 ##### a) getField()
+
 ###### Description:
+
 Use this function to get the current value of a form field
 
 ###### Syntax:
+
 ```js
-kf.currentForm.getField(fieldId).then((res) => {...})
+kf.context.getField(fieldId).then((res) => {...})
 // or
-let value = await kf.currentForm.getField(fieldId)
+let value = await kf.context.getField(fieldId)
 ```
 
 ##### b) updateField()
+
 ###### Description:
+
 Use this function to get update any field in the form
+
 ###### Syntax:
+
 ```js
-kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
+kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
 
 ##### c) toJSON()
+
 ###### Description:
+
 Use this function to get the JSON data of the current form
+
 ###### Syntax:
+
 ```js
-const json = await kf.currentForm.toJSON();
+const json = await kf.context.toJSON();
 ```
+
 ###### Output:
+
 ```
 {
     "Untitled_Field": "testing",
@@ -68,54 +82,87 @@ const json = await kf.currentForm.toJSON();
     "_modified_at": "2022-03-01T03:04:09Z"
 }
 ```
+
 ---
+
 ### Table functions
-`kf.currentForm.getTable(tableId)` returns a `Table` class which has the following functions
+
+`kf.currentForm.getTable(tableId)` returns a `Table` class which has the
+following functions
+
 #### a) addRow()
+
 ###### Description:
+
 Appends row details to the end of table.
+
 ###### Syntax:
+
 ```js
-const table = kf.currentForm.getTable(tableId);
+const table = kf.context.getTable(tableId);
 table.addRow({ columnId1: value, columnId2: value });
 ```
+
 #### b) deleteRow()
+
 ###### Description:
+
 Deletes a row from the table based on the row id
+
 ###### Syntax:
+
 ```js
-const table = kf.currentForm.getTable(tableId);
+const table = kf.context.getTable(tableId);
 table.deleteRow(rowId);
 ```
+
 #### c) getRow()
+
 ###### Description:
+
 Use this function to perform form actions on any row inside a child table
+
 ###### Syntax:
+
 ```js
-const table = kf.currentForm.getTable(tableId);
+const table = kf.context.getTable(tableId);
 const row = table.getRow(rowId);
 ```
+
 ###### Output:
+
 Returns an instance of `TableForm` class
 
 #### d) getRows()
+
 ###### Description:
+
 Gets all the rows of the table
+
 ###### Syntax:
+
 ```js
-const rows = await kf.currentForm.getTable(tableId).getRows();
+const rows = await kf.context.getTable(tableId).getRows();
 ```
+
 ###### Output:
+
 Returns an array of `TableForm` instances
 
 ##### e) toJSON()
+
 ###### Description:
+
 Use this function to get the JSON data of the child table
+
 ###### Syntax:
+
 ```js
-const json = await kf.currentForm.getTable(tableId).toJSON();
+const json = await kf.context.getTable(tableId).toJSON();
 ```
+
 ###### Output:
+
 ```
 [{
     "Untitled_Field": "row 1",
@@ -131,44 +178,71 @@ const json = await kf.currentForm.getTable(tableId).toJSON();
     "_modified_at": "2022-03-01T03:04:09Z"
 }]
 ```
+
 ---
+
 ### Table Row functions
+
 `kf.currentForm` returns a `TableForm` class which has the following functions
- 
+
 ##### a) getField()
+
 ###### Description:
+
 Use this function to get the value of the table row
+
 ###### Syntax:
+
 ```js
-kf.currentForm.getField(fieldId).then((res) => {...})
+kf.context.getField(fieldId).then((res) => {...})
 // or
-let value = await kf.currentForm.getField(fieldId)
+let value = await kf.context.getField(fieldId)
 ```
+
 ##### b) updateField()
+
 ###### Description:
+
 Use this function to get update any field in the table row
+
 ###### Syntax:
+
 ```js
 kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
+
 ##### c) getParent()
+
 ###### Description:
+
 Use this function to perform form actions on the main form
+
 ###### Syntax:
+
 ```js
-const mainForm = kf.currentForm.getParent();
+const mainForm = kf.context.getParent();
 mainForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
+
 ###### Output:
-Returns an instance of `Form` class using which we can perform any action on the main form
+
+Returns an instance of `Form` class using which we can perform any action on the
+main form
+
 ##### d) toJson()
+
 ##### Description:
+
 Get JSON output of table row
+
 ##### Syntax:
+
 ```js
-const json = await kf.currentForm.toJSON();
+const json = await kf.context.toJSON();
 ```
+
 ###### Output:
+
 ```
 {
     "Untitled_Field": "testing",
@@ -178,43 +252,83 @@ const json = await kf.currentForm.toJSON();
     "_modified_at": "2022-03-01T03:04:09Z"
 }
 ```
+
 ---
+
 ### 2) Client Functions
+
 ##### Show Toast
+
 ```js
 kf.client.showInfo(message);
 ```
+
 ##### Show confirm
+
 ```js
 kf.client.showConfirm({ title, content });
 ```
+
 ##### Redirect to URL
+
 ```js
 kf.client.redirect(url);
 ```
+
 ---
+
 ### 3) Component Functions
+
+getComponent(id) inside page returns component class instance.
+```js
+const componentABC = await kf.app.page.getComponent(componentId);
+```
+By using ComponentABC class we can invoke following methods.
+
 #### Refresh a component
+
 ```js
-kf.app.page.getComponent(componentId).refresh();
+componentABC.refresh();
 ```
+
 #### Show a component
+
 ```js
-kf.app.page.getComponent(componentId).show();
+componentABC.show();
 ```
+
 #### Hide a component
+
 ```js
-kf.app.page.getComponent(componentId).hide();
+componentABC.hide();
 ```
+
+#### Watch params (only for custom components)
+
+Listens for changes in parameter given to custom components in lowcode
+application.
+
+```js
+const custComponent = await kf.app.page.getComponent(customComponentId);
+custComponent.watchParams(function (data) {
+	console.log(data);
+});
+```
+
 ---
 
 ### 4) Lowcode application functions
+
 Application variables has global context to application,
+
 ##### Get value to application variable
+
+```js
+const appVarible1 = await kf.app.getVariable("variableId");
 ```
-let value = await kf.app.getVariable("variableId");
-```
+
 ##### Set value of application variable
+
 ```js
 let value = await kf.app.setVariable("variableId", value);
 // or
@@ -223,8 +337,11 @@ await kf.app.setVariable({
 	variableId_2: 3345
 });
 ```
+
 ##### Open a page
+
 > Note: Page Input parameters are optional.
+
 ```js
 let pageInputParameters = {
 	param1: value,
@@ -232,96 +349,85 @@ let pageInputParameters = {
 };
 kf.app.openPage(pageId, pageInputParameters);
 ```
+
 ##### Get values of page input parameters
+
 ```js
 let value = await kf.app.page.getParameter();
 ```
+
 ##### Open a popup
+
 ```js
-kf.app.page.openPopup(popupId, { inputParam1: 2 })
+kf.app.page.openPopup(popupId, { inputParam1: 2 });
 ```
+
 ##### Close popup
+
 > Closes the active popup in the page.
+
 ```js
 kf.app.page.closePopup();
 ```
-##### Page onClose event
-```js
-kf.app.page.onClose(() => {});
-```
----
 
-### 6) Get context
-Returns the current account, user, page, and application.
-```js
-kf.getContext().then((ctx) => {...})
-// or
-let ctx = await kf.getContext()
-/*
-returns the context object like. 
-ctx = {
-  app: {_id },
-  page: { _id },
-  user: { Name, Email, UserType, _id },
-  account: { _id }
-}
-*/
-```
----
-
-### 7) Fetch Api through kf sdk
+### 6) Fetch Api through kf sdk
 
 Fetch any external api & other kissflow api using this method.
+
 > Note: This method has a limit of 10 seconds for an api call
+
 ```js
 kf.api(url, config).then((res) => {...})
 // or
 let resp = await kf.api(url, config)
 ```
----
 
-### 8) Watch params
-Listens for changes in parameter given to custom components in lowcode
-application.
-```js
-kf.watchParams(function (data) {
-	console.log(data);
-});
-```
 ---
 
 ### 9) Formatter Functions
+
 ##### Format to KF Date
+
 ```js
 kf.formatter.toDate("08-24-2021").then((res) => {...})
 // or
 let value = await kf.formatter.toDate("08-24-2021");
 ```
+
 ##### Format to KF Date Time
+
 ```js
 kf.formatter.toDateTime("2021-08-26T14:30").then((res) => {...})
 // or
 let value = await kf.formatter.toDateTime("2021-08-26T14:30");
 ```
+
 ##### Format to KF Number
+
 ```js
 kf.formatter.toNumber("1,00,000.500000").then((res) => {...})
 // or
 let value = await kf.formatter.toNumber("1,00,000.500000");
 ```
+
 ##### Format to KF Currency
+
 ```js
 kf.formatter.toCurrency("1,00,000.500000", "USD").then((res) => {...})
 // or
 let value = await kf.formatter.toCurrency("1,00,000.500000", "USD");
 ```
+
 ##### Format to KF Boolean
+
 ```js
 kf.formatter.toBoolean("yes").then((res) => {...})
 // or
 let value = await kf.formatter.toBoolean("yes");
 ```
+
 ##### Other supported Boolean values
+
 ```js
 let value = await kf.formatter.toBoolean("1");
 let value = await kf.formatter.toBoolean("true");
@@ -329,4 +435,5 @@ let value = await kf.formatter.toBoolean("no");
 let value = await kf.formatter.toBoolean("0");
 let value = await kf.formatter.toBoolean("false");
 ```
+
 ---
