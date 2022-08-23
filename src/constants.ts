@@ -57,3 +57,7 @@ export const EVENT_TYPES = {
 	ON_CHANGE: "onChange",
 	ON_LOAD: "onLoad"
 };
+
+export const DEFAULTS = {
+	POPUP_ID: "ACTIVE_POP_UP"
+};

@@ -35,6 +35,5 @@ export interface PageContext {
 }
 
 export interface PopupContext {
-	popupId: string;
-	pageId: string;
+	popupId?: string;
 }

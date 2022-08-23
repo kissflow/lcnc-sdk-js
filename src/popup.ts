@@ -1,6 +1,7 @@
 import { Component } from "./component";
 import { BaseSDK } from "./base";
-import { LISTENER_CMDS, EVENT_TYPES } from "./constants";
+
+import { DEFAULTS, LISTENER_CMDS } from "./constants";
 import { PopupContext } from "./types/internal";
 
 export class Popup extends BaseSDK {
@@ -9,7 +10,7 @@ export class Popup extends BaseSDK {
 	constructor(props: PopupContext) {
 		super({});
 		this.type = "Popup";
-		this._id = props.popupId;
+		this._id = props.popupId || DEFAULTS.POPUP_ID;
 	}
 	getParameter(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_POPUP_PARAMS, {

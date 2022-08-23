@@ -9,6 +9,7 @@ let classMappings = {
 	Form: { name: "Form" },
 	Table: { name: "Table" },
 	TableForm: { name: "TableForm" },
+	Popup: {name: "Popup"},
 	Formatter: { name: "Formatter" },
 	LowcodeSDK: { name: "kf", staticDeclarations: true }
 };
