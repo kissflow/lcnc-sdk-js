@@ -7,11 +7,13 @@ import { Formatter } from "./formatter";
 import { Application } from "./app";
 import { Page } from "./page";
 import { Component } from "./component";
+import { Popup } from "./popup";
 
-import { SDKContext, userObject, accountObject } from "./sdk.types";
+import { SDKContext } from "./types/internal";
+import { userObject, accountObject } from "./types/external";
 
 class LowcodeSDK extends BaseSDK {
-	context: Component | Form | TableForm | Page;
+	context: Component | Form | TableForm | Page | Popup;
 	client: Client;
 	formatter: Formatter;
 	app: Application;
@@ -28,6 +30,8 @@ class LowcodeSDK extends BaseSDK {
 			);
 		} else if (props.formInstanceId) {
 			this.context = new Form(props.formInstanceId);
+		} else if (props.popupId) {
+			this.context = new Popup(props);
 		} else if (props.pageId && !props.componentId) {
 			this.context = new Page(props);
 		} else if (props.componentId) {

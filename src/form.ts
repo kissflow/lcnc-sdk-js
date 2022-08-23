@@ -3,17 +3,16 @@ import { LISTENER_CMDS } from "./constants";
 
 export class Form extends BaseSDK {
 	private instanceId: string;
+	type: string;
 	constructor(instanceId: string) {
 		super({});
+		this.type = "Form";
 		this.instanceId = instanceId;
 	}
 	toJSON() {
-		return this._postMessageAsync(
-			LISTENER_CMDS.TO_JSON,
-			{ 
-				instanceId: this.instanceId
-			},
-		);
+		return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+			instanceId: this.instanceId
+		});
 	}
 	getField(fieldId: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
@@ -86,10 +85,12 @@ export class TableForm extends BaseSDK {
 	private instanceId: string;
 	private tableId: string;
 	private rowId: string;
+	type: string;
 
 	constructor(instanceId: string, tableId: string, rowId: string) {
 		super({});
 		this.instanceId = instanceId;
+		this.type = "TabelForm";
 		this.tableId = tableId;
 		this.rowId = rowId;
 	}
@@ -99,16 +100,12 @@ export class TableForm extends BaseSDK {
 	}
 
 	toJSON() {
-		return this._postMessageAsync(
-			LISTENER_CMDS.TO_JSON,
-			{ 
-				tableId: this.tableId,
-				rowId: this.rowId
-			},
-		);
-
+		return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+			tableId: this.tableId,
+			rowId: this.rowId
+		});
 	}
-	
+
 	getField(fieldId: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
 			instanceId: this.instanceId,

@@ -92,7 +92,7 @@ function transfromTypings() {
 		}
 	}
 
-	let typesFile = fs.readFileSync("./src/sdk.types.ts").toString();
+	let typesFile = fs.readFileSync("./src/types/external.ts").toString();
 	toWrite += `\n` + typesFile.replace(/export/gi, "declare");
 
 	fs.writeFile("./dist/global.types.d.ts", toWrite, function (err) {
