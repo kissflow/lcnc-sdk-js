@@ -5,11 +5,16 @@ JavaScript SDK for developing over the Kissflow lowcode platform
 ### Use as an `npm` module
 
 Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import
-into your project:
+into your project: Note: Initializing Kf SDK in custom components returns a
+promise.
 
 ```js
 import KFSDK from "@kissflow/lowcode-client-sdk";
-const kf = KFSDK();
+let kf;
+(async function () {
+	// Immediately invoked function.
+	kf = await KFSDK();
+})();
 ```
 
 ### Use as a `<script>` tag directly in HTML
@@ -20,18 +25,47 @@ SDK can also be loaded directly into HTML by adding:
 <script src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kfsdk.umd.js"></script>
 ```
 
+And inside .js file initialize SDK as following
+
+```js
+let kf;
+(async function () {
+	kf = await window.KFSDK();
+})();
+```
+
 > Then SDK can be initialized anywhere by declaring:
 
 ```js
 const kf = window.KFSDK();
 ```
 
-## 1) Form Context Functions
+## 1) Context Functions
+
+Context functions are polymorphic, it has different classes based on execution
+context.
+
+### Custom component functions
+
+`kf.context` returns a `CustomComponent` class while using inside custom
+component. Custom component supported functions:
+
+##### a) Watch Params
+
+Listens for changes in parameter given to custom components in lowcode
+application.
+
+```js
+kf.context.watchParams(function (data) {
+	console.log(data);
+});
+```
 
 ### Main form functions
 
-`kf.context` returns a `Form` class when it is executed inside a kissflow's form
-that could be either Process, case or Dataform.
+`kf.context` returns a `Form` class when it is used inside a kissflow's form
+that could be either Process, case or Dataform & it has following supported
+functions
 
 ##### a) getField()
 
@@ -280,42 +314,30 @@ kf.client.redirect(url);
 ### 3) Component Functions
 
 getComponent(id) inside page returns component class instance.
+
 ```js
-const componentABC = await kf.app.page.getComponent(componentId);
+const componentName = await kf.app.page.getComponent(componentId);
 ```
-By using ComponentABC class we can invoke following methods.
+
+By using component instance we can invoke following methods.
 
 #### Refresh a component
 
 ```js
-componentABC.refresh();
+componentName.refresh();
 ```
 
 #### Show a component
 
 ```js
-componentABC.show();
+componentName.show();
 ```
 
 #### Hide a component
 
 ```js
-componentABC.hide();
+componentName.hide();
 ```
-
-#### Watch params (only for custom components)
-
-Listens for changes in parameter given to custom components in lowcode
-application.
-
-```js
-const custComponent = await kf.app.page.getComponent(customComponentId);
-custComponent.watchParams(function (data) {
-	console.log(data);
-});
-```
-
----
 
 ### 4) Lowcode application functions
 
@@ -370,7 +392,7 @@ kf.app.page.openPopup(popupId, { inputParam1: 2 });
 kf.app.page.closePopup();
 ```
 
-### 6) Fetch Api through kf sdk
+### 5) Fetch Api through kf sdk
 
 Fetch any external api & other kissflow api using this method.
 
@@ -384,7 +406,7 @@ let resp = await kf.api(url, config)
 
 ---
 
-### 9) Formatter Functions
+### 6) Formatter Functions
 
 ##### Format to KF Date
 
