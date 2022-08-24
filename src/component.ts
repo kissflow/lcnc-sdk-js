@@ -26,6 +26,14 @@ export class Component extends BaseSDK {
 			id: this._id
 		});
 	}
+}
+
+export class CustomComponent extends BaseSDK {
+	type: string;
+	constructor() {
+		super({});
+		this.type = "CustomComponent"
+	}
 	watchParams(func: (data: any) => any) {
 		this._postMessage(LISTENER_CMDS.PARAMS, func);
 	}

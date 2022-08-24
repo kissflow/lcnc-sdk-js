@@ -6,7 +6,7 @@ import { Client } from "./client";
 import { Formatter } from "./formatter";
 import { Application } from "./app";
 import { Page } from "./page";
-import { Component } from "./component";
+import { Component, CustomComponent } from "./component";
 import { Popup } from "./popup";
 
 import { SDKContext } from "./types/internal";
@@ -48,13 +48,44 @@ class LowcodeSDK extends BaseSDK {
 	api(url: string, args = {}): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
 	}
-	// getContext(): string | object {
-	// 	return this._postMessageAsync(LISTENER_CMDS.GET_CONTEXT, {});
-	// }
 }
 
-function initSDK(config: SDKContext): LowcodeSDK {
-	return new LowcodeSDK(config);
+class CustomComponentSDK extends BaseSDK {
+	app: Application;
+	page: Page;
+	user: userObject;
+	account: accountObject;
+	context: CustomComponent;
+	client: Client;
+	formatter: Formatter;
+	constructor() {
+		super({});
+		return this._postMessageAsync(
+			LISTENER_CMDS.INITIALIZE_CUST_COMP,
+			{},
+			true,
+			(data) => {
+				this.app = new Application(data);
+				this.page = new Page(data);
+				this.context = new CustomComponent();
+				this.client = new Client({});
+				this.formatter = new Formatter({});
+				this.user = data.user;
+				this.account = data.account;
+				return this;
+			}
+		);
+	}
+	api(url: string, args = {}): string | object {
+		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
+	}
+}
+
+function initSDK(config: SDKContext): CustomComponentSDK | LowcodeSDK {
+	if (config?.appId) {
+		return new LowcodeSDK(config);
+	}
+	return new CustomComponentSDK();
 }
 
 export default initSDK;

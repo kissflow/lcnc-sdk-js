@@ -21,7 +21,6 @@ export interface manifestMethodsType {
 
 export interface ComponentProps {
 	componentId: string;
-	pageId: string;
 	manifestMethods?: manifestMethodsType[];
 }
 
