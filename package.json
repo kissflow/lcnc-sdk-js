@@ -3,15 +3,20 @@
 	"version": "1.0.5",
 	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
 	"types": "dist/index.d.ts",
-	"files": ["dist"],
-  "main": "./dist/kfsdk.umd.js",
-  "module": "./dist/kfsdk.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/kfsdk.es.js",
-      "require": "./dist/kfsdk.umd.js"
-    }
-  },
+	"files": [
+		"dist"
+	],
+	"main": "./dist/kfsdk.umd.js",
+	"module": "./dist/kfsdk.es.js",
+	"exports": {
+		".": {
+			"import": "./dist/kfsdk.es.js",
+			"require": "./dist/kfsdk.umd.js"
+		},
+		"./lowcode": {
+			"import": "./dist/kfworkersdk.es.js"
+		}
+	},
 	"scripts": {
 		"start": "vite serve",
 		"customBuild": "node custom.build.mjs",

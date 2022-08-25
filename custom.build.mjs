@@ -15,6 +15,7 @@ let classMappings = {
 };
 
 runCommand("vite build", () => {
+	runCommand("tsc -p tsconfig.default.types.json")
 	runCommand("tsc -p tsconfig.types.json", transfromTypings);
 });
 
@@ -31,7 +32,7 @@ function runCommand(command, callBack = null) {
 }
 
 function transfromTypings() {
-	const filePath = "./dist/index.d.ts";
+	const filePath = "./dist/lowcode.d.ts";
 	let srcFile = fs.readFileSync(filePath).toString();
 	let srcCode = tsFileStruct.parseStruct(srcFile, {}, filePath);
 
