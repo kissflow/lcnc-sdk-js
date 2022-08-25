@@ -2,12 +2,15 @@ import { BaseSDK } from "./base";
 import { Page } from "./page";
 import { LISTENER_CMDS } from "./constants";
 
+import { AppContext } from "./types/internal";
+
 export class Application extends BaseSDK {
 	page: Page;
-
-	constructor(props: any) {
+	_id: string;
+	constructor(props: AppContext) {
 		super({});
-		this.page = new Page({});
+		this._id = props.appId;
+		this.page = new Page(props);
 	}
 	getVariable(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_APP_VARIABLE, {
@@ -23,7 +26,7 @@ export class Application extends BaseSDK {
 	}
 
 	openPage(pageId: string, pageParams: object) {
-		return super._postMessageAsync(LISTENER_CMDS.OPEN_PAGE, {
+		return this._postMessageAsync(LISTENER_CMDS.OPEN_PAGE, {
 			pageId,
 			pageParams
 		});

@@ -1,22 +1,26 @@
-import { defineConfig } from 'vite'
+import { build } from 'vite'
 import * as path from 'path';
 
-export default defineConfig({
-  build: {
-    lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'KFSDK',
-      fileName: (format) => `kfsdk.${format}.js`
-    },
-    rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
-      external: [],
-      output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
-        globals: {}
-      }
+const libraryModules = [
+	{
+		entry: path.resolve(__dirname, "src/index.ts"),
+		name: "kf",
+		fileName: (format) => `kfsdk.${format}.js`,
+	},
+	{
+		entry: path.resolve(__dirname, "src/lowcode.ts"),
+		name: "KFSDK",
+		fileName: (format) => `kfworkersdk.${format}.js`,
+		formats: ["es"]
+	}
+];
+
+
+libraryModules.forEach(async function test(libConfig) {
+  await build({
+    configFile: false,
+    build: {
+      lib: libConfig
     }
-  }
-})
+  })
+});

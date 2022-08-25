@@ -7,7 +7,7 @@ function generateId(prefix = "lcncsdk") {
 }
 
 function postMessage(args: any) {
-	console.log("SDK : @postMessage ", args);
+	// console.log("SDK : @postMessage ", args);
 	if (self.parent && self.parent !== self) {
 		self.parent.postMessage(args, "*");
 	} else {
@@ -19,7 +19,7 @@ export class BaseSDK {
 	#listeners: any;
 	#eventListeners: object;
 	constructor(props: any) {
-		console.log("SDK : Initializing ", props);
+		// console.log("SDK : Initializing ", props);
 		this.#listeners = {};
 		this.#eventListeners = {};
 		self.addEventListener("message", this.#onMessage.bind(this), false);
@@ -80,7 +80,7 @@ export class BaseSDK {
 
 	#onMessage(event: any) {
 		if (event.origin !== self.location.origin) {
-			console.log("SDK : @onMessage ", event);
+			// console.log("SDK : @onMessage ", event);
 			const data = event.data;
 			if (data.isEvent) {
 				return this.#checkEvents(data);

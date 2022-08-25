@@ -6,17 +6,17 @@ let classMappings = {
 	Application: { name: "Application" },
 	Client: { name: "Client" },
 	Component: { name: "Component" },
-	Form: { name: "Form"  },
+	Form: { name: "Form" },
 	Table: { name: "Table" },
-	TableForm: { name: "TableForm"  },
+	TableForm: { name: "TableForm" },
+	Popup: { name: "Popup" },
 	Formatter: { name: "Formatter" },
 	LowcodeSDK: { name: "kf", staticDeclarations: true }
 };
 
 runCommand("vite build", () => {
-	// runCommand("tsc", () => {
+	runCommand("tsc -p tsconfig.default.types.json")
 	runCommand("tsc -p tsconfig.types.json", transfromTypings);
-	// });
 });
 
 function runCommand(command, callBack = null) {
@@ -32,7 +32,7 @@ function runCommand(command, callBack = null) {
 }
 
 function transfromTypings() {
-	const filePath = "./dist/index.d.ts";
+	const filePath = "./dist/lowcode.d.ts";
 	let srcFile = fs.readFileSync(filePath).toString();
 	let srcCode = tsFileStruct.parseStruct(srcFile, {}, filePath);
 
@@ -52,8 +52,8 @@ function transfromTypings() {
 				// if (_class.fields[i].type.modulePath) {
 				let className = "";
 				if (!_class.fields[i].type) {
-					continue
-				} else if(_class.fields[i].type.options) {
+					continue;
+				} else if (_class.fields[i].type.options) {
 					// TODO: currently we add only the first typechecking
 					className = _class.fields[i].type.options[0].typeName;
 
@@ -68,7 +68,7 @@ function transfromTypings() {
 				} else {
 					className = _class.fields[i].type.typeName;
 				}
-				
+
 				let fieldName = _class.fields[i].name;
 				// console.log(_class.fields[i]);
 				toWrite += `\t${
@@ -93,6 +93,10 @@ function transfromTypings() {
 			toWrite += `}`;
 		}
 	}
+
+	let typesFile = fs.readFileSync("./src/types/external.ts").toString();
+	toWrite += `\n` + typesFile.replace(/export/gi, "declare");
+
 	fs.writeFile("./dist/global.types.d.ts", toWrite, function (err) {
 		if (err) return console.log(err);
 	});
