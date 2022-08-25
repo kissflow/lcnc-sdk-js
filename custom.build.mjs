@@ -1,5 +1,6 @@
-const tsFileStruct = require("ts-file-parser");
-const fs = require("fs");
+import tsFileStruct from "ts-file-parser";
+import fs from "fs";
+import { exec } from "child_process";
 let classMappings = {
 	Page: { name: "Page" },
 	Application: { name: "Application" },
@@ -8,15 +9,14 @@ let classMappings = {
 	Form: { name: "Form" },
 	Table: { name: "Table" },
 	TableForm: { name: "TableForm" },
+	Popup: { name: "Popup" },
 	Formatter: { name: "Formatter" },
 	LowcodeSDK: { name: "kf", staticDeclarations: true }
 };
 
-const exec = require("child_process").exec;
-runCommand("webpack", () => {
-	runCommand("tsc", () => {
-		runCommand("tsc -p tsconfig.types.json", transfromTypings);
-	});
+runCommand("vite build", () => {
+	runCommand("tsc -p tsconfig.default.types.json")
+	runCommand("tsc -p tsconfig.types.json", transfromTypings);
 });
 
 function runCommand(command, callBack = null) {
@@ -32,7 +32,7 @@ function runCommand(command, callBack = null) {
 }
 
 function transfromTypings() {
-	const filePath = "./dist/index.d.ts";
+	const filePath = "./dist/lowcode.d.ts";
 	let srcFile = fs.readFileSync(filePath).toString();
 	let srcCode = tsFileStruct.parseStruct(srcFile, {}, filePath);
 
@@ -80,7 +80,7 @@ function transfromTypings() {
 			}
 
 			//methods of Class
-			for (j = 0; j < _class.methods.length; j++) {
+			for (let j = 0; j < _class.methods.length; j++) {
 				func = _class.methods[j].text.trim().split("\n\t").join(" ");
 				toWrite += `\t${func} \n`;
 				// if (
@@ -94,7 +94,7 @@ function transfromTypings() {
 		}
 	}
 
-	let typesFile = fs.readFileSync("./src/sdk.types.ts").toString();
+	let typesFile = fs.readFileSync("./src/types/external.ts").toString();
 	toWrite += `\n` + typesFile.replace(/export/gi, "declare");
 
 	fs.writeFile("./dist/global.types.d.ts", toWrite, function (err) {

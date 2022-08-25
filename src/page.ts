@@ -1,16 +1,27 @@
 import { Component } from "./component";
 import { BaseSDK } from "./base";
-import { LISTENER_CMDS, EVENT_TYPES } from "./constants";
+import { Popup } from './popup';
+import { LISTENER_CMDS } from "./constants";
+import { PageContext } from "./types/internal";
 
 export class Page extends BaseSDK {
 	_id: string;
-	constructor(pageId: string) {
+	popup: Popup;
+	type: string;
+	constructor(props: PageContext) {
 		super({});
-		this._id = pageId;
+		this.type = "Page";
+		this.popup = new Popup({});
+		this._id = props.pageId;
 	}
 	getParameter(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_PAGE_PARAMS, {
 			key
+		});
+	}
+	getAllParameters(){
+		return this._postMessageAsync(LISTENER_CMDS.GET_ALL_PAGE_PARAMS, {
+			pageId: this._id,
 		});
 	}
 	getVariable(key: string) {
@@ -25,19 +36,19 @@ export class Page extends BaseSDK {
 		});
 	}
 	openPopup(popupId: string, popupParams: object) {
-		//TODO: add popup class
-		return this._postMessageAsync(LISTENER_CMDS.OPEN_POPUP_PAGE, {
+		return this._postMessageAsync(LISTENER_CMDS.OPEN_POPUP, {
 			popupId,
 			popupParams
 		});
 	}
-	closePopup() {
-		return this._postMessageAsync(LISTENER_CMDS.CLOSE_POPUP, {});
-	}
 	getComponent(componentId: string): Component {
-		return new Component(componentId);
-	}
-	onClose(callback: Function) {
-		this._registerEventListener(this._id, EVENT_TYPES.ON_CLOSE, callback);
+		return this._postMessageAsync(
+			LISTENER_CMDS.GET_COMPONENT,
+			{ componentId },
+			true, // has callBack
+			(data) => {
+				return new Component(data);
+			}
+		);
 	}
 }
