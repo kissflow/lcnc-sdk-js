@@ -1,10 +1,10 @@
 {
 	"name": "@kissflow/lowcode-client-sdk",
-	"version": "1.0.7",
+	"version": "1.0.9",
 	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
 	"types": "dist/index.d.ts",
 	"files": [
-		"dist"
+		"dist/"
 	],
 	"main": "./dist/kfsdk.umd.js",
 	"module": "./dist/kfsdk.es.js",
@@ -21,7 +21,6 @@
 		"start": "vite serve",
 		"customBuild": "node custom.build.mjs",
 		"build": "pnpm run customBuild",
-		"prepare": "vite build",
 		"serve": "http-server -p 8080"
 	},
 	"repository": {
