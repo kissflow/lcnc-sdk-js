@@ -47,7 +47,7 @@ export class BaseSDK {
 			const _id = generateId(command.toLowerCase());
 			postMessage({ _id, command, ...args });
 			this.#addListener(_id, async (data: any) => {
-				if (data.errorMessage) {
+				if (data?.errorMessage) {
 					reject(data);
 				} else {
 					if (hasCallBack && callBack) {

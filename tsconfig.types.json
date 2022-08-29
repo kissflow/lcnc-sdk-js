@@ -1,6 +1,11 @@
 {
 	"include": ["./src/"],
-	"exclude": ["./src/constants.ts", "./src/base.ts", "./src/types.ts", "./src/index.ts"],
+	"exclude": [
+		"./src/constants.ts",
+		"./src/base.ts",
+		"./src/types.ts",
+		"./src/index.ts"
+	],
 	"compilerOptions": {
 		"baseUrl": ".",
 		"target": "es6",
