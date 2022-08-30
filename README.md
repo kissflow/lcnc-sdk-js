@@ -12,7 +12,6 @@ promise.
 import KFSDK from "@kissflow/lowcode-client-sdk";
 let kf;
 (async function () {
-	// Immediately invoked function.
 	kf = await KFSDK.initialise();
 })();
 ```
@@ -22,18 +21,17 @@ let kf;
 SDK can also be loaded directly into HTML by adding:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@kissflow/lowcode-client-sdk@1/dist/kfsdk.umd.js"></script>
+<script src="https://unpkg.com/@kissflow/lowcode-client-sdk@latest/dist/kfsdk.umd.js""></script>
 ```
 
 > Then SDK can be initialized anywhere by declaring:
 
 ```js
 let kf;
-(async function () {
+window.onload = async function () {
 	kf = await window.kf.initialise();
-})();
+};
 ```
-
 
 ## 1) Context Functions
 
