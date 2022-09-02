@@ -48,14 +48,14 @@ let resp = await kf.api(url, config)
 - [1. Context](#1-context)
     - [Custom Components](#custom-component)
     - [Form](#custom-component)
-        - [Table Form](#table-form)
+        - [Form Table](#form-table)
         - [Table Row](#table-row)
 - [2. Client](#2-client)
 - [3. Application](#3-application)
 - [4. Page](#4-page)
 - [5. Component](#5-component)
 - [6. Popup](#6-popup)
-- [7. Formatter](#7-fformatter)
+- [7. Formatter](#7-formatter)
 
 ## 1) Context
 
@@ -267,7 +267,7 @@ const json = await kf.context.toJSON();
 
 ---
 
-### 2) Client Functions
+### 2) Client
 
 ##### Show Toast
 ```js
@@ -304,8 +304,9 @@ await kf.app.setVariable({
 ```
 
 ##### Open a page
+`openPage(id)` returns [Page](#4-page) class instance
 ```js
-let pageInputParameters = {
+const pageInputParameters = {
 	param1: value,
 	param2: value
 };
@@ -331,15 +332,15 @@ let allParams = await kf.app.page.getAllParameters();
 ```
 
 ##### Access a Component
-`getComponent` returns a component class
+`getComponent` returns a [Component](#5-component) class.
 ```js
 const componentName = await kf.app.page.getComponent("componentId");
 ```
 
 ##### Open a popup
-`openPoup` returns a Popup class.
+`openPoup` returns a [Popup](#6-popup) class.
 ```js
-kf.app.page.openPopup("popupId", { inputParam1: 2 });
+kf.app.page.openPopup("popupId", { inputParam1: "value" });
 // Note: Popup parameters are optional.
 ```
 
