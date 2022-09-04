@@ -1,52 +1,73 @@
 # _Kissflow Lowcode JavaScript SDK_
 
 JavaScript SDK for developing over the Kissflow lowcode platform
-
 ### Use as an `npm` module
 
-Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import
-into your project: Note: Initializing Kf SDK in custom components returns a
-promise.
-
+Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import into your project:
 ```js
 import KFSDK from "@kissflow/lowcode-client-sdk";
 let kf;
 (async function () {
-	kf = await KFSDK.initialise();
+	kf = await KFSDK.initialize();
 })();
 ```
-
+> Note: Initializing Kf SDK in custom components returns a promise.
 ### Use as a `<script>` tag directly in HTML
 
 SDK can also be loaded directly into HTML by adding:
-
 ```html
-<script src="https://unpkg.com/@kissflow/lowcode-client-sdk@latest/dist/kfsdk.umd.js""></script>
+<script src="https://unpkg.com/@kissflow/lowcode-client-sdk@latest/dist/kfsdk.umd.js"></script>
 ```
-
-> Then SDK can be initialized anywhere by declaring:
-
+Then SDK can be initialized as:
 ```js
 let kf;
 window.onload = async function () {
-	kf = await window.kf.initialise();
+	kf = await window.kf.initialize();
 };
 ```
 
-## 1) Context Functions
+### User and Account details
+Details of authenticated user can be accessed as following
+```js
+const { Name, Email, UserType, _id } = kf.user
+```
+And account id can be accessed as `kf.account._id`
 
-Context functions are polymorphic, it has different classes based on execution
-context.
+### Fetch Api through sdk
+Fetch any other kissflow api & external api using this method.
+kf.api has header tokens by default for making authenticated kissflow api calls
+> Note: This method has a limit of 10 seconds for an api call
 
-### Custom component functions
+```js
+kf.api(url, config).then((res) => {...})
+// or
+let resp = await kf.api(url, config)
+```
 
-`kf.context` returns a `CustomComponent` class while using inside custom
-component. Custom component supported functions:
+## Table of contents
+- [1. Context](#1-context)
+    - [Custom Components](#custom-component)
+    - [Form](#custom-component)
+        - [Form Table](#form-table)
+        - [Table Row](#table-row)
+- [2. Client](#2-client)
+- [3. Application](#3-application)
+- [4. Page](#4-page)
+- [5. Component](#5-component)
+- [6. Popup](#6-popup)
+- [7. Formatter](#7-formatter)
+
+## 1) Context
+
+Context methods are polymorphic, it has different classes pre-initialized based on execution context.
+
+### Custom component
+
+`kf.context` returns a `CustomComponent` class while using inside custom component. Custom component supported methods:
 
 ##### a) Watch Params
 
-Listens for changes in parameter given to custom components in lowcode
-application.
+Listens for changes in parameter given to custom components in lowcode application.
 
 ```js
 kf.context.watchParams(function (data) {
@@ -54,20 +75,16 @@ kf.context.watchParams(function (data) {
 });
 ```
 
-### Main form functions
+### Kissflow Forms
 
-`kf.context` returns a `Form` class when it is used inside a kissflow's form
-that could be either Process, case or Dataform & it has following supported
-functions
+`kf.context` returns a `Form` class when it is used inside a kissflow's form that could be either Process, case or Dataform & it has following supported methods
 
 ##### a) getField()
 
 ###### Description:
-
 Use this function to get the current value of a form field
 
 ###### Syntax:
-
 ```js
 kf.context.getField(fieldId).then((res) => {...})
 // or
@@ -77,11 +94,9 @@ let value = await kf.context.getField(fieldId)
 ##### b) updateField()
 
 ###### Description:
-
 Use this function to get update any field in the form
 
 ###### Syntax:
-
 ```js
 kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
@@ -89,17 +104,14 @@ kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ##### c) toJSON()
 
 ###### Description:
-
 Use this function to get the JSON data of the current form
 
 ###### Syntax:
-
 ```js
 const json = await kf.context.toJSON();
 ```
 
 ###### Output:
-
 ```
 {
     "Untitled_Field": "testing",
@@ -110,21 +122,16 @@ const json = await kf.context.toJSON();
 }
 ```
 
----
+### Form Table
 
-### Table functions
-
-`kf.currentForm.getTable(tableId)` returns a `Table` class which has the
-following functions
+`kf.context.getTable(tableId)` returns a `Table` class which has the following methods
 
 #### a) addRow()
 
 ###### Description:
-
 Appends row details to the end of table.
 
 ###### Syntax:
-
 ```js
 const table = kf.context.getTable(tableId);
 table.addRow({ columnId1: value, columnId2: value });
@@ -133,11 +140,9 @@ table.addRow({ columnId1: value, columnId2: value });
 #### b) deleteRow()
 
 ###### Description:
-
 Deletes a row from the table based on the row id
 
 ###### Syntax:
-
 ```js
 const table = kf.context.getTable(tableId);
 table.deleteRow(rowId);
@@ -146,50 +151,41 @@ table.deleteRow(rowId);
 #### c) getRow()
 
 ###### Description:
-
 Use this function to perform form actions on any row inside a child table
 
 ###### Syntax:
-
 ```js
 const table = kf.context.getTable(tableId);
 const row = table.getRow(rowId);
 ```
 
 ###### Output:
-
 Returns an instance of `TableForm` class
 
 #### d) getRows()
 
 ###### Description:
-
 Gets all the rows of the table
 
 ###### Syntax:
-
 ```js
 const rows = await kf.context.getTable(tableId).getRows();
 ```
 
 ###### Output:
-
 Returns an array of `TableForm` instances
 
 ##### e) toJSON()
 
 ###### Description:
-
 Use this function to get the JSON data of the child table
 
 ###### Syntax:
-
 ```js
 const json = await kf.context.getTable(tableId).toJSON();
 ```
 
 ###### Output:
-
 ```
 [{
     "Untitled_Field": "row 1",
@@ -206,20 +202,17 @@ const json = await kf.context.getTable(tableId).toJSON();
 }]
 ```
 
----
+### Table Row
 
-### Table Row functions
-
-`kf.currentForm` returns a `TableForm` class which has the following functions
+A single row inside a table is known as Table row
+`kf.context` returns a `TableForm` class which has the following methods
 
 ##### a) getField()
 
 ###### Description:
-
 Use this function to get the value of the table row
 
 ###### Syntax:
-
 ```js
 kf.context.getField(fieldId).then((res) => {...})
 // or
@@ -229,47 +222,39 @@ let value = await kf.context.getField(fieldId)
 ##### b) updateField()
 
 ###### Description:
-
 Use this function to get update any field in the table row
 
 ###### Syntax:
-
 ```js
-kf.currentForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
+kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
 
 ##### c) getParent()
 
 ###### Description:
-
 Use this function to perform form actions on the main form
 
 ###### Syntax:
-
 ```js
 const mainForm = kf.context.getParent();
 mainForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
 
 ###### Output:
-
 Returns an instance of `Form` class using which we can perform any action on the
 main form
 
 ##### d) toJson()
 
 ##### Description:
-
 Get JSON output of table row
 
 ##### Syntax:
-
 ```js
 const json = await kf.context.toJSON();
 ```
 
 ###### Output:
-
 ```
 {
     "Untitled_Field": "testing",
@@ -282,68 +267,33 @@ const json = await kf.context.toJSON();
 
 ---
 
-### 2) Client Functions
+### 2) Client
 
 ##### Show Toast
-
 ```js
 kf.client.showInfo(message);
 ```
 
 ##### Show confirm
-
 ```js
 kf.client.showConfirm({ title, content });
 ```
 
 ##### Redirect to URL
-
 ```js
 kf.client.redirect(url);
 ```
 
----
+### 3) Application
 
-### 3) Component Functions
-
-getComponent(id) inside page returns component class instance.
-
-```js
-const componentName = await kf.app.page.getComponent(componentId);
-```
-
-By using component instance we can invoke following methods.
-
-#### Refresh a component
-
-```js
-componentName.refresh();
-```
-
-#### Show a component
-
-```js
-componentName.show();
-```
-
-#### Hide a component
-
-```js
-componentName.hide();
-```
-
-### 4) Lowcode application functions
-
-Application variables has global context to application,
+`kf.app` represents the active kissflow app and `kf.app._id` returns its id.
 
 ##### Get value to application variable
-
 ```js
 const appVarible1 = await kf.app.getVariable("variableId");
 ```
 
 ##### Set value of application variable
-
 ```js
 let value = await kf.app.setVariable("variableId", value);
 // or
@@ -354,52 +304,93 @@ await kf.app.setVariable({
 ```
 
 ##### Open a page
-
-> Note: Page Input parameters are optional.
-
+`openPage(id)` returns [Page](#4-page) class instance
 ```js
-let pageInputParameters = {
+const pageInputParameters = {
 	param1: value,
 	param2: value
 };
 kf.app.openPage(pageId, pageInputParameters);
+// Note: Page Input parameters are optional.
 ```
 
-##### Get values of page input parameters
+### 4) Page
+`kf.app.page` returns the active page opened inside application and `kf.app.page._id` returns its id.
 
+##### Page parameters
 ```js
-let value = await kf.app.page.getParameter();
+let value = await kf.app.page.getParameter("parameterId"); // for retreiving single parameter
+```
+Get all page parameters
+```js 
+let allParams = await kf.app.page.getAllParameters(); 
+// returns an object
+{ 
+    parameterName: "Sample value",
+    parameterName2: "Sample value 2"
+}
+```
+
+##### Access a Component
+`getComponent` returns a [Component](#5-component) class.
+```js
+const componentName = await kf.app.page.getComponent("componentId");
 ```
 
 ##### Open a popup
+`openPoup` returns a [Popup](#6-popup) class.
+```js
+kf.app.page.openPopup("popupId", { inputParam1: "value" });
+// Note: Popup parameters are optional.
+```
+
+### 5) Component
 
 ```js
-kf.app.page.openPopup(popupId, { inputParam1: 2 });
+const component = await kf.app.page.getComponent(componentId);
+```
+By using component instance we can invoke following methods.
+
+##### Refresh a component
+```js
+component.refresh();
+```
+
+##### Show a component
+```js
+componentName.show();
+```
+
+##### Hide a component
+```js
+component.hide();
+```
+### 6) Popup
+`kf.app.page.popup` returns the active popup instance opened inside the page and its id can be accessed via `kf.app.page.popup._id`
+And `kf.app.page.getPopup(id)` returns this popup class instance.
+
+##### Popup parameters
+```js
+let value = await kf.app.page.popup.getParameter("parameterId"); // for retreiving single popup parameter
+```
+Get all popup parameters
+```js 
+let allParams = await kf.app.page.popup.getAllParameters(); 
+// returns an object
+{ 
+    parameterName: "Sample value",
+    parameterName2: "Sample value 2"
+}
 ```
 
 ##### Close popup
-
-> Closes the active popup in the page.
-
 ```js
-kf.app.page.closePopup();
+    kf.app.page.popup.close() // for active popup
+    // or if you already have a popup instance...
+    greetPopup.close();
 ```
 
-### 5) Fetch Api through kf sdk
-
-Fetch any external api & other kissflow api using this method.
-
-> Note: This method has a limit of 10 seconds for an api call
-
-```js
-kf.api(url, config).then((res) => {...})
-// or
-let resp = await kf.api(url, config)
-```
-
----
-
-### 6) Formatter Functions
+### 7) Formatter
 
 ##### Format to KF Date
 
@@ -451,4 +442,3 @@ let value = await kf.formatter.toBoolean("0");
 let value = await kf.formatter.toBoolean("false");
 ```
 
----

@@ -21,7 +21,7 @@ class CustomComponentSDK extends BaseSDK {
 	api(url: string, args = {}): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
 	}
-	initialise() {
+	initialize() {
 		return this._postMessageAsync(
 			LISTENER_CMDS.INITIALIZE_CUST_COMP,
 			{},
