@@ -1,5 +1,4 @@
 import { BaseSDK } from "./base";
-import { LISTENER_CMDS } from "./constants";
 import { Form } from "./form";
 import { TableForm } from "./form";
 import { Client } from "./client";
@@ -9,6 +8,7 @@ import { Page } from "./page";
 import { Component } from "./component";
 import { Popup } from "./popup";
 
+import { LISTENER_CMDS } from "./constants";
 import { SDKContext } from "./types/internal";
 import { userObject, accountObject } from "./types/external";
 
@@ -19,6 +19,7 @@ class LowcodeSDK extends BaseSDK {
 	app: Application;
 	user: userObject;
 	account: accountObject;
+	#csrfToken: string;
 
 	constructor(props: SDKContext) {
 		super({});
@@ -44,9 +45,30 @@ class LowcodeSDK extends BaseSDK {
 		}
 		this.user = props.user;
 		this.account = props.account;
+		this.#csrfToken = props.csrfToken;
 	}
-	api(url: string, args = {}): string | object {
-		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
+	async api(
+		url: string,
+		args?: {
+			headers: object;
+		}
+	) {
+		if (!globalThis.fetch) {
+			return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
+		}
+		const response = await globalThis.fetch(url, {
+			...args,
+			headers: {
+				...(args?.headers || {}),
+				"X-Csrf-Token": this.#csrfToken
+			}
+		});
+		const contentType = response.headers.get("content-type");
+		if (contentType && contentType.includes("application/json")) {
+			return await response.json();
+		} else {
+			return response;
+		}
 	}
 }
 

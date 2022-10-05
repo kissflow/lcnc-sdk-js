@@ -11,6 +11,7 @@ export interface SDKContext {
 	popupId: string;
 	user: userObject;
 	account: accountObject;
+	csrfToken: string;
 }
 
 export interface manifestMethodsType {
