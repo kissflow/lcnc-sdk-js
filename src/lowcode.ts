@@ -53,9 +53,6 @@ class LowcodeSDK extends BaseSDK {
 			headers: object;
 		}
 	) {
-		if (!globalThis.fetch) {
-			return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
-		}
 		const response = await globalThis.fetch(url, {
 			...args,
 			headers: {
