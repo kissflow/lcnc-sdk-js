@@ -38,6 +38,9 @@ class CustomComponentSDK extends BaseSDK {
 			}
 		);
 	}
+	initialise() {
+		return this.initialize();
+	}
 }
 
 export default new CustomComponentSDK();
