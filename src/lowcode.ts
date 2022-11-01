@@ -8,9 +8,8 @@ import { Page } from "./page";
 import { Component } from "./component";
 import { Popup } from "./popup";
 
-import { LISTENER_CMDS } from "./constants";
 import { SDKContext } from "./types/internal";
-import { userObject, accountObject } from "./types/external";
+import { userObject, accountObject, environmentObject } from "./types/external";
 
 class LowcodeSDK extends BaseSDK {
 	context: Component | Form | TableForm | Page | Popup;
@@ -18,6 +17,7 @@ class LowcodeSDK extends BaseSDK {
 	formatter: Formatter;
 	app: Application;
 	user: userObject;
+	env: environmentObject;
 	account: accountObject;
 	#csrfToken: string;
 
@@ -44,6 +44,7 @@ class LowcodeSDK extends BaseSDK {
 			this.app = new Application(props);
 		}
 		this.user = props.user;
+		this.env = props.envDetails;
 		this.account = props.account;
 		this.#csrfToken = props.csrfToken;
 	}

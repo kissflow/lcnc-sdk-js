@@ -9,3 +9,7 @@ export type userObject = {
 export type accountObject = {
 	_id: string;
 };
+
+export type environmentObject = {
+	isMobile: boolean
+}

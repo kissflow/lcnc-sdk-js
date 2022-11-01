@@ -12,6 +12,9 @@ export interface SDKContext {
 	user: userObject;
 	account: accountObject;
 	csrfToken: string;
+	envDetails: {
+		isMobile: boolean
+	}
 }
 
 export interface manifestMethodsType {
