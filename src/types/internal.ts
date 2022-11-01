@@ -1,4 +1,4 @@
-import { userObject, accountObject } from "./external";
+import { userObject, accountObject, environmentObject } from "./external";
 
 export interface SDKContext {
 	formInstanceId: string;
@@ -12,6 +12,7 @@ export interface SDKContext {
 	user: userObject;
 	account: accountObject;
 	csrfToken: string;
+	envDetails: environmentObject;
 }
 
 export interface manifestMethodsType {

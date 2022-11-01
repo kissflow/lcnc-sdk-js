@@ -5,7 +5,8 @@ import { Formatter } from "./formatter";
 import { Application } from "./app";
 import { Page } from "./page";
 import { CustomComponent } from "./component";
-import { userObject, accountObject } from "./types/external";
+
+import { userObject, accountObject, environmentObject } from "./types/external";
 
 class CustomComponentSDK extends BaseSDK {
 	app: Application;
@@ -15,6 +16,8 @@ class CustomComponentSDK extends BaseSDK {
 	context: CustomComponent;
 	client: Client;
 	formatter: Formatter;
+	env: environmentObject;
+
 	constructor() {
 		super({});
 	}
@@ -34,6 +37,7 @@ class CustomComponentSDK extends BaseSDK {
 				this.formatter = new Formatter({});
 				this.user = data.user;
 				this.account = data.account;
+				this.env = data.envDetails;
 				return this;
 			}
 		);
