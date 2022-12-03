@@ -31,10 +31,10 @@ jobs:
           version: 7
           run_install: |
             - args: [--frozen-lockfile, --strict-peer-dependencies=false]
+            
       - name: git config
-        run: |
-          git config --global user.name "sara"
-          git config --global user.email "saravanan.10393@gmail.com"
+      - run: git config --global user.email "saravanan.10393@gmail.com"
+      - run: git config --global user.name "sara"
             
       - name: Run build
         run:  pnpm run build
