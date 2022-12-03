@@ -33,8 +33,9 @@ jobs:
             - args: [--frozen-lockfile, --strict-peer-dependencies=false]
 
       - name: git config
-        run: git config --global user.email "saravanan.10393@gmail.com"
-        run: git config --global user.name "sara"
+        run: |
+          git config --global user.email "saravanan.10393@gmail.com"
+          git config --global user.name "sara"
             
       - name: Run build
         run:  pnpm run build
