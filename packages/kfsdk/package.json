@@ -1,0 +1,45 @@
+{
+	"name": "@kissflow/lowcode-client-sdk",
+	"version": "1.0.11",
+	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist/*"
+	],
+	"type": "module",
+	"main": "./dist/kfsdk.umd.js",
+	"module": "./dist/kfsdk.es.js",
+	"exports": {
+		".": {
+			"import": "./dist/kfsdk.es.js",
+			"require": "./dist/kfsdk.umd.js"
+		},
+		"./lowcode": {
+			"import": "./dist/kfworkersdk.es.js"
+		}
+	},
+	"scripts": {
+		"start": "vite serve",
+		"customBuild": "node custom.build.mjs",
+		"build": "pnpm run customBuild",
+		"prepare": "pnpm run customBuild",
+		"serve": "http-server -p 8080"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kissflow/lcnc-sdk-js.git"
+	},
+	"keywords": [],
+	"author": "Vivek Madurai<vivek@kissflow.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/kissflow/lcnc-sdk-js/issues"
+	},
+	"homepage": "https://github.com/kissflow/lcnc-sdk-js#readme",
+	"dependencies": {
+		"@lingui/cli": "^3.13.3",
+		"@lingui/react": "^2",
+		"nanoid": "^3.1.30",
+		"ts-file-parser": "0.0.21"
+	}
+}

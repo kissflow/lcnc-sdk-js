@@ -1,8 +1,9 @@
 import { nanoid } from "nanoid";
 
+import { globalInstances } from "./utils";
 import { LISTENER_CMDS } from "./constants";
 
-function generateId(prefix = "lcncsdk") {
+export function generateId(prefix = "lcncsdk") {
 	return `${prefix}-${nanoid()}`;
 }
 
@@ -59,23 +60,39 @@ export class BaseSDK {
 		});
 	}
 
-	_postMessage(command: string, func: (data: any) => {}, args = {}) {
+	_postMessage(command: string, func: (data: any) => void, args = {}) {
 		const _id = generateId(command.toLowerCase());
 		postMessage({ _id, command, ...args });
 		this.#addListener(_id, (data: any) => func(data));
+	}
+
+	_postMessageSync(command:string, args = {}) {
+		const _id = generateId(command.toLowerCase());
+		const sab = new SharedArrayBuffer(1024 * 1024);
+		const int32Array = new Int32Array(sab);
+		int32Array[0] = 0;
+		postMessage({ _id, command, sab: sab, ...args });
+		Atomics.wait(int32Array, 0, 0);
+		let result = "";
+		let dataLength = Atomics.load(int32Array, 0);
+		for(let i = 1; i <= dataLength; i++) {
+			result += String.fromCharCode(int32Array[i]);
+		}
+		return JSON.parse(result).value;
 	}
 
 	_registerEventListener(_id: string, eventType: string, callback: any) {
 		this.#appendEventListeners(_id, eventType, callback);
 	}
 
-	#checkEvents(data: any) {
-		const { _id, eventType, eventParams } = data;
-		if (!_id || !eventType) return;
-		const eventListener = this.#eventListeners[_id] || {};
-		if (eventListener[eventType]) {
-			eventListener[eventType](eventParams || {});
-		}
+	#checkEvents(event: any) {
+		const { _id, target, data, eventName, eventParams } = event;
+		if (!target) return;
+		// const eventListener = this.#eventListeners[_id] || {};
+		// if (eventListener[eventType]) {
+		// 	eventListener[eventType](eventParams || {});
+		// }
+		globalInstances[target]?.triggerEvent(eventName, data);
 	}
 
 	#onMessage(event: any) {

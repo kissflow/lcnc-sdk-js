@@ -7,6 +7,7 @@ import { Application } from "./app";
 import { Page } from "./page";
 import { Component } from "./component";
 import { Popup } from "./popup";
+import { window } from "./window"
 
 import { SDKContext } from "./types/internal";
 import { userObject, accountObject, environmentObject } from "./types/external";
@@ -74,4 +75,4 @@ function initSDK(config: SDKContext): LowcodeSDK {
 	return new LowcodeSDK(config);
 }
 
-export default initSDK;
+export { window, initSDK as default };
