@@ -10,15 +10,13 @@ export class Component extends BaseSDK {
 		super({});
 		this._id = props.componentId;
 		this.type = "Component";
-		if (props?.manifestMethods?.length > 0) {
-			props.manifestMethods.forEach((method) => {
-				this[method.name] = (...args) =>
-					this._postMessageAsync(`COMPONENT_${method.name}`, {
-						id: this._id,
-						parameters: args
-					});
-			});
-		}
+		props.manifestMethods?.forEach((method) => {
+			this[method.name] = (...args) =>
+				this._postMessageAsync(`COMPONENT_${method.name}`, {
+					id: this._id,
+					parameters: args
+				});
+		});
 	}
 	refresh() {
 		return this._postMessageAsync(LISTENER_CMDS.COMPONENT_REFRESH, {
