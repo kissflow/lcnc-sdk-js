@@ -10,6 +10,15 @@ export class Component extends BaseSDK {
 		super({});
 		this._id = props.componentId;
 		this.type = "Component";
+		if (props?.manifestMethods?.length > 0) {
+			props.manifestMethods.forEach((method) => {
+				this[method.name] = (...args) =>
+					this._postMessageAsync(`COMPONENT_${method.name}`, {
+						id: this._id,
+						parameters: args
+					});
+			});
+		}
 	}
 	refresh() {
 		return this._postMessageAsync(LISTENER_CMDS.COMPONENT_REFRESH, {
@@ -32,7 +41,7 @@ export class CustomComponent extends BaseSDK {
 	type: string;
 	constructor() {
 		super({});
-		this.type = "CustomComponent"
+		this.type = "CustomComponent";
 	}
 	watchParams(func: (data: any) => any) {
 		this._postMessage(LISTENER_CMDS.PARAMS, func);
