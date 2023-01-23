@@ -10,7 +10,7 @@ export class Component extends BaseSDK {
 		super({});
 		this._id = props.componentId;
 		this.type = "Component";
-		props.manifestMethods?.forEach((method) => {
+		props.componentMethods?.forEach((method) => {
 			this[method.name] = (...args) =>
 				this._postMessageAsync(`COMPONENT_${method.name}`, {
 					id: this._id,
