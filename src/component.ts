@@ -1,23 +1,56 @@
-import { BaseSDK } from "./base";
-import { LISTENER_CMDS } from "./constants";
+import { BaseSDK, EventBase } from "./base";
+import { LISTENER_CMDS, EVENT_TYPES } from "./constants";
+
+import { globalInstances } from "./utils";
 
 import { ComponentProps } from "./types/internal";
 
-export class Component extends BaseSDK {
+export class Component extends EventBase {
 	_id: string;
 	type: string;
-	constructor(props: ComponentProps) {
-		super({});
-		this._id = props.componentId;
-		this.type = "Component";
-		props.componentMethods?.forEach((method) => {
-			this[method.name] = (...args) =>
-				this._postMessageAsync(`COMPONENT_${method.name}`, {
-					id: this._id,
-					parameters: args
-				});
+
+	#registerComponentAPIs(componentAPIs) {
+		componentAPIs?.forEach((Api) => {
+			this[Api.name] = (...args) => {
+				if (Api.type === "method") {
+					return this._postMessageAsync(`COMPONENT_${Api.name}`, {
+						id: this._id,
+						parameters: args
+					});
+				} else if (Api.type === "event") {
+					this._postMessage(
+						LISTENER_CMDS.COMPONENT_ADD_EVENT_LISTENER,
+						{
+							id: this._id,
+							eventName: Api.name,
+							eventConfig: Api.eventConfig
+						}
+					);
+					this.addEventListener(Api.name, args[0]);
+				}
+			};
 		});
 	}
+
+	constructor(props: ComponentProps) {
+		super();
+		this._id = props.componentId;
+		this.type = "Component";
+		globalInstances[this._id] = this;
+		this.#registerComponentAPIs(props.componentMethods);
+	}
+
+	onMount(callback: Function): void {
+		this._postMessage(LISTENER_CMDS.COMPONENT_ADD_EVENT_LISTENER, {
+			id: this._id,
+			eventName: EVENT_TYPES.COMPONENT_ON_MOUNT,
+			eventConfig: {
+				once: true
+			}
+		});
+		this.addEventListener(EVENT_TYPES.COMPONENT_ON_MOUNT, callback);
+	}
+
 	refresh() {
 		return this._postMessageAsync(LISTENER_CMDS.COMPONENT_REFRESH, {
 			id: this._id

@@ -28,7 +28,7 @@ export class Popup extends BaseSDK {
 	}
 	getComponent(componentId: string): Component {
 		return this._postMessageAsync(
-			LISTENER_CMDS.GET_COMPONENT,
+			LISTENER_CMDS.COMPONENT_GET,
 			{ componentId },
 			true, // has callBack
 			(data) => {

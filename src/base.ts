@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 
 import { LISTENER_CMDS } from "./constants";
+import { globalInstances, globalMessageListeners } from "./utils";
 
 function generateId(prefix = "lcncsdk") {
 	return `${prefix}-${nanoid()}`;
@@ -8,33 +9,29 @@ function generateId(prefix = "lcncsdk") {
 
 function postMessage(args: any) {
 	// console.log("SDK : @postMessage ", args);
-	if (self.parent && self.parent !== self) {
-		self.parent.postMessage(args, "*");
+	if (globalThis.parent && globalThis.parent !== globalThis) {
+		globalThis.parent.postMessage(args, "*");
 	} else {
-		self.postMessage(args);
+		globalThis.postMessage(args);
 	}
 }
 
 export class BaseSDK {
-	#listeners: any;
-	#eventListeners: object;
 	constructor(props: any) {
-		// console.log("SDK : Initializing ", props);
-		this.#listeners = {};
-		this.#eventListeners = {};
-		self.addEventListener("message", this.#onMessage.bind(this), false);
-	}
-
-	#addListener(_id: string, callback: any) {
-		this.#listeners[_id] = this.#listeners[_id] || [];
-		this.#listeners[_id].push(callback);
-	}
-
-	#appendEventListeners(_id: string, eventType: string, callback: any) {
-		if (!this.#eventListeners[_id]) {
-			this.#eventListeners[_id] = {};
+		if (!globalInstances["base"]) {
+			globalThis.addEventListener(
+				"message",
+				this.#onMessage.bind(this),
+				false
+			);
+			globalInstances["base"] = this;
 		}
-		this.#eventListeners[_id][eventType] = callback;
+	}
+
+	#addMessageListener(_id: string, callback: any) {
+
+		globalMessageListeners[_id] = globalMessageListeners[_id] || [];
+		globalMessageListeners[_id].push(callback);
 	}
 
 	_postMessageAsync(
@@ -46,7 +43,7 @@ export class BaseSDK {
 		return new Promise((resolve, reject) => {
 			const _id = generateId(command.toLowerCase());
 			postMessage({ _id, command, ...args });
-			this.#addListener(_id, async (data: any) => {
+			this.#addMessageListener(_id, async (data: any) => {
 				if (data?.errorMessage) {
 					reject(data);
 				} else {
@@ -59,34 +56,30 @@ export class BaseSDK {
 		});
 	}
 
-	_postMessage(command: string, func: (data: any) => {}, args = {}) {
+	_postMessage(command: string, args) {
 		const _id = generateId(command.toLowerCase());
 		postMessage({ _id, command, ...args });
-		this.#addListener(_id, (data: any) => func(data));
+		// this.#addMessageListener(_id, (data: any) => func(data));
 	}
 
-	_registerEventListener(_id: string, eventType: string, callback: any) {
-		this.#appendEventListeners(_id, eventType, callback);
-	}
-
-	#checkEvents(data: any) {
-		const { _id, eventType, eventParams } = data;
-		if (!_id || !eventType) return;
-		const eventListener = this.#eventListeners[_id] || {};
-		if (eventListener[eventType]) {
-			eventListener[eventType](eventParams || {});
+	#executeEvent(eventData: any) {
+		const { target, eventParams, eventName, eventConfig = {} } = eventData;
+		if (!target) return;
+		globalInstances[target]?.triggerEvent(eventName, eventParams);
+		if (eventConfig.once) {
+			globalInstances[target]?.removeEventListener(eventName);
 		}
 	}
 
 	#onMessage(event: any) {
-		if (event.origin !== self.location.origin) {
+		if (event.origin !== globalThis.location.origin) {
 			// console.log("SDK : @onMessage ", event);
 			const data = event.data;
 			if (data.isEvent) {
-				return this.#checkEvents(data);
+				return this.#executeEvent(data);
 			}
 			const _req = data?._req || {};
-			let listeners = this.#listeners[_req?._id] || [];
+			let listeners = globalMessageListeners[_req?._id] || [];
 			if (listeners) {
 				listeners.forEach((listener: any) => {
 					try {
@@ -105,5 +98,40 @@ export class BaseSDK {
 				});
 			}
 		}
+	}
+}
+
+export class EventBase extends BaseSDK {
+	#eventListeners: {
+		[key: string]: Function[];
+	};
+
+	constructor() {
+		super({});
+		this.#eventListeners = {};
+	}
+
+	addEventListener(eventName: string, callBack: Function) {
+		this.#eventListeners[eventName] =
+			this.#eventListeners?.[eventName] || [];
+		this.#eventListeners[eventName].push(callBack);
+	}
+
+	removeEventListener(eventName: string, callBack?: any) {
+		if (callBack) {
+			let index = this.#eventListeners[eventName].findIndex(callBack);
+			index > -1 && this.#eventListeners[eventName].splice(index, 1);
+			return;
+		}
+		Reflect.deleteProperty(this.#eventListeners, eventName);
+	}
+	triggerEvent(eventName: string, data: object) {
+		if (Array.isArray(this.#eventListeners[eventName])) {
+			this.#eventListeners[eventName].forEach((callBack) =>
+				callBack(data)
+			);
+			return true;
+		}
+		return false;
 	}
 }
