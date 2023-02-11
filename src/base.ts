@@ -19,7 +19,7 @@ function postMessage(args: any) {
 function onMessage(event) {
 	if (event.origin !== globalThis.location.origin) {
 		const data = event.data;
-		if (data.isEvent) {
+		if (data?.isEvent) {
 			const { target, eventParams, eventName, eventConfig = {} } = data;
 			let targetInstance = globalInstances[target];
 			targetInstance._dispatchEvent(eventName, eventParams);
@@ -28,9 +28,11 @@ function onMessage(event) {
 			}
 			return;
 		}
-		let { _req: req, res } = data;
-		let targetInstance = globalInstances[req._id];
-		targetInstance._dispatchMessageEvents(req, res);
+		let { _req: req, resp } = data;
+		if (req?._id) {
+			let targetInstance = globalInstances[req._id];
+			targetInstance._dispatchMessageEvents(req, resp);
+		}
 	}
 }
 
