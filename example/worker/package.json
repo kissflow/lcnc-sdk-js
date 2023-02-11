@@ -9,7 +9,8 @@
     "serve": "vite serve"
   },
   "dependencies": {
-    "@kissflow/lowcode-client-sdk": "workspace:latest"
+    "@kissflow/lowcode-client-sdk": "workspace:latest",
+    "serve-handler": "^6.1.5"
   },
   "keywords": [],
   "author": "",

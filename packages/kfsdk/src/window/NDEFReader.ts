@@ -4,6 +4,10 @@ class EventTarget extends BaseSDK {
   #listeners: {
     [key: string]: Function[]
   };
+  constructor(args) {
+    super(args);
+    this.#listeners = {};
+  }
   addEventListener(eventName: string, cb: Function) {
     this.#listeners[eventName] = this.#listeners[eventName] || [];
     this.#listeners[eventName].push(cb);
@@ -33,7 +37,8 @@ export class NDEFReader extends EventTarget{
   scan() {
     return new Promise((resolve, reject) => {
       this._postMessage("WINDOW_NDEFReader_SCAN", ({data, err}) => {
-        
+        console.log("scan data from main window ", data );
+        resolve(data);
       }, {id: this.id, operation: "scan"});
     });
   }
@@ -47,6 +52,22 @@ export class NDEFReader extends EventTarget{
 
   addEventListener(eventName: string, cb: Function): void {
     super.addEventListener(eventName, cb);
-    this._postMessage("WINDOW_NDEFReader_ADDEVENTLISTENER", () => {}, {id: this.id, operation: "addEventListener", eventName});
+    this._postMessage("WINDOW_NDEFReader_ADD_EVENT_LISTENER", () => {}, {id: this.id, operation: "addEventListener", eventName});
+  }
+
+  makeReadOnly() {
+    return new Promise((resolve, reject) => {
+      this._postMessage("WINDOW_NDEFReader_MAKE_READONLY", ({data, err}) => {
+          
+      }, {id: this.id, operation: "makeReadOnly"});
+     });
+  }
+
+  abortScan() {
+    return new Promise((resolve, reject) => {
+      this._postMessage("WINDOW_NDEFReader_ABORT_SCAN", ({data, err}) => {
+          
+      }, {id: this.id, operation: "abortScan"});
+     });
   }
 }
