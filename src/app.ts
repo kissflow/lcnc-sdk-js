@@ -8,7 +8,7 @@ export class Application extends BaseSDK {
 	page: Page;
 	_id: string;
 	constructor(props: AppContext) {
-		super({});
+		super();
 		this._id = props.appId;
 		this.page = new Page(props);
 	}

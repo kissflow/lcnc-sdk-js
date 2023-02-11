@@ -11,7 +11,7 @@ export class Page extends BaseSDK {
 	popup: Popup;
 	type: string;
 	constructor(props: PageContext) {
-		super({});
+		super();
 		this.type = "Page";
 		this.popup = new Popup({});
 		this._id = props.pageId;

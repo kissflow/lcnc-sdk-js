@@ -22,7 +22,7 @@ class LowcodeSDK extends BaseSDK {
 	#csrfToken: string;
 
 	constructor(props: SDKContext) {
-		super({});
+		super();
 		if (props.tableId && props.tableRowId) {
 			this.context = new TableForm(
 				props.formInstanceId,
@@ -38,8 +38,8 @@ class LowcodeSDK extends BaseSDK {
 		} else if (props.componentId) {
 			this.context = new Component(props);
 		}
-		this.client = new Client({});
-		this.formatter = new Formatter({});
+		this.client = new Client();
+		this.formatter = new Formatter();
 		if (props.appId) {
 			this.app = new Application(props);
 		}

@@ -8,7 +8,7 @@ export class Popup extends BaseSDK {
 	_id: string;
 	type: string;
 	constructor(props: PopupContext) {
-		super({});
+		super();
 		this.type = "Popup";
 		this._id = props.popupId || DEFAULTS.POPUP_ID;
 	}

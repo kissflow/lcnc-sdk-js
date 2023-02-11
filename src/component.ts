@@ -5,7 +5,7 @@ import { globalInstances } from "./utils";
 
 import { ComponentProps } from "./types/internal";
 
-export class Component extends EventBase {
+export class Component extends BaseSDK {
 	_id: string;
 	type: string;
 
@@ -26,7 +26,7 @@ export class Component extends EventBase {
 							eventConfig: Api.eventConfig
 						}
 					);
-					this.addEventListener(Api.name, args[0]);
+					this._addEventListener(Api.name, args[0]);
 				}
 			};
 		});
@@ -48,7 +48,7 @@ export class Component extends EventBase {
 				once: true
 			}
 		});
-		this.addEventListener(EVENT_TYPES.COMPONENT_ON_MOUNT, callback);
+		this._addEventListener(EVENT_TYPES.COMPONENT_ON_MOUNT, callback);
 	}
 
 	refresh() {
@@ -71,7 +71,7 @@ export class Component extends EventBase {
 export class CustomComponent extends BaseSDK {
 	type: string;
 	constructor() {
-		super({});
+		super();
 		this.type = "CustomComponent";
 	}
 	watchParams(func: (data: any) => any) {
