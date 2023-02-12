@@ -49,7 +49,6 @@ export class Component extends BaseSDK {
 			},
 			callback
 		});
-		this._addEventListener(EVENT_TYPES.COMPONENT_ON_MOUNT, callback);
 	}
 
 	refresh() {
