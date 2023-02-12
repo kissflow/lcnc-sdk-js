@@ -120,8 +120,11 @@ export class BaseSDK extends EventBase {
 		});
 	}
 
-	_postMessage(command: string, args) {
+	_postMessage(command: string, args, callBack?) {
 		const _id = generateId(command.toLowerCase());
 		postMessage({ _id, command, ...args });
+		if (callBack) {
+			this._addEventListener(args.eventName, callBack);
+		}
 	}
 }

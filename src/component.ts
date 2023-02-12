@@ -23,10 +23,10 @@ export class Component extends BaseSDK {
 						{
 							id: this._id,
 							eventName: Api.name,
-							eventConfig: Api.eventConfig
-						}
+							eventConfig: args[1]
+						},
+						args[0]
 					);
-					this._addEventListener(Api.name, args[0]);
 				}
 			};
 		});
@@ -46,7 +46,8 @@ export class Component extends BaseSDK {
 			eventName: EVENT_TYPES.COMPONENT_ON_MOUNT,
 			eventConfig: {
 				once: true
-			}
+			},
+			callback
 		});
 		this._addEventListener(EVENT_TYPES.COMPONENT_ON_MOUNT, callback);
 	}
