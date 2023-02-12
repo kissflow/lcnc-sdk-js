@@ -41,14 +41,17 @@ export class Component extends BaseSDK {
 	}
 
 	onMount(callback: Function): void {
-		this._postMessage(LISTENER_CMDS.COMPONENT_ADD_EVENT_LISTENER, {
-			id: this._id,
-			eventName: EVENT_TYPES.COMPONENT_ON_MOUNT,
-			eventConfig: {
-				once: true
+		this._postMessage(
+			LISTENER_CMDS.COMPONENT_ADD_EVENT_LISTENER,
+			{
+				id: this._id,
+				eventName: EVENT_TYPES.COMPONENT_ON_MOUNT,
+				eventConfig: {
+					once: true
+				}
 			},
 			callback
-		});
+		);
 	}
 
 	refresh() {
