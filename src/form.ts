@@ -5,7 +5,7 @@ export class Form extends BaseSDK {
 	private instanceId: string;
 	type: string;
 	constructor(instanceId: string) {
-		super({});
+		super();
 		this.type = "Form";
 		this.instanceId = instanceId;
 	}
@@ -35,7 +35,7 @@ class Table extends BaseSDK {
 	private instanceId: string;
 
 	constructor(instanceId: string,tableId: string) {
-		super({});
+		super();
 		this.tableId = tableId;
 		this.instanceId = instanceId
 	}
@@ -88,7 +88,7 @@ export class TableForm extends BaseSDK {
 	type: string;
 
 	constructor(instanceId: string, tableId: string, rowId: string) {
-		super({});
+		super();
 		this.instanceId = instanceId;
 		this.type = "TabelForm";
 		this.tableId = tableId;

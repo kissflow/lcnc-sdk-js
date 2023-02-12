@@ -19,7 +19,7 @@ class CustomComponentSDK extends BaseSDK {
 	env: environmentObject;
 
 	constructor() {
-		super({});
+		super();
 	}
 	api(url: string, args = {}): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
@@ -33,8 +33,8 @@ class CustomComponentSDK extends BaseSDK {
 				this.app = new Application(data);
 				this.page = new Page(data);
 				this.context = new CustomComponent();
-				this.client = new Client({});
-				this.formatter = new Formatter({});
+				this.client = new Client();
+				this.formatter = new Formatter();
 				this.user = data.user;
 				this.account = data.account;
 				this.env = data.envDetails;

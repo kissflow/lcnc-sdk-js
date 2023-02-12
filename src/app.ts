@@ -8,7 +8,7 @@ export class Application extends BaseSDK {
 	page: Page;
 	_id: string;
 	constructor(props: AppContext) {
-		super({});
+		super();
 		this._id = props.appId;
 		this.page = new Page(props);
 	}
@@ -18,7 +18,7 @@ export class Application extends BaseSDK {
 		});
 	}
 
-	setVariable(key: string | object, value: any) {
+	setVariable(key: string | object, value?: any) {
 		return this._postMessageAsync(LISTENER_CMDS.SET_APP_VARIABLE, {
 			key,
 			value
