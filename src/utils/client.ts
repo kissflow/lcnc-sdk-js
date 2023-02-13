@@ -1,4 +1,4 @@
-import { BaseSDK, LISTENER_CMDS } from "../core/index";
+import { BaseSDK, LISTENER_CMDS } from "../core";
 
 export class Client extends BaseSDK {
 	showInfo(message: string) {

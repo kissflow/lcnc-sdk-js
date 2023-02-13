@@ -1,4 +1,4 @@
-import { BaseSDK, DEFAULTS, LISTENER_CMDS } from "../core/index";
+import { BaseSDK, DEFAULTS, LISTENER_CMDS } from "../core";
 
 import { Component } from "./component";
 

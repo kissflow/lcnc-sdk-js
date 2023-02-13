@@ -3,7 +3,7 @@ import {
 	globalInstances,
 	LISTENER_CMDS,
 	EVENT_TYPES
-} from "../core/index";
+} from "../core";
 
 import { ComponentProps } from "../types/internal";
 

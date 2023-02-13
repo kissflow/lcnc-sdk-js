@@ -1,4 +1,4 @@
-import { BaseSDK, LISTENER_CMDS } from "../core/index";
+import { BaseSDK, LISTENER_CMDS } from "../core";
 
 export class Formatter extends BaseSDK {
 	toDate(date: string) {
