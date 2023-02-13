@@ -1,10 +1,9 @@
-import { Component } from "./component";
-import { BaseSDK } from "./base";
-import { Popup } from "./popup";
-import { LISTENER_CMDS } from "./constants";
-import { PageContext } from "./types/internal";
+import { BaseSDK, LISTENER_CMDS } from "../core/index";
 
-import { globalInstances } from "./utils";
+import { Component } from "./component";
+import { Popup } from "./popup";
+
+import { PageContext } from "../types/internal";
 
 export class Page extends BaseSDK {
 	_id: string;

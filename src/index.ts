@@ -1,10 +1,7 @@
-import { BaseSDK } from "./base";
-import { LISTENER_CMDS } from "./constants";
-import { Client } from "./client";
-import { Formatter } from "./formatter";
-import { Application } from "./app";
-import { Page } from "./page";
-import { CustomComponent } from "./component";
+import { BaseSDK, LISTENER_CMDS } from "./core";
+
+import { Application, Page, CustomComponent } from "./app";
+import { Client, Formatter } from "./utils";
 
 import { userObject, accountObject, environmentObject } from "./types/external";
 

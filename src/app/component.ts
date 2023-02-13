@@ -1,9 +1,11 @@
-import { BaseSDK, EventBase } from "./base";
-import { LISTENER_CMDS, EVENT_TYPES } from "./constants";
+import {
+	BaseSDK,
+	globalInstances,
+	LISTENER_CMDS,
+	EVENT_TYPES
+} from "../core/index";
 
-import { globalInstances } from "./utils";
-
-import { ComponentProps } from "./types/internal";
+import { ComponentProps } from "../types/internal";
 
 export class Component extends BaseSDK {
 	_id: string;

@@ -1,8 +1,8 @@
-import { Component } from "./component";
-import { BaseSDK } from "./base";
+import { BaseSDK, DEFAULTS, LISTENER_CMDS } from "../core/index";
 
-import { DEFAULTS, LISTENER_CMDS } from "./constants";
-import { PopupContext } from "./types/internal";
+import { Component } from "./component";
+
+import { PopupContext } from "../types/internal";
 
 export class Popup extends BaseSDK {
 	_id: string;
@@ -35,5 +35,5 @@ export class Popup extends BaseSDK {
 				return new Component(data);
 			}
 		);
-	}	
+	}
 }
