@@ -1,8 +1,8 @@
-import { BaseSDK } from "./base";
-import { Page } from "./page";
-import { LISTENER_CMDS } from "./constants";
+import { BaseSDK, LISTENER_CMDS } from "../core";
 
-import { AppContext } from "./types/internal";
+import { Page } from "./page";
+
+import { AppContext } from "../types/internal";
 
 export class Application extends BaseSDK {
 	page: Page;
@@ -32,3 +32,7 @@ export class Application extends BaseSDK {
 		});
 	}
 }
+
+export * from "./component";
+export { Page };
+export * from "./popup";

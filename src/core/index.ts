@@ -1,11 +1,11 @@
 import { nanoid } from "nanoid";
 
 import { LISTENER_CMDS } from "./constants";
-import { globalInstances } from "./utils";
 
-function generateId(prefix = "lcncsdk") {
+export function generateId(prefix = "lcncsdk") {
 	return `${prefix}-${nanoid()}`;
 }
+export const globalInstances = {};
 
 function postMessage(args: any) {
 	// console.log("SDK : @postMessage ", args);
@@ -128,3 +128,5 @@ export class BaseSDK extends EventBase {
 		}
 	}
 }
+
+export * from "./constants";
