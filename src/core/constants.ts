@@ -1,6 +1,5 @@
 export const LISTENER_CMDS = {
 	API: "API",
-	PARAMS: "PARAMS",
 	GET_CONTEXT: "GET_CONTEXT",
 	RETURN: "RETURN",
 
@@ -51,7 +50,9 @@ export const LISTENER_CMDS = {
 	COMPONENT_HIDE: "COMPONENT_HIDE",
 	COMPONENT_ADD_EVENT_LISTENER: "COMPONENT_ADD_EVENT_LISTENER",
 
-	INITIALIZE_CUST_COMP: "INITIALIZE_CUST_COMP",
+	// CC Refers to custom components
+	CC_INITIALIZE: "CC_INITIALIZE",
+	CC_WATCH_PARAMS: "CC_WATCH_PARAMS",
 
 	// Window NDEF READER commands
 	WINDOW_NDEF_READER_NEW: "WINDOW_NDEF_READER_NEW",
@@ -64,7 +65,8 @@ export const LISTENER_CMDS = {
 };
 
 export const EVENT_TYPES = {
-	COMPONENT_ON_MOUNT: "componentOnMount"
+	COMPONENT_ON_MOUNT: "componentOnMount",
+	CC_ON_PARAMS_CHANGE: "onCustomComponentParamsChange"
 };
 
 export const DEFAULTS = {

@@ -1,9 +1,4 @@
-import {
-	BaseSDK,
-	globalInstances,
-	LISTENER_CMDS,
-	EVENT_TYPES
-} from "../core";
+import { BaseSDK, globalInstances, LISTENER_CMDS, EVENT_TYPES } from "../core";
 
 import { ComponentProps } from "../types/internal";
 
@@ -75,11 +70,24 @@ export class Component extends BaseSDK {
 
 export class CustomComponent extends BaseSDK {
 	type: string;
-	constructor() {
+	_id: string;
+	constructor(id) {
 		super();
+		this._id = id;
 		this.type = "CustomComponent";
+		globalInstances[this._id] = this;
 	}
-	watchParams(func: (data: any) => any) {
-		this._postMessage(LISTENER_CMDS.PARAMS, func);
+	watchParams(callBack: (data: any) => any) {
+		this._postMessage(
+			LISTENER_CMDS.CC_WATCH_PARAMS,
+			{
+				id: this._id,
+				eventName: EVENT_TYPES.CC_ON_PARAMS_CHANGE,
+				eventConfig: {
+					once: false
+				}
+			},
+			callBack
+		);
 	}
 }

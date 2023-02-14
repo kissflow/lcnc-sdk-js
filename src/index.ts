@@ -23,13 +23,13 @@ class CustomComponentSDK extends BaseSDK {
 	}
 	initialize() {
 		return this._postMessageAsync(
-			LISTENER_CMDS.INITIALIZE_CUST_COMP,
+			LISTENER_CMDS.CC_INITIALIZE,
 			{},
 			true,
 			(data) => {
 				this.app = new Application(data);
 				this.page = new Page(data);
-				this.context = new CustomComponent();
+				this.context = new CustomComponent(data.componentId);
 				this.client = new Client();
 				this.formatter = new Formatter();
 				this.user = data.user;
