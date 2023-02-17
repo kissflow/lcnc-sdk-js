@@ -54,6 +54,9 @@ let resp = await kf.api(url, config)
 - [3. Application](#3-application)
 - [4. Page](#4-page)
 - [5. Component](#5-component)
+    - [Standard Component methods](#standard-component-methods)
+    - [Component Specific methods](#component-specific-methods)
+        - [Tab](#521-tab-component)
 - [6. Popup](#6-popup)
 - [7. Formatter](#7-formatter)
 
@@ -345,26 +348,40 @@ kf.app.page.openPopup("popupId", { inputParam1: "value" });
 ```
 
 ### 5) Component
-
+#### getComponent(id)
+Parameter: Component's Id
+Returns: Component class instance
 ```js
 const component = await kf.app.page.getComponent(componentId);
 ```
-By using component instance we can invoke following methods.
-
-##### Refresh a component
+##### Standard Component Methods
 ```js
-component.refresh();
+component.refresh(); // Refreshes the component
+component.hide(); // Hides the component
+component.show(); // Shows the component if it's been hidden previously
+```
+##### Component Specific Methods
+
+
+##### 5.2.0) Component onMount
+Component onMount takes in callBack function as argument.
+> ##### Note: Any component specific methods that are used on Page load must be called inside component's onMount event.
+Parameter: function
+```js
+component.onMount(() => {
+    // function logic goes here... For eg.
+    // component.setActiveTab(2)
+})
+```
+##### 5.2.1) Tab component
+##### 1) setActiveTab
+Sets specified tab as active.
+Parameter: Tabs' Number (Starts from 1 to N)
+```js
+component.setActiveTab(2) // sets 2nd tab as active one
 ```
 
-##### Show a component
-```js
-componentName.show();
-```
 
-##### Hide a component
-```js
-component.hide();
-```
 ### 6) Popup
 `kf.app.page.popup` returns the active popup instance opened inside the page and its id can be accessed via `kf.app.page.popup._id`
 And `kf.app.page.getPopup(id)` returns this popup class instance.
@@ -376,7 +393,7 @@ let value = await kf.app.page.popup.getParameter("parameterId"); // for retreivi
 Get all popup parameters
 ```js 
 let allParams = await kf.app.page.popup.getAllParameters(); 
-// returns an object
+// Returns an object
 { 
     parameterName: "Sample value",
     parameterName2: "Sample value 2"
@@ -441,4 +458,3 @@ let value = await kf.formatter.toBoolean("no");
 let value = await kf.formatter.toBoolean("0");
 let value = await kf.formatter.toBoolean("false");
 ```
-
