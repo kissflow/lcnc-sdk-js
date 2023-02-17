@@ -36,11 +36,11 @@
 	},
 	"homepage": "https://github.com/kissflow/lcnc-sdk-js#readme",
 	"devDependencies": {
+		"ts-file-parser": "0.0.21",
 		"typescript": "^4.3.5",
 		"vite": "^2.9.8"
 	},
 	"dependencies": {
-		"nanoid": "^3.1.30",
-		"ts-file-parser": "0.0.21"
+		"nanoid": "^3.1.30"
 	}
 }
