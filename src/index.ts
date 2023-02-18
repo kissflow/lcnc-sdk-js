@@ -1,10 +1,7 @@
-import { BaseSDK } from "./base";
-import { LISTENER_CMDS } from "./constants";
-import { Client } from "./client";
-import { Formatter } from "./formatter";
-import { Application } from "./app";
-import { Page } from "./page";
-import { CustomComponent } from "./component";
+import { BaseSDK, LISTENER_CMDS } from "./core";
+
+import { Application, Page, CustomComponent } from "./app";
+import { Client, Formatter } from "./utils";
 
 import { userObject, accountObject, environmentObject } from "./types/external";
 
@@ -19,22 +16,22 @@ class CustomComponentSDK extends BaseSDK {
 	env: environmentObject;
 
 	constructor() {
-		super({});
+		super();
 	}
 	api(url: string, args = {}): string | object {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
 	}
 	initialize() {
 		return this._postMessageAsync(
-			LISTENER_CMDS.INITIALIZE_CUST_COMP,
+			LISTENER_CMDS.CC_INITIALIZE,
 			{},
 			true,
 			(data) => {
 				this.app = new Application(data);
 				this.page = new Page(data);
-				this.context = new CustomComponent();
-				this.client = new Client({});
-				this.formatter = new Formatter({});
+				this.context = new CustomComponent(data.componentId);
+				this.client = new Client();
+				this.formatter = new Formatter();
 				this.user = data.user;
 				this.account = data.account;
 				this.env = data.envDetails;

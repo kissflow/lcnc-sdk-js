@@ -5,7 +5,7 @@ export interface SDKContext {
 	tableId: string;
 	tableRowId: string;
 	componentId: string;
-	manifestMethods?: manifestMethodsType[];
+	componentMethods?: componentMethodsType[];
 	appId: string;
 	pageId: string;
 	popupId: string;
@@ -15,7 +15,7 @@ export interface SDKContext {
 	envDetails: environmentObject;
 }
 
-export interface manifestMethodsType {
+export interface componentMethodsType {
 	name: string;
 	returnType?: string;
 	parameters?: string[];
@@ -23,7 +23,7 @@ export interface manifestMethodsType {
 
 export interface ComponentProps {
 	componentId: string;
-	manifestMethods?: manifestMethodsType[];
+	componentMethods?: componentMethodsType[];
 }
 
 export interface AppContext {

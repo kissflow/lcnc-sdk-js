@@ -1,15 +1,16 @@
+import { BaseSDK, LISTENER_CMDS } from "../core";
+
 import { Component } from "./component";
-import { BaseSDK } from "./base";
-import { Popup } from './popup';
-import { LISTENER_CMDS } from "./constants";
-import { PageContext } from "./types/internal";
+import { Popup } from "./popup";
+
+import { PageContext } from "../types/internal";
 
 export class Page extends BaseSDK {
 	_id: string;
 	popup: Popup;
 	type: string;
 	constructor(props: PageContext) {
-		super({});
+		super();
 		this.type = "Page";
 		this.popup = new Popup({});
 		this._id = props.pageId;
@@ -19,9 +20,9 @@ export class Page extends BaseSDK {
 			key
 		});
 	}
-	getAllParameters(){
+	getAllParameters() {
 		return this._postMessageAsync(LISTENER_CMDS.GET_ALL_PAGE_PARAMS, {
-			pageId: this._id,
+			pageId: this._id
 		});
 	}
 	getVariable(key: string) {
@@ -43,12 +44,10 @@ export class Page extends BaseSDK {
 	}
 	getComponent(componentId: string): Component {
 		return this._postMessageAsync(
-			LISTENER_CMDS.GET_COMPONENT,
+			LISTENER_CMDS.COMPONENT_GET,
 			{ componentId },
-			true, // has callBack
-			(data) => {
-				return new Component(data);
-			}
+			true,
+			(data) => new Component(data)
 		);
 	}
 }

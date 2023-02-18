@@ -1,14 +1,14 @@
-import { Component } from "./component";
-import { BaseSDK } from "./base";
+import { BaseSDK, DEFAULTS, LISTENER_CMDS } from "../core";
 
-import { DEFAULTS, LISTENER_CMDS } from "./constants";
-import { PopupContext } from "./types/internal";
+import { Component } from "./component";
+
+import { PopupContext } from "../types/internal";
 
 export class Popup extends BaseSDK {
 	_id: string;
 	type: string;
 	constructor(props: PopupContext) {
-		super({});
+		super();
 		this.type = "Popup";
 		this._id = props.popupId || DEFAULTS.POPUP_ID;
 	}
@@ -28,12 +28,12 @@ export class Popup extends BaseSDK {
 	}
 	getComponent(componentId: string): Component {
 		return this._postMessageAsync(
-			LISTENER_CMDS.GET_COMPONENT,
+			LISTENER_CMDS.COMPONENT_GET,
 			{ componentId },
 			true, // has callBack
 			(data) => {
 				return new Component(data);
 			}
 		);
-	}	
+	}
 }

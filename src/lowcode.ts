@@ -1,12 +1,9 @@
-import { BaseSDK } from "./base";
-import { Form } from "./form";
-import { TableForm } from "./form";
-import { Client } from "./client";
-import { Formatter } from "./formatter";
-import { Application } from "./app";
-import { Page } from "./page";
-import { Component } from "./component";
-import { Popup } from "./popup";
+import { BaseSDK } from "./core";
+
+import { Form, TableForm } from "./form";
+import { Client, Formatter } from "./utils";
+import { Application, Page, Component, Popup } from "./app";
+import { window } from "./window";
 
 import { SDKContext } from "./types/internal";
 import { userObject, accountObject, environmentObject } from "./types/external";
@@ -22,7 +19,7 @@ class LowcodeSDK extends BaseSDK {
 	#csrfToken: string;
 
 	constructor(props: SDKContext) {
-		super({});
+		super();
 		if (props.tableId && props.tableRowId) {
 			this.context = new TableForm(
 				props.formInstanceId,
@@ -38,8 +35,8 @@ class LowcodeSDK extends BaseSDK {
 		} else if (props.componentId) {
 			this.context = new Component(props);
 		}
-		this.client = new Client({});
-		this.formatter = new Formatter({});
+		this.client = new Client();
+		this.formatter = new Formatter();
 		if (props.appId) {
 			this.app = new Application(props);
 		}
@@ -74,4 +71,4 @@ function initSDK(config: SDKContext): LowcodeSDK {
 	return new LowcodeSDK(config);
 }
 
-export default initSDK;
+export { window, initSDK as default };
