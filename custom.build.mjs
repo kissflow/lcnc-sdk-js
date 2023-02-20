@@ -2,24 +2,24 @@ import tsFileStruct from "ts-file-parser";
 import fs from "fs";
 import { exec } from "child_process";
 
-const LIB_KIND = {
+const SDK_KIND = {
   LOWCODE: "lowcode",
   NOCODE: "nocode",
 };
 
 const BUILD_PATH_INFO = {
-  [LIB_KIND.LOWCODE]: {
+  [SDK_KIND.LOWCODE]: {
     sourcePath: "./dist/lowcode.d.ts",
     destinationPath: "./dist/lowcode.types.d.ts",
   },
-  [LIB_KIND.NOCODE]: {
+  [SDK_KIND.NOCODE]: {
     sourcePath: "./dist/nocode.d.ts",
     destinationPath: "./dist/nocode.types.d.ts",
   },
 };
 
 const CLASS_MAPPINGS = {
-  [LIB_KIND.LOWCODE]: {
+  [SDK_KIND.LOWCODE]: {
     Page: { name: "Page" },
     Application: { name: "Application" },
     Client: { name: "Client" },
@@ -31,7 +31,7 @@ const CLASS_MAPPINGS = {
     Formatter: { name: "Formatter" },
     LowcodeSDK: { name: "kf", staticDeclarations: true },
   },
-  [LIB_KIND.NOCODE]: {
+  [SDK_KIND.NOCODE]: {
     Client: { name: "Client" },
     Form: { name: "Form" },
     Table: { name: "Table" },
@@ -45,12 +45,12 @@ runCommand("vite build", {}, () => {
 	runCommand("tsc -p tsconfig.default.types.json")
 	runCommand(
 		"tsc -p lowcode.types.json",
-		{ kind: LIB_KIND.LOWCODE },
+		{ kind: SDK_KIND.LOWCODE },
 		transfromTypings
 	);
 	runCommand(
 		"tsc -p nocode.types.json",
-		{ kind: LIB_KIND.NOCODE },
+		{ kind: SDK_KIND.NOCODE },
 		transfromTypings
   	);
 });
@@ -68,7 +68,7 @@ function runCommand(command, params = {}, callBack = null) {
 }
 
 function transfromTypings(params = {}) {
-	let { kind = LIB_KIND.LOWCODE } = params;
+	let { kind = SDK_KIND.LOWCODE } = params;
 	let { sourcePath, destinationPath } = BUILD_PATH_INFO[kind];
 	let classMappings = CLASS_MAPPINGS[kind] || {};
 
