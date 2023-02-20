@@ -1,13 +1,13 @@
 {
 	"include": ["./src/"],
-	"exclude": ["./src/core/", "./src/types/", "./src/lowcode.ts", "./src/nocode.ts"],
+	"exclude": ["./src/core/", "./src/types/", "./src/index.ts", "./src/lowcode.ts"],
 	"compilerOptions": {
 		"baseUrl": ".",
 		"target": "es6",
 		"module": "es2020",
 		"declaration": true,
 		"emitDeclarationOnly": true,
-		"outFile": "./dist/index.d.ts",
+		"outFile": "./dist/nocode.d.ts",
 		"moduleResolution": "node"
 	}
 }
