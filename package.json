@@ -1,6 +1,6 @@
 {
 	"name": "@kissflow/lowcode-client-sdk",
-	"version": "1.0.12",
+	"version": "1.0.13",
 	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
 	"types": "dist/index.d.ts",
 	"files": [
@@ -14,7 +14,7 @@
 			"require": "./dist/kfsdk.umd.js"
 		},
 		"./lowcode": {
-			"import": "./dist/kfworkersdk.es.js"
+			"import": "./dist/kflowCodeworkersdk.es.js"
 		}
 	},
 	"scripts": {

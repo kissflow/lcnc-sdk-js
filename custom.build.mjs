@@ -1,27 +1,63 @@
 import tsFileStruct from "ts-file-parser";
 import fs from "fs";
 import { exec } from "child_process";
-let classMappings = {
-	Page: { name: "Page" },
-	Application: { name: "Application" },
-	Client: { name: "Client" },
-	Component: { name: "Component" },
-	Form: { name: "Form" },
-	Table: { name: "Table" },
-	TableForm: { name: "TableForm" },
-	Popup: { name: "Popup" },
-	Formatter: { name: "Formatter" },
-	LowcodeSDK: { name: "kf", staticDeclarations: true }
+
+const LIB_KIND = {
+  LOWCODE: "lowCode",
+  NOCODE: "noCode",
 };
 
-runCommand("vite build", () => {
+const BUILD_PATH_INFO = {
+  [LIB_KIND.LOWCODE]: {
+    sourceFile: "./dist/lowcode.d.ts",
+    destinationFile: "./dist/lowCode.types.d.ts",
+  },
+  [LIB_KIND.NOCODE]: {
+    sourceFile: "./dist/nocode.d.ts",
+    destinationFile: "./dist/noCode.types.d.ts",
+  },
+};
+
+const CLASS_MAPPINGS = {
+  [LIB_KIND.LOWCODE]: {
+    Page: { name: "Page" },
+    Application: { name: "Application" },
+    Client: { name: "Client" },
+    Component: { name: "Component" },
+    Form: { name: "Form" },
+    Table: { name: "Table" },
+    TableForm: { name: "TableForm" },
+    Popup: { name: "Popup" },
+    Formatter: { name: "Formatter" },
+    LowcodeSDK: { name: "kf", staticDeclarations: true },
+  },
+  [LIB_KIND.NOCODE]: {
+    Client: { name: "Client" },
+    Form: { name: "Form" },
+    Table: { name: "Table" },
+    TableForm: { name: "TableForm" },
+    Formatter: { name: "Formatter" },
+    NocodeSDK: { name: "kf", staticDeclarations: true },
+  },
+};
+
+runCommand("vite build", {}, () => {
 	runCommand("tsc -p tsconfig.default.types.json")
-	runCommand("tsc -p tsconfig.types.json", transfromTypings);
+	runCommand(
+		"tsc -p lowcode.types.json",
+		{ kind: LIB_KIND.LOWCODE },
+		transfromTypings
+	);
+	runCommand(
+		"tsc -p nocode.types.json",
+		{ kind: LIB_KIND.NOCODE },
+		transfromTypings
+  	);
 });
 
-function runCommand(command, callBack = null) {
+function runCommand(command, params = {}, callBack = null) {
 	const execCmd = exec(command, () => {
-		callBack && callBack();
+		callBack && callBack(params);
 	});
 	execCmd.stdout.on("data", (data) => {
 		console.log(data);
@@ -31,10 +67,13 @@ function runCommand(command, callBack = null) {
 	});
 }
 
-function transfromTypings() {
-	const filePath = "./dist/lowcode.d.ts";
-	let srcFile = fs.readFileSync(filePath).toString();
-	let srcCode = tsFileStruct.parseStruct(srcFile, {}, filePath);
+function transfromTypings(params = {}) {
+	let { kind = LIB_KIND.LOWCODE } = params;
+	let { sourceFile, destinationFile } = BUILD_PATH_INFO[kind];
+	let classMappings = CLASS_MAPPINGS[kind] || {};
+
+	let srcFile = fs.readFileSync(sourceFile).toString();
+	let srcCode = tsFileStruct.parseStruct(srcFile, {}, sourceFile);
 
 	let allClasses = srcCode.classes;
 	let func = "";
@@ -97,7 +136,7 @@ function transfromTypings() {
 	let typesFile = fs.readFileSync("./src/types/external.ts").toString();
 	toWrite += `\n` + typesFile.replace(/export/gi, "declare");
 
-	fs.writeFile("./dist/global.types.d.ts", toWrite, function (err) {
-		if (err) return console.log(err);
-	});
-}
+	fs.writeFile(`${destinationFile}`, toWrite, function (err) {
+    	if (err) return console.log(err);
+  	});
+};
