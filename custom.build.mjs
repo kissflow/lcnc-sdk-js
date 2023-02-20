@@ -9,12 +9,12 @@ const LIB_KIND = {
 
 const BUILD_PATH_INFO = {
   [LIB_KIND.LOWCODE]: {
-    sourceFile: "./dist/lowcode.d.ts",
-    destinationFile: "./dist/lowcode.types.d.ts",
+    sourcePath: "./dist/lowcode.d.ts",
+    destinationPath: "./dist/lowcode.types.d.ts",
   },
   [LIB_KIND.NOCODE]: {
-    sourceFile: "./dist/nocode.d.ts",
-    destinationFile: "./dist/nocode.types.d.ts",
+    sourcePath: "./dist/nocode.d.ts",
+    destinationPath: "./dist/nocode.types.d.ts",
   },
 };
 
@@ -69,11 +69,11 @@ function runCommand(command, params = {}, callBack = null) {
 
 function transfromTypings(params = {}) {
 	let { kind = LIB_KIND.LOWCODE } = params;
-	let { sourceFile, destinationFile } = BUILD_PATH_INFO[kind];
+	let { sourcePath, destinationPath } = BUILD_PATH_INFO[kind];
 	let classMappings = CLASS_MAPPINGS[kind] || {};
 
-	let srcFile = fs.readFileSync(sourceFile).toString();
-	let srcCode = tsFileStruct.parseStruct(srcFile, {}, sourceFile);
+	let srcFile = fs.readFileSync(sourcePath).toString();
+	let srcCode = tsFileStruct.parseStruct(srcFile, {}, sourcePath);
 
 	let allClasses = srcCode.classes;
 	let func = "";
@@ -136,7 +136,7 @@ function transfromTypings(params = {}) {
 	let typesFile = fs.readFileSync("./src/types/external.ts").toString();
 	toWrite += `\n` + typesFile.replace(/export/gi, "declare");
 
-	fs.writeFile(`${destinationFile}`, toWrite, function (err) {
+	fs.writeFile(`${destinationPath}`, toWrite, function (err) {
     	if (err) return console.log(err);
   	});
 };
