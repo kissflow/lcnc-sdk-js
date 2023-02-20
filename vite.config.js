@@ -10,13 +10,13 @@ const libraryModules = [
   {
     entry: path.resolve(__dirname, "src/lowcode.ts"),
     name: "KFSDK",
-    fileName: (format) => `kflowCodeworkersdk.${format}.js`,
+    fileName: (format) => `kf.lowcodeworkersdk.${format}.js`,
     formats: ["es"],
   },
   {
     entry: path.resolve(__dirname, "src/nocode.ts"),
     name: "KFSDK",
-    fileName: (format) => `kfnoCodeworkersdk.${format}.js`,
+    fileName: (format) => `kf.nocodeworkersdk.${format}.js`,
     formats: ["es"],
   },
 ];

@@ -3,18 +3,18 @@ import fs from "fs";
 import { exec } from "child_process";
 
 const LIB_KIND = {
-  LOWCODE: "lowCode",
-  NOCODE: "noCode",
+  LOWCODE: "lowcode",
+  NOCODE: "nocode",
 };
 
 const BUILD_PATH_INFO = {
   [LIB_KIND.LOWCODE]: {
     sourceFile: "./dist/lowcode.d.ts",
-    destinationFile: "./dist/lowCode.types.d.ts",
+    destinationFile: "./dist/lowcode.types.d.ts",
   },
   [LIB_KIND.NOCODE]: {
     sourceFile: "./dist/nocode.d.ts",
-    destinationFile: "./dist/noCode.types.d.ts",
+    destinationFile: "./dist/nocode.types.d.ts",
   },
 };
 
