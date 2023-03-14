@@ -14,7 +14,7 @@
 			"require": "./dist/kfsdk.umd.js"
 		},
 		"./lowcode": {
-			"import": "./dist/kfworkersdk.es.js"
+			"import": "./dist/kf.lowcodeworkersdk.es.js"
 		}
 	},
 	"scripts": {
