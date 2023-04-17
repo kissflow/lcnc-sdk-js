@@ -1,7 +1,11 @@
 import tsFileStruct from "ts-file-parser";
 import fs from "fs";
 import { exec } from "child_process";
-import { SDK_KIND } from "./src/core/constants";
+
+const SDK_KIND = {
+	LOWCODE: "lowcode",
+	NOCODE: "nocode"
+};
 
 const BUILD_PATH_INFO = {
 	[SDK_KIND.LOWCODE]: {

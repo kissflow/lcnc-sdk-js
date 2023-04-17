@@ -73,7 +73,3 @@ export const DEFAULTS = {
 	POPUP_ID: "ACTIVE_POP_UP"
 };
 
-export const SDK_KIND = {
-	LOWCODE: "lowcode",
-	NOCODE: "nocode"
-};
