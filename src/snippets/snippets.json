@@ -1,0 +1,183 @@
+{
+	"lowcode": [
+		{
+			"label": "get app variable",
+			"documentation": "Get variable value from global app scope",
+			"insertText": "let variableName = await kf.app.getVariable(\"${1:variableId}\")"
+		},
+		{
+			"label": "set app variable",
+			"documentation": "Sets variable to new value in global app scope",
+			"insertText": "kf.app.setVariable(\"${1:variableId}\", \"${2:newValue}\")"
+		},
+		{
+			"label": "open or navigate page",
+			"documentation": "Navigate to another page\nRemove 2nd args if you dont have any input parameters to page",
+			"insertText": "kf.app.openPage(\"${1:pageId}\", { inputParam1: \"value1\" })"
+		},
+		{
+			"label": "get local(page) variable",
+			"documentation": "Get variable value from page scope",
+			"insertText": "let variableName = await kf.app.page.getVariable(\"${1:variableId}\")"
+		},
+		{
+			"label": "set local(page) variable",
+			"documentation": "Sets specified variable to new value in page scope",
+			"insertText": "kf.app.page.setVariable(\"${1:variableId}\", \"${2:newValue}\")"
+		},
+		{
+			"label": "get input parameter",
+			"documentation": "Get specific input parameter of the page",
+			"insertText": "let value = await kf.app.page.getParameter(\"${1:parameterId}\"); "
+		},
+		{
+			"label": "get all input parameters",
+			"documentation": "Get all input parameters in the page",
+			"insertText": "let allParams = await kf.app.page.getAllParameters();"
+		},
+		{
+			"label": "open a popup",
+			"documentation": "Opens a popup in the page",
+			"insertText": "// remove 2nd argument if popup doesnt have any popup params\nkf.app.page.openPopup(\"${1:popupId}\", { popupParam1: \"value\" });"
+		},
+		{
+			"label": "get component in page",
+			"documentation": "Get instance of the components inside the page",
+			"insertText": "let componentInstance = await kf.app.page.getComponent(\"${1:componentId}\")"
+		},
+		{
+			"label": "refresh the component",
+			"documentation": "Refreshes the component",
+			"insertText": "componentInstance.refresh()"
+		},
+		{
+			"label": "hide the component",
+			"documentation": "Hides the component from page",
+			"insertText": "componentInstance.hide()"
+		},
+		{
+			"label": "show the component",
+			"documentation": "Shows the hidden component from page",
+			"insertText": "componentInstance.show()"
+		},
+		{
+			"label": "set active tab (only for tab component)",
+			"documentation": "Sets the specified tab index as active",
+			"insertText": "// sets 2nd tab as active\ncomponentInstance.setActiveTab(${1:2})"
+		},
+		{
+			"label": "get popup parameter",
+			"documentation": "Get specific parameter in the popup",
+			"insertText": "let value = await kf.app.page.popup.getParameter(\"${1:parameterId}\"); "
+		},
+		{
+			"label": "get all popup parameters",
+			"documentation": "Get all parameters in the popup",
+			"insertText": "// returns all popup parameters as object\nlet allParams = await kf.app.page.popup.getAllParameters();"
+		},
+		{
+			"label": "close active popup",
+			"insertText": "kf.app.page.popup.close()"
+		},
+		{
+			"label": "get instance id",
+			"documentation": "Get the instance id from event arguments",
+			"insertText": "kf.eventParameters._id"
+		},
+		{
+			"label": "get activity instance id",
+			"documentation": "Get the activity instance id from event arguments",
+			"insertText": "kf.eventParameters._activity_instance_id"
+		}
+	],
+	"nocode": [
+		{
+			"label": "get field value",
+			"documentation": "Get value of a field in form",
+			"insertText": "let fieldValue = await kf.context.getField(\"${1:fieldId}\");"
+		},
+		{
+			"label": "set field value",
+			"documentation": "Set value of a field in form",
+			"insertText": "kf.context.updateField({\"${1:fieldId}\": \"${2:value}\"});"
+		},
+		{
+			"label": "set field value - bulk",
+			"documentation": "Set value of a field in form",
+			"insertText": "let payload = { \"fieldId\": \"value\", \"fieldId2\": \"value2\" };\nkf.context.updateField(payload);"
+		},
+		{
+			"label": "get form json",
+			"documentation": "Returns whole data of current form in json format",
+			"insertText": "let formJSON = await kf.context.getJSON();"
+		},
+		{
+			"label": "get table instance",
+			"documentation": "Get instance of table, which can be further used to add or delete rows",
+			"insertText": "let tableInstance = kf.context.getTable(\"${1:tableId}\");"
+		},
+		{
+			"label": "add a row in table",
+			"documentation": "Appends a row entry to table",
+			"insertText": "let rowDetails = { \"columnId1\": \"value1\", \"columnId2\": \"value2\" };\ntableInstance.addRow(rowDetails)"
+		},
+		{
+			"label": "get table row",
+			"documentation": "Returns all columns with values in specified row",
+			"insertText": "tableInstance.getRow(\"${1:rowId}\")"
+		},
+		{
+			"label": "get table json",
+			"documentation": "Returns all rows & columns data inside table in json format",
+			"insertText": "let tableJSON = await kf.context.getJSON();"
+		}
+	],
+	"common": [
+		{
+			"label": "showinfo",
+			"documentation": "Shows toast information",
+			"insertText": "kf.client.showInfo(\"${1:message}\")"
+		},
+		{
+			"label": "api call",
+			"documentation": "Makes an API call to any kissflow rest api end points",
+			"insertText": "kf.api(`/${1:url}`)\n.then((resp) => {${2}})\n.catch((err) => {${3}})"
+		},
+		{
+			"label": "get account id",
+			"documentation": "Retrieves the acccount id",
+			"insertText": "kf.account._id"
+		},
+
+		{
+			"label": "get dataform item",
+			"documentation": "Api call to get dataform item",
+			"insertText": "kf.api(`/form/2/${kf.account._id}/${1:formId}/${2:instanceId}`)\n.then((resp) => {${3}})\n.catch((err) => {${4}})"
+		},
+		{
+			"label": "update dataform item",
+			"documentation": "Api call to update dataform item",
+			"insertText": "let payload = {};\nkf.api(`/form/2/${kf.account._id}/${1:formId}/${2:instanceId}`, {\n\tmethod: \"POST\",\n\tbody: JSON.stringify(payload)\n})\n.then((resp) => {${4}})\n.catch((err) => {${5}})"
+		},
+		{
+			"label": "delete dataform item",
+			"documentation": "Api call to delete dataform item",
+			"insertText": "let payload = {};\nkf.api(`/form/2/${kf.account._id}/${1:formId}/${2:instanceId}`, { method: \"DELETE\" })\n.then((resp) => {${3}})\n.catch((err) => {${4}})"
+		},
+		{
+			"label": "create new dataform item",
+			"documentation": "Api call to create new dataform item",
+			"insertText": "let payload = {};\nkf.api(`/form/2/${kf.account._id}/${1:formId}/`,{\n\tmethod: \"POST\",\n\tbody: JSON.stringify(payload)\n})\n.then((resp) => {${2}})\n.catch((err) => {${3}})"
+		},
+		{
+			"label": "create new case item",
+			"documentation": "Api call to create new case item",
+			"insertText": "let payload = {};\nkf.api(`/case/2/${kf.account._id}/${1:caseId}/`, {\n\tmethod: \"POST\",\n\tbody: JSON.stringify(payload)\n})\n.then((resp) => {${2}})\n.catch((err) => {${3}})"
+		},
+		{
+			"label": "create new process item",
+			"documentation": "Api call to create new process item",
+			"insertText": "let payload = {}:\nkf.api(`/process/2/${kf.account._id}/${1:processId}/`, {\n\tmethod: \"POST\",\n\tbody: JSON.stringify(payload)\n})\n.then((resp) => {${2}})\n.catch((err) => {${3}})"
+		}
+	]
+}
