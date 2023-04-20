@@ -1,169 +1,212 @@
-The following are available snippets that can be used inside kissflow's code editor:
+### App snippets
 
-Trigger: "showinfo"
-  Shows toast information
-  Inserts code: 
+-   **Label:** get app variable 
+    **Documentation:** Get variable value from global app scope 
+    **Inserts Code:**
     ```js
-    kf.client.showInfo("message")
-    ```
-    
-Trigger: "api call"
-  Makes an API call to any kissflow rest api end points
-  Inserts Code:
-    ```js
-      kf.api(`/url`)
-        .then((resp) => {})
-        .catch((err) => {})
+    let variableName = await kf.app.getVariable("variableId");
     ```
 
-  Trigger: "get app variable"
-  Get variable value from global app scope
-  Inserts Code:
+-   **Label:** set app variable 
+    **Documentation:** Sets variable to new value in global app scope 
+    **Inserts Code:**
     ```js
-      let variableName = await kf.app.getVariable("variableId")
+    kf.app.setVariable("variableId", "newValue");
     ```
 
-  Trigger: "set app variable"
-  Sets variable to new value in global app scope
-  Inserts Code:
+-   **Label:** open or navigate page
+    **Documentation:** Navigate to another page. Remove 2nd args if you don't have any input parameters to page.
+    **Inserts Code:**
     ```js
-      kf.app.setVariable("variableId", "newValue")
+    kf.app.openPage("pageId", { inputParam1: "value1" });
     ```
 
-  Trigger: "open or navigate page"
-  Navigate to another page\nRemove 2nd args if you dont have any input parameters to page
-  Inserts Code:
+-   **Label:** get local(page) variable 
+    **Documentation:** Get variable value from page scope
+    **Inserts Code:**
     ```js
-      kf.app.openPage("pageId", { inputParam1: "value1" })
+    let variableName = await kf.app.page.getVariable("variableId");
     ```
 
-  Trigger: "get local(page) variable"
-  Get variable value from page scope
-  Inserts Code:
+-   **Label:** set local(page) variable 
+    **Documentation:** Sets specified variable to new value in page scope 
+    **Inserts Code:**
     ```js
-      let variableName = await kf.app.page.getVariable("variableId")
+    kf.app.page.setVariable("variableId", "newValue");
     ```
 
-  Trigger: "set local(page) variable"
-  Sets specified variable to new value in page scope
-  Inserts Code:
+-   **Label:** get input parameter 
+    **Documentation:** Get specific input parameter of the page 
+    **Inserts Code:**
     ```js
-      kf.app.page.setVariable("variableId", "newValue")
+    let value = await kf.app.page.getParameter("parameterId");
     ```
 
-  Trigger: "get input parameter"
-  Get specific input parameter of the page
-  Inserts Code:
+-   **Label:** get all input parameters
+    **Documentation:** Get all input parameters in the page 
+    **Inserts Code:**
     ```js
-      let value = await kf.app.page.getParameter("parameterId"); 
+    let allParams = await kf.app.page.getAllParameters();
     ```
 
-  Trigger: "get all input parameters"
-  Get all input parameters in the page
-  Inserts Code:
+-   **Label:** open a popup 
+    **Documentation:** Opens a popup in the page. Remove 2nd argument if popup doesn't have any popup params. 
+    **Inserts Code:**
     ```js
-      let allParams = await kf.app.page.getAllParameters();
+    kf.app.page.openPopup("popupId", { popupParam1: "value" });
     ```
 
-  Trigger: "open a popup"
-  Opens a popup in the page
-  Inserts Code:
+-   **Label:** get component in page 
+    **Documentation:** Get instance of the
+    components inside the page 
+    **Inserts Code:**
     ```js
-      // remove 2nd argument if popup doesnt have any popup params
-      kf.app.page.openPopup("popupId", { popupParam1: "value" });
+    let componentInstance = await kf.app.page.getComponent("componentId");
     ```
 
-  Trigger: "get component in page"
-  Get instance of the components inside the page
-  Inserts Code:
+-   **Label:** refresh the component 
+    **Documentation:** Refreshes the component
+    **Inserts Code:**
     ```js
-      let componentInstance = await kf.app.page.getComponent("componentId")
+    componentInstance.refresh();
     ```
 
-  Trigger: "refresh the component"
-  Refreshes the component
-  Inserts Code:
+-   **Label:** hide the component 
+    **Documentation:** Hides the component from page 
+    **Inserts Code:**
     ```js
-    componentInstance.refresh()
+    componentInstance.hide();
     ```
 
-  Trigger: "hide the component"
-  Hides the component from page
-  Inserts Code:
+-   **Label:** show the component
+    **Documentation:** Shows the hidden component from page 
+    **Inserts Code:**
     ```js
-    componentInstance.hide()
+    componentInstance.show();
     ```
 
-  Trigger: "show the component"
-  Shows the hidden component from page
-  Inserts Code:
-    ```js
-    componentInstance.show()
-    ```
-
-  Trigger: "set active tab (only for tab component)"
-  Sets the specified tab index as active
-  Inserts Code:
+-   **Label:** set active tab (only for tab component)
+    **Documentation:** Sets the specified tab index as active 
+    **Inserts Code:**
     ```js
     // sets 2nd tab as active
-    componentInstance.setActiveTab(2)
+    componentInstance.setActiveTab(2);
     ```
 
-  Trigger: "get popup parameter": 
-  Get specific parameter in the popup
-  Inserts Code:
+-   **Label:** get popup parameter 
+    **Documentation:** Get specific parameter in the popup 
+    **Inserts Code:**
     ```js
-    let value = await kf.app.page.popup.getParameter("parameterId"); 
+    let value = await kf.app.page.popup.getParameter("parameterId");
     ```
 
-  Trigger: "get all popup parameters"
-  Get all parameters in the popup
-  Inserts Code:
+-   **Label:** get all popup parameters 
+    **Documentation:** Get all parameters in the popup 
+    **Inserts Code:**
     ```js
     // returns all popup parameters as object
     let allParams = await kf.app.page.popup.getAllParameters();
     ```
 
-  Trigger: "close active popup"
-  Closes the active popup in the page
-  Inserts Code:
+-   **Label:** close active popup 
+    **Documentation:** Closes the active popup in
+    the page 
+    **Inserts Code:**
     ```js
-    kf.app.page.popup.close()
+    kf.app.page.popup.close();
     ```
 
-  Trigger: "get account id"
-  Retrieves the account id
-  Inserts Code:
+### Form snippets
+
+-   **Label:** get field value 
+    **Documentation:** Get value of a field in form
+    **Inserts Code:**
     ```js
-    kf.account._id
+    let fieldValue = await kf.context.getField("fieldId");
     ```
 
-  Trigger: "get instance id"
-  Get the instance id from event arguments
-  Inserts Code:
+-   **Label:** set field value 
+    **Documentation:** Set value of a field in form
+    **Inserts Code:**
     ```js
-    kf.eventParameters._id
+    kf.context.updateField({ "fieldId": "value" });
     ```
 
-  Trigger: "get activity instance id"
-  Get the activity instance id from event arguments
-  Inserts Code:
+-   **Label:** set field value - bulk 
+    **Documentation:** Set value of a field in form 
+    **Inserts Code:**
     ```js
-    kf.eventParameters._activity_instance_id
+    let payload = { fieldId: "value", fieldId2: "value2" };
+    kf.context.updateField(payload);
     ```
 
-  Trigger: "get dataform item"
-  API call to get dataform item
-  Inserts Code:
+-   **Label:** get form json 
+    **Documentation:** Returns whole data of current form in json format 
+    **Inserts Code:**
+    ```js
+    let formJSON = await kf.context.getJSON();
+    ```
+
+-   **Label:** get table instance 
+    **Documentation:** Get instance of table, which can be further used to add or delete rows 
+    **Inserts Code:**
+    ```js
+    let tableInstance = kf.context.getTable("tableId");
+    ```
+
+-   **Label:** add a row in table 
+    **Documentation:** Appends a row entry to table
+    **Inserts Code:**
+    ```js
+    let rowDetails = { columnId1: "value1", columnId2: "value2" };
+    tableInstance.addRow(rowDetails);
+    ```
+
+-   **Label:** get table row 
+    **Documentation:** Returns all columns with values in specified row 
+    **Inserts Code:**
+    ```js
+    tableInstance.getRow("rowId");
+    ```
+
+-   **Label:** get table json
+    **Documentation:** Returns all rows & columns datainside table in json format 
+    **Inserts Code:**
+    ```js
+    let tableJSON = await kf.context.getJSON();
+    ```
+
+### Common snippets
+
+-   **Label:** showinfo  
+    **Documentation:** Shows toast information  
+    **Inserts Code:** `kf.client.showInfo("message")`
+
+-   **Label:** api call  
+    **Documentation:** Makes an API call to any Kissflow REST API endpoints  
+    **Inserts Code:**
+    ```js
+    kf.api(`/url}`)
+    .then((resp) => {})
+    .catch((err) => {})
+    ```
+
+    **Label:** get account id  
+    **Documentation:** Retrieves the account ID  
+    **Inserts Code:** `kf.account._id`
+
+    **Label:** get dataform item  
+    **Documentation:** API call to get dataform item  
+    **Inserts Code:**
     ```js
     kf.api(`/form/2/${kf.account._id}/formId/instanceId`)
     .then((resp) => {})
     .catch((err) => {})
     ```
 
-  Trigger: "update dataform item"
-  API call to update dataform item
-  Inserts Code:
+    **Label:** update dataform item  
+    **Documentation:** API call to update dataform item  
+    **Inserts Code:**
     ```js
     let payload = {};
     kf.api(`/form/2/${kf.account._id}/formId/instanceId`, {
@@ -174,34 +217,53 @@ Trigger: "api call"
     .catch((err) => {})
     ```
 
-  Trigger: "delete dataform item"
-  API call to delete dataform item
-  Inserts Code:
+    **Label:** delete dataform item  
+    **Documentation:** API call to delete dataform item  
+    **Inserts Code:**
     ```js
     let payload = {};
-    kf.api(`/form/2/${kf.account._id}/formId/instanceId`, { method: "DELETE" })
+    kf.api(`/form/2/${kf.account._id}/formId/instanceId`, {
+      method: "DELETE"
+    })
     .then((resp) => {})
     .catch((err) => {})
     ```
 
-  Trigger: "create new dataform item"
-  API call to create new dataform item
-  Inserts Code:
+    **Label:** create new dataform item  
+    **Documentation:** API call to create new dataform item  
+    **Inserts Code:**
     ```js
-      kf.
+    let payload = {};
+    kf.api(`/form/2/${kf.account._id}/formId/`, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+    .then((resp) => {})
+    .catch((err) => {})
     ```
 
-  Trigger: "create new case item"
-  API call to create new case item
-  Inserts Code:
+    **Label:** create new case item  
+    **Documentation:** API call to create new case item  
+    **Inserts Code:**
     ```js
-      kf.
+    let payload = {};
+    kf.api(`/case/2/${kf.account._id}/caseId/`, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+    .then((resp) => {})
+    .catch((err) => {})
     ```
 
-  Trigger: "create new process item"
-  API call to create new process item
-  Inserts Code:
+    **Label:** create new process item  
+    **Documentation:** API call to create new process item  
+    **Inserts Code:**
     ```js
-        kf.
+    let payload = {};
+    kf.api(`/process/2/${kf.account._id}/processId/`, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+    .then((resp) => {})
+    .catch((err) => {})
     ```
-
