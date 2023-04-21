@@ -38,7 +38,7 @@
 		{
 			"label": "open a popup",
 			"documentation": "Opens a popup in the page",
-			"insertText": "// remove 2nd argument if popup doesnt have any popup params\nkf.app.page.openPopup(\"${1:popupId}\", { popupParam1: \"value\" });"
+			"insertText": "kf.app.page.openPopup(\"${1:popupId}\", { popupParam1: \"value\" });"
 		},
 		{
 			"label": "get component in page",
@@ -72,8 +72,8 @@
 		},
 		{
 			"label": "get all popup parameters",
-			"documentation": "Get all parameters in the popup",
-			"insertText": "// returns all popup parameters as object\nlet allParams = await kf.app.page.popup.getAllParameters();"
+			"documentation": "Get all parameters in the popup as object",
+			"insertText": "let allParams = await kf.app.page.popup.getAllParameters();"
 		},
 		{
 			"label": "close active popup",
