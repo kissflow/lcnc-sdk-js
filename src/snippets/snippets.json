@@ -12,7 +12,7 @@
 		},
 		{
 			"label": "open or navigate page",
-			"documentation": "Navigate to another page\nRemove 2nd args if you dont have any input parameters to page",
+			"documentation": "Navigate to another page",
 			"insertText": "kf.app.openPage(\"${1:pageId}\", { inputParam1: \"value1\" })"
 		},
 		{
