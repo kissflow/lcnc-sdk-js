@@ -72,3 +72,4 @@ export const EVENT_TYPES = {
 export const DEFAULTS = {
 	POPUP_ID: "ACTIVE_POP_UP"
 };
+

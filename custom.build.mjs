@@ -3,46 +3,46 @@ import fs from "fs";
 import { exec } from "child_process";
 
 const SDK_KIND = {
-  LOWCODE: "lowcode",
-  NOCODE: "nocode",
+	LOWCODE: "lowcode",
+	NOCODE: "nocode"
 };
 
 const BUILD_PATH_INFO = {
-  [SDK_KIND.LOWCODE]: {
-    sourcePath: "./dist/lowcode.d.ts",
-    destinationPath: "./dist/lowcode.types.d.ts",
-  },
-  [SDK_KIND.NOCODE]: {
-    sourcePath: "./dist/nocode.d.ts",
-    destinationPath: "./dist/nocode.types.d.ts",
-  },
+	[SDK_KIND.LOWCODE]: {
+		sourcePath: "./dist/lowcode.d.ts",
+		destinationPath: "./dist/lowcode.types.d.ts"
+	},
+	[SDK_KIND.NOCODE]: {
+		sourcePath: "./dist/nocode.d.ts",
+		destinationPath: "./dist/nocode.types.d.ts"
+	}
 };
 
 const CLASS_MAPPINGS = {
-  [SDK_KIND.LOWCODE]: {
-    Page: { name: "Page" },
-    Application: { name: "Application" },
-    Client: { name: "Client" },
-    Component: { name: "Component" },
-    Form: { name: "Form" },
-    Table: { name: "Table" },
-    TableForm: { name: "TableForm" },
-    Popup: { name: "Popup" },
-    Formatter: { name: "Formatter" },
-    LowcodeSDK: { name: "kf", staticDeclarations: true },
-  },
-  [SDK_KIND.NOCODE]: {
-    Client: { name: "Client" },
-    Form: { name: "Form" },
-    Table: { name: "Table" },
-    TableForm: { name: "TableForm" },
-    Formatter: { name: "Formatter" },
-    NocodeSDK: { name: "kf", staticDeclarations: true },
-  },
+	[SDK_KIND.LOWCODE]: {
+		Page: { name: "Page" },
+		Application: { name: "Application" },
+		Client: { name: "Client" },
+		Component: { name: "Component" },
+		Form: { name: "Form" },
+		Table: { name: "Table" },
+		TableForm: { name: "TableForm" },
+		Popup: { name: "Popup" },
+		Formatter: { name: "Formatter" },
+		LowcodeSDK: { name: "kf", staticDeclarations: true }
+	},
+	[SDK_KIND.NOCODE]: {
+		Client: { name: "Client" },
+		Form: { name: "Form" },
+		Table: { name: "Table" },
+		TableForm: { name: "TableForm" },
+		Formatter: { name: "Formatter" },
+		NocodeSDK: { name: "kf", staticDeclarations: true }
+	}
 };
 
 runCommand("vite build", {}, () => {
-	runCommand("tsc -p tsconfig.default.types.json")
+	runCommand("tsc -p tsconfig.default.types.json");
 	runCommand(
 		"tsc -p lowcode.types.json",
 		{ kind: SDK_KIND.LOWCODE },
@@ -52,7 +52,8 @@ runCommand("vite build", {}, () => {
 		"tsc -p nocode.types.json",
 		{ kind: SDK_KIND.NOCODE },
 		transfromTypings
-  	);
+	);
+	runCommand("cp src/snippets/snippets.json dist/")
 });
 
 function runCommand(command, params = {}, callBack = null) {
@@ -137,6 +138,6 @@ function transfromTypings(params = {}) {
 	toWrite += `\n` + typesFile.replace(/export/gi, "declare");
 
 	fs.writeFile(`${destinationPath}`, toWrite, function (err) {
-    	if (err) return console.log(err);
-  	});
-};
+		if (err) return console.log(err);
+	});
+}
