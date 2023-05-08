@@ -54,7 +54,7 @@ runCommand("vite build", {}, () => {
 		transfromTypings
 	);
 	runCommand("cp src/snippets/snippets.json dist/")
-	runCommand("cp src/worker/index.js dist/");
+	runCommand("cp src/worker/index.js dist/worker.js");
 });
 
 function runCommand(command, params = {}, callBack = null) {
