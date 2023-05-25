@@ -29,7 +29,7 @@ window.onload = async function () {
 ### User and Account details
 Details of authenticated user can be accessed as following
 ```js
-const { Name, Email, UserType, _id } = kf.user
+const { Name, Email, _id } = kf.user
 ```
 And account id can be accessed as `kf.account._id`
 
