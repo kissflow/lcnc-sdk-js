@@ -33,30 +33,30 @@ class Table extends BaseSDK {
 	private tableId: string;
 	private instanceId: string;
 
-	constructor(instanceId: string,tableId: string) {
+	constructor(instanceId: string, tableId: string) {
 		super();
 		this.tableId = tableId;
-		this.instanceId = instanceId
+		this.instanceId = instanceId;
 	}
 
 	// list of obj of rows
 	toJSON() {
-		return this._postMessageAsync(
-			LISTENER_CMDS.TO_JSON,
-			{ 
-				tableId: this.tableId
-			},
-		);
+		return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+			tableId: this.tableId
+		});
 	}
 
-	getRows():TableForm[] {
+	getRows(): TableForm[] {
 		// list of TableForm class
 		return this._postMessageAsync(
 			LISTENER_CMDS.GET_TABLE_ROWS,
 			{ tableId: this.tableId },
 			true, // has callBack
 			(data) => {
-				return data.map((row) => new TableForm(this.instanceId, this.tableId, row.id))
+				return data.map(
+					(row) =>
+						new TableForm(this.instanceId, this.tableId, row.id)
+				);
 			}
 		);
 	}
@@ -64,11 +64,18 @@ class Table extends BaseSDK {
 	getRow(rowId: string) {
 		return new TableForm(this.instanceId, this.tableId, rowId);
 	}
-	
+
 	addRow(rowObject: object) {
 		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROW, {
 			tableId: this.tableId,
 			rowObject
+		});
+	}
+
+	addRows(rows: [object]) {
+		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROWS, {
+			tableId: this.tableId,
+			rows
 		});
 	}
 
@@ -123,4 +130,3 @@ export class TableForm extends BaseSDK {
 		});
 	}
 }
-

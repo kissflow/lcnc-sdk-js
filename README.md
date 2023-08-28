@@ -132,7 +132,7 @@ const json = await kf.context.toJSON();
 #### a) addRow()
 
 ###### Description:
-Appends row details to the end of table.
+Appends row details to the table.
 
 ###### Syntax:
 ```js
@@ -140,7 +140,22 @@ const table = kf.context.getTable(tableId);
 table.addRow({ columnId1: value, columnId2: value });
 ```
 
-#### b) deleteRow()
+#### b) addRows()
+
+###### Description:
+Appends multiple rows details to the table.
+
+###### Syntax:
+```js
+const table = kf.context.getTable(tableId);
+table.addRows([
+    { columnId1: value, columnId2: value }, 
+    { columnId1: value, columnId2: value },
+    { columnId1: value, columnId2: value }
+]);
+```
+
+#### c) deleteRow()
 
 ###### Description:
 Deletes a row from the table based on the row id
@@ -151,7 +166,7 @@ const table = kf.context.getTable(tableId);
 table.deleteRow(rowId);
 ```
 
-#### c) getRow()
+#### d) getRow()
 
 ###### Description:
 Use this function to perform form actions on any row inside a child table
@@ -165,7 +180,7 @@ const row = table.getRow(rowId);
 ###### Output:
 Returns an instance of `TableForm` class
 
-#### d) getRows()
+#### e) getRows()
 
 ###### Description:
 Gets all the rows of the table
@@ -178,7 +193,7 @@ const rows = await kf.context.getTable(tableId).getRows();
 ###### Output:
 Returns an array of `TableForm` instances
 
-##### e) toJSON()
+##### f) toJSON()
 
 ###### Description:
 Use this function to get the JSON data of the child table
