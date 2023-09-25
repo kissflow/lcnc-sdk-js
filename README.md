@@ -293,8 +293,13 @@ kf.client.showInfo(message);
 ```
 
 ##### Show confirm
+Displays the confirmation dialog, and returns users's action as a response
 ```js
-kf.client.showConfirm({ title, content });
+kf.client.showConfirm({ title, content }).then((action) => {
+    if(action === "OK") // user clicked ok button
+
+    else // user clicked cancel button or clicked outside the popup
+})
 ```
 
 ##### Redirect to URL
