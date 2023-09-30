@@ -66,6 +66,11 @@
 			"insertText": "// sets 2nd tab as active\ncomponentInstance.setActiveTab(${1:2})"
 		},
 		{
+			"label": "set selected item",
+			"documentation": "Sets the specified instance as selected item - works only for master detail component",
+			"insertText": "componentInstance.setSelectedItem(\"${1:instanceId}\")"
+		},
+		{
 			"label": "get popup parameter",
 			"documentation": "Get specific parameter in the popup",
 			"insertText": "let value = await kf.app.page.popup.getParameter(\"${1:parameterId}\"); "
@@ -149,7 +154,6 @@
 			"documentation": "Retrieves the acccount id",
 			"insertText": "kf.account._id"
 		},
-
 		{
 			"label": "get dataform item",
 			"documentation": "API call to get dataform item",
