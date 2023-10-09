@@ -139,6 +139,7 @@ Appends row details to the table.
 const table = kf.context.getTable(tableId);
 table.addRow({ columnId1: value, columnId2: value });
 ```
+// Note: If there are more than one rows to be added to table then use addRows() instead for these bulk operations
 
 #### b) addRows()
 
@@ -148,11 +149,11 @@ Appends multiple rows details to the table.
 ###### Syntax:
 ```js
 const table = kf.context.getTable(tableId);
-table.addRows([
-    { columnId1: value, columnId2: value }, 
-    { columnId1: value, columnId2: value },
-    { columnId1: value, columnId2: value }
-]);
+let accumulator = [];
+someArray.forEach(function (rowDetails) {
+    accumulator.push(rowDetails);
+});
+await table.addRows(accumulator);
 ```
 
 #### c) deleteRow()
@@ -163,7 +164,7 @@ Deletes a row from the table based on the row id
 ###### Syntax:
 ```js
 const table = kf.context.getTable(tableId);
-table.deleteRow(rowId);
+await table.deleteRow(rowId);
 ```
 
 #### d) getRow()
