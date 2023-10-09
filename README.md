@@ -150,8 +150,11 @@ Appends multiple rows details to the table.
 ```js
 const table = kf.context.getTable(tableId);
 let accumulator = [];
-someArray.forEach(function (rowDetails) {
-    accumulator.push(rowDetails);
+someArrayOfObjects.forEach(function(rowDetail) {
+    accumulator.push({
+        columnId1: rowDetail[columnId1], 
+        columnId2: rowDetail[columnId2]
+    });
 });
 await table.addRows(accumulator);
 ```
