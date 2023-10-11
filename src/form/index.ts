@@ -82,7 +82,14 @@ class Table extends BaseSDK {
 	deleteRow(rowId: string) {
 		return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
 			tableId: this.tableId,
-			rowId
+			rows: [rowId],
+		});
+	}
+
+	deleteRows(rows: [string]){
+		return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
+			tableId: this.tableId,
+			rows
 		});
 	}
 }

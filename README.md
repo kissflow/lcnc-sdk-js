@@ -139,7 +139,7 @@ Appends row details to the table.
 const table = kf.context.getTable(tableId);
 table.addRow({ columnId1: value, columnId2: value });
 ```
-// Note: If there are more than one rows to be added to table then use addRows() instead for these bulk operations
+> ##### Note: If there are more than one rows to be added to table then use `addRows()` instead for these bulk operations
 
 #### b) addRows()
 
@@ -169,8 +169,20 @@ Deletes a row from the table based on the row id
 const table = kf.context.getTable(tableId);
 await table.deleteRow(rowId);
 ```
+> ##### Note: If there are more than one rows to be deleted then use `deleteRows()` instead.
 
-#### d) getRow()
+#### d) deleteRows()
+
+###### Description:
+Deletes multiple rows from the table based on given array of strings.
+
+###### Syntax:
+```js
+const table = kf.context.getTable(tableId);
+await table.deleteRows([rowId1, rowId2, rowId3]);
+```
+
+#### e) getRow()
 
 ###### Description:
 Use this function to perform form actions on any row inside a child table
@@ -184,7 +196,7 @@ const row = table.getRow(rowId);
 ###### Output:
 Returns an instance of `TableForm` class
 
-#### e) getRows()
+#### f) getRows()
 
 ###### Description:
 Gets all the rows of the table
@@ -197,7 +209,7 @@ const rows = await kf.context.getTable(tableId).getRows();
 ###### Output:
 Returns an array of `TableForm` instances
 
-##### f) toJSON()
+##### g) toJSON()
 
 ###### Description:
 Use this function to get the JSON data of the child table
