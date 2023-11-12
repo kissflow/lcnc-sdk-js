@@ -52,7 +52,7 @@ export class Page extends BaseSDK {
   }
   callIntegration(integrationId: string, eventConfig: object, payload: object) {
     return this._postMessageAsync(
-      LISTENER_CMDS.INTEGRATION_CALL,
+      LISTENER_CMDS.CALL_INTEGRATION,
       { integrationId, eventConfig, payload }
     );
   }
