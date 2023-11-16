@@ -50,10 +50,4 @@ export class Page extends BaseSDK {
       (data) => new Component(data)
     );
   }
-  getIntegration(integrationId: string, eventConfig: object, payload: object) {
-    return this._postMessageAsync(
-      LISTENER_CMDS.INTEGRATION_CALL,
-      { integrationId, eventConfig, payload }
-    );
-  }
 }

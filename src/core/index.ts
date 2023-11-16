@@ -79,7 +79,7 @@ export class EventBase {
 					if (
 						resp &&
 						Object.keys(resp).length === 1 &&
-						req.command !== LISTENER_CMDS.API
+						![LISTENER_CMDS.API, LISTENER_CMDS.CALL_INTEGRATION].includes(req.command)
 					) {
 						listener(Object.values(resp)[0]);
 					} else {

@@ -31,6 +31,13 @@ export class Application extends BaseSDK {
 			pageParams
 		});
 	}
+
+	callIntegration(integrationId: string, eventConfig: object, payload: object) {
+    return this._postMessageAsync(
+      LISTENER_CMDS.CALL_INTEGRATION,
+      { integrationId, eventConfig, payload }
+    );
+  }
 }
 
 export * from "./component";
