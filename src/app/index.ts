@@ -33,11 +33,11 @@ export class Application extends BaseSDK {
 	}
 
 	evaluateDecision(flowID: string, payload?: object) {
-        return this._postMessageAsync(LISTENER_CMDS.EVALUATE_DECISION, {
-            flowID,
-            payload
-        });
-    }
+		return this._postMessageAsync(LISTENER_CMDS.EVALUATE_DECISION, {
+			flowID,
+			payload
+		});
+	}
 }
 
 export * from "./component";
