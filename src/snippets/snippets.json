@@ -18,7 +18,7 @@
     {
       "label": "evaluate decision table",
       "documentation": "Evaluates the provided data and returns back the matched output",
-      "insertText": "kf.app.evaluateDecision(\"${1:flowId}\", { inputField1: \"value\", inputField2: \"value\" })"
+      "insertText": "let decisionOutput = await kf.app.evaluateDecision(\"${1:flowId}\", { inputField1: \"value\", inputField2: \"value\" })"
     },
     {
       "label": "get local variable",
