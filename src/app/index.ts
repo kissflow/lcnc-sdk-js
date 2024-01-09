@@ -4,6 +4,8 @@ import { Page } from "./page";
 
 import { AppContext } from "../types/internal";
 
+import { DecisionTable } from "./decisiontable";
+
 export class Application extends BaseSDK {
 	page: Page;
 	_id: string;
@@ -32,11 +34,8 @@ export class Application extends BaseSDK {
 		});
 	}
 
-	evaluateDecision(flowID: string, payload?: object) {
-		return this._postMessageAsync(LISTENER_CMDS.EVALUATE_DECISION, {
-			flowID,
-			payload
-		});
+	getDecisionTable(flowId: string): DecisionTable {
+		return new DecisionTable(flowId);
 	}
 }
 

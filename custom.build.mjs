@@ -29,7 +29,8 @@ const CLASS_MAPPINGS = {
 		TableForm: { name: "TableForm" },
 		Popup: { name: "Popup" },
 		Formatter: { name: "Formatter" },
-		LowcodeSDK: { name: "kf", staticDeclarations: true }
+		LowcodeSDK: { name: "kf", staticDeclarations: true },
+		DecisionTable: { name: "DecisionTable" }
 	},
 	[SDK_KIND.NOCODE]: {
 		Client: { name: "Client" },
@@ -53,7 +54,7 @@ runCommand("vite build", {}, () => {
 		{ kind: SDK_KIND.NOCODE },
 		transfromTypings
 	);
-	runCommand("cp src/snippets/snippets.json dist/")
+	runCommand("cp src/snippets/snippets.json dist/");
 });
 
 function runCommand(command, params = {}, callBack = null) {
@@ -83,9 +84,7 @@ function transfromTypings(params = {}) {
 	for (let i = 0; i < allClasses.length; i++) {
 		if (Object.keys(classMappings).includes(allClasses[i].name)) {
 			let _class = allClasses[i];
-			toWrite += `\ndeclare class ${
-				classMappings[_class.name].name
-			} { \n`;
+			toWrite += `\ndeclare class ${classMappings[_class.name].name} { \n`;
 
 			// fields on Class
 			for (let i = 0; i < _class.fields.length; i++) {
@@ -112,9 +111,7 @@ function transfromTypings(params = {}) {
 				let fieldName = _class.fields[i].name;
 				// console.log(_class.fields[i]);
 				toWrite += `\t${
-					classMappings[_class.name].staticDeclarations
-						? "static "
-						: ""
+					classMappings[_class.name].staticDeclarations ? "static " : ""
 				}${fieldName}: ${className} \n`;
 				// }
 			}
