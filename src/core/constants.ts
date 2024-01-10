@@ -30,7 +30,7 @@ export const LISTENER_CMDS = {
 
 	//Application SDK functions
 	GET_APP_VARIABLE: "GET_APP_VARIABLE",
-	SET_APP_VARIABLE: "SET_APP_VARIABLE"
+	SET_APP_VARIABLE: "SET_APP_VARIABLE",
 
 	//Application page sdk functions
 	GET_PAGE_VARIABLE: "GET_PAGE_VARIABLE",
