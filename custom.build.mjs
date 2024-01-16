@@ -54,7 +54,7 @@ runCommand("vite build", {}, () => {
 		{ kind: SDK_KIND.NOCODE },
 		transfromTypings
 	);
-	runCommand("cp src/snippets/snippets.json dist/");
+	runCommand("cp src/snippets/snippets.json dist/")
 	runCommand("cp src/worker/index.js dist/worker.js");
 });
 
