@@ -8,6 +8,7 @@
 */**/bower_components
 */**/jspm_packages
 */**/package-lock.json
+/package-lock.json
 
 # Logs
 */**/logs
@@ -41,3 +42,4 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+*.pem
