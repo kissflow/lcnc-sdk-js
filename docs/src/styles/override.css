@@ -1,0 +1,6 @@
+:root {
+  --sl-hue-accent: 206;
+  --sl-color-accent-low: hsl(var(--sl-hue-accent), 54%, 20%);
+	--sl-color-accent: hsl(var(--sl-hue-accent), 100%, 60%);
+	--sl-color-accent-high: hsl(var(--sl-hue-accent), 100%, 85%);
+}
