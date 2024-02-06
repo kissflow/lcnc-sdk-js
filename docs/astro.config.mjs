@@ -1,11 +1,13 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import netlify from "@astrojs/netlify";
 
-// https://astro.build/config
 export default defineConfig({
-	output: "server",
-	adapter: netlify(),
+	compressHTML: false,
+	site: "https://manu2699.github.io/",
+	base: "/lcnc-sdk-js",
+	// experimental: {
+	// 	assets: true
+	// },
 	integrations: [
 		starlight({
 			title: "Kissflow SDK docs",

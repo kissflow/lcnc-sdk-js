@@ -2,8 +2,8 @@
 title: Kissflow Lowcode JavaScript SDK
 description: Introduction to KF SDK
 ---
-  
-  Welcome to the Kissflow Lowcode JavaScript SDK repository! This SDK empowers
+
+Welcome to the Kissflow Lowcode JavaScript SDK repository! This SDK empowers
 developers to seamlessly interact with the Kissflow low-code platform using
 JavaScript.
 
@@ -25,11 +25,12 @@ kf.client.showInfo("Welcome " + kf.user.Name);
 
 This package has to be installed / imported, to use sdk on your codebase.
 
-> Note: Since this package is only for client side of your projects, we have support only for `esm` (es modules) and `umd` formats of javascript.
+> Note: Since this package is only for client side of your projects, we have
+> support only for `esm` (es modules) and `umd` formats of javascript.
 
 Please refer [installation](/getting-started/installation/) steps
 
-
+Please refer 2 [installation](/lcnc-sdk-js/getting-started/installation/) steps2
 
 ### TODO:
 
