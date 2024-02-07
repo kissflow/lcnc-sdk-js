@@ -15,7 +15,15 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: "Getting started",
-					autogenerate: { directory: "getting started" }
+					link: "/intro/about"
+				},
+				{
+					label: "Installation",
+					link: "/intro/installation"
+				},
+				{
+					label: "Utilities",
+					link: "/utils"
 				},
 				{
 					label: "Form",
@@ -24,6 +32,10 @@ export default defineConfig({
 				{
 					label: "Application",
 					autogenerate: { directory: "app" }
+				},
+				{
+					label: "Formatter",
+					link: "/formatter"
 				}
 			]
 		})
