@@ -1,5 +1,5 @@
 ---
-title: getVariable()
+title: Get Variable
 description: Retrieve value of variable.
 ---
 

@@ -2,7 +2,7 @@
 title: Get Table
 description: Returns instance of table class
 sidebar:
-    order: 4
+    order: 3
 ---
 
 Returns the instance of `Table` class, from which addRow(), addRows(),

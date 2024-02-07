@@ -1,11 +1,28 @@
 ---
-title: Delete row
-description: A guider in my new Starlight docs site.
+title: Delete Row
+description: Deletes a single row form table
+sidebar:
+    order: 8
 ---
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+Deletes a single row from the given
+[table instance](/lcnc-sdk-js/form/gettable/).
 
-## Furthers readings
+### Parameter
 
-- Reads [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+| Parameters | type   |
+| ---------- | ------ |
+| rowId      | String |
+
+### Syntax
+
+```js
+tableInstance.deleteRow(rowId);
+```
+
+
+:::note[Note] 
+If there are more than one rows to be deleted from table then use
+[deleteRow()](/lcnc-sdk-js/form/table/deleterows/) instead for these bulk
+operations
+:::

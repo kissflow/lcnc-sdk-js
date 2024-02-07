@@ -1,9 +1,12 @@
 ---
-title: Add row
+title: Add Row
 description: Appends row details to the table.
+sidebar:
+    order: 6
 ---
 
-Appends a single row into to specified `tableId`.
+Appends a single row into to given
+[table instance](/lcnc-sdk-js/form/gettable/).
 
 ### Parameter
 
@@ -14,8 +17,10 @@ Appends a single row into to specified `tableId`.
 ### Syntax
 
 ```js
-const table = kf.context.getTable(tableId);
-table.addRow({ columnId1: value, columnId2: value });
+tableInstance.addRow({ columnId1: value, columnId2: value });
 ```
 
-> Note: If there are more than one rows to be added to table then use `addRows()` instead for these bulk operations
+:::note[Note]
+If there are more than one rows to be added to table then use
+[addRows()](/lcnc-sdk-js/form/table/addrows/) instead for these bulk operations
+:::

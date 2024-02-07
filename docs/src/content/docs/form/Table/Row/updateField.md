@@ -1,11 +1,11 @@
 ---
 title: Update Field
-description: Set new value to a field
+description: Set new value to a column
 sidebar:
-    order: 2
+    order: 15
 ---
 
-Updates the value all fields given in the payload object
+Updates the value of given columnId in the object.
 
 ### Parameter
 
@@ -17,9 +17,9 @@ Updates the value all fields given in the payload object
 
 ```js
 let payload = {
-    "ratingField": 4,
-    "sliderFieldId": 9,
-    "textField": "new value",
+    "ratingColumn": 4,
+    "sliderColumn": 9,
+    "textColumn": "new value",
 };
 kf.context.updateField(payload).then((res) => {...})
 ```
@@ -32,4 +32,4 @@ let value = await kf.context.updateField(payload);
 
 ### Returns
 
-Returns the new value of the field, data type of value depends upon field.
+Returns the new value of the column, data type of value depends upon its field type.

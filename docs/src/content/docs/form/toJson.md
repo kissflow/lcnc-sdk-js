@@ -1,8 +1,8 @@
 ---
-title: toJson
+title: to JSON
 description: Retrieve data of current form as json
 sidebar:
-    order: 3
+    order: 4
 ---
 
 to retrieve data of current form as json
