@@ -1,6 +1,36 @@
+/* Dark mode colors. */
 :root {
-  --sl-hue-accent: 206;
-  --sl-color-accent-low: hsl(var(--sl-hue-accent), 54%, 20%);
-	--sl-color-accent: hsl(var(--sl-hue-accent), 100%, 60%);
-	--sl-color-accent-high: hsl(var(--sl-hue-accent), 100%, 85%);
+	--sl-color-accent-low: #2f2200;
+	--sl-color-accent: #846500;
+	--sl-color-accent-high: #dbc799;
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #dbf2fd;
+	--sl-color-gray-2: #abc7d5;
+	--sl-color-gray-3: #5a94ae;
+	--sl-color-gray-4: #246078;
+	--sl-color-gray-5: #003e53;
+	--sl-color-gray-6: #002b3b;
+	--sl-color-black: #031b25;
+}
+/* Light mode colors. */
+:root[data-theme='light'] {
+	--sl-color-accent-low: #e5d6b4;
+	--sl-color-accent: #876600;
+	--sl-color-accent-high: #402f00;
+	--sl-color-white: #031b25;
+	--sl-color-gray-1: #002b3b;
+	--sl-color-gray-2: #003e53;
+	--sl-color-gray-3: #246078;
+	--sl-color-gray-4: #5a94ae;
+	--sl-color-gray-5: #abc7d5;
+	--sl-color-gray-6: #dbf2fd;
+	--sl-color-gray-7: #edf8fe;
+	--sl-color-black: #ffffff;
+}
+
+
+.starlight-aside--note {
+		--sl-color-asides-text-accent: var(--sl-color-gray-1);
+		border-color: var(--sl-color-gray-2);
+		background-color: var(--sl-color-gray-6);
 }

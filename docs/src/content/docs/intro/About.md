@@ -29,9 +29,3 @@ This package has to be installed / imported, to use sdk on your codebase.
 > support only for `esm` (es modules) and `umd` formats of javascript.
 
 Please refer [installation](/lcnc-sdk-js/getting-started/installation/) steps
-
-### TODO:
-
-Add few use cases
-
-Add some features
