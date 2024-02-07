@@ -1,11 +1,11 @@
 ---
-title: Set Variable
-description: Updates new value to the variable.
+title: Set Local Variable
+description: Updates new value to the local variable.
 sidebar:
-    order: 3
+    order: 8
 ---
 
-To update a new value to application variables
+To update a new value to page / local variables
 
 ### Parameters
 
@@ -20,13 +20,13 @@ To update a new value to application variables
 To update a single variable
 
 ```js
-kf.app.setVariable(variableId, value);
+kf.app.page.setVariable(variableId, value);
 ```
 
 To update multiple variables
 
 ```js
-kf.app.setVariable({
+kf.app.page.setVariable({
 	variableId: "new value",
 	variableId2: 1
 });

@@ -30,7 +30,7 @@ export class Page extends BaseSDK {
 			key
 		});
 	}
-	setVariable(key: string, value: any) {
+	setVariable(key: string | object, value: any) {
 		return this._postMessageAsync(LISTENER_CMDS.SET_PAGE_VARIABLE, {
 			key,
 			value
