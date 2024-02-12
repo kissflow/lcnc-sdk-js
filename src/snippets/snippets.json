@@ -16,6 +16,11 @@
 			"insertText": "kf.app.openPage(\"${1:pageId}\", { inputParam1: \"value1\" })"
 		},
 		{
+			"label": "evaluate decision table",
+			"documentation": "Evaluates the provided data and returns back the matched output",
+			"insertText": "let decisionTableInstance = kf.app.getDecisionTable(\"${1:flowId}\");\n let decisionOutput = await decisionTableInstance.evaluate({ conditionField1: \"value\", conditionField2: \"value\" });"
+		},
+		{
 			"label": "get local variable",
 			"documentation": "Get value of the local variable",
 			"insertText": "let variableName = await kf.app.page.getVariable(\"${1:variableId}\")"
