@@ -189,7 +189,8 @@ export class AtomicsHandler {
 	}
 
 	encodeData(index: number = 0, data: object) {
-		let string = JSON.stringify(data);
+		const replacer = (key, value) => (value === undefined ? 'undefined' : value);
+		let string = JSON.stringify(data, replacer);
 		let encodedData = this.#textEncoder.encode(string);
 		this.int32Array.set(encodedData, index);
 		return this.int32Array;
