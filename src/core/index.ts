@@ -160,7 +160,7 @@ export class BaseSDK extends EventBase {
 
 
 
-export class AtomicsHandler {
+class AtomicsHandler {
 	sab: SharedArrayBuffer;
 	int32Array: Int32Array;
 
