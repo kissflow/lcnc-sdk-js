@@ -1,4 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
+import { CreateProxy } from "../core/proxy";
 
 import { Page } from "./page";
 
@@ -8,11 +9,13 @@ import { DecisionTable } from "./decisiontable";
 
 export class Application extends BaseSDK {
 	page: Page;
+	variable: object;
 	_id: string;
 	constructor(props: AppContext) {
 		super();
 		this._id = props.appId;
 		this.page = new Page(props);
+		this.variable = new CreateProxy("app_variable");
 	}
 	getVariable(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_APP_VARIABLE, {
