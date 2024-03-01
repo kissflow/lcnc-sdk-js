@@ -5,11 +5,7 @@ sidebar:
     order: 4
 ---
 
-to retrieve data of current form as json
-
-### Parameter
-
-N/A
+To retrieve the data of the current form in JSON format. 
 
 ### Syntax
 
@@ -23,4 +19,22 @@ or
 let formValues = await kf.context.toJSON();
 ```
 
-##### Returns an object
+### Returns
+
+All the values in the data form in JSON format.
+
+### Example
+
+To view all the values in the employee data form, use this toJSON method and obtain the complete set of field values in JSON format. 
+
+Example output for the above scenario:
+
+```js
+ {
+    "ratingField": 4,
+    "sliderFieldId": 9,
+    "Comments": "Exceeds expectations",
+    "_flow_name": "form events",
+    "_id": "Pk4_T1WGWuMe"
+  }
+```

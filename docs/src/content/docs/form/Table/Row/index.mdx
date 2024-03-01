@@ -5,9 +5,10 @@ sidebar:
     order: 13
 ---
 
-Considered each row in a table as a standalone form, thus writing events on the columns will have `kf.context` pointing to the `Row instance` instead of the parent form.
+Consider each row in a table as an independent form. So scripting events on the columns will cause kf.context to refer to the Row instance rather than the parent form.
 
-Row instance have following methods
+The row instance offers the following methods:
+
 1. getField()
 2. updateField()
 3. getParent()

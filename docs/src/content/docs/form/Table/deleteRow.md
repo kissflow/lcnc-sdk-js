@@ -5,7 +5,7 @@ sidebar:
     order: 8
 ---
 
-Deletes a single row from the given
+Deletes a single row from the specified
 [table instance](/lcnc-sdk-js/form/gettable/).
 
 ### Parameter
@@ -20,9 +20,17 @@ Deletes a single row from the given
 tableInstance.deleteRow(rowId);
 ```
 
+### Example
+
+To remove an entry from the employee work experience table, work_table1, specify the row ID, table_row_Id, in the payload and the entry will be deleted from your table. 
+
+```js
+worktableInstance.deleteRow(“table_row_Id”);
+```
+
+
 
 :::note[Note] 
-If there are more than one rows to be deleted from table then use
-[deleteRow()](/lcnc-sdk-js/form/table/deleterows/) instead for these bulk
-operations
+For bulk operations involving the deletion of more than a row, use the
+[deleteRow()](/lcnc-sdk-js/form/table/deleterows/) instead.
 :::

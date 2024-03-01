@@ -5,7 +5,7 @@ sidebar:
     order: 16
 ---
 
-To retrieve data of current row as json
+To retrieve the data of the current row in JSON format.
 
 ### Syntax
 
@@ -15,13 +15,12 @@ const json = await kf.context.toJSON();
 
 ##### Example output
 
-Consider your row have two columns, one text and another as rating
+If your row has two columns, one denoting the candidate’s company name and other, the duration of their employment there, the JSON output will be as follows:
 
 ```json
-{
-	"columnId_Text": "row 1",
-	"columnId_Rating": 2,
-	"_flow_name": "form events",
-	"_id": "Pk4_T1WGWuMe"
-}
+ {
+    "table_field1": "Kissflow",
+    "table_field2": “2 years”,
+    "_id": "Row_Pk4_T1WGWuMe"
+  }
 ```

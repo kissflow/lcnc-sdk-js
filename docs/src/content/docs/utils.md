@@ -2,10 +2,14 @@
 title: Utilities
 description: Common utilities
 ---
+While integrating SDKs, the initial step involves defining the account and user details. 
+
+Use the below functions to invoke the respective details.
+
 
 ### Account details
 
--   Account id can be accessed as
+-   You can obtain the account ID using 
 
 ```js
 kf.account._id;
@@ -13,23 +17,26 @@ kf.account._id;
 
 ### User details
 
--   Authenticated user details can be accessed as
+-   You can access the authenticated user details using
 
 ```js
-const { Name, Email, _id } = kf.user;
+const { Name, Email, _id, Role } = kf.user;
 ```
 
-### API
+### APIs in SDK
 
--   Fetch [kissflow's internal APIs](https://developers.kissflow.com/) using
-    this method.
--   `kf.api` has header tokens by default for making authenticated kissflow api
-    calls
+In Kissflow SDKs, you can initiate both internal and external API calls. 
+
+For internal APIs, refer to the [Developer's Hub](https://developers.kissflow.com/). 
+
+
+-   You can use the `kf.api` method to fetch internal APIs.
+-   `kf.api` is equipped with default header tokens, ensuring secure and authenticated API calls. 
 
 :::note[Note]
 
 -   This method has a limit of 10 seconds for an api call
--   For external api calls use
+-   For external API calls use,
     [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch#syntax)
     from javascript
 
@@ -47,12 +54,12 @@ An object containing any custom settings you want to apply to the request. The
 possible options
 
 -   ###### 1. method
-    The request method, e.g., "GET", "POST", "DELETE", etc. The default is "GET"
+	The request method, e.g., “GET”, “POST”, “DELETE”, etc., with the default being “GET”
 -   ###### 2. body
 
     Payload to be sent to an api as object.
 
-    Note that a request using the GET method cannot have a body.
+    > Note: A request using the GET method cannot have a body.
 
 ##### Syntax
 
@@ -68,21 +75,24 @@ Consider a process form submission api.
 
 ```js
 let payload = {
-	fieldId1: "newValue",
-	fieldId2: 22
+  fieldId1: "John Jacobs",
+  fieldId2: “HR”
 };
-const options = { method: "POST", body: JSON.strigify(payload) };
+const options = { method: "POST", body: JSON.stringify(payload) };
 kf.api(
-	`/process/2/${kf.account._id}/process_id/instance_id/activity_instance_id/submit`,
-	options
+  `/process/2/${kf.account._id}/process_id/instance_id/activity_instance_id/submit`,
+  options
 )
-	.then((response) => console.log(response))
-	.catch((err) => console.log("some error occured", err));
+  .then((response) => console.log(response))
+  .catch((err) => console.log(" An error has occurred.", err));
+
 ```
 
-### Client
+### Client methods
 
 #### Show Toast
+
+Displays the configured toast message to the clients.
 
 ```js
 kf.client.showInfo(message);
@@ -90,7 +100,7 @@ kf.client.showInfo(message);
 
 #### Show confirm
 
-Displays the confirmation dialog, and returns users's action as a response
+Displays the confirmation dialog to the client and returns the client's response as an output.
 
 ```js
 kf.client.showConfirm({ title, content }).then((action) => {
@@ -102,8 +112,32 @@ kf.client.showConfirm({ title, content }).then((action) => {
 });
 ```
 
+#### Example
+To configure a confirmation dialog for every form submission
+
+```js
+kf.client.showConfirm({
+     title: "Submit form",
+     content: "Are you sure you want to submit the form",
+     okText: "Continue",
+     cancelText: "Cancel"
+   })
+   .then(function(result) {
+     if (result === "OK") {
+			//code block to be executed if the user confirmed   
+	 	}else {
+			//code block to be executed if the user cancelled
+			}
+   });
+```
+
+
 #### Redirect to URL
+
+Redirects the client to a specific URL in the Kissflow application or to an external url. 
 
 ```js
 kf.client.redirect(url);
 ```
+#### Example
+To redirect a client to a feedback form post submitting their data, you can add the redirection URL to the above syntax. 

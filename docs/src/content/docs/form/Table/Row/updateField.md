@@ -5,13 +5,13 @@ sidebar:
     order: 15
 ---
 
-Updates the value of given columnId in the object.
+Updates the value of the given columnId in the row.
 
 ### Parameter
 
 | Parameters | type   | description                                                                                                                               |
 | ---------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| payload    | Object | Object with keys as fieldId(string) and its values as respective field type(like number for rating/slider, string for text/textarea etc.) |
+| payload    | Object | An object where the keys represent the fieldId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea, etc.). |
 
 ### Syntax
 
@@ -33,3 +33,14 @@ let value = await kf.context.updateField(payload);
 ### Returns
 
 Returns the new value of the column, data type of value depends upon its field type.
+
+### Example
+
+To update the values of background check completion in your employee data form, mention the column ID and the desired values in the payload. The form will be updated with the new values. 
+
+```js
+let payload = {
+    "columnId6": “Pending”,
+};
+kf.context.updateField(payload).then((res) => {...})
+```

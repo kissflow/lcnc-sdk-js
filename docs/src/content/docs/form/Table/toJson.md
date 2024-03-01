@@ -5,7 +5,7 @@ sidebar:
     order: 12
 ---
 
-To retrieve data of given [table instance](/lcnc-sdk-js/form/gettable/). as json
+To retrieve data of given [table instance](/lcnc-sdk-js/form/gettable/) as JSON
 
 ### Syntax
 
@@ -15,21 +15,20 @@ const json = await tableInstance.toJSON();
 
 ##### Example output
 
-Consider your table have two columns, one text and another as rating
+If your table has two columns, one denoting the candidate’s company name and the other, the duration of their employment there, the JSON output will be as follows:
 
 ```json
 [
-	{
-		"columnId_Text": "row 1",
-		"columnId_Rating": 2,
-		"_flow_name": "form events",
-		"_id": "Pk4_T1WGWuMe"
-	},
-	{
-		"columnId_Text": "row 2",
-		"columnId_Rating": 3,
-		"_flow_name": "form events",
-		"_id": "Pk4_T1WGWuMe"
-	}
+  {
+    "table_field1": "Microsoft",
+    "table_field2": “2 years”,
+    "_id": "Row_Pk4_T1WGWuMe"
+  },
+  {
+    "table_field1": "Amazon",
+    "table_field2": “3 years”,
+    "_id": "Row_Pk4_T1WMXuMd"
+  }
 ]
+
 ```

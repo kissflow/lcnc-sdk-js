@@ -5,16 +5,16 @@ sidebar:
     order: 2
 ---
 
-To Retrieve value of the application variable.
+To retrieve the value of an application variable.
 
--   Application variables are just like variables in any programming languages,
-    it has its scope(lifetime) for the entire app session of an user.
--   One can set a value of variable in a page/form/custom component and can
-    retreive its value inside another page/form/custom component inside same
-    application.
--   Value of application variable are stored on local machine of the user and
+-   Application variables are similar to variables in any programming language, with a scope spanning the entire user session within the application. 
+
+-   Users can set variable values in pages, forms, or custom components, and retrieve it from other pages, forms, or custom components within the same application. 
+
+:::note[Note] 
+Value of application variable are stored on local machine of the user and
     they are always persisted, even if the application reloaded.
-
+:::
 ### Parameters
 
 | Parameters | type   |
@@ -24,13 +24,12 @@ To Retrieve value of the application variable.
 ### Syntax
 
 ```js
-const appVarible1 = await kf.app.getVariable("variableId");
+const appVariable1 = await kf.app.getVariable("variableId");
 ```
 
 ### Returns
 
-Returns the value of variable, which could be of following data type in relation
-with variable type.
+Returns the value of the variable, with data type corresponding to the variable type.
 
 | Variable type | Data type |
 | ------------- | --------- |

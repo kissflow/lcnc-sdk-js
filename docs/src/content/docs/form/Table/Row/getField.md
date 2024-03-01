@@ -27,9 +27,14 @@ let value = await kf.context.getField(columnId);
 
 ### Returns
 
-Returns the value of the field, data type of value depends upon field.
+Returns the value of the field, and the data type of the value varies based on the field type.
 
-Eg:
+### Example
 
-If given columnId is Rating/Slider field then return value would be of type
-Integer.
+To retrieve the names of the previous companies an employee has worked for from the work experience table, specify the corresponding column ID, table_col1, and retrieve the values. 
+
+```js 
+let value = await kf.context.getField(“table_col1”);
+```
+
+In this example, the returned data type will be `text`. 

@@ -11,9 +11,7 @@ JavaScript.
 
 ### 1. Inside Kissflow platform
 
-Kissflow platform have inbuilt support for this sdk, therefore this can be
-accessed easily by using namespace `kf` where-ever the coding support has been
-provided inside the platform
+Within the Kissflow environment, whether in the platform or inside apps, you have built-in support to use these SDKs directly wherever JavaScript events are available. You can access the SDKs using the `kf` namespace. 
 
 Example:
 
@@ -21,11 +19,11 @@ Example:
 kf.client.showInfo("Welcome " + kf.user.Name);
 ```
 
-### 2. Using SDK in your own codebase
+### 2. In custom components 
 
 This package has to be installed / imported, to use sdk on your codebase.
 
-> Note: Since this package is only for client side of your projects, we have
-> support only for `esm` (es modules) and `umd` formats of javascript.
+> This package is exclusively designed for the client side of your projects. So we only support ECMAScript modules (es modules) and Universal Module Definition (UMD) formats of javascript.
+
 
 Please refer [installation](/lcnc-sdk-js/getting-started/installation/) steps

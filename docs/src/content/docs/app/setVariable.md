@@ -5,7 +5,7 @@ sidebar:
     order: 3
 ---
 
-To update a new value to application variables
+To update a new value for an application variable.
 
 ### Parameters
 

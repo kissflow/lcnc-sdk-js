@@ -5,8 +5,11 @@ sidebar:
     order: 10
 ---
 
-Returns a [row instance](/lcnc-sdk-js/form/table/row/) of `rowId` form given
+Returns a [row instance](/lcnc-sdk-js/form/table/row/) of `rowId` from the specified
 [table instance](/lcnc-sdk-js/form/gettable/).
+
+From the row instance, you can access methods such as updateField(), getField(), and so on.
+
 
 ### Parameter
 
@@ -22,18 +25,16 @@ let rowInstance = tableInstance.getRow(rowId);
 
 ### Example
 
-From the rowInstance, methods like `updateField()`, `getField()` can be accessed.
+A simple use case for updating the years of experience in the employee dataform.
 
 ```js
-// A simple use case of updating a number column from the row.
-
-let tableInstance = kf.context.getTable("someTableId");
-let rowInstance = tableInstance.getRow("someRowId");
-let counts = await rowInstance.getField("countNumber");
-rowInstance.updateField({ countNumber: counts + 1 });
+let tableInstance = kf.context.getTable("work_table1");
+let rowInstance = tableInstance.getRow("table_row_Id");
+let yoe = await rowInstance.getField("table_field2");
+rowInstance.updateField({ table_field2: yoe + 1 });
 ```
 
 :::note[Note]
-If there are more than one rows to be fetched from table then use
+If there is more than one row to be fetched from a table, use
 [getRows()](/lcnc-sdk-js/form/table/getrows/) instead 
 :::

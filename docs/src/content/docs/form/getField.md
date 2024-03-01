@@ -5,7 +5,7 @@ sidebar:
     order: 1
 ---
 
-To retrieve the current value of a form field
+To retrieve the current value of a form field.
 
 ### Parameter
 
@@ -27,9 +27,26 @@ let value = await kf.context.getField(fieldId);
 
 ### Returns
 
-Returns the value of the field, data type of value depends upon field.
+Returns the value of the field, and the data type varies based on the field type. 
 
-Eg:
 
-If given fieldId is Rating/Slider field then return value would be of type
-Integer.
+
+### Example
+
+To obtain the value of the rating field from your employee data form, use the field ID of the ratings field, ratingField, and retrieve the value. 
+
+In this example, the data type of the returned value would be integer. 
+
+
+
+
+```js
+let value = await kf.context.getField(“ratingField”);
+```
+
+#### Output
+
+```js
+3
+```
+

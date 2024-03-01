@@ -5,14 +5,14 @@ sidebar:
     order: 6
 ---
 
-Appends a single row into to given
+Adds a single row to the specified
 [table instance](/lcnc-sdk-js/form/gettable/).
 
 ### Parameter
 
 | Parameters | type   | description                                                                                                                                |
 | ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| payload    | object | Object with keys as columnId(string) and its values as respective field type(like number for rating/slider, string for text/textarea etc.) |
+| payload    | object | n object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.) |
 
 ### Syntax
 
@@ -20,7 +20,16 @@ Appends a single row into to given
 tableInstance.addRow({ columnId1: value, columnId2: value });
 ```
 
+### Example
+
+To add a new work experience entry into the employee work experience table, work_table1, specify the relevant column IDs, table_field1, table_field2, along with their corresponding values. (Kissflow, 2 years). 
+
+```js
+worktableInstance.addRow({ table_field1: “Microsoft”, table_field2: “2 years” });
+```
+
 :::note[Note]
-If there are more than one rows to be added to table then use
-[addRows()](/lcnc-sdk-js/form/table/addrows/) instead for these bulk operations
+For bulk operations involving the addition of more than one row to a table, use the
+[addRows()](/lcnc-sdk-js/form/table/addrows/) method instead.
 :::
+

@@ -7,7 +7,7 @@ sidebar:
 
 ## getAllParameters()
 
-To retrieve all parameters & its value on the page.
+To retrieve all parameters & its values on the page.
 
 ### Syntax
 

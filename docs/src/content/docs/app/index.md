@@ -5,12 +5,10 @@ sidebar:
     order: 1
 ---
 
-`kf.app` represents the active kissflow.
+`kf.app` represents the currently active instance of a kissflow application. You can retrieve the application’s ID using `kf.app._id`.
 
-Application Id can be retreived like `kf.app._id`.
-
-`kf.app` and other subsequent method signatures are accessible on:
-  - Form, only if its rendered inside an application.
-  - Custom components.
-  - Across all widget/popup events inside the page and page events.
-  - Bulk/Custom actions in dataforms inside application
+`kf.app` and its associated methods are accessible in:
+- Forms, when it's rendered inside an application.
+- Custom components.
+- Across all widgets and popup events inside page and page events.
+- Bulk and custom actions in dataforms inside applications.

@@ -7,13 +7,13 @@ sidebar:
         text: New
 ---
 
-Appends multiple rows to the [table instance](/lcnc-sdk-js/form/gettable/).
+Adds multiple rows to the [table instance](/lcnc-sdk-js/form/gettable/).
 
 ### Parameter
 
 | Parameters | type  | description                                                                                                                                          |
 | ---------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| payload    | array | Array of objects with keys as columnId(string) and its values as respective field type(like number for rating/slider, string for text/textarea etc.) |
+| payload    | array | Array of objects where keys represent the columnId(string) and its values correspond to the respective field types (like number for rating/slider, string for text/textarea etc.). |
 
 ### Syntax
 
@@ -25,14 +25,18 @@ tableInstance.addRows([
 ```
 
 ##### Example
+
+Assume `employeeData` variable is fetched via an api call.
+
 ```js
-const table = kf.context.getTable(tableId);
+const worktableInstance = kf.context.getTable(tableId);
 let accumulator = [];
-someArrayOfObjects.forEach(function(rowDetail) {
+employeeData.forEach(function(data) {
     accumulator.push({
-        columnId1: rowDetail[columnId1], 
-        columnId2: rowDetail[columnId2]
+        table_field1: data[“Company”],
+        table_field2: data[“YOE”]
     });
 });
-await table.addRows(accumulator);
+await worktableInstance.addRows(accumulator);
+
 ```
