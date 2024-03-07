@@ -31,7 +31,8 @@ const CLASS_MAPPINGS = {
     Formatter: { name: "Formatter" },
     LowcodeSDK: { name: "kf", staticDeclarations: true },
     DecisionTable: { name: "DecisionTable" },
-    AppVariable: { name: "AppVariable" },
+    // Not added typings for AppVariable class since its resolved in main thread
+    // AppVariable: { name: "AppVariable" },
   },
   [SDK_KIND.NOCODE]: {
     Client: { name: "Client" },
