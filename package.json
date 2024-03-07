@@ -22,7 +22,8 @@
 		"customBuild": "node custom.build.mjs",
 		"build": "pnpm run customBuild",
 		"prepare": "pnpm run customBuild",
-		"serve": "http-server -p 8080"
+		"serve": "http-server -p 8080",
+		"publish": "pnpm publish --tag canary"
 	},
 	"repository": {
 		"type": "git",
