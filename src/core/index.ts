@@ -150,8 +150,7 @@ export class BaseSDK extends EventBase {
 		let processedResp = processResponse(req, resp);
 
 		if (processedResp?.isError) {
-			console.error(processedResp);
-			throw new Error(`Error: ${processedResp.errorMessage}`);
+			throw new Error(`Error: ${JSON.stringify(processedResp, null, 2)}`);
 		}
 
 		return processedResp;
