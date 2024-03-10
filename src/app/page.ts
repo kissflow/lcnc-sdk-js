@@ -4,16 +4,19 @@ import { Component } from "./component";
 import { Popup } from "./popup";
 
 import { PageContext } from "../types/internal";
+import { CreateProxy } from "../core/proxy";
 
 export class Page extends BaseSDK {
 	_id: string;
 	popup: Popup;
 	type: string;
+	variable: PageVariable;
 	constructor(props: PageContext) {
 		super();
 		this.type = "Page";
 		this.popup = new Popup({});
 		this._id = props.pageId;
+		this.variable = new PageVariable()
 	}
 	getParameter(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_PAGE_PARAMS, {
@@ -49,5 +52,30 @@ export class Page extends BaseSDK {
 			true,
 			(data) => new Component(data)
 		);
+	}
+}
+
+
+class PageVariable extends BaseSDK {
+	constructor() {
+		super()
+		return new CreateProxy(this)
+	}
+
+	get(key, path) {
+		let args = {
+			key,
+			path: path
+		}
+		return this._postMessageSync(LISTENER_CMDS.GET_PAGE_VARIABLE, args);
+	}
+
+	set(key, value, path) {
+		let args = {
+			key,
+			value,
+			path
+		}
+		return this._postMessageSync(LISTENER_CMDS.SET_PAGE_VARIABLE, args);
 	}
 }
