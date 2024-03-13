@@ -2,7 +2,7 @@
 title: About
 description: Introduction to Tables SDK
 sidebar:
-    order: 0
+    order: 5
 ---
 
 A table acts as a separate section in forms and lets you collect and manage data in a tabular format. 
