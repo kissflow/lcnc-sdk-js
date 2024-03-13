@@ -353,6 +353,13 @@ kf.app.openPage(pageId, pageInputParameters);
 // Note: Page Input parameters are optional.
 ```
 
+##### Get a dataform instance
+`getDataform(formId)` returns a Dataform class instance
+```js
+const dfInstance = kf.app.getDataform("dataform_id");
+```
+
+
 ### 4) Page
 `kf.app.page` returns the active page opened inside application and `kf.app.page._id` returns its id.
 
@@ -442,6 +449,24 @@ let allParams = await kf.app.page.popup.getAllParameters();
     // or if you already have a popup instance...
     greetPopup.close();
 ```
+
+### 8) Dataform
+
+> Note: Get dataform instance from `kf.app.getDatform`
+
+
+##### Import CSV
+
+Opens up the import CSV modal where user could upload CSV file and map respective columns to the field.
+
+```js
+let defaultValues = {"fieldId": "value"}
+dataformInstance.importCSV(defaultValues)
+```
+> Note: Default values here is optional
+
+Default values are used to provide specific values to field while importing that aren't ideally exposed to user
+
 
 ### 7) Formatter
 
