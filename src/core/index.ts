@@ -13,7 +13,9 @@ function processResponse(req: object, resp: object) {
 		Object.keys(resp).length === 1 &&
 		req.command !== LISTENER_CMDS.API
 	) {
-		return Object.values(resp)[0];
+		let value = Object.values(resp)[0];
+		if (value === "undefined") return undefined;
+		return value;
 	} else {
 		return resp;
 	}
