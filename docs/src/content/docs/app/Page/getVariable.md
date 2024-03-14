@@ -7,9 +7,9 @@ sidebar:
 
 To Retrieve value of the page / local variable.
 
--   Page variables have its scope limited to page.
--   Page variables are not persisted like application variable, hence revisiting
-    the page will reinitialize all of its page variables
+-   Page variables have a limited scope and are specific to each page.
+-   Unlike application variables, page variables are not persisted, so they are
+    reinitialized each time the page is revisited.
 
 ### Parameters
 
@@ -34,3 +34,8 @@ with variable type.
 | Number        | Integer   |
 | DateTime      | String    |
 | Boolean       | Boolean   |
+
+### Example scenario
+
+Suppose you have a implemented a custom voting counter component on a page. 
+When a user submits their vote, you can retrieve the counter value and save this data.

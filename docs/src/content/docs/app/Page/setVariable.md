@@ -5,7 +5,7 @@ sidebar:
     order: 8
 ---
 
-To update a new value to page / local variables
+This method lets you to update a new value to local variables
 
 ### Parameters
 
@@ -17,13 +17,13 @@ To update a new value to page / local variables
 
 ### Syntax
 
-To update a single variable
+Follow the syntax to update a single variable:
 
 ```js
 kf.app.page.setVariable(variableId, value);
 ```
 
-To update multiple variables
+Follow the syntax to update multiple variables:
 
 ```js
 kf.app.page.setVariable({
@@ -31,3 +31,9 @@ kf.app.page.setVariable({
 	variableId2: 1
 });
 ```
+
+### Example scenario
+
+Consider you have fetched employee details such as name, age & address during
+the page's onload event. You can set local variables for all these fields and
+use them on different components inside the page, such as displaying labels or cards.

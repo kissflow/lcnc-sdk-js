@@ -5,6 +5,6 @@ sidebar:
     order: 5
 ---
 
-`kf.app.page` represents the active page opened inside the application.
+The `kf.app.page` property represents the currently active page within an app.
 
-Page Id can be retreived like `kf.app.page._id`.
+To retrieve the ID of a page, you can use `kf.app.page._id`.

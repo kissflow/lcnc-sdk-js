@@ -9,10 +9,10 @@ To open a popup in page
 
 ### Parameters
 
-| Parameters       | type   | Description                         |
-| ---------------- | ------ | ----------------------------------- |
-| popupId          | String | Unique Id of Popup                  |
-| popupParameters? | Object | specify popup parameters as objects |
+| Parameters                  | type   | Description                         |
+| --------------------------- | ------ | ----------------------------------- |
+| popupId                     | String | Unique Id of Popup                  |
+| popupParameters ?(optional) | Object | specify popup parameters as objects |
 
 ### Syntax
 
@@ -21,7 +21,8 @@ kf.app.page.openPoup(popupId, popupParameters);
 ```
 
 #### Example
-
+Consider there is a process form inside Popup and popup parameters are mapped to instance and activity instance id property of the process form.
+In such case we can pass in those values as popup parameters
 ```js
 let popupParameters = {
 	instanceId: "acdnd",

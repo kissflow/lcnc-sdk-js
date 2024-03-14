@@ -5,9 +5,9 @@ sidebar:
     order: 10
 ---
 
--   `kf.app.page.popup` returns the active popup instance opened inside the page
--   Access Popup Id from `kf.app.page.popup._id`
--   `kf.app.page.openPopup(id)` returns this popup class instance.
+-   The property `kf.app.page.popup` returns the active popup instance opened inside the page
+-   The property `kf.app.page.popup._id` lets you the get ID of the popup
+-   The method `kf.app.page.openPopup(id)` returns this popup class instance.
 
 Following methods are available for a popup instance
 
@@ -54,7 +54,7 @@ let value = await kf.app.page.popup.getParameter("parameterId");
 
 ## Close popup
 
-Closes the active popup opened in the page
+Closes an active popup that is currently open in the page
 
 ###### Syntax
 
