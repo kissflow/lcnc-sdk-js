@@ -5,10 +5,14 @@ sidebar:
     order: 1
 ---
 
-`kf.app` represents the currently active instance of a kissflow application. You can retrieve the application’s ID using `kf.app._id`.
+There are several SDK methods that you can use to retrieve information from and about the app that is currently in use. Below are a few examples:
+
+To get information about the current active instance of a Kissflow app, use `kf.app` 
+To retrieve the app’s ID, use `kf.app._id.`
 
 `kf.app` and its associated methods are accessible in:
-- Forms, when it's rendered inside an application.
+- Forms within the app.
 - Custom components.
-- Across all widgets and popup events inside page and page events.
-- Bulk and custom actions in dataforms inside applications.
+- Across all widgets and popup events inside a page and other page events.
+- Bulk and custom actions in dataforms inside the app.
+

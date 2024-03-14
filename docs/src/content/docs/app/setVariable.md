@@ -5,7 +5,7 @@ sidebar:
     order: 3
 ---
 
-To update a new value for an application variable.
+This method lets you update the value of a global variable used in the app.
 
 ### Parameters
 
@@ -17,13 +17,13 @@ To update a new value for an application variable.
 
 ### Syntax
 
-To update a single variable
+Follow the below syntax to update a **single** global variable:
 
 ```js
 kf.app.setVariable(variableId, value);
 ```
 
-To update multiple variables
+Follow the below syntax to update ***multiple*** variables:
 
 ```js
 kf.app.setVariable({
@@ -31,3 +31,6 @@ kf.app.setVariable({
 	variableId2: 1
 });
 ```
+### Example
+
+This command can be used to update an employee’s personal information such as their dependants, contact number, and address that could be of varied variable types. 

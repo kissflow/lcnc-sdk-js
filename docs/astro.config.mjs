@@ -26,12 +26,20 @@ export default defineConfig({
 					link: "/utils"
 				},
 				{
+					label: "Context",
+					link: "/context"
+				},
+				{
 					label: "Form",
 					autogenerate: { directory: "form" }
 				},
 				{
 					label: "Application",
 					autogenerate: { directory: "app" }
+				},
+				{
+					label: "Custom Component",
+					link: "/component"
 				},
 				{
 					label: "Formatter",

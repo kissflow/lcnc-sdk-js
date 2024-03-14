@@ -5,7 +5,7 @@ sidebar:
     order: 2
 ---
 
-To retrieve the value of an application variable.
+This method lets you retrieve the value of a global variable used in the app.
 
 -   Application variables are similar to variables in any programming language, with a scope spanning the entire user session within the application. 
 
@@ -29,7 +29,7 @@ const appVariable1 = await kf.app.getVariable("variableId");
 
 ### Returns
 
-Returns the value of the variable, with data type corresponding to the variable type.
+The above syntax will return the value of the variable, with data type corresponding to the variable type.
 
 | Variable type | Data type |
 | ------------- | --------- |
@@ -37,3 +37,7 @@ Returns the value of the variable, with data type corresponding to the variable 
 | Number        | Integer   |
 | DateTime      | String    |
 | Boolean       | Boolean   |
+
+### Example
+
+This method can be used to retrieve the number of work hours an employee has logged in a particular week.
