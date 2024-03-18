@@ -36,9 +36,10 @@
 
 .site-title{
 	color: var(--sl-color-white);
+	gap: 4px;
+	font-weight: 500px;
 }
 
 .site-title img{
 	transform: scale(0.7);
-	gap: 4px;
 }
