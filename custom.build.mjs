@@ -30,7 +30,8 @@ const CLASS_MAPPINGS = {
 		Popup: { name: "Popup" },
 		Formatter: { name: "Formatter" },
 		LowcodeSDK: { name: "kf", staticDeclarations: true },
-		DecisionTable: { name: "DecisionTable" }
+		DecisionTable: { name: "DecisionTable" },
+		Dataform: {name: "Dataform"}
 	},
 	[SDK_KIND.NOCODE]: {
 		Client: { name: "Client" },

@@ -40,8 +40,9 @@ jobs:
       - name: Run build
         run:  pnpm run build
 
-      - name: pump package version
-        run:  pnpm version patch
+      # disabled automatic version pump as it is conflicting with internal versioning
+      # - name: pump package version
+      #   run:  pnpm version patch
 
       - name: Publish package to npm
         run:  pnpm publish --no-git-checks

@@ -1,9 +1,12 @@
 # _Kissflow Lowcode JavaScript SDK_
 
 JavaScript SDK for developing over the Kissflow lowcode platform
+
 ### Use as an `npm` module
 
-Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import into your project:
+Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import
+into your project:
+
 ```js
 import KFSDK from "@kissflow/lowcode-client-sdk";
 let kf;
@@ -11,14 +14,19 @@ let kf;
 	kf = await KFSDK.initialize();
 })();
 ```
+
 > Note: Initializing Kf SDK in custom components returns a promise.
+
 ### Use as a `<script>` tag directly in HTML
 
 SDK can also be loaded directly into HTML by adding:
+
 ```html
 <script src="https://unpkg.com/@kissflow/lowcode-client-sdk@latest/dist/kfsdk.umd.js"></script>
 ```
+
 Then SDK can be initialized as:
+
 ```js
 let kf;
 window.onload = async function () {
@@ -27,15 +35,20 @@ window.onload = async function () {
 ```
 
 ### User and Account details
+
 Details of authenticated user can be accessed as following
+
 ```js
-const { Name, Email, _id } = kf.user
+const { Name, Email, _id } = kf.user;
 ```
+
 And account id can be accessed as `kf.account._id`
 
 ### Fetch Api through sdk
-Fetch any other kissflow api & external api using this method.
-kf.api has header tokens by default for making authenticated kissflow api calls
+
+Fetch any other kissflow api & external api using this method. kf.api has header
+tokens by default for making authenticated kissflow api calls
+
 > Note: This method has a limit of 10 seconds for an api call
 
 ```js
@@ -45,32 +58,36 @@ let resp = await kf.api(url, config)
 ```
 
 ## Table of contents
-- [1. Context](#1-context)
-    - [Custom Components](#custom-component)
-    - [Form](#custom-component)
-        - [Form Table](#form-table)
-        - [Table Row](#table-row)
-- [2. Client](#2-client)
-- [3. Application](#3-application)
-- [4. Page](#4-page)
-- [5. Component](#5-component)
-    - [Standard Component methods](#standard-component-methods)
-    - [Component Specific methods](#component-specific-methods)
-        - [Tab](#521-tab-component)
-- [6. Popup](#6-popup)
-- [7. Formatter](#7-formatter)
+
+-   [1. Context](#1-context)
+    -   [Custom Components](#custom-component)
+    -   [Form](#custom-component)
+        -   [Form Table](#form-table)
+        -   [Table Row](#table-row)
+-   [2. Client](#2-client)
+-   [3. Application](#3-application)
+-   [4. Page](#4-page)
+-   [5. Component](#5-component)
+    -   [Standard Component methods](#standard-component-methods)
+    -   [Component Specific methods](#component-specific-methods)
+        -   [Tab](#521-tab-component)
+-   [6. Popup](#6-popup)
+-   [7. Formatter](#7-formatter)
 
 ## 1) Context
 
-Context methods are polymorphic, it has different classes pre-initialized based on execution context.
+Context methods are polymorphic, it has different classes pre-initialized based
+on execution context.
 
 ### Custom component
 
-`kf.context` returns a `CustomComponent` class while using inside custom component. Custom component supported methods:
+`kf.context` returns a `CustomComponent` class while using inside custom
+component. Custom component supported methods:
 
 ##### a) Watch Params
 
-Listens for changes in parameter given to custom components in lowcode application.
+Listens for changes in parameter given to custom components in lowcode
+application.
 
 ```js
 kf.context.watchParams(function (data) {
@@ -80,14 +97,18 @@ kf.context.watchParams(function (data) {
 
 ### Kissflow Forms
 
-`kf.context` returns a `Form` class when it is used inside a kissflow's form that could be either Process, case or Dataform & it has following supported methods
+`kf.context` returns a `Form` class when it is used inside a kissflow's form
+that could be either Process, case or Dataform & it has following supported
+methods
 
 ##### a) getField()
 
 ###### Description:
+
 Use this function to get the current value of a form field
 
 ###### Syntax:
+
 ```js
 kf.context.getField(fieldId).then((res) => {...})
 // or
@@ -97,9 +118,11 @@ let value = await kf.context.getField(fieldId)
 ##### b) updateField()
 
 ###### Description:
+
 Use this function to get update any field in the form
 
 ###### Syntax:
+
 ```js
 kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
@@ -107,14 +130,17 @@ kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ##### c) toJSON()
 
 ###### Description:
+
 Use this function to get the JSON data of the current form
 
 ###### Syntax:
+
 ```js
 const json = await kf.context.toJSON();
 ```
 
 ###### Output:
+
 ```
 {
     "Untitled_Field": "testing",
@@ -127,34 +153,40 @@ const json = await kf.context.toJSON();
 
 ### Form Table
 
-`kf.context.getTable(tableId)` returns a `Table` class which has the following methods
+`kf.context.getTable(tableId)` returns a `Table` class which has the following
+methods
 
 #### a) addRow()
 
 ###### Description:
+
 Appends row details to the table.
 
 ###### Syntax:
+
 ```js
 const table = kf.context.getTable(tableId);
 table.addRow({ columnId1: value, columnId2: value });
 ```
+
 > ##### Note: If there are more than one rows to be added to table then use `addRows()` instead for these bulk operations
 
 #### b) addRows()
 
 ###### Description:
+
 Appends multiple rows details to the table.
 
 ###### Syntax:
+
 ```js
 const table = kf.context.getTable(tableId);
 let accumulator = [];
-someArrayOfObjects.forEach(function(rowDetail) {
-    accumulator.push({
-        columnId1: rowDetail[columnId1], 
-        columnId2: rowDetail[columnId2]
-    });
+someArrayOfObjects.forEach(function (rowDetail) {
+	accumulator.push({
+		columnId1: rowDetail[columnId1],
+		columnId2: rowDetail[columnId2]
+	});
 });
 await table.addRows(accumulator);
 ```
@@ -162,21 +194,26 @@ await table.addRows(accumulator);
 #### c) deleteRow()
 
 ###### Description:
+
 Deletes a row from the table based on the row id
 
 ###### Syntax:
+
 ```js
 const table = kf.context.getTable(tableId);
 await table.deleteRow(rowId);
 ```
+
 > ##### Note: If there are more than one rows to be deleted then use `deleteRows()` instead.
 
 #### d) deleteRows()
 
 ###### Description:
+
 Deletes multiple rows from the table based on given array of strings.
 
 ###### Syntax:
+
 ```js
 const table = kf.context.getTable(tableId);
 await table.deleteRows([rowId1, rowId2, rowId3]);
@@ -185,41 +222,50 @@ await table.deleteRows([rowId1, rowId2, rowId3]);
 #### e) getRow()
 
 ###### Description:
+
 Use this function to perform form actions on any row inside a child table
 
 ###### Syntax:
+
 ```js
 const table = kf.context.getTable(tableId);
 const row = table.getRow(rowId);
 ```
 
 ###### Output:
+
 Returns an instance of `TableForm` class
 
 #### f) getRows()
 
 ###### Description:
+
 Gets all the rows of the table
 
 ###### Syntax:
+
 ```js
 const rows = await kf.context.getTable(tableId).getRows();
 ```
 
 ###### Output:
+
 Returns an array of `TableForm` instances
 
 ##### g) toJSON()
 
 ###### Description:
+
 Use this function to get the JSON data of the child table
 
 ###### Syntax:
+
 ```js
 const json = await kf.context.getTable(tableId).toJSON();
 ```
 
 ###### Output:
+
 ```
 [{
     "Untitled_Field": "row 1",
@@ -238,15 +284,17 @@ const json = await kf.context.getTable(tableId).toJSON();
 
 ### Table Row
 
-A single row inside a table is known as Table row
-`kf.context` returns a `TableForm` class which has the following methods
+A single row inside a table is known as Table row `kf.context` returns a
+`TableForm` class which has the following methods
 
 ##### a) getField()
 
 ###### Description:
+
 Use this function to get the value of the table row
 
 ###### Syntax:
+
 ```js
 kf.context.getField(fieldId).then((res) => {...})
 // or
@@ -256,9 +304,11 @@ let value = await kf.context.getField(fieldId)
 ##### b) updateField()
 
 ###### Description:
+
 Use this function to get update any field in the table row
 
 ###### Syntax:
+
 ```js
 kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
@@ -266,29 +316,35 @@ kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ##### c) getParent()
 
 ###### Description:
+
 Use this function to perform form actions on the main form
 
 ###### Syntax:
+
 ```js
 const mainForm = kf.context.getParent();
 mainForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
 ```
 
 ###### Output:
+
 Returns an instance of `Form` class using which we can perform any action on the
 main form
 
 ##### d) toJson()
 
 ##### Description:
+
 Get JSON output of table row
 
 ##### Syntax:
+
 ```js
 const json = await kf.context.toJSON();
 ```
 
 ###### Output:
+
 ```
 {
     "Untitled_Field": "testing",
@@ -304,12 +360,15 @@ const json = await kf.context.toJSON();
 ### 2) Client
 
 ##### Show Toast
+
 ```js
 kf.client.showInfo(message);
 ```
 
 ##### Show confirm
+
 Displays the confirmation dialog, and returns users's action as a response
+
 ```js
 kf.client.showConfirm({ title, content }).then((action) => {
     if(action === "OK") // user clicked ok button
@@ -319,6 +378,7 @@ kf.client.showConfirm({ title, content }).then((action) => {
 ```
 
 ##### Redirect to URL
+
 ```js
 kf.client.redirect(url);
 ```
@@ -328,11 +388,13 @@ kf.client.redirect(url);
 `kf.app` represents the active kissflow app and `kf.app._id` returns its id.
 
 ##### Get value to application variable
+
 ```js
 const appVarible1 = await kf.app.getVariable("variableId");
 ```
 
 ##### Set value of application variable
+
 ```js
 let value = await kf.app.setVariable("variableId", value);
 // or
@@ -343,7 +405,9 @@ await kf.app.setVariable({
 ```
 
 ##### Open a page
+
 `openPage(id)` returns [Page](#4-page) class instance
+
 ```js
 const pageInputParameters = {
 	param1: value,
@@ -353,95 +417,162 @@ kf.app.openPage(pageId, pageInputParameters);
 // Note: Page Input parameters are optional.
 ```
 
+##### Get a dataform instance
+
+`getDataform(formId)` returns a Dataform class instance
+
+```js
+const dfInstance = kf.app.getDataform("dataform_id");
+```
+
 ### 4) Page
-`kf.app.page` returns the active page opened inside application and `kf.app.page._id` returns its id.
+
+`kf.app.page` returns the active page opened inside application and
+`kf.app.page._id` returns its id.
 
 ##### Page parameters
+
 ```js
 let value = await kf.app.page.getParameter("parameterId"); // for retreiving single parameter
 ```
+
 Get all page parameters
-```js 
-let allParams = await kf.app.page.getAllParameters(); 
+
+```js
+let allParams = await kf.app.page.getAllParameters();
 // returns an object
-{ 
+{
     parameterName: "Sample value",
     parameterName2: "Sample value 2"
 }
 ```
 
 ##### Access a Component
+
 `getComponent` returns a [Component](#5-component) class.
+
 ```js
 const componentName = await kf.app.page.getComponent("componentId");
 ```
 
 ##### Open a popup
+
 `openPoup` returns a [Popup](#6-popup) class.
+
 ```js
 kf.app.page.openPopup("popupId", { inputParam1: "value" });
 // Note: Popup parameters are optional.
 ```
 
 ### 5) Component
+
 #### getComponent(id)
-Parameter: Component's Id
-Returns: Component class instance
+
+Parameter: Component's Id Returns: Component class instance
+
 ```js
 const component = await kf.app.page.getComponent(componentId);
 ```
+
 ##### Standard Component Methods
+
 ```js
 component.refresh(); // Refreshes the component
 component.hide(); // Hides the component
 component.show(); // Shows the component if it's been hidden previously
 ```
+
 ##### Component Specific Methods
 
-
 ##### 5.2.0) Component onMount
+
 Component onMount takes in callBack function as argument.
+
 > ##### Note: Any component specific methods that are used on Page load must be called inside component's onMount event.
-Parameter: function
+>
+> Parameter: function
+
 ```js
 component.onMount(() => {
-    // function logic goes here... For eg.
-    // component.setActiveTab(2)
-})
-```
-##### 5.2.1) Tab component
-##### 1) setActiveTab
-Sets specified tab as active.
-Parameter: Tabs' Number (Starts from 1 to N)
-```js
-component.setActiveTab(2) // sets 2nd tab as active one
+	// function logic goes here... For eg.
+	// component.setActiveTab(2)
+});
 ```
 
+##### 5.2.1) Tab component
+
+##### 1) setActiveTab
+
+Sets specified tab as active. Parameter: Tabs' Number (Starts from 1 to N)
+
+```js
+component.setActiveTab(2); // sets 2nd tab as active one
+```
 
 ### 6) Popup
-`kf.app.page.popup` returns the active popup instance opened inside the page and its id can be accessed via `kf.app.page.popup._id`
-And `kf.app.page.getPopup(id)` returns this popup class instance.
+
+`kf.app.page.popup` returns the active popup instance opened inside the page and
+its id can be accessed via `kf.app.page.popup._id` And
+`kf.app.page.getPopup(id)` returns this popup class instance.
 
 ##### Popup parameters
+
 ```js
 let value = await kf.app.page.popup.getParameter("parameterId"); // for retreiving single popup parameter
 ```
+
 Get all popup parameters
-```js 
-let allParams = await kf.app.page.popup.getAllParameters(); 
+
+```js
+let allParams = await kf.app.page.popup.getAllParameters();
 // Returns an object
-{ 
+{
     parameterName: "Sample value",
     parameterName2: "Sample value 2"
 }
 ```
 
 ##### Close popup
+
 ```js
-    kf.app.page.popup.close() // for active popup
-    // or if you already have a popup instance...
-    greetPopup.close();
+kf.app.page.popup.close(); // for active popup
+// or if you already have a popup instance...
+greetPopup.close();
 ```
+
+### 8) Dataform
+
+> Note: Get dataform instance from `kf.app.getDatform`
+
+##### Import CSV
+
+Opens up the import CSV modal where user could upload CSV file and map
+respective columns to the field.
+
+```js
+let defaultValues = { fieldId: "value" };
+dataformInstance.importCSV(defaultValues);
+```
+
+###### Example scenario
+
+Consider scenario where few fields that aren't exposed to user(basically hidden
+in form visibilty). In such cases Default values can be used to provide data to
+hidden fields
+
+```js
+// Here the location field is hidden to user,
+// thus user isn't aware to include this on import csv.
+let defaultValues = { location: "India" };
+dataformInstance.importCSV(defaultValues);
+```
+
+> Note:
+> 1. Default values here is optional
+> 2. Any variables or parameter can also be mapped in `defaultValues`.
+> 3. End user can't pass this value if default value is set by dev.
+> 4. Some fields cannot be set as default eg. Auto calculated fields, Sequence numbers etc.
+
 
 ### 7) Formatter
 
