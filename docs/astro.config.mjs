@@ -19,11 +19,11 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: "Getting started",
-					link: "/intro/about"
+					link: "/"
 				},
 				{
 					label: "Installation",
-					link: "/intro/installation"
+					link: "/installation"
 				},
 				{
 					label: "Utilities",
