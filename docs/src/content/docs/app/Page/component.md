@@ -1,13 +1,13 @@
 ---
 title: Component
-description: Retrieves component instance
+description: Gives component instance and their methods
 sidebar:
     order: 11
 ---
 
 ## Get component instance
 
-To retrieve a component instance
+This method lets you to retrieve a component instance
 
 ###### Syntax
 
@@ -25,7 +25,7 @@ Returns a component instance with following methods
 
 ### Refresh
 
-Refreshes the given component.
+This methods lets you to refresh the component.
 
 ###### Syntax
 
@@ -35,7 +35,7 @@ componentInstance.refresh();
 
 ### Hide
 
-Hides the component from page
+This method hides a component from page
 
 ###### Syntax
 
@@ -45,7 +45,7 @@ componentInstance.hide();
 
 ### Show
 
-Renders component in the page, if its been hidden previously.
+This method renders a component that has been hidden previously in a page.
 
 ###### Syntax
 
@@ -57,8 +57,8 @@ componentInstance.show();
 
 ### OnMount
 
-A lifecycle event for component which will be called when component is mounted /
-re-mounted on page.
+A lifecycle event for a component which will be called when component is mounted
+/ re-mounted on page.
 
 ###### Syntax
 
@@ -76,15 +76,16 @@ componentInstance.onMount(() => {
 });
 ```
 
-> ###### Note: Any component specific methods that are used on Page load must be called inside component's onMount event.
-
-`onMount` is applicable only for following components
+:::note[Note]
+- Any component specific methods that are used on Page load must be called inside component's onMount event.
+- The event `onMount` is applicable only for following components
+:::
 
 ### 1. Tab
 
 ##### setActiveTab
 
-Sets specified tab index as active.
+The method can be used to set a specified tab index as active.
 
 ###### Parameters
 
@@ -102,5 +103,5 @@ componentInstance.setActiveTab(tabIndex);
 
 ```js
 // To set 2nd tab as active
-componentInstance.setActiveTab(2)
+componentInstance.setActiveTab(2);
 ```
