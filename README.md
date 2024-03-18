@@ -542,7 +542,7 @@ greetPopup.close();
 
 ### 8) Dataform
 
-> Note: Get dataform instance from `kf.app.getDatform`
+> Note: Get dataform instance from `kf.app.getDataform`
 
 ##### Import CSV
 
