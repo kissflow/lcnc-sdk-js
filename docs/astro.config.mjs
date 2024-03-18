@@ -48,6 +48,10 @@ export default defineConfig({
 				{
 					label: "Formatter",
 					link: "/formatter"
+				},
+				{
+					label: "Integration",
+					link: "/integration"
 				}
 			]
 		})
