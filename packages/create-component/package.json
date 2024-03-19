@@ -1,8 +1,11 @@
 {
-  "name": "kissflow-lcnc-sdk",
-  "version": "1.0.0",
+  "name": "kf-create-component",
+  "type": "module",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "kf-component": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
