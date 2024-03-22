@@ -1,0 +1,13 @@
+.rootDiv{
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  padding: 8px;
+  /* border: 1px solid #ccc; */
+  /* border-radius: 4px; */
+}

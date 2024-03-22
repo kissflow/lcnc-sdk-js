@@ -2,18 +2,20 @@
 import fs from "fs";
 import prompts from "prompts";
 import { blue, cyan, red, reset, green } from "kolorist";
+import path from "path";
 
 import {
 	runCommand,
 	formatDirectoryName,
 	isEmptyDirectory,
 	isValidPackageName,
-	toValidPackageName
+	toValidPackageName,
+	writeContents
 } from "./helpers/index.js";
 
 const FRAMEWORKS = [
 	{ value: "react", title: "React", color: blue },
-	{ value: "html", title: "Html", color: cyan }
+	{ value: "vannila", title: "Html", color: cyan }
 ];
 
 // Get the component name from the command line arguments
@@ -70,7 +72,7 @@ const questions = [
 	{
 		type: () => (isValidPackageName(componentDirectory) ? null : "text"),
 		name: "packageName",
-		message: reset("Package name:"),
+		message: cyan("Package name:"),
 		initial: () => toValidPackageName(componentDirectory),
 		validate: (dir) =>
 			isValidPackageName(dir) || "Invalid package.json name"
@@ -78,7 +80,7 @@ const questions = [
 	{
 		type: "select",
 		name: "framework",
-		message: reset("Select a framework:"),
+		message: green("Select a framework:"),
 		initial: 0,
 		choices: FRAMEWORKS.map((framework) => {
 			return {
@@ -110,9 +112,21 @@ function init() {
 
 			console.info("Creating component...", target);
 
-			let templatePath = `${currentDirectory}/template/${framework}-template/`;
+			let templatePath = `${currentDirectory}/template/${framework}/`;
 			createFolder(target);
 			copyFiles(templatePath, target);
+
+			const packageJson = JSON.parse(
+				fs.readFileSync(path.join(target, `package.json`), "utf-8")
+			);
+
+			packageJson.name = target;
+
+			writeContents(
+				"package.json",
+				target,
+				JSON.stringify(packageJson, null, 2) + "\n"
+			);
 
 			console.log(
 				green(

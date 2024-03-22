@@ -1,5 +1,6 @@
 import { execSync } from "child_process";
 import fs from "fs";
+import path from "path";
 
 /**
  * Runs a command synchronously.
@@ -64,10 +65,25 @@ function isEmptyDirectory(path) {
 	return files.length === 0 || (files.length === 1 && files[0] === ".git");
 }
 
+/**
+ * Writes content to a file at the specified path.
+ *
+ * @param {string} file - The name of the file to write.
+ * @param {string} root - The root directory where the file should be written.
+ * @param {string} content - The content to write to the file.
+ */
+function writeContents(file, root, content) {
+	const targetPath = path.join(root, file);
+	if (content) {
+		fs.writeFileSync(targetPath, content);
+	}
+}
+
 export {
 	runCommand,
 	formatDirectoryName,
 	isValidPackageName,
 	toValidPackageName,
-	isEmptyDirectory
+	isEmptyDirectory,
+	writeContents
 };
