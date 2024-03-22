@@ -5,10 +5,12 @@ import { Page } from "./page";
 import { AppContext } from "../types/internal";
 
 import { DecisionTable } from "./decisiontable";
+import { Dataform } from "./dataform";
 
 export class Application extends BaseSDK {
 	page: Page;
 	_id: string;
+
 	constructor(props: AppContext) {
 		super();
 		this._id = props.appId;
@@ -36,6 +38,10 @@ export class Application extends BaseSDK {
 
 	getDecisionTable(flowId: string): DecisionTable {
 		return new DecisionTable(flowId);
+	}
+
+	getDataform(flowId: string): Dataform {
+		return new Dataform(flowId);
 	}
 }
 
