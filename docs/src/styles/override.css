@@ -62,23 +62,16 @@
 
 .site-title{
 	gap: 4px;
+	height: 20px;
 }
 
 .site-title span{
-	color: var(--sl-color-white);
+	color: var(--sl-color-gray-2);
 	font-weight: 500;
 	font-size: 20px;
-  padding: 4px;
-  border-inline-start: 1.5px solid;
+	border-inline-start: 1.5px solid;
 	padding-inline-start: 8px;
 }
-
-/* .site-title span::before{ */
-	/* content: "";
-	height: 80%;
-	width: 1.5px;
-	background-color: var(--sl-color-black); */
-/* } */
 
 .site-title img{
 	width: 130px;

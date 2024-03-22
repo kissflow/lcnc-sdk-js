@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+
 import fs from "fs";
 import prompts from "prompts";
-import { blue, cyan, red, reset, green } from "kolorist";
+import { blue, cyan, red, green } from "kolorist";
 import path from "path";
 
 import {

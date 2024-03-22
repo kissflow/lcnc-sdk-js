@@ -1,10 +1,10 @@
 {
-  "name": "kf-create-component",
+  "name": "kf-component-test",
   "type": "module",
   "description": "",
   "main": "index.js",
   "bin": {
-    "kf-component": "index.js"
+    "kf-component-test": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
