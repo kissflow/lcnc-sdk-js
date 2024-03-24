@@ -1,5 +1,5 @@
 {
-  "name": "kf-sdk-docs",
+  "name": "@kissflow/lowcode-client-sdk-docs",
   "type": "module",
   "version": "0.0.1",
   "scripts": {

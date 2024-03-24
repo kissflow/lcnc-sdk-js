@@ -1,12 +1,14 @@
 {
-  "name": "kf-component-test",
+  "name": "@kissflow/create-kf-test-comp",
+  "version": "0.0.1",
   "type": "module",
-  "description": "",
+  "description": "create-kf-component is a cli utility to create a new kissflow custom component",
   "main": "index.js",
   "bin": {
-    "kf-component-test": "index.js"
+    "create-kf-test-comp": "index.js"
   },
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

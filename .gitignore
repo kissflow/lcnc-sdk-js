@@ -9,6 +9,8 @@
 */**/jspm_packages
 */**/package-lock.json
 /package-lock.json
+/pnpm-lock.yaml
+*/**/pnpm-lock.yaml
 
 # Logs
 */**/logs
