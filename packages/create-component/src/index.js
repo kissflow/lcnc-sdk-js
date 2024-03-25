@@ -166,9 +166,8 @@ function init() {
 					break;
 			}
 			console.log(
-				blue(
-					`\nUse Network URL in kissflow's custom component playground for development purposes.
-					\nFinally run the following command to generate .zip file inside dist folder: \n`
+				green(
+					`\nUse Network URL in kissflow's custom component playground for development purposes.\nFinally run the following command to generate .zip file inside dist folder: \n`
 				),
 				cyan(`\t${packageManager} run build`),
 				"\n"

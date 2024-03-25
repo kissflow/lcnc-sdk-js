@@ -3,9 +3,13 @@ import path from "node:path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	base: "",
+	base: "./",
 	build: {
-		target: "es2022"
+		target: "es2022",
+		outDir: "dist",
+		assetsDir: "assets",
+		minify: false,
+		cssMinify: false
 	},
 	server: {
 		https: {
