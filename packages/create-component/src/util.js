@@ -8,7 +8,7 @@ import path from "path";
  * @param {string} command - The command to be executed.
  * @returns {void}
  */
-function runCommand(command) {
+export function runCommand(command) {
 	execSync(command, (err, stdout, stderr) => {
 		if (err) {
 			console.error("command Failed" + command, err, stderr, stdout);
@@ -23,7 +23,7 @@ function runCommand(command) {
  * @param {string} projectName - The project name to validate.
  * @returns {boolean} - Returns true if the project name is valid, otherwise false.
  */
-function isValidPackageName(projectName) {
+export function isValidPackageName(projectName) {
 	return /^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d\-~][a-z\d\-._~]*$/.test(
 		projectName
 	);
@@ -35,7 +35,7 @@ function isValidPackageName(projectName) {
  * @param {string} projectName - The project name to be converted.
  * @returns {string} The converted valid package name.
  */
-function toValidPackageName(projectName) {
+export function toValidPackageName(projectName) {
 	return projectName
 		.trim()
 		.toLowerCase()
@@ -50,7 +50,7 @@ function toValidPackageName(projectName) {
  * @param {string} directoryName - The target directory to format.
  * @returns {string} The formatted target directory.
  */
-function formatDirectoryName(directoryName) {
+export function formatDirectoryName(directoryName) {
 	return directoryName?.trim().replace(/\/+$/g, "");
 }
 
@@ -60,7 +60,7 @@ function formatDirectoryName(directoryName) {
  * @param {string} path - The path of the directory to check.
  * @returns {boolean} - Returns true if the directory is empty, false otherwise.
  */
-function isEmptyDirectory(path) {
+export function isEmptyDirectory(path) {
 	const files = fs.readdirSync(path);
 	return files.length === 0 || (files.length === 1 && files[0] === ".git");
 }
@@ -72,18 +72,25 @@ function isEmptyDirectory(path) {
  * @param {string} root - The root directory where the file should be written.
  * @param {string} content - The content to write to the file.
  */
-function writeContents(file, root, content) {
+export function writeContents(file, root, content) {
 	const targetPath = path.join(root, file);
 	if (content) {
 		fs.writeFileSync(targetPath, content);
 	}
 }
 
-export {
-	runCommand,
-	formatDirectoryName,
-	isValidPackageName,
-	toValidPackageName,
-	isEmptyDirectory,
-	writeContents
-};
+/**
+ * Extracts package manager details from the user agent string.
+ *
+ * @param {string} userAgent - The user agent string.
+ * @returns {object|undefined} - Returns an object containing the package manager name and version, or undefined if the user agent is not provided.
+ */
+export function getPackageManagerDetails(userAgent) {
+	if (!userAgent) return undefined;
+	const packageManager = userAgent.split(" ")[0];
+	const nameWithVersion = packageManager.split("/");
+	return {
+		name: nameWithVersion[0],
+		version: nameWithVersion[1]
+	};
+}

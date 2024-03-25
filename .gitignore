@@ -12,6 +12,7 @@
 /pnpm-lock.yaml
 */**/pnpm-lock.yaml
 
+
 # Logs
 */**/logs
 */**/*.log
@@ -37,6 +38,10 @@ typings/
 # Optional npm cache directory
 .npm
 .npmrc
+
+# Pnpm debugs 
+.pnpm-debug.log
+*/**/.pnpm-debug.log
 
 # Optional eslint cache
 .eslintcache

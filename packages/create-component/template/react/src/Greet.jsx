@@ -1,3 +1,6 @@
+import { useKFSdk } from "./sdk";
+
 export function Greet() {
-	return <h3>Welcome {window.kf.user.Name}</h3>;
+	const kf = useKFSdk();
+	return <h3>Welcome {kf.user.Name}</h3>;
 }

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "zip": "cd dist/ && bestzip ../build.zip *",
+    "build": "vite build && npm run zip",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -21,6 +22,7 @@
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "vite": "^5.1.6"
+    "vite": "^5.1.6",
+    "bestzip": "^2.2.1"
   }
 }

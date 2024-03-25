@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "zip": "cd dist/ && bestzip ../build.zip *",
+    "build": "vite build && npm run zip",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^5.2.0"
+    "vite": "^5.2.0",
+    "bestzip": "^2.2.1"
   }
 }
