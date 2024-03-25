@@ -23,7 +23,9 @@ npm run dev
 If you already have an existing project, you can follow these instructions to
 install the SDK package.
 
-1. As npm module To install kissflow sdk as npm module, use
+1. As npm module
+
+To install kissflow sdk as npm module, use
 
 ```js
 npm install @kissflow/lowcode-client-sdk
@@ -47,8 +49,9 @@ let kf;
 > root or inital entry of you projects and use the same instance across your
 > codebase.
 
-2. As HTML/JS Package is exported as umd file to ease usage inside HTML and
-   vannila javascript.
+2. As HTML/JS 
+
+Package is exported as umd file to ease usage inside HTML and vannila javascript.
 
 Simply import the package in your html like
 
