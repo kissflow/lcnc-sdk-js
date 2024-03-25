@@ -3,8 +3,8 @@ title: Add Rows
 description: Appends multiple rows details to the table.
 sidebar:
     order: 7
-    badge:
-        text: New
+    # badge:
+    #     text: New
 ---
 
 Adds multiple rows to the [table instance](/lcnc-sdk-js/form/gettable/).
