@@ -1,0 +1,32 @@
+name: Publish Packages
+
+on:
+  push:
+    tags:
+      - doc-v*
+
+jobs:
+  build-and-deploy-docs:
+    if: ${{ github.event_path == 'docs/package.json' }}
+    runs-on: ubuntu-latest
+      
+    steps:
+      - name: Checkout docs repository
+        run: echo "Docs changes ${{github.event_path}}"
+        
+
+  build-and-publish-sdk:
+    if: ${{ github.event_path == 'package/sdk/package.json' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sdk repository
+        run: echo "SDK changes ${{github.event_path}}"
+
+  build-and-publish-create-component:
+    if: ${{ github.event_path == 'package/create-component/package.json' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout scaffold repository
+        run: echo "scaffold changes ${{github.event_path}}"
