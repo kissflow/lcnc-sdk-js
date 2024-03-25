@@ -7,6 +7,7 @@ export default defineConfig({
 	base: "/lcnc-sdk-js",
 	integrations: [
 		starlight({
+			favicon: "/favicon.ico",
 			title: "SDK Docs",
 			logo: {
 				light: "./src/assets/logo.light.png",
