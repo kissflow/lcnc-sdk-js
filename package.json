@@ -1,10 +1,14 @@
 {
-  "name": "kissflow-lcnc-sdk",
+  "name": "kissflow-sdk",
   "version": "1.0.0",
-  "description": "",
+  "description": "A library that contains essentials packages for Kissflow SDK",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:all": "pnpm run build",
+    "build:sdk": "cd packages/sdk && pnpm run build",
+    "publish:sdk": "cd packages/sdk && pnpm publish",
+    "build:create-component": "cd packages/create-component && pnpm run build",
+    "publish:create-component": "cd packages/create-component && pnpm publish"
   },
   "keywords": [],
   "author": "",

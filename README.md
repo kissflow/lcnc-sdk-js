@@ -1,8 +1,8 @@
 # _Kissflow Lowcode JavaScript SDK_
 
-This SDK package lets you build custom UI components and import them as reusable
-custom components in your kissflow application. You can use plain HTML or
-frontend frameworks like React to build your component.
+This SDK package lets you build custom UI components and import them as reusable custom components in your kissflow application. You can use plain HTML or frontend frameworks like React to build your component.
+
+### Please refer docs [here](https://kissflow.github.io/lcnc-sdk-js/) for more capabilities.
 
 If you are starting newly, you can create a Kissflow custom component package
 using npm
@@ -49,9 +49,10 @@ let kf;
 > root or inital entry of you projects and use the same instance across your
 > codebase.
 
-2. As HTML/JS 
+2. As HTML/JS
 
-Package is exported as umd file to ease usage inside HTML and vannila javascript.
+Package is exported as umd file to ease usage inside HTML and vannila
+javascript.
 
 Simply import the package in your html like
 
