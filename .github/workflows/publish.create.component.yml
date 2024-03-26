@@ -5,8 +5,9 @@ name: Kf Create component Publish
 
 on:
   push:
-    tags:
-      - cc-v*
+    branches: [ main ]
+    paths:
+      - 'packages/create-component/**'
 
 jobs:
   publish-npm:
