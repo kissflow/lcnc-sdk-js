@@ -1,15 +1,11 @@
 name: Deploy Documentation
 
 on:
-  # Trigger the workflow every time you push to the `main` branch
-  # Using a different branch name? Replace `main` with your branch’s name
-  # push:
-  #   tags:
-  #     - doc-v*
-    # branches: [ main ]
-  
-  # release:
-  #   types: [created]
+  # Trigger the workflow every time you push docs changes to the `main` branch
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
 
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
