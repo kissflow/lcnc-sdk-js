@@ -44,4 +44,4 @@ jobs:
       - name: Publish package to npm
         run:  pnpm publish:create-component --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_CREATE_COMPONENT_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
