@@ -13,7 +13,8 @@ function App() {
 			{kfSdk && <Greet />}
 			<div className={styles.card}>
 				<p className='read-the-docs'>
-					Click <a href=''>here</a> to read docs.
+					Click <a href='https://developers.kissflow.com/sdk'>here</a>
+					to read docs.
 				</p>
 			</div>
 		</div>
