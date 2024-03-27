@@ -4,11 +4,8 @@
 name: KF SDK Publish
 
 on:
-  push:
-    tags:
-      - v*
-  # release:
-  #   types: [created]
+  release:
+    types: [created]
 
 
 jobs:
