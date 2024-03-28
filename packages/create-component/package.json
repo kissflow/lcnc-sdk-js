@@ -1,0 +1,28 @@
+{
+  "name": "@kissflow/create-kf-component",
+  "version": "0.0.4",
+  "type": "module",
+  "description": "create-kf-component is a cli utility to create a new kissflow custom component",
+  "main": "index.js",
+  "bin": {
+    "create-kf-component": "index.js"
+  },
+  "files": [
+    "index.js",
+    "template/**/*",
+    "bin"
+  ],
+  "scripts": {
+    "build": "unbuild"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "kolorist": "^1.8.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "unbuild": "^2.0.0"
+  }
+}

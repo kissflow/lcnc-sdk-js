@@ -9,6 +9,9 @@
 */**/jspm_packages
 */**/package-lock.json
 /package-lock.json
+/pnpm-lock.yaml
+*/**/pnpm-lock.yaml
+
 
 # Logs
 */**/logs
@@ -35,6 +38,10 @@ typings/
 # Optional npm cache directory
 .npm
 .npmrc
+
+# Pnpm debugs 
+.pnpm-debug.log
+*/**/.pnpm-debug.log
 
 # Optional eslint cache
 .eslintcache
