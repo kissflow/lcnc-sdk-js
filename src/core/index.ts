@@ -142,6 +142,7 @@ export class BaseSDK extends EventBase {
 		let data = { _id, command, ...args }
 
 		let atomics = new AtomicsHandler()
+		atomics.reset();
 		atomics.store(0, intialValue);
 		atomics.encodeData(1, data);
 		postMessage(atomics.sab);
@@ -161,12 +162,15 @@ export class BaseSDK extends EventBase {
 
 
 
+// single shared array buffer instance for worker
+let sharedArrayBufferInstance: SharedArrayBuffer;
 class AtomicsHandler {
 	sab: SharedArrayBuffer;
 	int32Array: Int32Array;
 
-	constructor(sab?: SharedArrayBuffer) {
-		this.sab = sab || new SharedArrayBuffer(1024 * 1024); //1mb;
+	constructor() {
+		sharedArrayBufferInstance = sharedArrayBufferInstance || new SharedArrayBuffer(1024 * 1024); //1mb;
+		this.sab = sharedArrayBufferInstance;
 		this.int32Array = new Int32Array(this.sab);
 	}
 
@@ -179,6 +183,11 @@ class AtomicsHandler {
 
 	store(index: number = 0, data: any) {
 		return Atomics.store(this.int32Array, index, data);
+	}
+
+	reset() {
+		// set the zero in all bytes to reset the previously stored data
+		return this.int32Array.fill(0);
 	}
 
 	notify(index: number = 0, count: number = 1) {
@@ -199,10 +208,11 @@ class AtomicsHandler {
 	}
 
 	decodeData() {
+		//we can't decode shared typed array directly so we need to create a new view
+		let uInt8Array = new Uint8Array(this.int32Array);
 		let string = this.#textDecoder
-			//we can't decode sharedBuffer typed array directly so we need to slice it
-			.decode(this.int32Array.slice())
-			.replace(/\x00/g, ""); // to remove null bytes
+			.decode(uInt8Array)
+			.replaceAll(/\x00/g, ""); // to remove null bytes
 		return JSON.parse(string);
 	}
 }
