@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-import "./bin/index.mjs"
+import "./src/index.js"

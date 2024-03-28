@@ -27,15 +27,15 @@ jobs:
         with:
           version: 7
           run_install: |
-            - args: [--frozen-lockfile, --strict-peer-dependencies=false, --filter=@kissflow/create-kf-component]
+            - args: [--filter=@kissflow/create-kf-component, --frozen-lockfile, --strict-peer-dependencies=false]
 
       - name: git config
         run: |
           git config --global user.email "saravanan.10393@gmail.com"
           git config --global user.name "sara"
             
-      - name: Run build
-        run:  pnpm run build:create-component
+      # - name: Run build
+      #   run:  pnpm run build:create-component
 
       # disabled automatic version pump as it is conflicting with internal versioning
       # - name: pump package version
