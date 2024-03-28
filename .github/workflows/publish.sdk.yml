@@ -6,7 +6,8 @@ name: KF SDK Publish
 on:
   release:
     types: [created]
-
+  # Allows you to run this workflow manually from the Actions tab on GitHub.
+  workflow_dispatch:
 
 jobs:
   publish-npm:
@@ -26,7 +27,7 @@ jobs:
         with:
           version: 7
           run_install: |
-            - args: [--frozen-lockfile, --strict-peer-dependencies=false, --filter=@kissflow/lowcode-client-sdk]
+            - args: [--filter=@kissflow/lowcode-client-sdk, --frozen-lockfile, --strict-peer-dependencies=false,]
 
       - name: git config
         run: |
