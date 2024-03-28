@@ -5,11 +5,9 @@ description: Formatter usages
 
 # _Kissflow Low-code JavaScript SDK_
 
-The JavaScript Software Development Kit (SDK) for Kissflow Low-code includes all
-the supported functions and code snippets that you can incorporate into your
-application while integrating with other services.
+Kissflow lets you extend your integrations and run server side functions using the **Run Script** connector. You can use the Kissflow SDK inside the connector to get application and account details and make API calls.
 
-### 1) Get context
+### 1. Get context
 
 This function retrieves your account and application's context information, such
 as the **account ID** and **application ID**.
@@ -29,7 +27,7 @@ ctx = {
 
 ---
 
-### 2) Get API via Kissflow Low-code SDK
+### 2. Get API via Kissflow Low-code SDK
 
 This function lets you retrieve any external or Kissflow APIs. To access an
 internal Kissflow API, use an absolute URL, **(i.e.,
