@@ -13,7 +13,7 @@ If you're starting a project from scratch, you can create a Kissflow custom comp
 npm create kf-component
 ```
 
-You'll be prompted to provide a name for you component and choose between HTML or React. Once installed, run the following commands:
+You'll be prompted to provide a name for you component and choose between **HTML** or **React**. Once installed, run the following commands:
 
 ```js
 cd componentname
@@ -21,7 +21,7 @@ npm install
 npm run dev
 ```
 
-Once development is done, you can use the `npm run build` command to build and compress the project into a zip file. You can then import this zip file direclty into Kissflow as a custom component.
+Once development is done, you can use the **`npm run build`** command to build and compress the project into a zip file. You can then import this zip file direclty into Kissflow as a custom component.
 > This package is exclusively designed for the client side of your projects. So we only support ECMAScript modules (es modules) and Universal Module Definition (UMD) formats of javascript.
 
 
