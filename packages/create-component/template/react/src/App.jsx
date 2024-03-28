@@ -1,24 +1,11 @@
-import { Greet } from "./Greet";
-import { kfSdk } from "./sdk/index.js";
-
-import styles from "./style.module.css";
+import { DefaultLandingComponent } from "./landing/index.jsx";
 
 function App() {
 	return (
-		<div className={styles.rootDiv}>
-			<h2>Kissflow custom component</h2>
-			<Greet />
-			<div className={styles.card}>
-				<p className='read-the-docs'>
-					Click{" "}
-					<a
-						target='_blank'
-						href='https://kissflow.github.io/lcnc-sdk-js/'>
-						here
-					</a>{" "}
-					to read docs.
-				</p>
-			</div>
+		<div className='rootDiv'>
+			{/* This is a default placeholder component, 
+					remove this and add your own component */}
+			<DefaultLandingComponent />
 		</div>
 	);
 }
