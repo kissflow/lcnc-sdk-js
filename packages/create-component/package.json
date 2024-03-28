@@ -24,5 +24,8 @@
   },
   "devDependencies": {
     "unbuild": "^2.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^4.3.5"
   }
 }

@@ -21,7 +21,6 @@
 		"start": "vite serve",
 		"customBuild": "node custom.build.mjs",
 		"build": "pnpm run customBuild",
-		"prepare": "pnpm run customBuild",
 		"serve": "http-server -p 8080",
 		"publish-canary": "pnpm publish --tag canary"
 	},
