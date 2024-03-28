@@ -8,6 +8,7 @@ export default defineConfig({
 		target: "es2022",
 		outDir: "dist",
 		assetsDir: "assets",
+		copyPublicDir: true,
 		minify: false,
 		cssMinify: false
 	},

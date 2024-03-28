@@ -25,7 +25,7 @@ export function defaultLandingComponent() {
 					</p>
 				</div>
 				<button id="clickHere">Click me</button>
-				<img src="assets/kf.logo.png" width="120px" class='logo'></img>
+				<img src="kf.logo.png" width="120px" class='logo'></img>
 			</div>
 		</div>`;
 	document
