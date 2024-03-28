@@ -22,6 +22,11 @@ class CustomComponentSDK extends BaseSDK {
 		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
 	}
 	initialize() {
+		if (globalThis.parent && globalThis.parent === globalThis) {
+			return Promise.reject(
+				"SDK can be initialized only inside the Kissflow platform."
+			);
+		}
 		return this._postMessageAsync(
 			LISTENER_CMDS.CC_INITIALIZE,
 			{},

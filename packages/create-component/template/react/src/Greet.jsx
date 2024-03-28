@@ -1,6 +1,5 @@
-import { useKFSdk } from "./sdk";
+import { kfSdk } from "./sdk/index.js";
 
 export function Greet() {
-	const kf = useKFSdk();
-	return <h3>Welcome {kf.user.Name}</h3>;
+	return <h3>Welcome {kfSdk.user.Name}</h3>;
 }

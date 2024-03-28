@@ -1,16 +1,13 @@
 import { Greet } from "./Greet";
-import { useKFSdk } from "./sdk";
+import { kfSdk } from "./sdk/index.js";
 
 import styles from "./style.module.css";
 
 function App() {
-	const kfSdk = useKFSdk();
-
-	// Mouting Component only if kissflow's sdk instance is available
 	return (
 		<div className={styles.rootDiv}>
 			<h2>Kissflow custom component</h2>
-			{kfSdk && <Greet />}
+			<Greet />
 			<div className={styles.card}>
 				<p className='read-the-docs'>
 					Click <a href='https://developers.kissflow.com/sdk'>here</a>
