@@ -29,7 +29,7 @@ jobs:
         with:
           version: 7
           run_install: |
-            - args: [--frozen-lockfile=false, --strict-peer-dependencies=false]
+            - args: [--frozen-lockfile, --strict-peer-dependencies=false]
 
       - name: git config
         run: |
