@@ -9,6 +9,9 @@ on:
     paths:
       - 'packages/create-component/**'
 
+  # Allows you to run this workflow manually from the Actions tab on GitHub.
+  workflow_dispatch:
+
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
