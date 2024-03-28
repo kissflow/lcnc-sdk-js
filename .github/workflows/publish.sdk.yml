@@ -27,7 +27,7 @@ jobs:
         with:
           version: 7
           run_install: |
-            - args: [--filter=@kissflow/lowcode-client-sdk, --frozen-lockfile, --strict-peer-dependencies=false,]
+            - args: [--frozen-lockfile, --strict-peer-dependencies=false,]
 
       - name: git config
         run: |
