@@ -6,7 +6,6 @@
   "scripts": {
     "build:sdk": "cd packages/sdk && pnpm run build",
     "publish:sdk": "cd packages/sdk && pnpm publish",
-    "build:create-component": "cd packages/create-component && pnpm run build",
     "publish:create-component": "cd packages/create-component && pnpm publish"
   },
   "keywords": [],

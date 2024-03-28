@@ -1,1 +1,1 @@
-export { SDKWrapper, kfSdk } from "./wrapper.jsx";
+export * from "./wrapper.jsx";
