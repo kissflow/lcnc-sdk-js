@@ -5,20 +5,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,maximum-scale=1">
   <title>Kissflow Custom component</title>
-  <script type="module" src="https://unpkg.com/@kissflow/lowcode-client-sdk@latest/dist/kfsdk.umd.js"></script>
   <link rel="stylesheet" href="style.css" media="all">
+  <!-- Styles related to Default landing component, you can remove this. -->
+  <link rel="stylesheet" href="/src/landing/styles.css" media="all">
+
+  <script type="module" src="https://unpkg.com/@kissflow/lowcode-client-sdk@latest/dist/kfsdk.umd.js"></script>
   <script type="module" src="index.js"></script>
 </head>
 
 <body>
-  <div id="app">
-    <h2>Kissflow custom component</h2>
-    <div id="greet"></div>
-    <div className="card">
-      <p className="read-the-docs">Click <a target="_blank" href="https://kissflow.github.io/lcnc-sdk-js/">here</a> to read docs.</p>
-    </div>
+  <div id="root">
   </div>
-
 </body>
 
 </html>
