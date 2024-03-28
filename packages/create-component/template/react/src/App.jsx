@@ -10,7 +10,12 @@ function App() {
 			<Greet />
 			<div className={styles.card}>
 				<p className='read-the-docs'>
-					Click <a href='https://developers.kissflow.com/sdk'>here</a>
+					Click{" "}
+					<a
+						target='_blank'
+						href='https://kissflow.github.io/lcnc-sdk-js/'>
+						here
+					</a>{" "}
 					to read docs.
 				</p>
 			</div>
