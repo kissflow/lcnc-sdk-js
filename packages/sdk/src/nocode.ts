@@ -32,39 +32,25 @@ class NocodeSDK extends BaseSDK {
 		this.account = props.account;
 		this.#csrfToken = props.csrfToken;
 	}
-	api(
+	async api(
 		url: string,
 		args?: {
 			headers: object;
 		}
 	) {
-		return new Promise((resolve, reject) => {
-			globalThis
-				.fetch(url, {
-					...args,
-					headers: {
-						...(args?.headers || {}),
-						"X-Csrf-Token": this.#csrfToken
-					}
-				})
-				.then(async (response) => {
-					if (response.status >= 200 && response.status < 300) {
-						let successResponse = response;
-						const contentType =
-							response.headers.get("content-type");
-						if (
-							contentType &&
-							contentType.includes("application/json")
-						) {
-							successResponse = await response.json();
-						}
-						resolve(successResponse);
-					} else {
-						reject(response);
-					}
-				})
-				.catch((err) => reject(err));
+		const response = await globalThis.fetch(url, {
+			...args,
+			headers: {
+				...(args?.headers || {}),
+				"X-Csrf-Token": this.#csrfToken
+			}
 		});
+		const contentType = response.headers.get("content-type");
+		if (contentType && contentType.includes("application/json")) {
+			return await response.json();
+		} else {
+			return response;
+		}
 	}
 }
 
