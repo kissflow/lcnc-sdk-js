@@ -30,7 +30,7 @@ jobs:
         with:
           version: 7
           run_install: |
-            - args: [--filter=@kissflow/create-kf-component, --frozen-lockfile, --strict-peer-dependencies=false]
+            - args: [--filter=create-kf-component, --frozen-lockfile, --strict-peer-dependencies=false]
 
       - name: git config
         run: |
