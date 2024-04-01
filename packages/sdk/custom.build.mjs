@@ -32,6 +32,8 @@ const CLASS_MAPPINGS = {
     LowcodeSDK: { name: "kf", staticDeclarations: true },
     DecisionTable: { name: "DecisionTable" },
     Dataform: { name: "Dataform" },
+    // Not added typings for AppVariable and PageVariable class, since it's resolved in main thread
+    // AppVariable: { name: "AppVariable" },
   },
   [SDK_KIND.NOCODE]: {
     Client: { name: "Client" },
