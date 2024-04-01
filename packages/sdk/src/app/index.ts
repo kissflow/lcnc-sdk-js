@@ -1,4 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
+import { CreateProxy } from "../core/proxy";
 
 import { Page } from "./page";
 
@@ -9,12 +10,14 @@ import { Dataform } from "./dataform";
 
 export class Application extends BaseSDK {
 	page: Page;
+	variable: AppVariable;
 	_id: string;
 
 	constructor(props: AppContext) {
 		super();
 		this._id = props.appId;
 		this.page = new Page(props);
+		this.variable = new AppVariable()
 	}
 	getVariable(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_APP_VARIABLE, {
@@ -42,6 +45,31 @@ export class Application extends BaseSDK {
 
 	getDataform(flowId: string): Dataform {
 		return new Dataform(flowId);
+	}
+}
+
+
+class AppVariable extends BaseSDK {
+	constructor() {
+		super()
+		return new CreateProxy(this)
+	}
+
+	get(key, path) {
+		let args = {
+			key,
+			path: path
+		}
+		return this._postMessageSync(LISTENER_CMDS.GET_APP_VARIABLE, args);
+	}
+
+	set(key, value, path) {
+		let args = {
+			key,
+			value,
+			path
+		}
+		return this._postMessageSync(LISTENER_CMDS.SET_APP_VARIABLE, args);
 	}
 }
 
