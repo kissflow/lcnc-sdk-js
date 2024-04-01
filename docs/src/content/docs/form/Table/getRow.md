@@ -1,0 +1,40 @@
+---
+title: Get Row
+description: Retrieve a row instance from table
+sidebar:
+    order: 10
+---
+
+Returns a [row instance](/lcnc-sdk-js/form/table/row/) of `rowId` from the specified
+[table instance](/lcnc-sdk-js/form/gettable/).
+
+From the row instance, you can access methods such as updateField(), getField(), and so on.
+
+
+### Parameter
+
+| Parameters | type   |
+| ---------- | ------ |
+| rowId      | String |
+
+### Syntax
+
+```js
+let rowInstance = tableInstance.getRow(rowId);
+```
+
+### Example
+
+A simple use case for updating the years of experience in the employee dataform.
+
+```js
+let tableInstance = kf.context.getTable("work_table1");
+let rowInstance = tableInstance.getRow("table_row_Id");
+let yoe = await rowInstance.getField("table_field2");
+rowInstance.updateField({ table_field2: yoe + 1 });
+```
+
+:::note[Note]
+If there is more than one row to be fetched from a table, use
+[getRows()](/lcnc-sdk-js/form/table/getrows/) instead 
+:::

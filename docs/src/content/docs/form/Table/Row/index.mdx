@@ -1,0 +1,16 @@
+---
+title: About
+description: Explanation about the context
+sidebar:
+    order: 13
+---
+
+Consider each row in a table as an independent form. So scripting events on the columns will cause kf.context to refer to the Row instance rather than the parent form.
+
+The row instance offers the following methods:
+
+1. getField()
+2. updateField()
+3. getParent()
+4. toJSON()
+
