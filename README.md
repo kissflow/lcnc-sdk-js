@@ -542,7 +542,10 @@ greetPopup.close();
 
 ### 8) Dataform
 
-> Note: Get dataform instance from `kf.app.getDatform`
+Get dataform instance like
+```js
+const dfInstance = kf.app.getDataform("dataform_id");
+```
 
 ##### Import CSV
 
@@ -551,7 +554,7 @@ respective columns to the field.
 
 ```js
 let defaultValues = { fieldId: "value" };
-dataformInstance.importCSV(defaultValues);
+dfInstance.importCSV(defaultValues);
 ```
 
 ###### Example scenario
@@ -561,10 +564,14 @@ in form visibilty). In such cases Default values can be used to provide data to
 hidden fields
 
 ```js
-// Here the location field is hidden to user,
-// thus user isn't aware to include this on import csv.
-let defaultValues = { location: "India" };
-dataformInstance.importCSV(defaultValues);
+//Get the dataform with the dataform's flow_id
+const dfInstance = kf.app.getDataform("Product_Dataform_A00");  //Product_Dataform_A00 is the flow_id
+
+//Set field values for specific fields of the dataform
+let defaultValues = { location: "India" };  //Location is the the field_id of a field inside the dataform
+
+//Pass the field config into the import sdk method 
+dfInstance.importCSV(defaultValues);  //All records imported through this importer would have Location field set as India
 ```
 
 > Note:
