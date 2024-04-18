@@ -13,11 +13,14 @@ export class Application extends BaseSDK {
 	variable: AppVariable;
 	_id: string;
 
-	constructor(props: AppContext) {
+	constructor(props: AppContext, isCustomComponent: boolean = false) {
 		super();
 		this._id = props.appId;
 		this.page = new Page(props);
-		this.variable = new AppVariable()
+		/* Note: Synchronous variable read/write is not supported for custom components
+		 * as it is not possible to use Atomics.wait in the main thread and iframe thread
+		 */
+		!isCustomComponent && (this.variable = new AppVariable());
 	}
 	getVariable(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_APP_VARIABLE, {

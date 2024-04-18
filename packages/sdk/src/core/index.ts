@@ -115,7 +115,7 @@ export class BaseSDK extends EventBase {
 			globalInstances[_id] = this;
 
 			this._addEventListener(_id, async (data: any) => {
-				if (data?.errorMessage) {
+				if (data?.errorMessage || data?.isError) {
 					reject(data);
 				} else {
 					if (hasCallBack && callBack) {

@@ -12,12 +12,15 @@ export class Page extends BaseSDK {
 	type: string;
 	variable: PageVariable;
 
-	constructor(props: PageContext) {
+	constructor(props: PageContext, isCustomComponent: boolean = false) {
 		super();
 		this.type = "Page";
 		this.popup = new Popup({});
 		this._id = props.pageId;
-		this.variable = new PageVariable()
+		/* Note: Synchronous variable read/write is not supported for custom components
+		 * as it is not possible to use Atomics.wait in the main thread and iframe thread
+		 */
+		!isCustomComponent && (this.variable = new PageVariable());
 	}
 	getParameter(key: string) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_PAGE_PARAMS, {
