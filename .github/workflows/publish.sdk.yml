@@ -6,6 +6,7 @@ name: KF SDK Publish
 on:
   release:
     types: [created]
+
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
