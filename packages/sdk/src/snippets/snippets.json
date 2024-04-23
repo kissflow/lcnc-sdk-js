@@ -3,12 +3,12 @@
 		{
 			"label": "get app variable",
 			"documentation": "Get value of the global variable",
-			"insertText": "let variableName = kf.app.variable.${1:variableId};"
+			"insertText": "let variableName = await kf.app.getVariable(\"${1:variableId}\")"
 		},
 		{
 			"label": "set app variable",
 			"documentation": "Sets a new value to the global variable",
-			"insertText": "kf.app.variable.${1:variableId} = \"${2:newValue}\";"
+			"insertText": "kf.app.setVariable(\"${1:variableId}\", \"${2:newValue}\")"
 		},
 		{
 			"label": "open or navigate page",
@@ -23,12 +23,12 @@
 		{
 			"label": "get local variable",
 			"documentation": "Get value of the local variable",
-			"insertText": "let variableName = kf.app.page.variable.${1:variableId};"
+			"insertText": "let variableName = await kf.app.page.getVariable(\"${1:variableId}\")"
 		},
 		{
 			"label": "set local variable",
 			"documentation": "Sets specified variable to new value in page scope",
-			"insertText": "kf.app.page.variable.${1:variableId} = \"${2:newValue}\";"
+			"insertText": "kf.app.page.setVariable(\"${1:variableId}\", \"${2:newValue}\")"
 		},
 		{
 			"label": "get input parameter",

@@ -18,11 +18,5 @@ export default defineConfig({
       key: path.resolve("./cert/localhost.key"),
     },
     host: "0.0.0.0",
-    headers: {
-      // Header for cross origin isolation support
-      "Cross-Origin-Opener-Policy": "same-origin",
-      "Cross-Origin-Embedder-Policy": "require-corp",
-      "Cross-Origin-Resource-Policy": "cross-origin",
-    },
   },
 });
