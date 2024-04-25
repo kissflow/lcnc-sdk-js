@@ -7,6 +7,7 @@ import { AppContext } from "../types/internal";
 
 import { DecisionTable } from "./decisiontable";
 import { Dataform } from "./dataform";
+import { Board } from "../board";
 
 export class Application extends BaseSDK {
 	page: Page;
@@ -48,6 +49,10 @@ export class Application extends BaseSDK {
 
 	getDataform(flowId: string): Dataform {
 		return new Dataform(flowId);
+	}
+
+	getBoard(flowId: string) {
+		return new Board(flowId);
 	}
 }
 

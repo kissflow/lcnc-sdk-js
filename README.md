@@ -542,15 +542,19 @@ greetPopup.close();
 
 ### 8) Dataform
 
-Get dataform instance like
+In Kissflow apps, dataforms gather and store data, enabling users to submit data
+into an app.
+
+To begin with, obtain the dataform instance using:
+
 ```js
 const dfInstance = kf.app.getDataform("dataform_id");
 ```
 
 ##### Import CSV
 
-Opens up the import CSV modal where user could upload CSV file and map
-respective columns to the field.
+Launches the import CSV popup, where you can upload CSV file and map columns to
+the corresponding fields.
 
 ```js
 let defaultValues = { fieldId: "value" };
@@ -559,27 +563,71 @@ dfInstance.importCSV(defaultValues);
 
 ###### Example scenario
 
-Consider scenario where few fields that aren't exposed to user(basically hidden
-in form visibilty). In such cases Default values can be used to provide data to
-hidden fields
+Consider scenario where certain fields are not visible to the user(hidden in
+form visibilty). In that case, default values can be used to populate data in
+these hidden fields
 
 ```js
 //Get the dataform with the dataform's flow_id
-const dfInstance = kf.app.getDataform("Product_Dataform_A00");  //Product_Dataform_A00 is the flow_id
+const dfInstance = kf.app.getDataform("Product_Dataform_A00"); //Product_Dataform_A00 is the flow_id
 
 //Set field values for specific fields of the dataform
-let defaultValues = { location: "India" };  //Location is the the field_id of a field inside the dataform
+let defaultValues = { location: "India" }; //Location is the the field_id of a field inside the dataform
 
-//Pass the field config into the import sdk method 
-dfInstance.importCSV(defaultValues);  //All records imported through this importer would have Location field set as India
+//Pass the field config into the import sdk method
+dfInstance.importCSV(defaultValues); //All records imported through this importer would have Location field set as India
 ```
 
 > Note:
-> 1. Default values here is optional
+>
+> 1. Default values are optional
 > 2. Any variables or parameter can also be mapped in `defaultValues`.
-> 3. End user can't pass this value if default value is set by dev.
-> 4. Some fields cannot be set as default eg. Auto calculated fields, Sequence numbers etc.
+> 3. If a default value is set by the developer, end users cannot override it.
+> 4. Certain fields cannot be set as default, such as auto-calculated fields and
+>    sequence numbers.
 
+### 9) Board
+
+Get board instance like
+
+```js
+const boardInstance = kf.app.getBoard("case_id");
+```
+
+##### Import CSV
+
+Launches the import CSV modal, where you can upload a CSV file and map its
+columns to the corresponding fields.
+
+```js
+let defaultValues = { fieldId: "value" };
+boardInstance.importCSV(defaultValues);
+```
+
+###### Example scenario
+
+Consider a scenario where certain fields are not visible to the user (hidden in
+form visibility). In that case, default values can be used to populate data in
+these hidden fields.
+
+```js
+// Get the board with the board's flow_id
+const boardInstance = kf.app.getBoard("Asset_Tracking_A00"); // Asset_Tracking_A00 is the flow_id
+
+// Set field values for specific fields of the board
+let boardInstance = { location: "India" }; // Location is the the field_id of a field inside the board
+
+// Pass the field config into the import sdk method
+boardInstance.importCSV(defaultValues); // All records imported through this importer would have Location field set as India
+```
+
+> Note:
+>
+> 1. Default values are optional
+> 2. Any variables or parameter can also be mapped in `defaultValues`.
+> 3. If a default value is set by the developer, end users cannot override it.
+> 4. Certain fields cannot be set as default, such as auto-calculated fields and
+>    sequence numbers.
 
 ### 7) Formatter
 
