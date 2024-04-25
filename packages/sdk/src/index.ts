@@ -32,8 +32,8 @@ class CustomComponentSDK extends BaseSDK {
 			{},
 			true,
 			(data) => {
-				this.app = new Application(data);
-				this.page = new Page(data);
+				this.app = new Application(data, true);
+				this.page = new Page(data, true);
 				this.context = new CustomComponent(data.componentId);
 				this.client = new Client();
 				this.formatter = new Formatter();
