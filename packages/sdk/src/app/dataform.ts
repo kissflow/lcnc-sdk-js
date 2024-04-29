@@ -14,4 +14,16 @@ export class Dataform extends BaseSDK {
 			defaultValues
 		});
 	}
+
+	openForm(itemId: string) {
+		if(!itemId) {
+			return Promise.reject({
+				message: "itemId is required"
+			});
+		}
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_OPEN_FORM, {
+			flowId: this._id,
+			itemId
+		});
+	}
 }

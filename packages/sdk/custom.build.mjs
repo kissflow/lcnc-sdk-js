@@ -31,7 +31,8 @@ const CLASS_MAPPINGS = {
 		Formatter: { name: "Formatter" },
 		LowcodeSDK: { name: "kf", staticDeclarations: true },
 		DecisionTable: { name: "DecisionTable" },
-		Dataform: {name: "Dataform"}
+		Dataform: {name: "Dataform"},
+		Board: {name: "Board"},
 	},
 	[SDK_KIND.NOCODE]: {
 		Client: { name: "Client" },
