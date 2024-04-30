@@ -36,7 +36,7 @@ export class Application extends BaseSDK {
 		});
 	}
 
-	openPage(pageId: string, pageParams: object) {
+	openPage(pageId: string, pageParams?: object) {
 		return this._postMessageAsync(LISTENER_CMDS.OPEN_PAGE, {
 			pageId,
 			pageParams
