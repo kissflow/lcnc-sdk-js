@@ -37,13 +37,13 @@ export class Page extends BaseSDK {
 			key
 		});
 	}
-	setVariable(key: string | object, value: any) {
+	setVariable(key: string | object, value?: any) {
 		return this._postMessageAsync(LISTENER_CMDS.SET_PAGE_VARIABLE, {
 			key,
 			value
 		});
 	}
-	openPopup(popupId: string, popupParams: object) {
+	openPopup(popupId: string, popupParams?: object) {
 		return this._postMessageAsync(LISTENER_CMDS.OPEN_POPUP, {
 			popupId,
 			popupParams

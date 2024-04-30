@@ -18,8 +18,8 @@ class CustomComponentSDK extends BaseSDK {
 	constructor() {
 		super();
 	}
-	api(url: string, args = {}): string | object {
-		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
+	api(url: string, args?: object): string | object {
+		return this._postMessageAsync(LISTENER_CMDS.API, { url, args: args || {}  });
 	}
 	initialize() {
 		if (globalThis.parent && globalThis.parent === globalThis) {
