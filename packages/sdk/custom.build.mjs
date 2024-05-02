@@ -32,7 +32,8 @@ const CLASS_MAPPINGS = {
     LowcodeSDK: { name: "kf", staticDeclarations: true },
     DecisionTable: { name: "DecisionTable" },
     Dataform: { name: "Dataform" },
-    Board: { name: "Board" }
+    Board: { name: "Board" },
+    Process: { name: "Process" }
     // Not added typings for AppVariable and PageVariable class, since it's resolved in main thread
     // AppVariable: { name: "AppVariable" },
   },
