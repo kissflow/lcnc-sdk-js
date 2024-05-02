@@ -1,5 +1,8 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
 
+interface DataformItem{
+	_id: string;
+}
 export class Dataform extends BaseSDK {
 	private _id: string;
 
@@ -15,15 +18,15 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
-	openForm(itemId: string) {
-		if(!itemId) {
+	openForm(item: DataformItem) {
+		if (!item._id) {
 			return Promise.reject({
-				message: "itemId is required"
+				message: "Instance Id (_id) is required"
 			});
 		}
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_OPEN_FORM, {
 			flowId: this._id,
-			itemId
+			itemId: item._id
 		});
 	}
 }
