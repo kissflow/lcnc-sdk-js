@@ -13,6 +13,7 @@ class NocodeSDK extends BaseSDK {
 	formatter: Formatter;
 	user: userObject;
 	account: accountObject;
+	eventParameters: any;
 	#csrfToken: string;
 
 	constructor(props: SDKContext) {

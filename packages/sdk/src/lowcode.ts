@@ -16,6 +16,7 @@ class LowcodeSDK extends BaseSDK {
 	user: userObject;
 	env: environmentObject;
 	account: accountObject;
+	eventParameters: any;
 	#csrfToken: string;
 
 	constructor(props: SDKContext) {
