@@ -7,6 +7,20 @@ export function generateId(prefix = "lcncsdk") {
 }
 export const globalInstances = {};
 
+function processResponse(req: object, resp: object) {
+	if (
+		resp &&
+		Object.keys(resp).length === 1 &&
+		req.command !== LISTENER_CMDS.API
+	) {
+		let value = Object.values(resp)[0];
+		if (value === "undefined") return undefined;
+		return value;
+	} else {
+		return resp;
+	}
+}
+
 function postMessage(args: any) {
 	// console.log("SDK : @postMessage ", args);
 	if (globalThis.parent && globalThis.parent !== globalThis) {
@@ -76,15 +90,8 @@ export class EventBase {
 		if (Array.isArray(this.#listeners[target])) {
 			this.#listeners[target].forEach((listener: any) => {
 				try {
-					if (
-						resp &&
-						Object.keys(resp).length === 1 &&
-						req.command !== LISTENER_CMDS.API
-					) {
-						listener(Object.values(resp)[0]);
-					} else {
-						listener(resp);
-					}
+					let processedResp = processResponse(req, resp);
+					listener(processedResp)
 				} catch (err) {
 					console.error("Message callback error: ", err);
 				}
@@ -108,7 +115,7 @@ export class BaseSDK extends EventBase {
 			globalInstances[_id] = this;
 
 			this._addEventListener(_id, async (data: any) => {
-				if (data?.errorMessage) {
+				if (data?.errorMessage || data?.isError) {
 					reject(data);
 				} else {
 					if (hasCallBack && callBack) {
@@ -126,6 +133,87 @@ export class BaseSDK extends EventBase {
 		if (callBack) {
 			this._addEventListener(args.eventName, callBack);
 		}
+	}
+
+	_postMessageSync(command: string, args) {
+		let intialValue = 0;
+		const _id = generateId(command.toLowerCase());
+
+		let data = { _id, command, ...args }
+
+		let atomics = new AtomicsHandler()
+		atomics.reset();
+		atomics.store(0, intialValue);
+		atomics.encodeData(1, data);
+		postMessage(atomics.sab);
+		atomics.wait(0, intialValue, 10000)
+		let decodedData = atomics.decodeData()
+
+		let { _req: req, resp } = decodedData;
+		let processedResp = processResponse(req, resp);
+
+		if (processedResp?.isError) {
+			throw new Error(`Error: ${JSON.stringify(processedResp, null, 2)}`);
+		}
+
+		return processedResp;
+	}
+}
+
+
+
+// single shared array buffer instance for worker
+let sharedArrayBufferInstance: SharedArrayBuffer;
+class AtomicsHandler {
+	sab: SharedArrayBuffer;
+	int32Array: Int32Array;
+
+	constructor() {
+		sharedArrayBufferInstance = sharedArrayBufferInstance || new SharedArrayBuffer(1024 * 1024); //1mb;
+		this.sab = sharedArrayBufferInstance;
+		this.int32Array = new Int32Array(this.sab);
+	}
+
+	#textEncoder = new TextEncoder();
+	#textDecoder = new TextDecoder();
+
+	load(index: number = 0) {
+		return Atomics.load(this.int32Array, index);
+	}
+
+	store(index: number = 0, data: any) {
+		return Atomics.store(this.int32Array, index, data);
+	}
+
+	reset() {
+		// set the zero in all bytes to reset the previously stored data
+		return this.int32Array.fill(0);
+	}
+
+	notify(index: number = 0, count: number = 1) {
+		// eslint-disable-next-line no-undef
+		return Atomics.notify(this.int32Array, index, count);
+	}
+
+	wait(index: number, value: number, timeout: number) {
+		return Atomics.wait(this.int32Array, index, value, timeout);
+	}
+
+	encodeData(index: number = 0, data: object) {
+		const replacer = (key, value) => (value === undefined ? 'undefined' : value);
+		let string = JSON.stringify(data, replacer);
+		let encodedData = this.#textEncoder.encode(string);
+		this.int32Array.set(encodedData, index);
+		return this.int32Array;
+	}
+
+	decodeData() {
+		//we can't decode shared typed array directly so we need to create a new view
+		let uInt8Array = new Uint8Array(this.int32Array);
+		let string = this.#textDecoder
+			.decode(uInt8Array)
+			.replaceAll(/\x00/g, ""); // to remove null bytes
+		return JSON.parse(string);
 	}
 }
 

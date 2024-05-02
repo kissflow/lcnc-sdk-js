@@ -6,7 +6,7 @@ name: KF SDK Publish
 on:
   release:
     types: [created]
-  
+
     # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
@@ -20,13 +20,13 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
           registry-url: https://registry.npmjs.org/
-  
+
       - name: setup pnpm
         uses: pnpm/action-setup@v2.1.0
         with:
-          version: 7
+          version: latest
           run_install: |
             - args: [--filter=@kissflow/lowcode-client-sdk, --frozen-lockfile, --strict-peer-dependencies=false]
 
@@ -34,15 +34,15 @@ jobs:
         run: |
           git config --global user.email "saravanan.10393@gmail.com"
           git config --global user.name "sara"
-            
+
       - name: Run build
-        run:  pnpm run build:sdk
+        run: pnpm run build:sdk
 
       # disabled automatic version pump as it is conflicting with internal versioning
       # - name: pump package version
       #   run:  pnpm version patch
 
       - name: Publish package to npm
-        run:  pnpm publish:sdk --no-git-checks
+        run: pnpm publish:sdk --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

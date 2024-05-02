@@ -18,8 +18,8 @@ class CustomComponentSDK extends BaseSDK {
 	constructor() {
 		super();
 	}
-	api(url: string, args = {}): string | object {
-		return this._postMessageAsync(LISTENER_CMDS.API, { url, args });
+	api(url: string, args?: object): string | object {
+		return this._postMessageAsync(LISTENER_CMDS.API, { url, args: args || {}  });
 	}
 	initialize() {
 		if (globalThis.parent && globalThis.parent === globalThis) {
@@ -32,8 +32,8 @@ class CustomComponentSDK extends BaseSDK {
 			{},
 			true,
 			(data) => {
-				this.app = new Application(data);
-				this.page = new Page(data);
+				this.app = new Application(data, true);
+				this.page = new Page(data, true);
 				this.context = new CustomComponent(data.componentId);
 				this.client = new Client();
 				this.formatter = new Formatter();

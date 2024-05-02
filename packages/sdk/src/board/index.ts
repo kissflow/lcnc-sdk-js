@@ -8,7 +8,7 @@ export class Board extends BaseSDK {
 		this._id = flowId;
 	}
 
-	importCSV(defaultValues: object) {
+	importCSV(defaultValues?: object) {
 		return this._postMessageAsync(LISTENER_CMDS.BOARD_IMPORT_CSV, {
 			flowId: this._id,
 			defaultValues
