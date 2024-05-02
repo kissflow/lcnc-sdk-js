@@ -1,7 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-interface BoardItem {
-	_id: string;
-}
+import { BoardItem } from "../types/external";
 
 export class Board extends BaseSDK {
 	private _id: string;

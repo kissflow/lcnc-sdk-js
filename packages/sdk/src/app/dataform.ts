@@ -1,8 +1,6 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
+import { DataformItem } from "../types/external";
 
-interface DataformItem{
-	_id: string;
-}
 export class Dataform extends BaseSDK {
 	private _id: string;
 

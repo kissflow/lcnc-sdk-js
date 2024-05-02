@@ -1,9 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-
-interface ProcessItem {
-    _id: string;
-    _activity_instance_id: string;
-}
+import { ProcessItem } from "../types/external";
 
 export class Process extends BaseSDK {
     private _id: string;
