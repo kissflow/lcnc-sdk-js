@@ -12,3 +12,16 @@ export type accountObject = {
 export type environmentObject = {
 	isMobile: boolean
 }
+
+export type BoardItem = {
+	_id: string;
+}
+
+export type DataformItem = {
+	_id: string;
+}
+
+export type ProcessItem = {
+	_id: string;
+	_activity_instance_id: string;
+}

@@ -8,6 +8,7 @@ import { AppContext } from "../types/internal";
 import { DecisionTable } from "./decisiontable";
 import { Dataform } from "./dataform";
 import { Board } from "../board";
+import { Process } from "../process";
 
 export class Application extends BaseSDK {
 	page: Page;
@@ -53,6 +54,10 @@ export class Application extends BaseSDK {
 
 	getBoard(flowId: string) {
 		return new Board(flowId);
+	}
+
+	getProcess(flowId: string) {
+		return new Process(flowId);
 	}
 }
 
