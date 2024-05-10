@@ -27,7 +27,7 @@ export type ProcessItem = {
 }
 
 export type FetchOptions = {
-	method: string,
-	body: string | object;
-	headers: object;
+	method?: string,
+	body?: string | object;
+	headers?: object;
 }
