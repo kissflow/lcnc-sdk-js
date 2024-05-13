@@ -25,3 +25,9 @@ export type ProcessItem = {
 	_id: string;
 	_activity_instance_id: string;
 }
+
+export type FetchOptions = {
+	method?: string,
+	body?: string | object;
+	headers?: object;
+}

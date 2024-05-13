@@ -72,7 +72,7 @@ class Table extends BaseSDK {
 		});
 	}
 
-	addRows(rows: [object]) {
+	addRows(rows: object[]) {
 		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROWS, {
 			tableId: this.tableId,
 			rows
@@ -86,7 +86,7 @@ class Table extends BaseSDK {
 		});
 	}
 
-	deleteRows(rows: [string]){
+	deleteRows(rows: string[]){
 		return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
 			tableId: this.tableId,
 			rows
