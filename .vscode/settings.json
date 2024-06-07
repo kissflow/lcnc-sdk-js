@@ -1,0 +1,11 @@
+{
+  "editor.autoIndent": "full",
+  "eslint.workingDirectories": [
+    {
+      "pattern": "*/**/"
+    }
+  ],
+  "editor.formatOnSave": true,
+  "editor.guides.indentation": true,
+  "workbench.editor.pinnedTabsOnSeparateRow": true
+}
