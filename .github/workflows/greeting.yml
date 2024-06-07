@@ -1,0 +1,18 @@
+name: Greetings
+
+on:
+    pull_request_target:
+      types: [opened]
+      branches: [main]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+    - uses: actions/first-interaction@v1.3.0
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        pr-message: |-
+            Congrats on making your first Pull Request and thanks for taking the time to improve kissflow SDK! ❤️! 🎉🍕.
+            Our team will review it shortly. Meanwhile Say hello by following us through [X](https://x.com/kissflow)
