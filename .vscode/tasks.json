@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "eslint",
+      "type": "shell",
+      "command": "eslint",
+      "args": [
+        "."  // Runs ESLint on the entire project
+      ],
+      "problemMatcher": ["$eslint-stylish"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

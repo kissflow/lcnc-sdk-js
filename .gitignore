@@ -35,9 +35,8 @@ typings/
 
 # Optional npm cache directory
 .npm
-.npmrc
 
-# Pnpm debugs 
+# Pnpm debugs
 .pnpm-debug.log
 */**/.pnpm-debug.log
 

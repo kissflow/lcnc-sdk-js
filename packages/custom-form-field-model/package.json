@@ -11,6 +11,9 @@
         ".": "./src/index.js",
         "./helpers": "./src/helpers.js"
     },
+    "engines": {
+        "node": ">=18.14.1"
+    },
     "keywords": [
         "no-code",
         "low-code",

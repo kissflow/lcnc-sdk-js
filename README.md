@@ -8,11 +8,11 @@ Install the SDK as a module: `npm i @kissflow/lowcode-client-sdk` Then import
 into your project:
 
 ```js
-import KFSDK from "@kissflow/lowcode-client-sdk";
-let kf;
-(async function () {
-	kf = await KFSDK.initialize();
-})();
+import KFSDK from '@kissflow/lowcode-client-sdk'
+let kf
+;(async function () {
+    kf = await KFSDK.initialize()
+})()
 ```
 
 > Note: Initializing Kf SDK in custom components returns a promise.
@@ -28,10 +28,10 @@ SDK can also be loaded directly into HTML by adding:
 Then SDK can be initialized as:
 
 ```js
-let kf;
+let kf
 window.onload = async function () {
-	kf = await window.kf.initialize();
-};
+    kf = await window.kf.initialize()
+}
 ```
 
 ### User and Account details
@@ -39,7 +39,7 @@ window.onload = async function () {
 Details of authenticated user can be accessed as following
 
 ```js
-const { Name, Email, _id } = kf.user;
+const { Name, Email, _id } = kf.user
 ```
 
 And account id can be accessed as `kf.account._id`
@@ -91,8 +91,8 @@ application.
 
 ```js
 kf.context.watchParams(function (data) {
-	console.log(data);
-});
+    console.log(data)
+})
 ```
 
 ### Kissflow Forms
@@ -124,7 +124,7 @@ Use this function to get update any field in the form
 ###### Syntax:
 
 ```js
-kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
+kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
 ```
 
 ##### c) toJSON()
@@ -136,7 +136,7 @@ Use this function to get the JSON data of the current form
 ###### Syntax:
 
 ```js
-const json = await kf.context.toJSON();
+const json = await kf.context.toJSON()
 ```
 
 ###### Output:
@@ -165,8 +165,8 @@ Appends row details to the table.
 ###### Syntax:
 
 ```js
-const table = kf.context.getTable(tableId);
-table.addRow({ columnId1: value, columnId2: value });
+const table = kf.context.getTable(tableId)
+table.addRow({ columnId1: value, columnId2: value })
 ```
 
 > ##### Note: If there are more than one rows to be added to table then use `addRows()` instead for these bulk operations
@@ -180,15 +180,15 @@ Appends multiple rows details to the table.
 ###### Syntax:
 
 ```js
-const table = kf.context.getTable(tableId);
-let accumulator = [];
+const table = kf.context.getTable(tableId)
+let accumulator = []
 someArrayOfObjects.forEach(function (rowDetail) {
-	accumulator.push({
-		columnId1: rowDetail[columnId1],
-		columnId2: rowDetail[columnId2]
-	});
-});
-await table.addRows(accumulator);
+    accumulator.push({
+        columnId1: rowDetail[columnId1],
+        columnId2: rowDetail[columnId2],
+    })
+})
+await table.addRows(accumulator)
 ```
 
 #### c) deleteRow()
@@ -200,8 +200,8 @@ Deletes a row from the table based on the row id
 ###### Syntax:
 
 ```js
-const table = kf.context.getTable(tableId);
-await table.deleteRow(rowId);
+const table = kf.context.getTable(tableId)
+await table.deleteRow(rowId)
 ```
 
 > ##### Note: If there are more than one rows to be deleted then use `deleteRows()` instead.
@@ -215,8 +215,8 @@ Deletes multiple rows from the table based on given array of strings.
 ###### Syntax:
 
 ```js
-const table = kf.context.getTable(tableId);
-await table.deleteRows([rowId1, rowId2, rowId3]);
+const table = kf.context.getTable(tableId)
+await table.deleteRows([rowId1, rowId2, rowId3])
 ```
 
 #### e) getRow()
@@ -228,8 +228,8 @@ Use this function to perform form actions on any row inside a child table
 ###### Syntax:
 
 ```js
-const table = kf.context.getTable(tableId);
-const row = table.getRow(rowId);
+const table = kf.context.getTable(tableId)
+const row = table.getRow(rowId)
 ```
 
 ###### Output:
@@ -245,7 +245,7 @@ Gets all the rows of the table
 ###### Syntax:
 
 ```js
-const rows = await kf.context.getTable(tableId).getRows();
+const rows = await kf.context.getTable(tableId).getRows()
 ```
 
 ###### Output:
@@ -261,7 +261,7 @@ Use this function to get the JSON data of the child table
 ###### Syntax:
 
 ```js
-const json = await kf.context.getTable(tableId).toJSON();
+const json = await kf.context.getTable(tableId).toJSON()
 ```
 
 ###### Output:
@@ -310,7 +310,7 @@ Use this function to get update any field in the table row
 ###### Syntax:
 
 ```js
-kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
+kf.context.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
 ```
 
 ##### c) getParent()
@@ -322,8 +322,8 @@ Use this function to perform form actions on the main form
 ###### Syntax:
 
 ```js
-const mainForm = kf.context.getParent();
-mainForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue });
+const mainForm = kf.context.getParent()
+mainForm.updateField({ fieldId_1: fieldValue, fieldId_2: fieldValue })
 ```
 
 ###### Output:
@@ -340,7 +340,7 @@ Get JSON output of table row
 ##### Syntax:
 
 ```js
-const json = await kf.context.toJSON();
+const json = await kf.context.toJSON()
 ```
 
 ###### Output:
@@ -362,7 +362,7 @@ const json = await kf.context.toJSON();
 ##### Show Toast
 
 ```js
-kf.client.showInfo(message);
+kf.client.showInfo(message)
 ```
 
 ##### Show confirm
@@ -380,7 +380,7 @@ kf.client.showConfirm({ title, content }).then((action) => {
 ##### Redirect to URL
 
 ```js
-kf.client.redirect(url);
+kf.client.redirect(url)
 ```
 
 ### 3) Application
@@ -390,18 +390,18 @@ kf.client.redirect(url);
 ##### Get value to application variable
 
 ```js
-const appVarible1 = await kf.app.getVariable("variableId");
+const appVarible1 = await kf.app.getVariable('variableId')
 ```
 
 ##### Set value of application variable
 
 ```js
-let value = await kf.app.setVariable("variableId", value);
+let value = await kf.app.setVariable('variableId', value)
 // or
 await kf.app.setVariable({
-	variableId_1: "value_1",
-	variableId_2: 3345
-});
+    variableId_1: 'value_1',
+    variableId_2: 3345,
+})
 ```
 
 ##### Open a page
@@ -410,10 +410,10 @@ await kf.app.setVariable({
 
 ```js
 const pageInputParameters = {
-	param1: value,
-	param2: value
-};
-kf.app.openPage(pageId, pageInputParameters);
+    param1: value,
+    param2: value,
+}
+kf.app.openPage(pageId, pageInputParameters)
 // Note: Page Input parameters are optional.
 ```
 
@@ -422,7 +422,7 @@ kf.app.openPage(pageId, pageInputParameters);
 `getDataform(formId)` returns a Dataform class instance
 
 ```js
-const dfInstance = kf.app.getDataform("dataform_id");
+const dfInstance = kf.app.getDataform('dataform_id')
 ```
 
 ### 4) Page
@@ -433,7 +433,7 @@ const dfInstance = kf.app.getDataform("dataform_id");
 ##### Page parameters
 
 ```js
-let value = await kf.app.page.getParameter("parameterId"); // for retreiving single parameter
+let value = await kf.app.page.getParameter('parameterId') // for retreiving single parameter
 ```
 
 Get all page parameters
@@ -452,7 +452,7 @@ let allParams = await kf.app.page.getAllParameters();
 `getComponent` returns a [Component](#5-component) class.
 
 ```js
-const componentName = await kf.app.page.getComponent("componentId");
+const componentName = await kf.app.page.getComponent('componentId')
 ```
 
 ##### Open a popup
@@ -460,7 +460,7 @@ const componentName = await kf.app.page.getComponent("componentId");
 `openPoup` returns a [Popup](#6-popup) class.
 
 ```js
-kf.app.page.openPopup("popupId", { inputParam1: "value" });
+kf.app.page.openPopup('popupId', { inputParam1: 'value' })
 // Note: Popup parameters are optional.
 ```
 
@@ -471,15 +471,15 @@ kf.app.page.openPopup("popupId", { inputParam1: "value" });
 Parameter: Component's Id Returns: Component class instance
 
 ```js
-const component = await kf.app.page.getComponent(componentId);
+const component = await kf.app.page.getComponent(componentId)
 ```
 
 ##### Standard Component Methods
 
 ```js
-component.refresh(); // Refreshes the component
-component.hide(); // Hides the component
-component.show(); // Shows the component if it's been hidden previously
+component.refresh() // Refreshes the component
+component.hide() // Hides the component
+component.show() // Shows the component if it's been hidden previously
 ```
 
 ##### Component Specific Methods
@@ -494,9 +494,9 @@ Component onMount takes in callBack function as argument.
 
 ```js
 component.onMount(() => {
-	// function logic goes here... For eg.
-	// component.setActiveTab(2)
-});
+    // function logic goes here... For eg.
+    // component.setActiveTab(2)
+})
 ```
 
 ##### 5.2.1) Tab component
@@ -506,7 +506,7 @@ component.onMount(() => {
 Sets specified tab as active. Parameter: Tabs' Number (Starts from 1 to N)
 
 ```js
-component.setActiveTab(2); // sets 2nd tab as active one
+component.setActiveTab(2) // sets 2nd tab as active one
 ```
 
 ### 6) Popup
@@ -518,7 +518,7 @@ its id can be accessed via `kf.app.page.popup._id` And
 ##### Popup parameters
 
 ```js
-let value = await kf.app.page.popup.getParameter("parameterId"); // for retreiving single popup parameter
+let value = await kf.app.page.popup.getParameter('parameterId') // for retreiving single popup parameter
 ```
 
 Get all popup parameters
@@ -535,9 +535,9 @@ let allParams = await kf.app.page.popup.getAllParameters();
 ##### Close popup
 
 ```js
-kf.app.page.popup.close(); // for active popup
+kf.app.page.popup.close() // for active popup
 // or if you already have a popup instance...
-greetPopup.close();
+greetPopup.close()
 ```
 
 ### 8) Dataform
@@ -548,7 +548,7 @@ into an app.
 To begin with, obtain the dataform instance using:
 
 ```js
-const dfInstance = kf.app.getDataform("dataform_id");
+const dfInstance = kf.app.getDataform('dataform_id')
 ```
 
 ##### Import CSV
@@ -557,8 +557,8 @@ Launches the import CSV popup, where you can upload CSV file and map columns to
 the corresponding fields.
 
 ```js
-let defaultValues = { fieldId: "value" };
-dfInstance.importCSV(defaultValues);
+let defaultValues = { fieldId: 'value' }
+dfInstance.importCSV(defaultValues)
 ```
 
 ###### Example scenario
@@ -569,13 +569,13 @@ these hidden fields
 
 ```js
 //Get the dataform with the dataform's flow_id
-const dfInstance = kf.app.getDataform("Product_Dataform_A00"); //Product_Dataform_A00 is the flow_id
+const dfInstance = kf.app.getDataform('Product_Dataform_A00') //Product_Dataform_A00 is the flow_id
 
 //Set field values for specific fields of the dataform
-let defaultValues = { location: "India" }; //Location is the the field_id of a field inside the dataform
+let defaultValues = { location: 'India' } //Location is the the field_id of a field inside the dataform
 
 //Pass the field config into the import sdk method
-dfInstance.importCSV(defaultValues); //All records imported through this importer would have Location field set as India
+dfInstance.importCSV(defaultValues) //All records imported through this importer would have Location field set as India
 ```
 
 > Note:
@@ -591,7 +591,7 @@ dfInstance.importCSV(defaultValues); //All records imported through this importe
 Get board instance like
 
 ```js
-const boardInstance = kf.app.getBoard("case_id");
+const boardInstance = kf.app.getBoard('case_id')
 ```
 
 ##### Import CSV
@@ -600,8 +600,8 @@ Launches the import CSV modal, where you can upload a CSV file and map its
 columns to the corresponding fields.
 
 ```js
-let defaultValues = { fieldId: "value" };
-boardInstance.importCSV(defaultValues);
+let defaultValues = { fieldId: 'value' }
+boardInstance.importCSV(defaultValues)
 ```
 
 ###### Example scenario
@@ -612,13 +612,13 @@ these hidden fields.
 
 ```js
 // Get the board with the board's flow_id
-const boardInstance = kf.app.getBoard("Asset_Tracking_A00"); // Asset_Tracking_A00 is the flow_id
+const boardInstance = kf.app.getBoard('Asset_Tracking_A00') // Asset_Tracking_A00 is the flow_id
 
 // Set field values for specific fields of the board
-let boardInstance = { location: "India" }; // Location is the the field_id of a field inside the board
+let boardInstance = { location: 'India' } // Location is the the field_id of a field inside the board
 
 // Pass the field config into the import sdk method
-boardInstance.importCSV(defaultValues); // All records imported through this importer would have Location field set as India
+boardInstance.importCSV(defaultValues) // All records imported through this importer would have Location field set as India
 ```
 
 > Note:
@@ -674,9 +674,26 @@ let value = await kf.formatter.toBoolean("yes");
 ##### Other supported Boolean values
 
 ```js
-let value = await kf.formatter.toBoolean("1");
-let value = await kf.formatter.toBoolean("true");
-let value = await kf.formatter.toBoolean("no");
-let value = await kf.formatter.toBoolean("0");
-let value = await kf.formatter.toBoolean("false");
+let value = await kf.formatter.toBoolean('1')
+let value = await kf.formatter.toBoolean('true')
+let value = await kf.formatter.toBoolean('no')
+let value = await kf.formatter.toBoolean('0')
+let value = await kf.formatter.toBoolean('false')
 ```
+
+# Working with this repo
+
+## eslint
+
+This repo is configured to use eslint's new [flat config](https://eslint.org/docs/latest/extend/plugin-migration-flat-config),
+flat configs are only supported by node.js >= 18.18.0. To get diagnostics information from eslint in you IDE, change your machine's
+default nodejs version to 18.18.0 or higher (18.18.0 is recommended) before opening the repo with your IDE.
+
+To set 18.18.0 as the default Node.js version for your machine,
+
+```
+nvm install 18.18.0
+nvm alias 18.18.0
+```
+
+Additionally, make sure to update your VS Code, as ESLint's flat configuration doesn't function correctly with older versions.
