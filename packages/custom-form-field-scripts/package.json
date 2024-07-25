@@ -2,9 +2,14 @@
     "name": "@kissflow/custom-form-field-scripts",
     "version": "0.1.34",
     "description": "",
-    "scripts": {},
+    "scripts": {
+        "test": "console.log('test')"
+    },
     "bin": {
         "c3-scripts": "./bin/index.js"
+    },
+    "engines": {
+        "node": ">=18.14.1"
     },
     "files": [
         "package.json",
