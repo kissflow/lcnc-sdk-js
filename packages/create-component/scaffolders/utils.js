@@ -5,10 +5,6 @@ import * as prettier from 'prettier'
 import { prettierConfig } from './constants.js'
 
 function getAllFilePathsRecursively(directoryPath) {
-    const currentModuleFile = new URL(import.meta.url).pathname
-    const currentModuleDirectory = path.dirname(currentModuleFile)
-    const absolutePath = path.resolve(currentModuleDirectory, directoryPath)
-
     const filesList = []
 
     function readFilesHelper(currentPath, parentDirectory = '') {
@@ -32,7 +28,7 @@ function getAllFilePathsRecursively(directoryPath) {
         })
     }
 
-    readFilesHelper(absolutePath)
+    readFilesHelper(directoryPath)
     return filesList
 }
 
@@ -77,7 +73,6 @@ function isValidPackageName(projectName) {
 export {
     getAllFilePathsRecursively,
     renderFileWithEjs,
-    getAllFilePathsRecursively,
     writeFileWithFolderCreation,
     formatWithPrettier,
     isValidPackageName,

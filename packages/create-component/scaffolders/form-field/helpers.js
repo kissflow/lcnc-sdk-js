@@ -1,4 +1,5 @@
-import { getFileMap } from '@shibi-snowball/c3-model/helpers'
+import { getFileMap } from '@shibi-snowball/custom-form-field-model/helpers'
+import path from 'path'
 
 const getC3Config = (projectTarget) => {
     const c3Config = Object.entries(getFileMap(projectTarget)).reduce(
@@ -20,6 +21,10 @@ const getC3Config = (projectTarget) => {
     return c3Config
 }
 
-// const getProps = () => {}
+const getProjectTemplatePath = () => {
+    const currentModuleFile = new URL(import.meta.url).pathname
+    const currentModuleDirectory = path.dirname(currentModuleFile)
+    return path.resolve(currentModuleDirectory, './project-template/')
+}
 
-export { getC3Config }
+export { getC3Config, getProjectTemplatePath }

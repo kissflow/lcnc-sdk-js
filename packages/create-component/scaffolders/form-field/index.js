@@ -12,36 +12,49 @@ import {
 import { rename } from '../helpers.js'
 import { join } from 'path'
 
-import { C3_SCRIPTS, C3_MODEL } from './constants.js'
+import {
+    CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME,
+    CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME,
+} from './constants.js'
 import {
     SUPPORTED_REACT_DOM_VERSION,
     SUPPORTED_REACT_VERSION,
-} from '@shibi-snowball/c3-model'
+} from '@shibi-snowball/custom-form-field-model'
 import {
     getC3ProjectTargetKey,
     getC3PlatformKey,
     getC3ComponentKey,
-} from '@shibi-snowball/c3-model/helpers'
-import { getC3Config } from './helpers.js'
+} from '@shibi-snowball/custom-form-field-model/helpers'
+import { getC3Config, getProjectTemplatePath } from './helpers.js'
 
-const createProject = async (projectPath, projectName, projectTarget) => {
-    const projectTemplateFiles =
-        getAllFilePathsRecursively('./project-template')
+const createProject = async ({
+    projectFolderPath,
+    projectName,
+    projectTarget,
+}) => {
+    const projectTemplateFiles = getAllFilePathsRecursively(
+        getProjectTemplatePath()
+    )
 
     const c3Config = getC3Config(projectTarget)
 
-    const latestC3ScriptsVersion = await getLatestPackageVersion(C3_SCRIPTS)
-    const latestC3ModelVersion = await getLatestPackageVersion(C3_MODEL)
+    const latestFormFieldScriptsVersion = await getLatestPackageVersion(
+        CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME
+    )
+    const latestFormFieldModelVersion = await getLatestPackageVersion(
+        CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME
+    )
 
     const templateData = {
-        C3_MODEL,
+        CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME,
+        CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME,
         projectName,
         c3Config,
         projectTarget,
         reactVersion: SUPPORTED_REACT_VERSION,
         reactDomVersion: SUPPORTED_REACT_DOM_VERSION,
-        latestC3ScriptsVersion,
-        latestC3ModelVersion,
+        latestFormFieldScriptsVersion,
+        latestFormFieldModelVersion,
         getC3ProjectTargetKey,
         getC3PlatformKey,
         getC3ComponentKey,
@@ -57,7 +70,11 @@ const createProject = async (projectPath, projectName, projectTarget) => {
         const newName = rename(fileName)
 
         const renderedFileContent = renderFileWithEjs(fileContent, templateData)
-        const targetFilePath = join(projectPath, relativeDirectoryPath, newName)
+        const targetFilePath = join(
+            projectFolderPath,
+            relativeDirectoryPath,
+            newName
+        )
         const formattedContent = await formatWithPrettier(
             renderedFileContent,
             targetFilePath
@@ -67,7 +84,7 @@ const createProject = async (projectPath, projectName, projectTarget) => {
     }
 }
 
-const addFiles = async (projectPath, projectTarget) => {
+const addFiles = async ({ projectFolderPath, projectTarget }) => {
     const component = readFileContentRelativeToCurrentFile(
         './file-templates/ReactComponent.ejs'
     )
@@ -89,7 +106,7 @@ const addFiles = async (projectPath, projectTarget) => {
             )
 
             const targetFilePath = join(
-                projectPath,
+                projectFolderPath,
                 `${moduleFolderPath}/${componentName}.${fileExtension}`
             )
 
@@ -102,12 +119,16 @@ const addFiles = async (projectPath, projectTarget) => {
     }
 }
 
-const formFieldScaffolder = (projectPath, projectName, projectTarget) => {
+const formFieldScaffolder = ({
+    projectFolderPath,
+    projectName,
+    projectTarget,
+}) => {
     console.log(
         `Scaffolding a c3-app named '${projectName}' which targets Kissflow's '${projectTarget}'...`
     )
-    createProject(projectPath, projectName, projectTarget)
-    addFiles(projectPath, projectTarget)
+    createProject({ projectFolderPath, projectName, projectTarget })
+    addFiles({ projectFolderPath, projectTarget })
     // git init and npm install if you can.
 }
 

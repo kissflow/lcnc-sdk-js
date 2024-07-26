@@ -76,7 +76,7 @@ const API_SCHEMA = {
 }
 
 const FILE_MAP = {
-    [PROJECT_TARGETS.FORMS]: {
+    [PROJECT_TARGETS.FORM_FIELD]: {
         [PLATFORMS.WEB]: {
             [C3_COMPONENTS.FORM_FIELD]: {
                 moduleFolderPath: `src/${PLATFORMS.WEB}/`,

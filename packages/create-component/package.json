@@ -4,7 +4,7 @@
     "description": "@kisssflow/c3 is a cli tool to scaffold a custom components project",
     "main": "index.js",
     "bin": {
-        "c3": "./bin/index.js"
+        "create-kf-component": "./bin/index.js"
     },
     "type": "module",
     "files": [
@@ -38,7 +38,7 @@
     "author": "shibi@kissflow.com",
     "license": "ISC",
     "dependencies": {
-        "@kissflow/custom-form-field-model": "workspace:^",
+        "@shibi-snowball/custom-form-field-model": "workspace:^",
         "chalk": "^5.3.0",
         "ejs": "^3.1.9",
         "inquirer": "^9.2.13",
