@@ -126,7 +126,6 @@ class C3WebpackPlugin {
                     errors.forEach((error) => {
                         const { name } = error
                         if (name === 'ESLintError') {
-                            // I hate this plugin!!!!!!!!!!!!
                             const errors = JSON.parse(
                                 error.message.slice('[eslint]'.length)
                             )

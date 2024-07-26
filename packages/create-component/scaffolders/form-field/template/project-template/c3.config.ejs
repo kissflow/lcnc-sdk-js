@@ -1,0 +1,14 @@
+import {
+    C3_COMPONENTS,
+    PLATFORMS,
+    PROJECT_TARGETS,
+} from '<%= C3_MODEL %>'
+
+export default {
+    target: PROJECT_TARGETS.<%= getC3ProjectTargetKey(projectTarget) %>,
+    components: {
+        <% Object.keys(c3Config).forEach(platform => { %>
+        [PLATFORMS.<%= getC3PlatformKey(platform) %>]: { <% Object.entries(c3Config[platform]).forEach(([componentName, component]) => { %> [C3_COMPONENTS.<%= getC3ComponentKey(componentName) %>]: './<%= component.moduleFolderPath %><%= componentName %>.<%= component.fileExtension %>',<% }) %>
+        },<% }) %>
+    },
+}
