@@ -6,6 +6,7 @@ const renames = {
     'c3.config.ejs': 'c3.config.js',
     _npmrc: '.npmrc',
     '_eslintrc.cjs': '.eslintrc.cjs',
+    _gitkeep: '.gitkeep',
 }
 
 const prettierConfig = {
