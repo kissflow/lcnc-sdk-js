@@ -15,7 +15,7 @@ import {
     SUPPORTED_REACT_VERSION,
     SUPPORTED_REACT_DOM_VERSION,
     C3_SCHEMA,
-} from '@shibi-snowball/c3-model'
+} from '@shibi-snowball/custom-form-field-model'
 import {
     getProjectTargetFromC3App,
     getAppC3Config,

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import latestVersion from 'latest-version'
+import chalk from 'chalk'
 
 const readFileContentRelativeToCurrentFile = (relativePath) => {
     const currentModuleFile = new URL(import.meta.url).pathname
