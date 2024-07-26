@@ -1,12 +1,15 @@
 import {
     getAllFilePathsRecursively,
-    getFileContentUsingFullPath,
     renderFileWithEjs,
     writeFileWithFolderCreation,
     formatWithPrettier,
+} from '../utils.js'
+import {
+    getFileContentUsingFullPath,
     readFileContentRelativeToCurrentFile,
+    getLatestPackageVersion,
 } from './utils.js'
-import { rename, getLatestPackageVersion } from './helpers.js'
+import { rename } from '../helpers.js'
 import { join } from 'path'
 
 import { C3_SCRIPTS, C3_MODEL } from './constants.js'
@@ -99,10 +102,13 @@ const addFiles = async (projectPath, projectTarget) => {
     }
 }
 
-const scaffoldProject = (projectPath, projectName, projectTarget) => {
+const formFieldScaffolder = (projectPath, projectName, projectTarget) => {
+    console.log(
+        `Scaffolding a c3-app named '${projectName}' which targets Kissflow's '${projectTarget}'...`
+    )
     createProject(projectPath, projectName, projectTarget)
     addFiles(projectPath, projectTarget)
     // git init and npm install if you can.
 }
 
-export { scaffoldProject }
+export { formFieldScaffolder }

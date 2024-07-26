@@ -8,7 +8,8 @@ import * as fs from 'fs'
 import chalk from 'chalk'
 
 import { PROJECT_TARGETS } from '@shibi-snowball/c3-model'
-import { scaffoldProject } from '../template/index.js'
+import { formFieldScaffolder } from '../scaffolders/form-field/index.js'
+import { pageScaffolder } from '../scaffolders/page/index.js'
 import { isValidPackageName, makeDirectory } from '../template/utils.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -40,8 +41,8 @@ program
     .action(async (projectName, options) => {
         let { starterKit, projectTarget } = options
         projectName = projectName?.trim()
-        starterKit = starterKit?.trim()
         projectTarget = projectTarget?.trim()
+        starterKit = starterKit?.trim()
         if (starterKit && projectTarget) {
             // These two are contradicting options, so they should not be used together...
             console.log(
@@ -117,9 +118,9 @@ program
             console.log(
                 chalk.red(
                     `Error: A directory with the name '${projectName}' already exists in ${currentWorkingDirectory}!
-  Please, either, 
-     1) Supply a new project name.
-     2) Remove or rename the existing folder.`
+                     Please, either, 
+                     1) Supply a new project name.
+                     2) Remove or rename the existing folder.`
                 )
             )
             process.exit(0)
@@ -131,11 +132,27 @@ program
             )
             process.exit(0)
         } else {
-            console.log(
-                `Scaffolding a c3-app named '${projectName}' which targets Kissflow's '${projectTarget}'...`
-            )
             makeDirectory(projectFolderPath)
-            scaffoldProject(projectFolderPath, projectName, projectTarget)
+            switch (projectTarget) {
+                case PROJECT_TARGETS.FORM_FIELD: {
+                    formFieldScaffolder(
+                        projectFolderPath,
+                        projectName,
+                        projectTarget
+                    )
+                    break
+                }
+                case PROJECT_TARGETS.PAGE: {
+                    pageScaffolder({
+                        projectFolderPath,
+                        projectName,
+                        framework: 'react',
+                    })
+                    break
+                }
+                default:
+                    throw new Error('Unknown projectTarget... ', projectTarget)
+            }
         }
     })
 
