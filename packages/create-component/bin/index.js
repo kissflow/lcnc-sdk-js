@@ -61,7 +61,7 @@ switch (projectTarget) {
     }
 
     case PROJECT_TARGETS.PAGE: {
-        const framework = await inquirer.prompt([
+        const { framework } = await inquirer.prompt([
             {
                 type: 'list',
                 name: 'framework',
@@ -79,5 +79,5 @@ switch (projectTarget) {
     }
 
     default:
-        throw new Error('Unknown projectTarget... ', projectTarget)
+        throw new Error('Invalid projectTarget... ', projectTarget)
 }
