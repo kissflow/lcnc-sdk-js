@@ -4,6 +4,7 @@ const renames = {
     '_README.md': 'README.md',
     '_settings.json': 'settings.json',
     'c3.config.ejs': 'c3.config.js',
+    _npmrc: '.npmrc',
 }
 
 const prettierConfig = {

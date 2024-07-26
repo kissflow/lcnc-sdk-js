@@ -45,8 +45,6 @@ const getC3Config = (projectTarget) => {
     return c3Config
 }
 
-const getProps = () => {
-
-}
+const getProps = () => {}
 
 export { getLatestPackageVersion, rename, getC3Config, getProps }

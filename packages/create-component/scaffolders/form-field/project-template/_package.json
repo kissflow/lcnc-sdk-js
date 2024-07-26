@@ -18,6 +18,9 @@
         "unzipper": "^0.10.14",
         "zip": "^1.2.0"
     },
+    "engines": {
+        "node": ">=16.0.0 <17.0.0"
+    },
     "eslintConfig": {
         "extends": ["react-app"],
         "rules": {
