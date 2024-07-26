@@ -38,9 +38,8 @@
     "author": "shibi@kissflow.com",
     "license": "ISC",
     "dependencies": {
-        "@shibi-snowball/c3-model": "workspace:^",
+        "@kissflow/custom-form-field-model": "workspace:^",
         "chalk": "^5.3.0",
-        "commander": "^11.1.0",
         "ejs": "^3.1.9",
         "inquirer": "^9.2.13",
         "latest-version": "^8.0.0",
