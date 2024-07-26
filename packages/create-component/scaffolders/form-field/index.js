@@ -27,7 +27,6 @@ const createProject = async (projectPath, projectName, projectTarget) => {
 
     const c3Config = getC3Config(projectTarget)
 
-
     const latestC3ScriptsVersion = await getLatestPackageVersion(C3_SCRIPTS)
     const latestC3ModelVersion = await getLatestPackageVersion(C3_MODEL)
 
