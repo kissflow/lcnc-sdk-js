@@ -1,7 +1,5 @@
 const PROJECT_TARGETS = {
-    FORMS: 'forms',
-    REPORTS: 'reports',
-    VIEWS: 'views',
+    FORM_FIELD: 'form-field',
     PAGE: 'page',
 }
 
