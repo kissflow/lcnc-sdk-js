@@ -1,5 +1,5 @@
 {
-  "name": "xcv",
+  "name": "<%= projectName %>",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,6 +8,9 @@
     "zip": "cd dist/ && bestzip ../build.zip *",
     "build": "vite build && npm run zip",
     "preview": "vite preview"
+  },
+  "engines": {
+      "node": ">=16.0.0 <17.0.0"
   },
   "devDependencies": {
     "vite": "^5.2.0",
