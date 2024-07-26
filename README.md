@@ -775,6 +775,7 @@ To set 18.18.0 as the default Node.js version for your machine,
 ```
 nvm install 18.18.0
 nvm alias 18.18.0
+code .
 ```
 
 Additionally, make sure to update your VS Code, as ESLint's flat configuration doesn't function correctly with older versions.
