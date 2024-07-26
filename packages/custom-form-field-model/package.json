@@ -1,6 +1,6 @@
 {
-    "name": "@kissflow/custom-form-field-model",
-    "version": "0.1.15",
+    "name": "@shibi-snowball/custom-form-field-model",
+    "version": "0.1.18",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -10,9 +10,6 @@
     "exports": {
         ".": "./src/index.js",
         "./helpers": "./src/helpers.js"
-    },
-    "engines": {
-        "node": ">=18.14.1"
     },
     "keywords": [
         "no-code",

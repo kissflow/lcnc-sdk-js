@@ -1,26 +1,48 @@
 {
     "name": "create-kf-component",
-    "version": "0.0.4",
-    "type": "module",
-    "description": "create-kf-component is a cli utility to create a new kissflow custom component",
+    "version": "0.1.31",
+    "description": "@kisssflow/c3 is a cli tool to scaffold a custom components project",
     "main": "index.js",
     "bin": {
-        "create-kf-component": "index.js"
+        "create-kf-component": "./bin/index.js"
     },
+    "type": "module",
+    "files": [
+        "package.json",
+        "index.js",
+        "README.md",
+        "./template",
+        "!./node_modules/**"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "lcnc",
+        "OrangeScape",
+        "no-code",
+        "low-code",
+        "platform",
+        "c3",
+        "c3-app",
+        "custom-component-creator",
+        "react",
+        "cli",
+        "kissflow",
+        "custom-components",
+        "custom-fields"
+    ],
     "engines": {
         "node": ">=18.14.1"
     },
-    "files": [
-        "index.js",
-        "template/**/*",
-        "src/**/*"
-    ],
-    "keywords": [],
-    "author": "",
+    "author": "shibi@kissflow.com",
     "license": "ISC",
     "dependencies": {
-        "kolorist": "^1.8.0",
-        "prompts": "^2.4.2"
+        "@shibi-snowball/custom-form-field-model": "workspace:^",
+        "chalk": "^5.3.0",
+        "ejs": "^3.1.9",
+        "inquirer": "^9.2.13",
+        "latest-version": "^8.0.0",
+        "prettier": "^3.2.5"
     }
 }
-

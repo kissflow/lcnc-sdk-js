@@ -1,7 +1,5 @@
 const PROJECT_TARGETS = {
-    FORMS: 'forms',
-    REPORTS: 'reports',
-    VIEWS: 'views',
+    FORM_FIELD: 'form-field',
     PAGE: 'page',
 }
 
@@ -78,7 +76,7 @@ const API_SCHEMA = {
 }
 
 const FILE_MAP = {
-    [PROJECT_TARGETS.FORMS]: {
+    [PROJECT_TARGETS.FORM_FIELD]: {
         [PLATFORMS.WEB]: {
             [C3_COMPONENTS.FORM_FIELD]: {
                 moduleFolderPath: `src/${PLATFORMS.WEB}/`,

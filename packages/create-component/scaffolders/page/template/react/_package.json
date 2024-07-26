@@ -1,0 +1,31 @@
+{
+    "name": "<%= projectName %>",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "zip": "cd dist/ && bestzip ../build.zip *",
+        "build": "vite build && npm run zip",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "@kissflow/lowcode-client-sdk": "latest"
+    },
+    "engines": {
+        "node": "^18.0.0 || >=20.0.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.64",
+        "@types/react-dom": "^18.2.21",
+        "@vitejs/plugin-react": "^4.2.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react": "^7.34.0",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.5",
+        "vite": "^5.1.6",
+        "bestzip": "^2.2.1"
+    }
+}

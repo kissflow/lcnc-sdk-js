@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { isPlural } from './utils.js'
-import { getFileMap } from '@shibi-snowball/c3-model/helpers'
+import { getFileMap } from '@shibi-snowball/custom-form-field-model/helpers'
 import { getAppC3Config } from '../helpers.js'
 
 const clearScreen = () => {
