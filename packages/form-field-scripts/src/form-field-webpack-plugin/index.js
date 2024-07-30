@@ -142,12 +142,12 @@ class FormFieldWebpackPlugin {
                         const { name } = error
                         if (name === 'ESLintError') {
                             let errors
-                            if (errors.message.startsWith('[eslint]')) {
+                            if (error.message.startsWith('[eslint]')) {
                                 errors = JSON.parse(
                                     error.message.slice('[eslint]'.length)
                                 )
                             } else {
-                                errors = JSON.parse(errors.message)
+                                errors = JSON.parse(error.message)
                             }
 
                             numberOfErrors--
