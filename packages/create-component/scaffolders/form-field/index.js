@@ -24,7 +24,6 @@ import {
     getFormFieldPlatformKey,
     getFormFieldComponentKey,
 } from '@shibi-snowball/custom-form-field-model/helpers'
-import { getFormFieldProjectTargetKey } from '../helpers.js'
 import { getFormFieldConfig, getProjectTemplatePath } from './helpers.js'
 
 const createProject = async ({
@@ -55,7 +54,6 @@ const createProject = async ({
         reactDomVersion: SUPPORTED_REACT_DOM_VERSION,
         latestFormFieldScriptsVersion,
         latestFormFieldModelVersion,
-        getFormFieldProjectTargetKey,
         getFormFieldPlatformKey,
         getFormFieldComponentKey,
     }
