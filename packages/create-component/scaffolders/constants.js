@@ -3,7 +3,7 @@ const renames = {
     '_package.json': 'package.json',
     '_README.md': 'README.md',
     '_settings.json': 'settings.json',
-    'c3.config.ejs': 'c3.config.js',
+    'form-field.config.ejs': 'form-field.config.js',
     _npmrc: '.npmrc',
     '_eslintrc.cjs': '.eslintrc.cjs',
     _gitkeep: '.gitkeep',

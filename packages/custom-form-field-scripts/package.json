@@ -1,12 +1,9 @@
 {
     "name": "@shibi-snowball/custom-form-field-scripts",
     "version": "0.1.37",
-    "description": "",
-    "scripts": {
-        "test": "console.log('test')"
-    },
+    "description": "Scripts to serve, build, lint, test, etc. a Kissflow's custom form field project.",
     "bin": {
-        "c3-scripts": "./bin/index.js"
+        "form-field-scripts": "./bin/index.js"
     },
     "files": [
         "package.json",
@@ -25,14 +22,10 @@
         "no-code",
         "low-code",
         "platform",
-        "c3",
-        "c3-app",
-        "custom-component-creator",
         "react",
         "cli",
         "kissflow",
-        "custom-components",
-        "custom-fields"
+        "custom-form-fields"
     ],
     "type": "module",
     "author": "shibi@kissflow.com",

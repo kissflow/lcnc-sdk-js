@@ -1,13 +1,13 @@
 {
     "name": "<%= projectName %>",
     "version": "1.0.0",
-    "description": "A simple @kissflow/c3 app that targets Kissflow's <%= projectTarget %>.",
+    "description": "Custom form field for Kissflow's form",
     "main": "index.js",
     "scripts": {
-        "dev": "c3-scripts dev",
-        "build": "c3-scripts build",
-        "zip": "zip -r c3-app.zip ./dist",
-        "unzip": "rm -rf ./zip && unzip c3-app.zip -d ./c3-app"
+        "dev": "form-field-scripts dev",
+        "build": "form-field-scripts build",
+        "zip": "zip -r custom-form-field.zip ./dist",
+        "unzip": "rm -rf ./custom-form-field && unzip custom-form-field.zip -d ./custom-form-field"
     },
     "type": "module",
     "author": "",
@@ -38,14 +38,10 @@
         }
     },
     "keywords": [
-        "kissflow-<%= projectTarget %>",
         "lcnc",
         "no-code",
         "low-code",
         "platform",
-        "c3",
-        "c3-app",
-        "custom-component-creator",
         "react",
         "cli",
         "kissflow",
