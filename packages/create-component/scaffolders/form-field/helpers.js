@@ -1,4 +1,4 @@
-import { FILE_MAP } from '@shibi-snowball/custom-form-field-model'
+import { FILE_MAP } from '@kissflow/form-field-config'
 import path from 'path'
 
 const getFormFieldConfig = () => {

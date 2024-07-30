@@ -1,5 +1,5 @@
 {
-    "name": "@shibi-snowball/custom-form-field-model",
+    "name": "@kissflow/form-field-config",
     "version": "0.1.20",
     "description": "Configurations for Kissflow's custom form field projects.",
     "main": "index.js",

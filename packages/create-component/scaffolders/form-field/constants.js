@@ -1,7 +1,7 @@
-const ORGANIZATION = '@' + 'shibi-snowball'
+const ORGANIZATION = '@' + 'kissflow'
 
-const CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME = `${ORGANIZATION}/custom-form-field-scripts`
-const CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME = `${ORGANIZATION}/custom-form-field-model`
+const CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME = `${ORGANIZATION}/form-field-scripts`
+const CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME = `${ORGANIZATION}/form-field-config`
 
 export {
     CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME,

@@ -15,7 +15,7 @@ import {
     SUPPORTED_REACT_VERSION,
     SUPPORTED_REACT_DOM_VERSION,
     FORM_FIELD_PROJECT_CONFIG_SCHEMA,
-} from '@shibi-snowball/custom-form-field-model'
+} from '@kissflow/form-field-config'
 import {
     getProjectTargetFromFormFieldProject,
     getMandatoryModules,
