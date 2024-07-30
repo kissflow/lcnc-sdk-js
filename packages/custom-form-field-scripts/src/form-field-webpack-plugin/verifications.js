@@ -17,11 +17,12 @@ import {
     C3_SCHEMA,
 } from '@shibi-snowball/custom-form-field-model'
 import {
-    getProjectTargetFromC3App,
-    getAppC3Config,
+    getProjectTargetFromFormFieldProject,
     getMandatoryModules,
-    getComponentsFromC3App,
+    getComponentsFromFormFieldProject,
 } from './helpers.js'
+
+import { getFormFieldProjectConfig } from '../helpers.js'
 import { getAppPackageJson } from '../helpers.js'
 
 import paths from '../paths.js'
@@ -47,11 +48,11 @@ const performRuntimeChecks = async () => {
 const performPreBuildtimeChecks = async () => {
     // No need to check if package.json file exists or not, because if package.json doesn't exists the scripts that run the current file
     // can't won't be invoked.
-    await getAppC3Config() // needs need to move 1 level above the compilation tree.
+    await getFormFieldProjectConfig() // needs need to move 1 level above the compilation tree.
 }
 
 const defaultExportCheckAllModules = async () => {
-    const modulesPresentInC3App = await getComponentsFromC3App()
+    const modulesPresentInC3App = await getComponentsFromFormFieldProject()
 
     for (let [platforms, components] of Object.entries(modulesPresentInC3App)) {
         for (const [component, modulePath] of Object.entries(components)) {
@@ -102,7 +103,7 @@ const defaultExportCheckAllModules = async () => {
 const validateC3ConfigSchema = async () => {
     const ajv = new Ajv()
 
-    const appC3Config = await getAppC3Config()
+    const appC3Config = await getFormFieldProjectConfig()
     const validate = ajv.compile(C3_SCHEMA)
     const valid = validate(appC3Config)
     if (!valid) {
@@ -137,9 +138,9 @@ const verifyPackageVersions = async () => {
 }
 
 const isAllMandatoryModulesPresent = async () => {
-    const projectTarget = await getProjectTargetFromC3App()
+    const projectTarget = await getProjectTargetFromFormFieldProject()
     const mandatoryModules = getMandatoryModules(projectTarget)
-    const modulesPresentInC3App = await getComponentsFromC3App()
+    const modulesPresentInC3App = await getComponentsFromFormFieldProject()
     for (const [platform, components] of Object.entries(mandatoryModules)) {
         for (const component of components) {
             if (component in modulesPresentInC3App[platform]) {

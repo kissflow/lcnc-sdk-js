@@ -16,4 +16,9 @@ const prettierConfig = {
     semi: false,
 }
 
-export { renames, prettierConfig }
+const PROJECT_TARGETS = {
+    FORM_FIELD: 'form-field',
+    PAGE: 'page',
+}
+
+export { renames, prettierConfig, PROJECT_TARGETS }

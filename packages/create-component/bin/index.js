@@ -4,7 +4,7 @@ import inquirer from 'inquirer'
 import * as fs from 'fs'
 import chalk from 'chalk'
 
-import { PROJECT_TARGETS } from '@shibi-snowball/custom-form-field-model'
+import { PROJECT_TARGETS } from '../scaffolders/constants.js'
 import { FRAMEWORKS } from '../scaffolders/page/constants.js'
 import { formFieldScaffolder } from '../scaffolders/form-field/index.js'
 import { pageScaffolder } from '../scaffolders/page/index.js'
