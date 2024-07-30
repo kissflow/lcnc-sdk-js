@@ -10,9 +10,12 @@ const runServer = async () => {
     const compiler = webpack(webpackConfig)
     const server = new WebpackDevServer(webpackDevServerConfig, compiler)
     await server.start()
-    const watcher = chokidar.watch([paths.c3Config, paths.appPackageJson], {
-        persistent: true,
-    })
+    const watcher = chokidar.watch(
+        [paths.formFieldProjectConfig, paths.projectPackageJson],
+        {
+            persistent: true,
+        }
+    )
 
     const killServer = async () => {
         await server.stop()
