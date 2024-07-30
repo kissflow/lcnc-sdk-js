@@ -1,5 +1,4 @@
 import { PROJECT_TARGETS, C3_COMPONENTS, PLATFORMS } from './index.js'
-import { FILE_MAP } from './index.js'
 
 const getC3ComponentKey = (value) => {
     for (const key in C3_COMPONENTS) {
@@ -34,13 +33,4 @@ const getC3PlatformKey = (value) => {
     )
 }
 
-const getFileMap = (projectTarget) => {
-    return FILE_MAP[projectTarget]
-}
-
-export {
-    getC3ComponentKey,
-    getC3ProjectTargetKey,
-    getFileMap,
-    getC3PlatformKey,
-}
+export { getC3ComponentKey, getC3ProjectTargetKey, getC3PlatformKey }
