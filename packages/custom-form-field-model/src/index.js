@@ -76,65 +76,45 @@ const API_SCHEMA = {
 }
 
 const FILE_MAP = {
-    [PROJECT_TARGETS.FORM_FIELD]: {
-        [PLATFORMS.WEB]: {
-            [C3_COMPONENTS.FORM_FIELD]: {
-                moduleFolderPath: `src/${PLATFORMS.WEB}/`,
-                isMandatory: true,
-                fileExtension: 'jsx',
-            },
-            [C3_COMPONENTS.EDITABLE_TABLE]: {
-                moduleFolderPath: `src/${PLATFORMS.WEB}/`,
-                isMandatory: false,
-                fileExtension: 'jsx',
-            },
-            [C3_COMPONENTS.READONLY_TABLE]: {
-                moduleFolderPath: `src/${PLATFORMS.WEB}/`,
-                isMandatory: false,
-                fileExtension: 'jsx',
-            },
-            [C3_COMPONENTS.CARD]: {
-                moduleFolderPath: `src/${PLATFORMS.WEB}/`,
-                isMandatory: false,
-                fileExtension: 'jsx',
-            },
+    [PLATFORMS.WEB]: {
+        [C3_COMPONENTS.FORM_FIELD]: {
+            moduleFolderPath: `src/${PLATFORMS.WEB}/`,
+            isMandatory: true,
+            fileExtension: 'jsx',
         },
-        [PLATFORMS.PWA]: {
-            [C3_COMPONENTS.FORM_FIELD]: {
-                moduleFolderPath: `src/${PLATFORMS.PWA}/`,
-                isMandatory: true,
-                fileExtension: 'jsx',
-            },
-            [C3_COMPONENTS.CARD]: {
-                moduleFolderPath: `src/${PLATFORMS.PWA}/`,
-                isMandatory: false,
-                fileExtension: 'jsx',
-            },
-            [C3_COMPONENTS.READONLY_TABLE]: {
-                moduleFolderPath: `src/${PLATFORMS.PWA}/`,
-                isMandatory: false,
-                fileExtension: 'jsx',
-            },
+        [C3_COMPONENTS.EDITABLE_TABLE]: {
+            moduleFolderPath: `src/${PLATFORMS.WEB}/`,
+            isMandatory: false,
+            fileExtension: 'jsx',
+        },
+        [C3_COMPONENTS.READONLY_TABLE]: {
+            moduleFolderPath: `src/${PLATFORMS.WEB}/`,
+            isMandatory: false,
+            fileExtension: 'jsx',
+        },
+        [C3_COMPONENTS.CARD]: {
+            moduleFolderPath: `src/${PLATFORMS.WEB}/`,
+            isMandatory: false,
+            fileExtension: 'jsx',
         },
     },
-    // [PROJECT_TARGETS.REPORTS]: {
-    //   [PLATFORMS.WEB]: [
-    //     {
-    //       componentName: "Report",
-    //       relativePath: "./src/Report.jsx",
-    //     },
-    //   ],
-    //   [PLATFORMS.PWA]: [],
-    // },
-    // [PROJECT_TARGETS.VIEWS]: {
-    //   [PLATFORMS.WEB]: [
-    //     {
-    //       componentName: "View",
-    //       relativePath: "./src/View.jsx",
-    //     },
-    //   ],
-    //   [PLATFORMS.PWA]: [],
-    // },
+    [PLATFORMS.PWA]: {
+        [C3_COMPONENTS.FORM_FIELD]: {
+            moduleFolderPath: `src/${PLATFORMS.PWA}/`,
+            isMandatory: true,
+            fileExtension: 'jsx',
+        },
+        [C3_COMPONENTS.CARD]: {
+            moduleFolderPath: `src/${PLATFORMS.PWA}/`,
+            isMandatory: false,
+            fileExtension: 'jsx',
+        },
+        [C3_COMPONENTS.READONLY_TABLE]: {
+            moduleFolderPath: `src/${PLATFORMS.PWA}/`,
+            isMandatory: false,
+            fileExtension: 'jsx',
+        },
+    },
 }
 
 // If you are updating this, please make sure that you are updaing
