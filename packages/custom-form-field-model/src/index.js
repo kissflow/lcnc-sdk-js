@@ -1,53 +1,34 @@
-const PROJECT_TARGETS = {
-    FORM_FIELD: 'form-field',
-    PAGE: 'page',
-}
-
 const PLATFORMS = {
     WEB: 'web',
     PWA: 'pwa',
 }
 
-const C3_COMPONENTS = {
+const FORM_FIELD_COMPONENTS = {
     EDITABLE_TABLE: 'EditableTable',
     FORM_FIELD: 'FormField',
     READONLY_TABLE: 'ReadonlyTable',
     CARD: 'Card',
 }
 
-const C3_SCHEMA = {
+const FORM_FIELD_PROJECT_CONFIG_SCHEMA = {
     type: 'object',
-    properties: {
-        target: {
-            type: 'string',
-            enum: Object.values(PROJECT_TARGETS),
-        },
-        components: {
+    properties: Object.values(PLATFORMS).reduce((platformsMap, platform) => {
+        platformsMap[platform] = {
             type: 'object',
-            properties: Object.values(PLATFORMS).reduce(
-                (platformsMap, platform) => {
-                    platformsMap[platform] = {
-                        type: 'object',
-                        properties: Object.values(C3_COMPONENTS).reduce(
-                            (componentsMap, component) => {
-                                componentsMap[component] = {
-                                    type: 'string',
-                                    pattern: '^(?:\\.\\/)?[^/]+\\/.*\\.jsx$',
-                                }
-                                return componentsMap
-                            },
-                            {}
-                        ),
-                        additionalProperties: false,
+            properties: Object.values(FORM_FIELD_COMPONENTS).reduce(
+                (componentsMap, component) => {
+                    componentsMap[component] = {
+                        type: 'string',
+                        pattern: '^(?:\\.\\/)?[^/]+\\/.*\\.jsx$',
                     }
-                    return platformsMap
+                    return componentsMap
                 },
                 {}
             ),
             additionalProperties: false,
-        },
-    },
-    required: ['target', 'components'],
+        }
+        return platformsMap
+    }, {}),
     additionalProperties: false,
 }
 
@@ -77,39 +58,39 @@ const API_SCHEMA = {
 
 const FILE_MAP = {
     [PLATFORMS.WEB]: {
-        [C3_COMPONENTS.FORM_FIELD]: {
+        [FORM_FIELD_COMPONENTS.FORM_FIELD]: {
             moduleFolderPath: `src/${PLATFORMS.WEB}/`,
             isMandatory: true,
             fileExtension: 'jsx',
         },
-        [C3_COMPONENTS.EDITABLE_TABLE]: {
+        [FORM_FIELD_COMPONENTS.EDITABLE_TABLE]: {
             moduleFolderPath: `src/${PLATFORMS.WEB}/`,
             isMandatory: false,
             fileExtension: 'jsx',
         },
-        [C3_COMPONENTS.READONLY_TABLE]: {
+        [FORM_FIELD_COMPONENTS.READONLY_TABLE]: {
             moduleFolderPath: `src/${PLATFORMS.WEB}/`,
             isMandatory: false,
             fileExtension: 'jsx',
         },
-        [C3_COMPONENTS.CARD]: {
+        [FORM_FIELD_COMPONENTS.CARD]: {
             moduleFolderPath: `src/${PLATFORMS.WEB}/`,
             isMandatory: false,
             fileExtension: 'jsx',
         },
     },
     [PLATFORMS.PWA]: {
-        [C3_COMPONENTS.FORM_FIELD]: {
+        [FORM_FIELD_COMPONENTS.FORM_FIELD]: {
             moduleFolderPath: `src/${PLATFORMS.PWA}/`,
             isMandatory: true,
             fileExtension: 'jsx',
         },
-        [C3_COMPONENTS.CARD]: {
+        [FORM_FIELD_COMPONENTS.CARD]: {
             moduleFolderPath: `src/${PLATFORMS.PWA}/`,
             isMandatory: false,
             fileExtension: 'jsx',
         },
-        [C3_COMPONENTS.READONLY_TABLE]: {
+        [FORM_FIELD_COMPONENTS.READONLY_TABLE]: {
             moduleFolderPath: `src/${PLATFORMS.PWA}/`,
             isMandatory: false,
             fileExtension: 'jsx',
@@ -127,8 +108,7 @@ export {
     FILE_MAP,
     SUPPORTED_REACT_VERSION,
     SUPPORTED_REACT_DOM_VERSION,
-    PROJECT_TARGETS,
     PLATFORMS,
-    C3_SCHEMA,
+    FORM_FIELD_PROJECT_CONFIG_SCHEMA,
     API_SCHEMA,
 }
