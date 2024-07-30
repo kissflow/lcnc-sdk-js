@@ -21,11 +21,11 @@ import {
     SUPPORTED_REACT_VERSION,
 } from '@shibi-snowball/custom-form-field-model'
 import {
-    getC3ProjectTargetKey,
-    getC3PlatformKey,
-    getC3ComponentKey,
+    getFormFieldPlatformKey,
+    getFormFieldComponentKey,
 } from '@shibi-snowball/custom-form-field-model/helpers'
-import { getC3Config, getProjectTemplatePath } from './helpers.js'
+import { getFormFieldProjectTargetKey } from '../helpers.js'
+import { getFormFieldConfig, getProjectTemplatePath } from './helpers.js'
 
 const createProject = async ({
     projectFolderPath,
@@ -36,7 +36,7 @@ const createProject = async ({
         getProjectTemplatePath()
     )
 
-    const c3Config = getC3Config(projectTarget)
+    const formFieldConfig = getFormFieldConfig(projectTarget)
 
     const latestFormFieldScriptsVersion = await getLatestPackageVersion(
         CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME
@@ -49,15 +49,15 @@ const createProject = async ({
         CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME,
         CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME,
         projectName,
-        c3Config,
+        formFieldConfig,
         projectTarget,
         reactVersion: SUPPORTED_REACT_VERSION,
         reactDomVersion: SUPPORTED_REACT_DOM_VERSION,
         latestFormFieldScriptsVersion,
         latestFormFieldModelVersion,
-        getC3ProjectTargetKey,
-        getC3PlatformKey,
-        getC3ComponentKey,
+        getFormFieldProjectTargetKey,
+        getFormFieldPlatformKey,
+        getFormFieldComponentKey,
     }
 
     // Copy the base template into the target folder...
@@ -89,9 +89,7 @@ const addFiles = async ({ projectFolderPath, projectTarget }) => {
         './file-templates/ReactComponent.ejs'
     )
 
-    for (const [platform, files] of Object.entries(
-        getC3Config(projectTarget)
-    )) {
+    for (const [platform, files] of Object.entries(getFormFieldConfig())) {
         for (const [
             componentName,
             { moduleFolderPath, fileExtension },
@@ -125,7 +123,7 @@ const formFieldScaffolder = ({
     projectTarget,
 }) => {
     console.log(
-        `Scaffolding a c3-app named '${projectName}' which targets Kissflow's '${projectTarget}'...`
+        `Scaffolding a custom form field project named '${projectName}'...`
     )
     createProject({ projectFolderPath, projectName, projectTarget })
     addFiles({ projectFolderPath, projectTarget })

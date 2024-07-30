@@ -2,7 +2,7 @@ import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin
 import { getAppPackageJson } from '../helpers.js'
 import { getModuleMap } from '../helpers.js'
 import paths from '../paths.js'
-import C3WebpackPlugin from '../c3-webpack-plugin/index.js'
+import FormFieldWebpackPlugin from '../form-field-webpack-plugin/index.js'
 import ESLintPlugin from 'eslint-webpack-plugin'
 
 import { createRequire } from 'module'
@@ -60,7 +60,7 @@ export default {
         ],
     },
     plugins: [
-        new C3WebpackPlugin(),
+        new FormFieldWebpackPlugin(),
         new ModuleFederationPlugin({
             name: 'Remote4',
             library: {
