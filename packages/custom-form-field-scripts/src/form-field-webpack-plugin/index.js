@@ -19,8 +19,7 @@ const banner = () => {
 
 const isDevMode = process.env.WEBPACK_SERVE === 'true'
 
-class C3WebpackPlugin {
-    hasC3errors = false
+class FormFieldWebpackPlugin {
     apply(compiler) {
         const getRunHook = () => {
             return isDevMode
@@ -29,9 +28,9 @@ class C3WebpackPlugin {
         }
 
         const runHook = getRunHook()
-        runHook.tap(C3WebpackPlugin.name, async (compiler, callback) => {
+        runHook.tap(FormFieldWebpackPlugin.name, async (compiler, callback) => {
             compiler.hooks.thisCompilation.tap(
-                C3WebpackPlugin.name,
+                FormFieldWebpackPlugin.name,
                 async (compilation) => {
                     try {
                         if (!this.firstRun) {
@@ -68,7 +67,7 @@ class C3WebpackPlugin {
             )
         })
 
-        compiler.hooks.done.tap(C3WebpackPlugin.name, (stats) => {
+        compiler.hooks.done.tap(FormFieldWebpackPlugin.name, (stats) => {
             if (isDevMode) {
                 clearScreen()
             }
@@ -163,10 +162,10 @@ class C3WebpackPlugin {
             }
         })
 
-        compiler.hooks.failed.tap(C3WebpackPlugin.name, (error) => {
+        compiler.hooks.failed.tap(FormFieldWebpackPlugin.name, (error) => {
             console.error('Build failed with error:', error)
         })
     }
 }
 
-export default C3WebpackPlugin
+export default FormFieldWebpackPlugin

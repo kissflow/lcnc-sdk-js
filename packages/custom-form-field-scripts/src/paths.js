@@ -33,9 +33,9 @@ const resolveModule = (resolveFn, filePath) => {
 
 export default {
     appPath: resolveApp('.'),
-    appPackageJson: resolveModule(resolveApp, 'package'),
+    projectPackageJson: resolveModule(resolveApp, 'package'),
     appBuild: resolveApp('dist'),
-    c3Config: resolveModule(resolveApp, 'c3.config'),
+    formFieldProjectConfig: resolveModule(resolveApp, 'form-field.config'),
     appRoot: resolveApp(''),
     appSrc: resolveApp('src'),
     appNodeModules: resolveApp('node_modules'),

@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import { isPlural } from './utils.js'
 import { getFileMap } from '@shibi-snowball/custom-form-field-model/helpers'
-import { getAppC3Config } from '../helpers.js'
+import { getFormFieldProjectConfig } from '../helpers.js'
 
 const clearScreen = () => {
     process.stdout.write('\x1B[2J\x1B[3J\x1B[H') // Clears screen, scrollback buffer, and moves cursor to the top-left corner
@@ -23,31 +23,14 @@ const logSummary = ({ numberOfErrors, numberOfWarnings }) => {
     }
 }
 
-const getModuleMap = async () => {
-    const c3Config = await getAppC3Config()
-    const { components } = c3Config
-    const moduleMap = Object.entries(components).reduce(
-        (moduleMap, [module, filePath]) => {
-            if (filePath.startsWith('./')) {
-                moduleMap['./' + module] = filePath
-            } else {
-                moduleMap['./' + module] = './' + filePath
-            }
-            return moduleMap
-        },
-        {}
-    )
-    return moduleMap
+const getProjectTargetFromFormFieldProject = async () => {
+    const formFieldConfig = await getFormFieldProjectConfig()
+    return formFieldConfig.target
 }
 
-const getProjectTargetFromC3App = async () => {
-    const c3Config = await getAppC3Config()
-    return c3Config.target
-}
-
-const getComponentsFromC3App = async () => {
-    const c3Config = await getAppC3Config()
-    return c3Config.components
+const getComponentsFromFormFieldProject = async () => {
+    const formFieldConfig = await getFormFieldProjectConfig()
+    return formFieldConfig.components
 }
 
 const getMandatoryModules = (projectTarget) => {
@@ -65,11 +48,9 @@ const getMandatoryModules = (projectTarget) => {
 }
 
 export {
-    getModuleMap,
-    getProjectTargetFromC3App,
-    getAppC3Config,
+    getProjectTargetFromFormFieldProject,
     getMandatoryModules,
     logSummary,
     clearScreen,
-    getComponentsFromC3App,
+    getComponentsFromFormFieldProject,
 }

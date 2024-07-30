@@ -1,8 +1,6 @@
 # <%= projectName %>
 
-This is a @kissflow/c3 app, scaffolded using @kissflow/c3.
-
-This project targets Kissflow's <%= projectTarget %>.
+This is a Kissflow's custom form field project, scaffolded using `@kissflow/create-kf-component`.
 
 ### To install dependencies,
 
