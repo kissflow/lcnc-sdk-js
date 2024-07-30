@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
 import chalk from 'chalk'
 import { logBoxenError } from '../src/logBoxen.js'
-import { performPreBuildtimeChecks } from '../src/c3-webpack-plugin/verifications.js'
+import { performPreBuildtimeChecks } from '../src/form-field-webpack-plugin/verifications.js'
 
 program
     .command('dev')

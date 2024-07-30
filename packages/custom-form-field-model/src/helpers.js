@@ -1,28 +1,17 @@
-import { PROJECT_TARGETS, C3_COMPONENTS, PLATFORMS } from './index.js'
+import { FORM_FIELD_COMPONENTS, PLATFORMS } from './index.js'
 
-const getC3ComponentKey = (value) => {
-    for (const key in C3_COMPONENTS) {
-        if (C3_COMPONENTS[key] === value) {
+const getFormFieldComponentKey = (value) => {
+    for (const key in FORM_FIELD_COMPONENTS) {
+        if (FORM_FIELD_COMPONENTS[key] === value) {
             return key
         }
     }
     throw new Error(
-        `The value supplied (${value}, doesn't have an associated key in C3_COMPONENTS.)`
+        `The value supplied (${value}, doesn't have an associated key in FORM_FIELD_COMPONENTS.)`
     )
 }
 
-const getC3ProjectTargetKey = (value) => {
-    for (const key in PROJECT_TARGETS) {
-        if (PROJECT_TARGETS[key] === value) {
-            return key
-        }
-    }
-    throw new Error(
-        `The value supplied (${value}, doesn't have an associated key in PROJECT_TARGETS.)`
-    )
-}
-
-const getC3PlatformKey = (value) => {
+const getFormFieldPlatformKey = (value) => {
     for (const key in PLATFORMS) {
         if (PLATFORMS[key] === value) {
             return key
@@ -33,4 +22,4 @@ const getC3PlatformKey = (value) => {
     )
 }
 
-export { getC3ComponentKey, getC3ProjectTargetKey, getC3PlatformKey }
+export { getFormFieldComponentKey, getFormFieldPlatformKey }
