@@ -4,7 +4,7 @@ import {
     C3_CONFIG_NOT_FOUND,
     C3_ERROR,
     UNABLE_TO_PARSE_C3_CONFIG,
-} from './c3-webpack-plugin/errors.js'
+} from './form-field-webpack-plugin/errors.js'
 
 const getModuleMap = async () => {
     const c3Config = await getAppC3Config()
