@@ -1,67 +1,68 @@
-class C3_ERROR {
+class FORM_FIELD_ERROR {
     constructor({ title, description }) {
         this.title = title
         this.description = description
     }
 }
 
-class C3_MODULE_NOT_PRESENT_ERROR extends C3_ERROR {
+class FORM_FIELD_MODULE_NOT_PRESENT_ERROR extends FORM_FIELD_ERROR {
     constructor({ modulePath }) {
         super({
             title: 'Module not present',
-            description: `The module at '${modulePath}' not present.`,
+            description: `The module at '${modulePath}' is not present.`,
         })
     }
 }
 
-class REACT_VERSION_MISMATCH_ERROR extends C3_ERROR {
+class REACT_VERSION_MISMATCH_ERROR extends FORM_FIELD_ERROR {
     constructor({ supportedReactVersion, suppliedReactVersion }) {
         const title = `React version mismatch!`
-        const description = `react version ${supportedReactVersion} expected, react version ${suppliedReactVersion} supplied, please update app's package.json and rerun the build.`
+        const description = `The expected React version is ${supportedReactVersion}, but version ${suppliedReactVersion} was provided. Please update the React version in your project's package.json file to ${supportedReactVersion} and rerun the build.`
         super({ title, description })
     }
 }
 
-class REACT_DOM_VERSION_MISMATCH_ERROR extends C3_ERROR {
+class REACT_DOM_VERSION_MISMATCH_ERROR extends FORM_FIELD_ERROR {
     constructor({ supportedReactDomVersion, suppliedReactDomVersion }) {
-        const title = `React version mismatch!`
-        const description = `react-dom version ${supportedReactDomVersion} expected, react-dom version ${suppliedReactDomVersion} supplied, please update app's package.json and rerun the build.`
+        const title = `ReactDOM version mismatch!`
+        const description = `The expected ReactDOM version is ${supportedReactDomVersion}, but version ${suppliedReactDomVersion} was provided. Please update the ReactDOM version in your project's package.json file to ${supportedReactDOMVersion} and rerun the build.`
         super({ title, description })
     }
 }
 
-class C3_CONFIG_SCHEMA_INVALID_ERROR extends C3_ERROR {
+class FORM_FIELD_CONFIG_SCHEMA_INVALID_ERROR extends FORM_FIELD_ERROR {
     constructor({ errorMessage }) {
         super({
-            title: "c3.config.js doesn't follow the schema!",
+            title: "form-field.config.js doesn't follow the API schema.",
             description: errorMessage,
         })
     }
 }
 
-class DEFAULT_EXPORT_NOT_FOUND_ERROR extends C3_ERROR {
+class DEFAULT_EXPORT_NOT_FOUND_ERROR extends FORM_FIELD_ERROR {
     constructor({ modulePath, component }) {
         super({
-            title: 'Default export not found in a C3 module',
-            description: `Default export not found at '${modulePath}', the module must default export the code for ${component} component.`,
+            title: 'Default export not found in a form field module',
+            description: `Default export not found in the Javascript module '${modulePath}', the module must default export a React component for Kissflow form's '${component}'.`,
         })
         this.modulePath = modulePath
     }
 }
 
-class DEFAULT_EXPORT_NOT_REACT_COMPONENT_ERROR extends C3_ERROR {
+class DEFAULT_EXPORT_NOT_REACT_COMPONENT_ERROR extends FORM_FIELD_ERROR {
+    // todo: Shibi
     constructor() {
         super()
     }
 }
 
-class MANDATORY_MODULES_NOT_PRESENT_ERROR extends C3_ERROR {
+class MANDATORY_MODULES_NOT_PRESENT_ERROR extends FORM_FIELD_ERROR {
     constructor({ msg }) {
         super({ title: 'Mandatory module not present!', description: msg })
     }
 }
 
-class UNABLE_TO_PARSE_A_C3_MODULE extends C3_ERROR {
+class UNABLE_TO_PARSE_A_FORM_FIELD_MODULE extends FORM_FIELD_ERROR {
     constructor({ component, modulePath, err }) {
         super({
             title: 'Unable to parse module using babel',
@@ -70,36 +71,36 @@ class UNABLE_TO_PARSE_A_C3_MODULE extends C3_ERROR {
     }
 }
 
-class C3_CONFIG_NOT_FOUND extends C3_ERROR {
+class FORM_FIELD_CONFIG_NOT_FOUND extends FORM_FIELD_ERROR {
     constructor() {
         super({
-            title: '`c3.config.js` not found',
+            title: '`form-field.config.js` not found',
             description:
-                'All c3-apps must have a configuration file named `c3.config.js` in its root.',
+                'All custom form field projects must include a configuration file named form-field.config.js in their root directory.',
         })
     }
 }
 
-class UNABLE_TO_PARSE_C3_CONFIG extends C3_ERROR {
+class UNABLE_TO_PARSE_FORM_FIELD_CONFIG extends FORM_FIELD_ERROR {
     constructor() {
         super({
-            title: 'Unable to parse c3.config.js',
+            title: 'Unable to parse form-field.config.js',
             description:
-                'Unable to parse `c3.config.js`, the module might contain syntax errors.',
+                'Unable to parse `form-field.config.js` due to syntax error(s) present in the module.',
         })
     }
 }
 
 export {
-    UNABLE_TO_PARSE_C3_CONFIG,
-    C3_CONFIG_NOT_FOUND,
+    UNABLE_TO_PARSE_FORM_FIELD_CONFIG,
+    FORM_FIELD_CONFIG_NOT_FOUND,
     MANDATORY_MODULES_NOT_PRESENT_ERROR,
     DEFAULT_EXPORT_NOT_FOUND_ERROR,
     REACT_VERSION_MISMATCH_ERROR,
     REACT_DOM_VERSION_MISMATCH_ERROR,
-    C3_CONFIG_SCHEMA_INVALID_ERROR,
+    FORM_FIELD_CONFIG_SCHEMA_INVALID_ERROR,
     DEFAULT_EXPORT_NOT_REACT_COMPONENT_ERROR,
-    C3_MODULE_NOT_PRESENT_ERROR,
-    UNABLE_TO_PARSE_A_C3_MODULE,
-    C3_ERROR,
+    FORM_FIELD_MODULE_NOT_PRESENT_ERROR,
+    UNABLE_TO_PARSE_A_FORM_FIELD_MODULE,
+    FORM_FIELD_ERROR,
 }

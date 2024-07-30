@@ -1,11 +1,11 @@
 import path from 'path'
 import {
-    C3_CONFIG_SCHEMA_INVALID_ERROR,
+    FORM_FIELD_CONFIG_SCHEMA_INVALID_ERROR,
     MANDATORY_MODULES_NOT_PRESENT_ERROR,
     REACT_DOM_VERSION_MISMATCH_ERROR,
     REACT_VERSION_MISMATCH_ERROR,
-    C3_MODULE_NOT_PRESENT_ERROR,
-    UNABLE_TO_PARSE_A_C3_MODULE,
+    FORM_FIELD_MODULE_NOT_PRESENT_ERROR,
+    UNABLE_TO_PARSE_A_FORM_FIELD_MODULE,
     DEFAULT_EXPORT_NOT_FOUND_ERROR,
 } from './errors.js'
 import fs from 'fs'
@@ -65,7 +65,7 @@ const defaultExportCheckAllModules = async () => {
                     'utf-8'
                 )
             } catch (err) {
-                throw new C3_MODULE_NOT_PRESENT_ERROR({ modulePath })
+                throw new FORM_FIELD_MODULE_NOT_PRESENT_ERROR({ modulePath })
             }
 
             try {
@@ -82,7 +82,7 @@ const defaultExportCheckAllModules = async () => {
                     },
                 })
             } catch (err) {
-                throw new UNABLE_TO_PARSE_A_C3_MODULE({
+                throw new UNABLE_TO_PARSE_A_FORM_FIELD_MODULE({
                     component,
                     modulePath,
                     err,
@@ -108,7 +108,7 @@ const validateC3ConfigSchema = async () => {
     if (!valid) {
         validate.errors.forEach((error) => {
             const errorMessage = ajv.errorsText([error], { separator: ', ' })
-            throw new C3_CONFIG_SCHEMA_INVALID_ERROR({ errorMessage })
+            throw new FORM_FIELD_CONFIG_SCHEMA_INVALID_ERROR({ errorMessage })
         })
     }
 }
@@ -148,7 +148,7 @@ const isAllMandatoryModulesPresent = async () => {
                 )
             } else {
                 throw new MANDATORY_MODULES_NOT_PRESENT_ERROR({
-                    msg: `Mandatory module '${platform}/${component}' is not present! Exiting.`,
+                    msg: `Mandatory module '${platform}/${component}' is not present!`,
                 })
             }
         }
