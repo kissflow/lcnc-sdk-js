@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { isPlural } from './utils.js'
-import { FILE_MAP } from '@shibi-snowball/custom-form-field-model'
+import { FILE_MAP } from '@kissflow/form-field-config'
 import { getFormFieldProjectConfig } from '../helpers.js'
 
 const clearScreen = () => {

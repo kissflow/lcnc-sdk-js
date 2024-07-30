@@ -19,11 +19,11 @@ import {
 import {
     SUPPORTED_REACT_DOM_VERSION,
     SUPPORTED_REACT_VERSION,
-} from '@shibi-snowball/custom-form-field-model'
+} from '@kissflow/form-field-config'
 import {
     getFormFieldPlatformKey,
     getFormFieldComponentKey,
-} from '@shibi-snowball/custom-form-field-model/helpers'
+} from '@kissflow/form-field-config/helpers'
 import { getFormFieldConfig, getProjectTemplatePath } from './helpers.js'
 
 const createProject = async ({
