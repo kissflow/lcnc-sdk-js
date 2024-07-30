@@ -96,9 +96,14 @@ class FormFieldWebpackPlugin {
                         // by one (compilation.errors.push(...errors)).
                         const { name } = warning
                         if (name === 'ESLintError') {
-                            const warnings = JSON.parse(
-                                warning.message.slice('[eslint]'.length)
-                            )
+                            let warnings
+                            if (warning.message.startsWith('[eslint]')) {
+                                warnings = JSON.parse(
+                                    warning.message.slice('[eslint]'.length)
+                                )
+                            } else {
+                                warnings = JSON.parse(warning.message)
+                            }
 
                             numberOfWarnings--
                             for (const warning of warnings) {
@@ -125,9 +130,14 @@ class FormFieldWebpackPlugin {
                     errors.forEach((error) => {
                         const { name } = error
                         if (name === 'ESLintError') {
-                            const errors = JSON.parse(
-                                error.message.slice('[eslint]'.length)
-                            )
+                            let errors
+                            if (errors.message.startsWith('[eslint]')) {
+                                errors = JSON.parse(
+                                    error.message.slice('[eslint]'.length)
+                                )
+                            } else {
+                                errors = JSON.parse(errors.message)
+                            }
 
                             numberOfErrors--
                             for (const error of errors) {

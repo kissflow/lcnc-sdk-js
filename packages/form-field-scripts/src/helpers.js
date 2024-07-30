@@ -7,8 +7,7 @@ import {
 } from './form-field-webpack-plugin/errors.js'
 
 const getModuleMap = async () => {
-    const formFieldProjectConfig = await getFormFieldProjectConfig()
-    const { components } = formFieldProjectConfig
+    const components = await getFormFieldProjectConfig()
     return Object.entries(components).reduce(
         (moduleMap, [platform, modules]) => {
             Object.entries(modules).forEach(([moduleName, filePath]) => {
@@ -48,7 +47,7 @@ const getFormFieldProjectConfig = async () => {
 
 const getAppPackageJson = () => {
     const packageJson = JSON.parse(
-        fs.readFileSync(paths.appPackageJson, 'utf8')
+        fs.readFileSync(paths.projectPackageJson, 'utf8')
     )
     return packageJson
 }
