@@ -1,24 +1,24 @@
-import { getFileMap } from '@shibi-snowball/custom-form-field-model/helpers'
+import { FILE_MAP } from '@kissflow/form-field-config'
 import path from 'path'
 
-const getC3Config = (projectTarget) => {
-    const c3Config = Object.entries(getFileMap(projectTarget)).reduce(
-        (c3Config, [platform, components]) => {
-            c3Config[platform] = {}
+const getFormFieldConfig = () => {
+    const formFieldConfig = Object.entries(FILE_MAP).reduce(
+        (formFieldConfig, [platform, components]) => {
+            formFieldConfig[platform] = {}
             for (const [
-                c3Component,
+                formFieldComponent,
                 { moduleFolderPath, fileExtension },
             ] of Object.entries(components)) {
-                c3Config[platform][c3Component] = {
+                formFieldConfig[platform][formFieldComponent] = {
                     moduleFolderPath,
                     fileExtension,
                 }
             }
-            return c3Config
+            return formFieldConfig
         },
         {}
     )
-    return c3Config
+    return formFieldConfig
 }
 
 const getProjectTemplatePath = () => {
@@ -27,4 +27,4 @@ const getProjectTemplatePath = () => {
     return path.resolve(currentModuleDirectory, './project-template/')
 }
 
-export { getC3Config, getProjectTemplatePath }
+export { getFormFieldConfig, getProjectTemplatePath }

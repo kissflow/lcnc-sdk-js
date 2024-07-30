@@ -1,14 +1,13 @@
 import fs from 'fs'
 import paths from './paths.js'
 import {
-    C3_CONFIG_NOT_FOUND,
-    C3_ERROR,
-    UNABLE_TO_PARSE_C3_CONFIG,
-} from './c3-webpack-plugin/errors.js'
+    FORM_FIELD_CONFIG_NOT_FOUND,
+    FORM_FIELD_ERROR,
+    UNABLE_TO_PARSE_FORM_FIELD_CONFIG,
+} from './form-field-webpack-plugin/errors.js'
 
 const getModuleMap = async () => {
-    const c3Config = await getAppC3Config()
-    const { components } = c3Config
+    const components = await getFormFieldProjectConfig()
     return Object.entries(components).reduce(
         (moduleMap, [platform, modules]) => {
             Object.entries(modules).forEach(([moduleName, filePath]) => {
@@ -26,29 +25,31 @@ const getModuleMap = async () => {
     )
 }
 
-const getAppC3Config = async () => {
+const getFormFieldProjectConfig = async () => {
     try {
-        const c3Config = await import(paths.c3Config)
-        return c3Config.default
+        const formFieldProjectConfig = await import(
+            paths.formFieldProjectConfig
+        )
+        return formFieldProjectConfig.default
     } catch (err) {
         if (err instanceof Error && err.code === 'ERR_MODULE_NOT_FOUND') {
-            throw new C3_CONFIG_NOT_FOUND()
+            throw new FORM_FIELD_CONFIG_NOT_FOUND()
         } else if (err instanceof SyntaxError) {
-            throw new UNABLE_TO_PARSE_C3_CONFIG()
+            throw new UNABLE_TO_PARSE_FORM_FIELD_CONFIG()
         }
-        throw new C3_ERROR({
+        throw new FORM_FIELD_ERROR({
             title: 'Unknown error',
             description:
-                'Unknown error encountered while reading `c3.config.js`.',
+                'Unknown error encountered while reading `form-field.config.js`.',
         })
     }
 }
 
 const getAppPackageJson = () => {
     const packageJson = JSON.parse(
-        fs.readFileSync(paths.appPackageJson, 'utf8')
+        fs.readFileSync(paths.projectPackageJson, 'utf8')
     )
     return packageJson
 }
 
-export { getModuleMap, getAppPackageJson, getAppC3Config }
+export { getModuleMap, getAppPackageJson, getFormFieldProjectConfig }

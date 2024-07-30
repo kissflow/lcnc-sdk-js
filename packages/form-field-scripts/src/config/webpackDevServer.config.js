@@ -10,12 +10,4 @@ export default {
         overlay: false,
         logging: 'none',
     },
-    onListening: (devServer) => {
-        if (!devServer) {
-            throw new Error('webpack-dev-server is not defined')
-        }
-
-        const port = devServer.server.address().port
-        console.log('@kf-c3 listening on port: ', port)
-    },
 }

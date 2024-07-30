@@ -10,17 +10,27 @@ import {
     DEFAULT_EXPORT_NOT_FOUND_ERROR,
     DEFAULT_EXPORT_NOT_REACT_COMPONENT_ERROR,
 } from './errors.js'
+import fs from 'fs'
+
+const getAsciiArtText = () => {
+    const currentFileUrl = new URL(import.meta.url)
+    const asciiArtPath = path.join(
+        path.dirname(currentFileUrl.pathname),
+        './assets',
+        'kf-logo-ascii-art.txt'
+    )
+    const asciiArtText = fs.readFileSync(asciiArtPath, 'utf8')
+    return asciiArtText
+}
 
 const banner = () => {
-    console.log('**********************************************')
-    console.log('This is a banner!')
-    console.log('**********************************************')
+    console.log(getAsciiArtText())
+    console.log('Project server on port 9090')
 }
 
 const isDevMode = process.env.WEBPACK_SERVE === 'true'
 
-class C3WebpackPlugin {
-    hasC3errors = false
+class FormFieldWebpackPlugin {
     apply(compiler) {
         const getRunHook = () => {
             return isDevMode
@@ -29,9 +39,9 @@ class C3WebpackPlugin {
         }
 
         const runHook = getRunHook()
-        runHook.tap(C3WebpackPlugin.name, async (compiler, callback) => {
+        runHook.tap(FormFieldWebpackPlugin.name, async (compiler, callback) => {
             compiler.hooks.thisCompilation.tap(
-                C3WebpackPlugin.name,
+                FormFieldWebpackPlugin.name,
                 async (compilation) => {
                     try {
                         if (!this.firstRun) {
@@ -68,7 +78,7 @@ class C3WebpackPlugin {
             )
         })
 
-        compiler.hooks.done.tap(C3WebpackPlugin.name, (stats) => {
+        compiler.hooks.done.tap(FormFieldWebpackPlugin.name, (stats) => {
             if (isDevMode) {
                 clearScreen()
             }
@@ -97,9 +107,14 @@ class C3WebpackPlugin {
                         // by one (compilation.errors.push(...errors)).
                         const { name } = warning
                         if (name === 'ESLintError') {
-                            const warnings = JSON.parse(
-                                warning.message.slice('[eslint]'.length)
-                            )
+                            let warnings
+                            if (warning.message.startsWith('[eslint]')) {
+                                warnings = JSON.parse(
+                                    warning.message.slice('[eslint]'.length)
+                                )
+                            } else {
+                                warnings = JSON.parse(warning.message)
+                            }
 
                             numberOfWarnings--
                             for (const warning of warnings) {
@@ -126,9 +141,14 @@ class C3WebpackPlugin {
                     errors.forEach((error) => {
                         const { name } = error
                         if (name === 'ESLintError') {
-                            const errors = JSON.parse(
-                                error.message.slice('[eslint]'.length)
-                            )
+                            let errors
+                            if (error.message.startsWith('[eslint]')) {
+                                errors = JSON.parse(
+                                    error.message.slice('[eslint]'.length)
+                                )
+                            } else {
+                                errors = JSON.parse(error.message)
+                            }
 
                             numberOfErrors--
                             for (const error of errors) {
@@ -163,10 +183,10 @@ class C3WebpackPlugin {
             }
         })
 
-        compiler.hooks.failed.tap(C3WebpackPlugin.name, (error) => {
+        compiler.hooks.failed.tap(FormFieldWebpackPlugin.name, (error) => {
             console.error('Build failed with error:', error)
         })
     }
 }
 
-export default C3WebpackPlugin
+export default FormFieldWebpackPlugin

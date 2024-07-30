@@ -1,7 +1,7 @@
 {
     "name": "create-kf-component",
     "version": "0.1.31",
-    "description": "@kisssflow/c3 is a cli tool to scaffold a custom components project",
+    "description": "create-kf-component is a cli tool that scaffolds Javascript based custom component projects that seamlessly integrate into Kissflow.",
     "main": "index.js",
     "bin": {
         "create-kf-component": "./bin/index.js"
@@ -23,14 +23,12 @@
         "no-code",
         "low-code",
         "platform",
-        "c3",
-        "c3-app",
-        "custom-component-creator",
         "react",
         "cli",
         "kissflow",
-        "custom-components",
-        "custom-fields"
+        "scaffolder",
+        "vite",
+        "webpack"
     ],
     "engines": {
         "node": ">=18.14.1"
@@ -38,7 +36,7 @@
     "author": "shibi@kissflow.com",
     "license": "ISC",
     "dependencies": {
-        "@shibi-snowball/custom-form-field-model": "workspace:^",
+        "@kissflow/form-field-config": "workspace:^",
         "chalk": "^5.3.0",
         "ejs": "^3.1.9",
         "inquirer": "^9.2.13",

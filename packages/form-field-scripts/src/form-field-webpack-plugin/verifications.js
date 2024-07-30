@@ -1,11 +1,11 @@
 import path from 'path'
 import {
-    C3_CONFIG_SCHEMA_INVALID_ERROR,
+    FORM_FIELD_CONFIG_SCHEMA_INVALID_ERROR,
     MANDATORY_MODULES_NOT_PRESENT_ERROR,
     REACT_DOM_VERSION_MISMATCH_ERROR,
     REACT_VERSION_MISMATCH_ERROR,
-    C3_MODULE_NOT_PRESENT_ERROR,
-    UNABLE_TO_PARSE_A_C3_MODULE,
+    FORM_FIELD_MODULE_NOT_PRESENT_ERROR,
+    UNABLE_TO_PARSE_A_FORM_FIELD_MODULE,
     DEFAULT_EXPORT_NOT_FOUND_ERROR,
 } from './errors.js'
 import fs from 'fs'
@@ -14,14 +14,15 @@ import babel from '@babel/core'
 import {
     SUPPORTED_REACT_VERSION,
     SUPPORTED_REACT_DOM_VERSION,
-    C3_SCHEMA,
-} from '@shibi-snowball/custom-form-field-model'
+    FORM_FIELD_PROJECT_CONFIG_SCHEMA,
+} from '@kissflow/form-field-config'
 import {
-    getProjectTargetFromC3App,
-    getAppC3Config,
+    getProjectTargetFromFormFieldProject,
     getMandatoryModules,
-    getComponentsFromC3App,
+    getComponentsFromFormFieldProject,
 } from './helpers.js'
+
+import { getFormFieldProjectConfig } from '../helpers.js'
 import { getAppPackageJson } from '../helpers.js'
 
 import paths from '../paths.js'
@@ -30,13 +31,13 @@ const require = createRequire(import.meta.url)
 
 const performOnetimeChecks = async () => {
     // These validations are only performed ones (at instantiating time),
-    // if the dev tries to change things that requires re-instantiating, for example, if he modifies the c3.config.js or package.json,
+    // if the dev tries to change things that requires re-instantiating, for example, if he modifies the form-field.config.js or package.json,
     // the build become obsolete and needs to be restarted again.
-    // Add a file watcher that watchs c3.config.js and package.json of the c3-app from which this Webpack plugin is getting instantiating,
+    // Add a file watcher that watch the form-field.config.js and package.json of the custom form field project from which this Webpack plugin is getting instantiating,
     // kill the build if changes are detecting in these files (add a log explaining why the build was killed, so that the user doesn't get
     // confused)...
     await verifyPackageVersions()
-    await validateC3ConfigSchema()
+    await validateFormFieldProjectConfigSchema()
     await isAllMandatoryModulesPresent()
 }
 
@@ -47,13 +48,16 @@ const performRuntimeChecks = async () => {
 const performPreBuildtimeChecks = async () => {
     // No need to check if package.json file exists or not, because if package.json doesn't exists the scripts that run the current file
     // can't won't be invoked.
-    await getAppC3Config() // needs need to move 1 level above the compilation tree.
+    await getFormFieldProjectConfig() // needs need to move 1 level above the compilation tree.
 }
 
 const defaultExportCheckAllModules = async () => {
-    const modulesPresentInC3App = await getComponentsFromC3App()
+    const modulesPresentInFormFieldProject =
+        await getComponentsFromFormFieldProject()
 
-    for (let [platforms, components] of Object.entries(modulesPresentInC3App)) {
+    for (let [platforms, components] of Object.entries(
+        modulesPresentInFormFieldProject
+    )) {
         for (const [component, modulePath] of Object.entries(components)) {
             let hasDefaultExport = false
             let isReactComponent = false
@@ -65,7 +69,7 @@ const defaultExportCheckAllModules = async () => {
                     'utf-8'
                 )
             } catch (err) {
-                throw new C3_MODULE_NOT_PRESENT_ERROR({ modulePath })
+                throw new FORM_FIELD_MODULE_NOT_PRESENT_ERROR({ modulePath })
             }
 
             try {
@@ -82,7 +86,7 @@ const defaultExportCheckAllModules = async () => {
                     },
                 })
             } catch (err) {
-                throw new UNABLE_TO_PARSE_A_C3_MODULE({
+                throw new UNABLE_TO_PARSE_A_FORM_FIELD_MODULE({
                     component,
                     modulePath,
                     err,
@@ -99,23 +103,23 @@ const defaultExportCheckAllModules = async () => {
     }
 }
 
-const validateC3ConfigSchema = async () => {
+const validateFormFieldProjectConfigSchema = async () => {
     const ajv = new Ajv()
 
-    const appC3Config = await getAppC3Config()
-    const validate = ajv.compile(C3_SCHEMA)
-    const valid = validate(appC3Config)
+    const formFieldProjectConfig = await getFormFieldProjectConfig()
+    const validate = ajv.compile(FORM_FIELD_PROJECT_CONFIG_SCHEMA)
+    const valid = validate(formFieldProjectConfig)
     if (!valid) {
         validate.errors.forEach((error) => {
             const errorMessage = ajv.errorsText([error], { separator: ', ' })
-            throw new C3_CONFIG_SCHEMA_INVALID_ERROR({ errorMessage })
+            throw new FORM_FIELD_CONFIG_SCHEMA_INVALID_ERROR({ errorMessage })
         })
     }
 }
 
 const verifyPackageVersions = async () => {
     // Since the react + react-dom is installed as 'dependencies'
-    // all c3-apps the user might change the versions... We have to prevent this.
+    // The user might change the versions... We have to prevent this.
     const packageJson = getAppPackageJson()
     const { dependencies: deps } = packageJson
 
@@ -137,18 +141,15 @@ const verifyPackageVersions = async () => {
 }
 
 const isAllMandatoryModulesPresent = async () => {
-    const projectTarget = await getProjectTargetFromC3App()
+    const projectTarget = await getProjectTargetFromFormFieldProject()
     const mandatoryModules = getMandatoryModules(projectTarget)
-    const modulesPresentInC3App = await getComponentsFromC3App()
+    const modulesPresentInFormFieldProject =
+        await getComponentsFromFormFieldProject()
     for (const [platform, components] of Object.entries(mandatoryModules)) {
         for (const component of components) {
-            if (component in modulesPresentInC3App[platform]) {
-                console.log(
-                    `Mandatory component '${platform}/${component}' present, bundling...`
-                )
-            } else {
+            if (!(component in modulesPresentInFormFieldProject[platform])) {
                 throw new MANDATORY_MODULES_NOT_PRESENT_ERROR({
-                    msg: `Mandatory module '${platform}/${component}' is not present! Exiting.`,
+                    msg: `Mandatory module '${platform}/${component}' is not present!`,
                 })
             }
         }
