@@ -1,7 +1,7 @@
 {
     "name": "@shibi-snowball/custom-form-field-model",
     "version": "0.1.18",
-    "description": "",
+    "description": "Configurations for Kissflow's custom form field projects.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,12 +15,10 @@
         "no-code",
         "low-code",
         "platform",
-        "c3",
         "React",
         "CLI",
         "Kissflow",
-        "custom components",
-        "custom fields"
+        "custom-form-fields"
     ],
     "files": [
         "package.json",

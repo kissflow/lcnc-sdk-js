@@ -37,7 +37,7 @@ if (fs.existsSync(projectFolderPath)) {
 } else if (!isValidPackageName(projectName)) {
     console.log(
         chalk.red(
-            `Invalid c3-app name, '${projectName}', refer https://docs.npmjs.com/cli/v10/configuring-npm/package-json.`
+            `Invalid project name, '${projectName}', refer https://docs.npmjs.com/cli/v10/configuring-npm/package-json.`
         )
     )
     process.exit(0)
