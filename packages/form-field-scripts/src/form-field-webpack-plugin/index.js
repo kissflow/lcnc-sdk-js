@@ -10,11 +10,22 @@ import {
     DEFAULT_EXPORT_NOT_FOUND_ERROR,
     DEFAULT_EXPORT_NOT_REACT_COMPONENT_ERROR,
 } from './errors.js'
+import fs from 'fs'
+
+const getAsciiArtText = () => {
+    const currentFileUrl = new URL(import.meta.url)
+    const asciiArtPath = path.join(
+        path.dirname(currentFileUrl.pathname),
+        './assets',
+        'kf-logo-ascii-art.txt'
+    )
+    const asciiArtText = fs.readFileSync(asciiArtPath, 'utf8')
+    return asciiArtText
+}
 
 const banner = () => {
-    console.log('**********************************************')
-    console.log('This is a banner!')
-    console.log('**********************************************')
+    console.log(getAsciiArtText())
+    console.log('Project server on port 9090')
 }
 
 const isDevMode = process.env.WEBPACK_SERVE === 'true'
