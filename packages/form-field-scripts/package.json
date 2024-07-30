@@ -1,6 +1,6 @@
 {
     "name": "@shibi-snowball/custom-form-field-scripts",
-    "version": "0.1.37",
+    "version": "0.1.38",
     "description": "Scripts to serve, build, lint, test, etc. a Kissflow's custom form field project.",
     "bin": {
         "form-field-scripts": "./bin/index.js"

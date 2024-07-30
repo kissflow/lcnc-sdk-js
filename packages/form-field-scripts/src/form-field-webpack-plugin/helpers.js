@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { isPlural } from './utils.js'
-import { getFileMap } from '@shibi-snowball/custom-form-field-model/helpers'
+import { FILE_MAP } from '@shibi-snowball/custom-form-field-model'
 import { getFormFieldProjectConfig } from '../helpers.js'
 
 const clearScreen = () => {
@@ -33,10 +33,9 @@ const getComponentsFromFormFieldProject = async () => {
     return formFieldConfig.components
 }
 
-const getMandatoryModules = (projectTarget) => {
-    const fileMap = getFileMap(projectTarget)
+const getMandatoryModules = () => {
     const mandatoryModules = {}
-    for (const [platform, components] of Object.entries(fileMap)) {
+    for (const [platform, components] of Object.entries(FILE_MAP)) {
         mandatoryModules[platform] = []
         for (const [component, { isMandatory }] of Object.entries(components)) {
             if (isMandatory) {
