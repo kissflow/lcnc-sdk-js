@@ -35,7 +35,7 @@ importers:
 
   packages/create-component:
     dependencies:
-      '@shibi-snowball/custom-form-field-model':
+      '@kissflow/form-field-config':
         specifier: workspace:^
         version: link:../form-field-config
       chalk:
@@ -71,7 +71,7 @@ importers:
       '@babel/preset-react':
         specifier: ^7.22.5
         version: 7.24.7(@babel/core@7.25.2)
-      '@shibi-snowball/custom-form-field-model':
+      '@kissflow/form-field-config':
         specifier: workspace:^
         version: link:../form-field-config
       ajv:
