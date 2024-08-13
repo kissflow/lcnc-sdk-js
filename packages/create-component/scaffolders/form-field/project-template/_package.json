@@ -1,0 +1,55 @@
+{
+    "name": "<%= projectName %>",
+    "version": "1.0.0",
+    "description": "Custom form field for Kissflow's form",
+    "main": "index.js",
+    "scripts": {
+        "dev": "form-field-scripts dev",
+        "build": "form-field-scripts build",
+        "zip": "zip -r custom-form-field.zip ./dist",
+        "unzip": "rm -rf ./custom-form-field && unzip custom-form-field.zip -d ./custom-form-field"
+    },
+    "type": "module",
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "<%= CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME %>": "<%= latestFormFieldScriptsVersion %>",
+        "<%= CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME %>": "<%= latestFormFieldModelVersion %>",
+        "unzipper": "^0.10.14",
+        "zip": "^1.2.0"
+    },
+    "engines": {
+        "node": ">=16.0.0 <17.0.0"
+    },
+    "eslintConfig": {
+        "extends": ["react-app"],
+        "rules": {
+            "no-restricted-globals": [
+                "error",
+                {
+                    "name": "window",
+                    "message": "Don't use browser's `window` object."
+                },
+                {
+                    "name": "document",
+                    "message": "Don't use browser's `document` object."
+                }
+            ]
+        }
+    },
+    "keywords": [
+        "lcnc",
+        "no-code",
+        "low-code",
+        "platform",
+        "react",
+        "cli",
+        "kissflow",
+        "custom-components",
+        "custom-fields"
+    ],
+    "dependencies": {
+        "react": "<%= reactVersion %>",
+        "react-dom": "<%= reactDomVersion %>"
+    }
+}

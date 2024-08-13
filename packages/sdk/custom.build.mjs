@@ -32,6 +32,8 @@ const CLASS_MAPPINGS = {
     LowcodeSDK: { name: "kf", staticDeclarations: true },
     DecisionTable: { name: "DecisionTable" },
     Dataform: { name: "Dataform" },
+    Board: { name: "Board" },
+    Process: { name: "Process" }
     // Not added typings for AppVariable and PageVariable class, since it's resolved in main thread
     // AppVariable: { name: "AppVariable" },
   },
@@ -85,52 +87,37 @@ function transfromTypings(params = {}) {
   let func = "";
   let toWrite = ``;
 
-  for (let i = 0; i < allClasses.length; i++) {
-    if (Object.keys(classMappings).includes(allClasses[i].name)) {
-      let _class = allClasses[i];
-      toWrite += `\ndeclare class ${classMappings[_class.name].name} { \n`;
+  for (let _class of allClasses) {
+    if (Object.keys(classMappings).includes(_class.name)) {
+      let className = classMappings[_class.name].name;
+      toWrite += `\ndeclare class ${className} { \n`;
 
-      // fields on Class
-      for (let i = 0; i < _class.fields.length; i++) {
-        // if (_class.fields[i].type.modulePath) {
-        let className = "";
-        if (!_class.fields[i].type) {
+      // Fields on Class
+      for (let field of _class.fields) {
+        if (!field.type) {
           continue;
-        } else if (_class.fields[i].type.options) {
-          // TODO: currently we add only the first typechecking
-          className = _class.fields[i].type.options[0].typeName;
-
-          // TODO: need to handle when there are multiple type
-          // let options = _class.fields[i].type.options
-          // for (let j = 0; j < options.length; j++) {
-          // 	className += options[j].typeName;
-          // 	if (j < options.length - 1) {
-          // 		className += " | ";
-          // 	}
-          // }
-        } else {
-          className = _class.fields[i].type.typeName;
         }
 
-        let fieldName = _class.fields[i].name;
-        // console.log(_class.fields[i]);
-        toWrite += `\t${
-          classMappings[_class.name].staticDeclarations ? "static " : ""
-        }${fieldName}: ${className} \n`;
-        // }
+        let fieldType = "";
+        if (field.type.options) {
+          fieldType = field.type.options[0].typeName;
+        } else {
+          fieldType = field.type.typeName;
+        }
+
+        let fieldName = field.name;
+        let staticDeclaration = classMappings[_class.name].staticDeclarations ? "static " : "";
+
+        toWrite += `\t${staticDeclaration}${fieldName}: ${fieldType} \n`;
       }
 
-      //methods of Class
-      for (let j = 0; j < _class.methods.length; j++) {
-        func = _class.methods[j].text.trim().split("\n\t").join(" ");
-        toWrite += `\t${func} \n`;
-        // if (
-        // 	typeof _class.methods[j].returnType === "object" &&
-        // 	method.returnType.modulePath
-        // ) {
-        // 	childClasses.push(method.returnType.typeName);
-        // }
+      // Methods of Class
+      for (let method of _class.methods) {
+        let methodText = method.text.trim().split("\n\t").join(" ");
+        let staticDeclaration = classMappings[_class.name].staticDeclarations ? "static " : "";
+        toWrite += `\t${staticDeclaration}${methodText} \n`;
       }
+
       toWrite += `}`;
     }
   }

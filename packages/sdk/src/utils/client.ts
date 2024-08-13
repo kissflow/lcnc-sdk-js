@@ -1,7 +1,7 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
 
 export class Client extends BaseSDK {
-	showInfo(message: string) {
+	showInfo(message: string | object) {
 		return super._postMessageAsync(LISTENER_CMDS.MESSAGE, { message });
 	}
 

@@ -6,7 +6,7 @@ import { Application, Page, Component, Popup } from "./app";
 import { window } from "./window";
 
 import { SDKContext } from "./types/internal";
-import { userObject, accountObject, environmentObject } from "./types/external";
+import { userObject, accountObject, environmentObject, FetchOptions } from "./types/external";
 
 class LowcodeSDK extends BaseSDK {
 	context: Component | Form | TableForm | Page | Popup;
@@ -16,6 +16,7 @@ class LowcodeSDK extends BaseSDK {
 	user: userObject;
 	env: environmentObject;
 	account: accountObject;
+	eventParameters: any;
 	#csrfToken: string;
 
 	constructor(props: SDKContext) {
@@ -47,9 +48,7 @@ class LowcodeSDK extends BaseSDK {
 	}
 	async api(
 		url: string,
-		args?: {
-			headers: object;
-		}
+		args?: FetchOptions
 	) {
 		const response = await globalThis.fetch(url, {
 			...args,

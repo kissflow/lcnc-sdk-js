@@ -5,7 +5,7 @@ import { Client, Formatter } from "./utils";
 import { window } from "./window";
 
 import { SDKContext } from "./types/internal";
-import { userObject, accountObject } from "./types/external";
+import { userObject, accountObject, FetchOptions } from "./types/external";
 
 class NocodeSDK extends BaseSDK {
 	context: Form | TableForm;
@@ -13,6 +13,7 @@ class NocodeSDK extends BaseSDK {
 	formatter: Formatter;
 	user: userObject;
 	account: accountObject;
+	eventParameters: any;
 	#csrfToken: string;
 
 	constructor(props: SDKContext) {
@@ -34,9 +35,7 @@ class NocodeSDK extends BaseSDK {
 	}
 	async api(
 		url: string,
-		args?: {
-			headers: object;
-		}
+		args?: FetchOptions
 	) {
 		const response = await globalThis.fetch(url, {
 			...args,

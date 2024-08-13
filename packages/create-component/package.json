@@ -1,22 +1,46 @@
 {
-  "name": "create-kf-component",
-  "version": "0.0.4",
-  "type": "module",
-  "description": "create-kf-component is a cli utility to create a new kissflow custom component",
-  "main": "index.js",
-  "bin": {
-    "create-kf-component": "index.js"
-  },
-  "files": [
-    "index.js",
-    "template/**/*",
-    "src/**/*"
-  ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "kolorist": "^1.8.0",
-    "prompts": "^2.4.2"
-  }
+    "name": "create-kf-component",
+    "version": "0.1.31",
+    "description": "create-kf-component is a cli tool that scaffolds Javascript based custom component projects that seamlessly integrate into Kissflow.",
+    "main": "index.js",
+    "bin": {
+        "create-kf-component": "./bin/index.js"
+    },
+    "type": "module",
+    "files": [
+        "package.json",
+        "index.js",
+        "README.md",
+        "./template",
+        "!./node_modules/**"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "lcnc",
+        "OrangeScape",
+        "no-code",
+        "low-code",
+        "platform",
+        "react",
+        "cli",
+        "kissflow",
+        "scaffolder",
+        "vite",
+        "webpack"
+    ],
+    "engines": {
+        "node": ">=18.14.1"
+    },
+    "author": "shibi@kissflow.com",
+    "license": "ISC",
+    "dependencies": {
+        "@kissflow/form-field-config": "workspace:^",
+        "chalk": "^5.3.0",
+        "ejs": "^3.1.9",
+        "inquirer": "^9.2.13",
+        "latest-version": "^8.0.0",
+        "prettier": "^3.2.5"
+    }
 }
