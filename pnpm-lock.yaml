@@ -150,9 +150,6 @@ importers:
       eslint-webpack-plugin:
         specifier: ^3.1.1
         version: 3.2.0(eslint@8.57.0)(webpack@5.93.0)
-      kf-emit-manifest-plugins:
-        specifier: latest
-        version: 0.0.1
       style-loader:
         specifier: ^3.3.4
         version: 3.3.4(webpack@5.93.0)
@@ -165,8 +162,6 @@ importers:
       webpack-manifest-plugin:
         specifier: ^5.0.0
         version: 5.0.0(webpack@5.93.0)
-
-  packages/kf-emit-manifest-plugins: {}
 
   packages/sdk:
     dependencies:
@@ -3929,9 +3924,6 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
-
-  kf-emit-manifest-plugins@0.0.1:
-    resolution: {integrity: sha512-7FFmPYjBXsB88xq5ENwvTjIG5kVJJyW3I4gTAf96d8hE2c3CS72FSCtNUNh02wIAvWmNGf/pLxEVI53kxeiWWA==}
 
   kind-of@6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
@@ -10600,8 +10592,6 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
-
-  kf-emit-manifest-plugins@0.0.1: {}
 
   kind-of@6.0.3: {}
 
