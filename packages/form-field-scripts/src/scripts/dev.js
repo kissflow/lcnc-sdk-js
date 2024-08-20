@@ -7,7 +7,9 @@ import chokidar from 'chokidar'
 import chalk from 'chalk'
 
 const runServer = async () => {
-    const compiler = webpack(webpackConfig)
+    const compiler = webpack(
+        Object.assign(webpackConfig, { mode: 'development' })
+    )
     const server = new WebpackDevServer(webpackDevServerConfig, compiler)
     await server.start()
     const watcher = chokidar.watch(

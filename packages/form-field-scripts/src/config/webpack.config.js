@@ -4,6 +4,7 @@ import { getModuleMap } from '../helpers.js'
 import paths from '../paths.js'
 import FormFieldWebpackPlugin from '../form-field-webpack-plugin/index.js'
 import ESLintPlugin from 'eslint-webpack-plugin'
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin'
 
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
@@ -24,7 +25,6 @@ function getRelativePath(filePath) {
 
 export default {
     context: paths.appRoot,
-    mode: 'development',
     entry: {},
     experiments: {
         outputModule: true,
@@ -60,6 +60,12 @@ export default {
         ],
     },
     plugins: [
+        new WebpackManifestPlugin({
+            fileName: 'manifest.json',
+            generate: () => {
+                return { Category: 'FormField' }
+            },
+        }),
         new FormFieldWebpackPlugin(),
         new ModuleFederationPlugin({
             name: 'Remote4',
