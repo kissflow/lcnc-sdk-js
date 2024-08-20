@@ -8,10 +8,10 @@
     },
     "type": "module",
     "files": [
+        "bin",
+        "scaffolders",
         "package.json",
-        "index.js",
         "README.md",
-        "./template",
         "!./node_modules/**"
     ],
     "scripts": {
