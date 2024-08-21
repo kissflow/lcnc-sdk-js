@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "form-field-scripts dev",
         "build": "form-field-scripts build",
-        "zip": "zip -r custom-form-field.zip ./dist",
+        "zip": "cd ./dist && zip -r ../custom-form-field.zip .",
         "unzip": "rm -rf ./custom-form-field && unzip custom-form-field.zip -d ./custom-form-field"
     },
     "type": "module",
