@@ -24,6 +24,7 @@ function getRelativePath(filePath) {
 }
 
 export default {
+    devtool: 'eval-source-map',
     context: paths.appRoot,
     entry: {},
     experiments: {
@@ -54,7 +55,13 @@ export default {
                 test: /\.css$/,
                 use: [
                     require.resolve('style-loader'),
-                    require.resolve('css-loader'),
+                    {
+                        loader: require.resolve('css-loader'),
+                        options: {
+                            modules: true, // Enables CSS Modules
+                            // localIdentName: '[name]__[local]___[hash:base64:5]', // Optional, for custom class names
+                        },
+                    },
                 ],
             },
         ],
