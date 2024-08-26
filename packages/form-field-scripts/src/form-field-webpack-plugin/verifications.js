@@ -16,13 +16,13 @@ import {
     SUPPORTED_REACT_DOM_VERSION,
     FORM_FIELD_PROJECT_CONFIG_SCHEMA,
 } from '@kissflow/form-field-config'
-import {
-    getProjectTargetFromFormFieldProject,
-    getMandatoryModules,
-    getComponentsFromFormFieldProject,
-} from './helpers.js'
+import { getMandatoryModules } from './helpers.js'
 
-import { getFormFieldProjectConfig } from '../helpers.js'
+import {
+    formFieldProjectConfig,
+    getFormFieldProjectConfig,
+} from '../helpers.js'
+
 import { getAppPackageJson } from '../helpers.js'
 
 import paths from '../paths.js'
@@ -52,8 +52,7 @@ const performPreBuildtimeChecks = async () => {
 }
 
 const defaultExportCheckAllModules = async () => {
-    const modulesPresentInFormFieldProject =
-        await getComponentsFromFormFieldProject()
+    const modulesPresentInFormFieldProject = formFieldProjectConfig
 
     for (let [platforms, components] of Object.entries(
         modulesPresentInFormFieldProject
@@ -106,7 +105,6 @@ const defaultExportCheckAllModules = async () => {
 const validateFormFieldProjectConfigSchema = async () => {
     const ajv = new Ajv()
 
-    const formFieldProjectConfig = await getFormFieldProjectConfig()
     const validate = ajv.compile(FORM_FIELD_PROJECT_CONFIG_SCHEMA)
     const valid = validate(formFieldProjectConfig)
     if (!valid) {
@@ -141,10 +139,8 @@ const verifyPackageVersions = async () => {
 }
 
 const isAllMandatoryModulesPresent = async () => {
-    const projectTarget = await getProjectTargetFromFormFieldProject()
-    const mandatoryModules = getMandatoryModules(projectTarget)
-    const modulesPresentInFormFieldProject =
-        await getComponentsFromFormFieldProject()
+    const mandatoryModules = getMandatoryModules()
+    const modulesPresentInFormFieldProject = formFieldProjectConfig
     for (const [platform, components] of Object.entries(mandatoryModules)) {
         for (const component of components) {
             if (!(component in modulesPresentInFormFieldProject[platform])) {
