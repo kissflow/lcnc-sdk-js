@@ -6,8 +6,8 @@ import {
     UNABLE_TO_PARSE_FORM_FIELD_CONFIG,
 } from './form-field-webpack-plugin/errors.js'
 
-const getModuleMap = async () => {
-    const components = await getFormFieldProjectConfig()
+const getModuleMap = () => {
+    const components = formFieldProjectConfig
     return Object.entries(components).reduce(
         (moduleMap, [platform, modules]) => {
             Object.entries(modules).forEach(([moduleName, filePath]) => {
@@ -52,4 +52,12 @@ const getAppPackageJson = () => {
     return packageJson
 }
 
-export { getModuleMap, getAppPackageJson, getFormFieldProjectConfig }
+const formFieldProjectConfig = await getFormFieldProjectConfig()
+
+export {
+    getModuleMap,
+    getAppPackageJson,
+    getSuffixedModuleMap,
+    formFieldProjectConfig,
+    getFormFieldProjectConfig,
+}

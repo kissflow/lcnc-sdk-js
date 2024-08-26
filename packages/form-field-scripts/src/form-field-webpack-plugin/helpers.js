@@ -1,7 +1,6 @@
 import chalk from 'chalk'
 import { isPlural } from './utils.js'
 import { FILE_MAP } from '@kissflow/form-field-config'
-import { getFormFieldProjectConfig } from '../helpers.js'
 
 const clearScreen = () => {
     process.stdout.write('\x1B[2J\x1B[3J\x1B[H') // Clears screen, scrollback buffer, and moves cursor to the top-left corner
@@ -23,16 +22,6 @@ const logSummary = ({ numberOfErrors, numberOfWarnings }) => {
     }
 }
 
-const getProjectTargetFromFormFieldProject = async () => {
-    const formFieldConfig = await getFormFieldProjectConfig()
-    return formFieldConfig.target
-}
-
-const getComponentsFromFormFieldProject = async () => {
-    const formFieldConfig = await getFormFieldProjectConfig()
-    return formFieldConfig.components
-}
-
 const getMandatoryModules = () => {
     const mandatoryModules = {}
     for (const [platform, components] of Object.entries(FILE_MAP)) {
@@ -46,10 +35,4 @@ const getMandatoryModules = () => {
     return mandatoryModules
 }
 
-export {
-    getProjectTargetFromFormFieldProject,
-    getMandatoryModules,
-    logSummary,
-    clearScreen,
-    getComponentsFromFormFieldProject,
-}
+export { getMandatoryModules, logSummary, clearScreen }

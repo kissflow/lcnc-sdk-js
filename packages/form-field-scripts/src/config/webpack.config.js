@@ -80,9 +80,7 @@ export default {
                 type: 'module',
             },
             filename: 'moduleEntry.js',
-            exposes: {
-                ...moduleMap,
-            },
+            exposes: moduleMap,
             shared: {
                 react: {
                     requiredVersion: deps.react,
