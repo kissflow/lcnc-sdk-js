@@ -9,9 +9,8 @@ import http from 'http'
 import cors from 'cors'
 
 import { clearScreen } from '../form-field-webpack-plugin/helpers.js'
-import { getSuffixedModuleMap } from '../helpers.js'
 
-const port = 8080
+const port = 9090
 
 const runDevBuild = () => {
     const compiler = webpack(
@@ -60,7 +59,7 @@ const startDevServer = async () => {
         for (const client of clients) {
             client.send('reload')
         }
-        clearScreen()
+        // clearScreen()
     })
 
     const killServer = async () => {

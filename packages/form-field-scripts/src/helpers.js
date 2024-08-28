@@ -57,7 +57,6 @@ const formFieldProjectConfig = await getFormFieldProjectConfig()
 export {
     getModuleMap,
     getAppPackageJson,
-    getSuffixedModuleMap,
     formFieldProjectConfig,
     getFormFieldProjectConfig,
 }
