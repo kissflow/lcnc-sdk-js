@@ -1,47 +1,47 @@
 {
-	"name": "@kissflow/lowcode-client-sdk",
-	"version": "1.0.27",
-	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
-	"types": "dist/index.d.ts",
-	"files": [
-		"dist/"
-	],
-	"main": "./dist/kfsdk.umd.js",
-	"module": "./dist/kfsdk.es.js",
-	"exports": {
-		".": {
-			"import": "./dist/kfsdk.es.js",
-			"require": "./dist/kfsdk.umd.js"
-		},
-		"./lowcode": {
-			"import": "./dist/kf.lowcodeworkersdk.es.js"
-		}
-	},
-	"scripts": {
-		"start": "vite serve",
-		"customBuild": "node custom.build.mjs",
-		"build": "pnpm run customBuild",
-		"serve": "http-server -p 8080",
-		"prepare": "pnpm run build",
-		"publish-canary": "pnpm publish --tag canary"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/kissflow/lcnc-sdk-js.git"
-	},
-	"keywords": [],
-	"author": "Vivek Madurai<vivek@kissflow.com>",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/kissflow/lcnc-sdk-js/issues"
-	},
-	"homepage": "https://github.com/kissflow/lcnc-sdk-js#readme",
-	"devDependencies": {
-		"ts-file-parser": "0.0.21",
-		"typescript": "^4.3.5",
-		"vite": "^2.9.8"
-	},
-	"dependencies": {
-		"nanoid": "^3.1.30"
-	}
+  "name": "@kissflow/lowcode-client-sdk",
+  "version": "1.0.28-beta",
+  "description": "JavaScript SDK for developing over the Kissflow lowcode platform",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "main": "./dist/kfsdk.umd.js",
+  "module": "./dist/kfsdk.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/kfsdk.es.js",
+      "require": "./dist/kfsdk.umd.js"
+    },
+    "./lowcode": {
+      "import": "./dist/kf.lowcodeworkersdk.es.js"
+    }
+  },
+  "scripts": {
+    "start": "vite serve",
+    "customBuild": "node custom.build.mjs",
+    "build": "pnpm run customBuild",
+    "serve": "http-server -p 8080",
+    "prepare": "pnpm run build",
+    "publish-canary": "pnpm publish --tag canary"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kissflow/lcnc-sdk-js.git"
+  },
+  "keywords": [],
+  "author": "Vivek Madurai<vivek@kissflow.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kissflow/lcnc-sdk-js/issues"
+  },
+  "homepage": "https://github.com/kissflow/lcnc-sdk-js#readme",
+  "devDependencies": {
+    "ts-file-parser": "0.0.21",
+    "typescript": "^4.3.5",
+    "vite": "^2.9.8"
+  },
+  "dependencies": {
+    "nanoid": "^3.1.30"
+  }
 }
