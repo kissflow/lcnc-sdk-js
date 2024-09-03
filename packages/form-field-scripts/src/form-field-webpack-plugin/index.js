@@ -24,7 +24,7 @@ const getAsciiArtText = () => {
 }
 
 const banner = () => {
-    console.log(getAsciiArtText())
+    // console.log(getAsciiArtText())
     console.log('Project server on port 9090')
 }
 
