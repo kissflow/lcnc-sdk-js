@@ -19,8 +19,6 @@ const __dirname = dirname(__filename)
 const { dependencies: deps } = getAppPackageJson()
 const moduleMap = await getModuleMap()
 
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-
 function getRelativePath(filePath) {
     return path.relative(paths.appPath, filePath)
 }
@@ -34,19 +32,6 @@ export default {
     },
     infrastructureLogging: {
         level: 'none',
-    },
-    optimization: {
-        chunkIds: 'named',
-        splitChunks: {
-            cacheGroups: {
-                styles: {
-                    name: 'styles',
-                    type: 'css/mini-extract',
-                    chunks: 'all',
-                    enforce: true,
-                },
-            },
-        },
     },
     stats: 'none',
     module: {
@@ -69,11 +54,12 @@ export default {
             {
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    require.resolve('style-loader'),
                     {
                         loader: require.resolve('css-loader'),
                         options: {
-                            modules: true,
+                            modules: true, // Enables CSS Modules
+                            // localIdentName: '[name]__[local]___[hash:base64:5]', // Optional, for custom class names
                         },
                     },
                 ],
@@ -141,10 +127,6 @@ export default {
             ),
             cwd: paths.appPath,
             resolvePluginsRelativeTo: __dirname,
-        }),
-        new MiniCssExtractPlugin({
-            filename: 'index.css',
-            ignoreOrder: true,
         }),
     ],
     resolve: {

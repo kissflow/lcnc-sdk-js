@@ -12,12 +12,18 @@ import { clearScreen } from '../form-field-webpack-plugin/helpers.js'
 
 const port = 9090
 
-const runDevBuild = () => {
-    const compiler = webpack(
-        Object.assign(webpackConfig, { mode: 'development' })
-    )
-
-    compiler.run((err, stats) => {})
+const runDevBuild = async () => {
+    return new Promise((resolve, reject) => {
+        const compiler = webpack(
+            Object.assign(webpackConfig, { mode: 'development' })
+        )
+        compiler.run((err, stats) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(stats)
+        })
+    })
 }
 
 const startDevServer = async () => {
@@ -43,7 +49,7 @@ const startDevServer = async () => {
         })
     })
 
-    runDevBuild()
+    await runDevBuild()
 
     server.listen(port, () => {
         console.log(`Server running at http://localhost:${port}`)
@@ -55,7 +61,7 @@ const startDevServer = async () => {
 
     sourceWatcher.on('change', async (path) => {
         console.log('sourceWatch -> ', path)
-        runDevBuild()
+        await runDevBuild()
         for (const client of clients) {
             client.send('reload')
         }
