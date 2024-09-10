@@ -10,11 +10,13 @@ const renames = {
     _prettierrc: '.prettierrc',
 }
 
+// Update the _prettierrc file as well if you
+// are updating this config...
 const prettierConfig = {
-    singleQuote: true,
     trailingComma: 'es5',
     tabWidth: 4,
     semi: false,
+    singleQuote: true,
 }
 
 const PROJECT_TARGETS = {
