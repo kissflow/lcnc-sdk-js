@@ -52,7 +52,7 @@ const startDevServer = async () => {
     await runDevBuild()
 
     server.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}`)
+        console.log(`Server running at http://127.0.0.1:${port}`)
     })
 
     const sourceWatcher = chokidar.watch([paths.appSrc], {
@@ -60,7 +60,6 @@ const startDevServer = async () => {
     })
 
     sourceWatcher.on('change', async (path) => {
-        console.log('sourceWatch -> ', path)
         await runDevBuild()
         for (const client of clients) {
             client.send('reload')
