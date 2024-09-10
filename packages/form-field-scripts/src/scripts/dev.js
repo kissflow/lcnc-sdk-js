@@ -15,7 +15,12 @@ const port = 9090
 const runDevBuild = async () => {
     return new Promise((resolve, reject) => {
         const compiler = webpack(
-            Object.assign(webpackConfig, { mode: 'development' })
+            Object.assign(webpackConfig, {
+                mode: 'development',
+                output: {
+                    path: paths.devDist,
+                },
+            })
         )
         compiler.run((err, stats) => {
             if (err) {
@@ -29,7 +34,7 @@ const runDevBuild = async () => {
 const startDevServer = async () => {
     const app = express()
     app.use(cors())
-    app.use(express.static(paths.appBuild)) // todo: the path needs to be changed.
+    app.use(express.static(paths.devDist))
     const server = http.createServer(app)
     const wss = new WebSocketServer({ server })
 

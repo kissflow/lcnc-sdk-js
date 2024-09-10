@@ -39,4 +39,5 @@ export default {
     appRoot: resolveApp(''),
     appSrc: resolveApp('src'),
     appNodeModules: resolveApp('node_modules'),
+    devDist: resolveApp('node_modules/dev_dist'),
 }
