@@ -7,6 +7,7 @@ const renames = {
     _npmrc: '.npmrc',
     '_eslintrc.cjs': '.eslintrc.cjs',
     _gitkeep: '.gitkeep',
+    _prettierrc: '.prettierrc',
 }
 
 const prettierConfig = {
