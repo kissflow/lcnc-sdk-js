@@ -1,6 +1,10 @@
-         __      __                             __
-        ╠╬╬▒╖  ╔╠▒▒H   █H     ╙^              ▐█╙╙ ▓▌
-         ╙╬╬╬⌐[▒▒╠╙    █H ╓▓⌐ ▓▌ ▄▓▀▀▄ ╓▓▀▀▓ ª▓█▀M ▓▌ ,▓▀▀▀▌_'▓   ▓▌  ▐▓
-           ,╓ ,▄,      █▓▓▌   ▓▌ ╙▓φ▄, '▀▓▄╥  ╟▌   ▓▌ █Γ   ║█ ╟▌ ▓M▓▄┌█
-          ╠╠╠ └╣╬▓     █Ñ ╙▓, ▓▌ ▓╖_▄█ Φ▄_,█▌ ╟▌   ▓▌ ▀▓,_╓▓▀  ▓▓Ñ  █▓M
-          `     ``     "    " `   '""   `""   ``   '    """     "    "
+
+   ╔▒▒K╦_      _╔@DD╦
+   ╬╬╬╬╬╬▒_   j▒▒▒▒▒▒     |
+   `╬╬╬╬╬╬╠_ ╠▒▒▒▒▒╠`     | The custom form field dev. build is running on port 9090.
+     '╙╬╬╬╠` ╠▒▒╠╩^       | To view the output, open the live preview in Kissflow Apps' custom components page,
+        ,╓╓  ╓╥,_         | enter the URL `http://127.0.0.1:9090/moduleEntry.js`, and press enter.
+      ╔╠╠╠╠H'╬╬╬▓▓_       |
+     ╚╠╠╠╠╙  ╙╣╬╬╬▓
+      `"`      `""
+

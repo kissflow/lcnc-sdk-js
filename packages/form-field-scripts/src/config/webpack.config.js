@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const { dependencies: deps } = getAppPackageJson()
-const moduleMap = await getModuleMap()
+const moduleMap = getModuleMap()
 
 function getRelativePath(filePath) {
     return path.relative(paths.appPath, filePath)

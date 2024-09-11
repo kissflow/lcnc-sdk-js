@@ -24,18 +24,19 @@ const getAsciiArtText = () => {
 }
 
 const banner = () => {
-    // console.log(getAsciiArtText())
-    console.log('Project server on port 9090')
+    if (isDevMode) {
+        console.log(getAsciiArtText())
+    } else {
+        console.log('Build completed.')
+    }
 }
 
-const isDevMode = process.env.WEBPACK_SERVE === 'true'
+const isDevMode = process.env.npm_lifecycle_event === 'dev'
 
 class FormFieldWebpackPlugin {
     apply(compiler) {
         const getRunHook = () => {
-            return isDevMode
-                ? compiler.hooks.watchRun
-                : compiler.hooks.beforeRun
+            return compiler.hooks.beforeRun
         }
 
         const runHook = getRunHook()
@@ -44,19 +45,14 @@ class FormFieldWebpackPlugin {
                 FormFieldWebpackPlugin.name,
                 async (compilation) => {
                     try {
-                        if (!this.firstRun) {
-                            this.firstRun = true
-                            try {
-                                await performOnetimeChecks()
-                            } catch (err) {
-                                const { title, description } = err
-                                logBoxenError({ title, description })
-                                process.exit(0)
-                            }
-                            await performRuntimeChecks()
-                        } else {
-                            await performRuntimeChecks()
+                        try {
+                            await performOnetimeChecks()
+                        } catch (err) {
+                            const { title, description } = err
+                            logBoxenError({ title, description })
+                            process.exit(0)
                         }
+                        await performRuntimeChecks()
                     } catch (err) {
                         // Check,
                         // DEFAULT_EXPORT_NOT_FOUND_ERROR.
@@ -81,6 +77,9 @@ class FormFieldWebpackPlugin {
         compiler.hooks.done.tap(FormFieldWebpackPlugin.name, (stats) => {
             if (isDevMode) {
                 clearScreen()
+                console.log()
+            } else {
+                console.log()
             }
             if (stats.hasErrors() || stats.hasWarnings()) {
                 let numberOfErrors = stats.compilation.errors.length
@@ -132,6 +131,8 @@ class FormFieldWebpackPlugin {
                                     ),
                                 })
                             }
+                        } else {
+                            numberOfWarnings--
                         }
                     })
                 }
@@ -178,6 +179,11 @@ class FormFieldWebpackPlugin {
                 }
 
                 logSummary({ numberOfWarnings, numberOfErrors })
+
+                if (numberOfErrors <= 0) {
+                    console.log()
+                    banner()
+                }
             } else {
                 banner()
             }
