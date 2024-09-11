@@ -12,7 +12,7 @@ program
     .command('dev')
     .description('Serve the project.')
     .action(() => {
-        console.log('Serving the project for local development...')
+        console.log('Serving the project for development...')
         runScript('dev.js')
     })
 

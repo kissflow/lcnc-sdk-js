@@ -8,8 +8,6 @@ import { WebSocketServer } from 'ws'
 import http from 'http'
 import cors from 'cors'
 
-import { clearScreen } from '../form-field-webpack-plugin/helpers.js'
-
 const port = 9090
 
 const runDevBuild = async () => {
@@ -38,13 +36,6 @@ const startDevServer = async () => {
     const server = http.createServer(app)
     const wss = new WebSocketServer({ server })
 
-    app.get('/get-module-map', (req, res) => {
-        res.json({
-            name: 'shibi',
-            lastName: 'suriya',
-        })
-    })
-
     const clients = new Set()
 
     wss.on('connection', (ws) => {
@@ -56,9 +47,7 @@ const startDevServer = async () => {
 
     await runDevBuild()
 
-    server.listen(port, () => {
-        console.log(`Server running at http://127.0.0.1:${port}`)
-    })
+    server.listen(port, () => {})
 
     const sourceWatcher = chokidar.watch([paths.appSrc], {
         persistent: true,
@@ -69,7 +58,6 @@ const startDevServer = async () => {
         for (const client of clients) {
             client.send('reload')
         }
-        // clearScreen()
     })
 
     const killServer = async () => {

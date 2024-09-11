@@ -3,6 +3,4 @@ import webpack from 'webpack'
 
 const compiler = webpack(Object.assign(webpackConfig, { mode: 'production' }))
 
-compiler.run((err, stats) => {
-    console.log('build finised')
-})
+compiler.run((err, stats) => {})
