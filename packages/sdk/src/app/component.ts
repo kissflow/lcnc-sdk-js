@@ -56,11 +56,13 @@ export class Component extends BaseSDK {
 			id: this._id
 		});
 	}
+	/** @deprecated Use condition visibility instead. */
 	show() {
 		return this._postMessageAsync(LISTENER_CMDS.COMPONENT_SHOW, {
 			id: this._id
 		});
 	}
+	/** @deprecated Use condition visibility instead. */
 	hide() {
 		return this._postMessageAsync(LISTENER_CMDS.COMPONENT_HIDE, {
 			id: this._id
