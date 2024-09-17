@@ -46,6 +46,12 @@ class Table extends BaseSDK {
 		});
 	}
 
+	getSelectedRows() {
+		return this._postMessageAsync(LISTENER_CMDS.GET_SELECTED_TABLE_ROWS, {
+			tableId: this.tableId
+		})
+	}
+
 	getRows(): TableForm[] {
 		// list of TableForm class
 		return this._postMessageAsync(
@@ -86,7 +92,7 @@ class Table extends BaseSDK {
 		});
 	}
 
-	deleteRows(rows: string[]){
+	deleteRows(rows: string[]) {
 		return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
 			tableId: this.tableId,
 			rows
