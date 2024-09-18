@@ -1,15 +1,15 @@
 ---
-title: Custom Components
-description: Installing and using custom components
+title: page Components
+description: Installing and using page components
 ---
-Kissflow lets you build custom UI components and import them as reusable custom components in your app. You can use plain HTML or frontend frameworks like React to build your component. Read more to understand the SDK methods available inside custom components. 
+Kissflow lets you build page UI components and import them as reusable page components in your app. You can use plain HTML or frontend frameworks like React to build your component. Read more to understand the SDK methods available inside page components. 
 
-To learn about installing the Kissflow SDK inside custom components, follow [these](/lcnc-sdk-js/installation/) instructions.
+To learn about installing the Kissflow SDK inside page components, follow [these](/lcnc-sdk-js/installation/) instructions.
 
 
 ### Watch Params
 
-Listens for changes in parameter mapped to custom components inside page.
+Listens for changes in parameter mapped to page components inside page.
 
 ##### Example
 
@@ -23,6 +23,6 @@ kf.context.watchParams(onParamsChange);
 
 :::note[Note]
 
-While using custom components, make sure `WatchParams` is called only once. 
+While using page components, make sure `WatchParams` is called only once. 
 
 :::
