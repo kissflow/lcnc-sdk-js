@@ -332,6 +332,37 @@ const json = await kf.context.getTable(tableId).toJSON();
 }]
 ```
 
+##### h) getSelectedRows()
+
+###### Description:
+
+Use this function to get selected rows on the given `tableId`
+
+###### Syntax:
+
+```js
+let table = await kf.context.getTable("tableId");
+let selectedRows = await table.getSelectedRows();
+```
+
+###### Output:
+
+```
+[{
+    "Untitled_Field": "row 1",
+    "_created_at": "2022-03-01T03:04:09Z",
+    "_flow_name": "form events",
+    "_id": "Pk4_T1WGWuMe",
+    "_modified_at": "2022-03-01T03:04:09Z"
+},{
+    "Untitled_Field": "row 2",
+    "_created_at": "2022-03-01T03:04:09Z",
+    "_flow_name": "form events",
+    "_id": "Pk4_T1WGWuMe",
+    "_modified_at": "2022-03-01T03:04:09Z"
+}]
+```
+
 ### Table Row
 
 A single row inside a table is known as Table row `kf.context` returns a
