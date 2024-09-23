@@ -3,12 +3,12 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,maximum-scale=1">
+  <meta name="viewport" content="width=device-width,maximum-scale=1" />
   <title>Kissflow Custom component</title>
-  <link rel="stylesheet" href="style.css" media="all">
+  <link rel="stylesheet" href="style.css" media="all" />
   <!-- Use you static assets inside public folder. -->
   <!-- Styles related to Default landing component, you can remove this. -->
-  <link rel="stylesheet" href="/src/landing/styles.css" media="all">
+  <link rel="stylesheet" href="/src/landing/styles.css" media="all" />
 
   <script type="module" src="https://unpkg.com/@kissflow/lowcode-client-sdk@latest/dist/kfsdk.umd.js"></script>
   <script type="module" src="index.js"></script>
@@ -16,6 +16,29 @@
 
 <body>
   <div id="root">
+    <div id="landingHero" class='landingHero'>
+      <div class='mainDiv'>
+        <h1>Welcome, <span id="username"></span></h1>
+        <div>
+          <p class='sampletext'>
+            This is a sample custom component pre-loaded with the
+            Kissflow SDK. <br> Edit <code>index.js</code> to make
+            changes.
+          </p>
+          <p class='sampletext'>
+            Click <a href='https://kissflow.github.io/lcnc-sdk-js/' target='_blank'>
+              here
+            </a> to read the SDK documentation.
+          </p>
+        </div>
+        <button id="clickHere">Click me</button>
+        <img src="kf.logo.png" width="120px" class='logo'></img>
+      </div>
+    </div>
+    <div id='error'>
+      <h1>Something went wrong</h1>
+      <p>Please use this component within Kissflow platform.</p>
+    </div>
   </div>
 </body>
 
