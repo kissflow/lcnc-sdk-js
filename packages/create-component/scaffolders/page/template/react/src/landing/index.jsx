@@ -1,5 +1,6 @@
 import { kf } from './../sdk/index.js'
 import kflogo from './../assets/kf.logo.png'
+import React, { useState, useEffect } from 'react'
 
 import styles from './styles.module.css'
 
