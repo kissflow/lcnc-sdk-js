@@ -5,8 +5,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "zip": "cd dist/ && bestzip ../build.zip *",
-        "build": "vite build && npm run zip",
+        "zip": "rm -rf ./custom-page-component.zip ./dist && npm run build && cd ./dist && zip -q -r ../custom-page-component.zip . && rm -rf ../dist",
+        "build": "vite build",
         "preview": "vite preview"
     },
     "engines": {
