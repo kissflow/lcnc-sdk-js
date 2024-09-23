@@ -11,6 +11,12 @@ export function defaultLandingComponent() {
     document
         .getElementById('clickHere')
         .addEventListener('click', () => showUserInfo())
+
+    window.kf.context.watchParams(function (data) {
+        console.log('watch params data', data)
+        document.getElementById('inputParameters').innerHTML =
+            JSON.stringify(data)
+    })
 }
 
 export function defaultErrorComponent() {
