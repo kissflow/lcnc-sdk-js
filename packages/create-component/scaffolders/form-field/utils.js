@@ -17,16 +17,6 @@ const readFileContentRelativeToCurrentFile = (relativePath) => {
     }
 }
 
-const getFileContentUsingFullPath = (filePath) => {
-    try {
-        // Read the file content synchronously
-        const content = fs.readFileSync(filePath, 'utf-8')
-        return content
-    } catch (error) {
-        throw new Error('Unable to read file: ', filePath, 'error: ', error)
-    }
-}
-
 const getLatestPackageVersion = async (packageName) => {
     try {
         const verison = await latestVersion(packageName)
@@ -39,8 +29,4 @@ const getLatestPackageVersion = async (packageName) => {
     }
 }
 
-export {
-    getFileContentUsingFullPath,
-    readFileContentRelativeToCurrentFile,
-    getLatestPackageVersion,
-}
+export { readFileContentRelativeToCurrentFile, getLatestPackageVersion }

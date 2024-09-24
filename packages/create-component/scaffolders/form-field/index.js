@@ -3,12 +3,13 @@ import {
     renderFileWithEjs,
     writeFileWithFolderCreation,
     formatWithPrettier,
+    isBinaryFile,
 } from '../utils.js'
 import {
-    getFileContentUsingFullPath,
     readFileContentRelativeToCurrentFile,
     getLatestPackageVersion,
 } from './utils.js'
+import { getFileContentUsingFullPath } from '../utils.js'
 import { rename } from '../helpers.js'
 import { join } from 'path'
 
@@ -61,24 +62,37 @@ const createProject = async ({
     // Copy the base template into the target folder...
     for (const file of projectTemplateFiles) {
         const { fileName, fileFullPath, relativeDirectoryPath } = file
-        const fileContent = getFileContentUsingFullPath(fileFullPath)
+        const fileContent = getFileContentUsingFullPath(fileFullPath, fileName)
 
-        // Some files are stored with different name, since they have special meaning in the codebase,
-        // for example, .gitignore, package.json, etc.
-        const newName = rename(fileName)
+        if (isBinaryFile(fileName)) {
+            const newName = rename(fileName)
+            const targetFilePath = join(
+                projectFolderPath,
+                relativeDirectoryPath,
+                newName
+            )
+            writeFileWithFolderCreation(targetFilePath, fileContent)
+        } else {
+            // Some files are stored with different name, since they have special meaning in the codebase,
+            // for example, .gitignore, package.json, etc.
+            const newName = rename(fileName)
 
-        const renderedFileContent = renderFileWithEjs(fileContent, templateData)
-        const targetFilePath = join(
-            projectFolderPath,
-            relativeDirectoryPath,
-            newName
-        )
-        const formattedContent = await formatWithPrettier(
-            renderedFileContent,
-            targetFilePath
-        )
+            const renderedFileContent = renderFileWithEjs(
+                fileContent,
+                templateData
+            )
+            const targetFilePath = join(
+                projectFolderPath,
+                relativeDirectoryPath,
+                newName
+            )
+            const formattedContent = await formatWithPrettier(
+                renderedFileContent,
+                targetFilePath
+            )
 
-        writeFileWithFolderCreation(targetFilePath, formattedContent)
+            writeFileWithFolderCreation(targetFilePath, formattedContent)
+        }
     }
 }
 
