@@ -24,4 +24,6 @@ const PROJECT_TARGETS = {
     PAGE: 'page',
 }
 
-export { renames, prettierConfig, PROJECT_TARGETS }
+const BINARY_FILE_EXTENSIONS = ['png', 'jpg', 'jpeg']
+
+export { renames, prettierConfig, PROJECT_TARGETS, BINARY_FILE_EXTENSIONS }

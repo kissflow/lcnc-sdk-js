@@ -2,7 +2,7 @@ import ejs from 'ejs'
 import fs from 'fs'
 import path from 'path'
 import * as prettier from 'prettier'
-import { prettierConfig } from './constants.js'
+import { BINARY_FILE_EXTENSIONS, prettierConfig } from './constants.js'
 
 function getAllFilePathsRecursively(directoryPath) {
     const filesList = []
@@ -60,14 +60,43 @@ function writeFileWithFolderCreation(targetFilePath, renderedFileContent) {
         fs.mkdirSync(targetDirectory, { recursive: true })
     }
 
-    // Write the file content to the target file
-    fs.writeFileSync(targetFilePath, renderedFileContent, 'utf-8')
+    if (isBinaryFile(targetFilePath)) {
+        const binaryData = Buffer.from(renderedFileContent, 'binary') // convert string to binary
+        fs.writeFileSync(targetFilePath, binaryData)
+    } else {
+        // Write the file content to the target file
+        fs.writeFileSync(targetFilePath, renderedFileContent, 'utf-8')
+    }
 }
 
 function isValidPackageName(projectName) {
     return /^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d\-~][a-z\d\-._~]*$/.test(
         projectName
     )
+}
+
+const isBinaryFile = (fileName) => {
+    for (let binaryFileExtension of BINARY_FILE_EXTENSIONS) {
+        if (fileName.endsWith(binaryFileExtension)) {
+            return true
+        }
+    }
+    return false
+}
+
+const getFileContentUsingFullPath = (filePath, fileName) => {
+    try {
+        // Read the file content synchronously
+        if (isBinaryFile(fileName)) {
+            const content = fs.readFileSync(filePath, 'binary')
+            return content
+        } else {
+            const content = fs.readFileSync(filePath, 'utf-8')
+            return content
+        }
+    } catch (error) {
+        throw new Error('Unable to read file: ', filePath, 'error: ', error)
+    }
 }
 
 export {
@@ -77,4 +106,6 @@ export {
     formatWithPrettier,
     isValidPackageName,
     makeDirectory,
+    isBinaryFile,
+    getFileContentUsingFullPath,
 }
