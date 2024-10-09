@@ -82,7 +82,7 @@ const FILE_MAP = {
     [PLATFORMS.PWA]: {
         [FORM_FIELD_COMPONENTS.FORM_FIELD]: {
             moduleFolderPath: `src/${PLATFORMS.PWA}/`,
-            isMandatory: true,
+            isMandatory: false,
             fileExtension: 'jsx',
         },
         [FORM_FIELD_COMPONENTS.READONLY_TABLE]: {
