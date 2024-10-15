@@ -1,0 +1,14 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Pagination.astro";
+
+const isHomepage = Astro.props.slug === "";
+---
+
+<!-- To disable the the Next section in the home page -->{
+  !isHomepage && (
+    <Default {...Astro.props}>
+      <slot />
+    </Default>
+  )
+}
