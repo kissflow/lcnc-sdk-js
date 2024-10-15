@@ -5,10 +5,6 @@ template: splash
 hero:
   title: Kissflow Developer Documentation
   tagline: Streamline your workflows and create better apps with Kissflow's API and SDK. Our tools, equipped with robust security measures, help you develop efficient, scalable solutions without compromising your data's safety.
-  image:
-    alt: Kissflow No-code low-code platform
-    dark: ~/assets/logo.dark.png
-    light: ~/assets/logo.light.png
   actions:
     - text: API docs
       link: https://developers.kissflow.com
@@ -21,9 +17,10 @@ hero:
       link: /lcnc-sdk-js/installation/
 ---
 
-import { LinkButton } from "@astrojs/starlight/components";
 import BottomBanner from "~/components/landing_page/bottom_banner.astro";
 import CardSegment from "~/components/landing_page/segment.astro";
+
+import "./landing.css";
 
 <CardSegment />
 <BottomBanner />

@@ -1,0 +1,11 @@
+.page > .header {
+  border-block-end: solid 1px var(--kf-color-gray-300);
+}
+
+.hero {
+  grid-template-columns: 1fr;
+}
+
+.hero .tagline {
+  max-width: 72ch;
+}
