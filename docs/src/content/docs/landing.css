@@ -9,3 +9,7 @@
 .hero .tagline {
   max-width: 72ch;
 }
+
+.hero > .stack > .actions {
+  gap: 16px;
+}
