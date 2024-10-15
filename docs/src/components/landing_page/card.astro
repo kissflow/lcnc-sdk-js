@@ -1,0 +1,29 @@
+---
+const { title, description } = Astro.props;
+---
+
+<main class=`cardContainer`>
+  <header>
+    <h3><b>{title}</b></h3>
+    <h6>{description}</h6>
+  </header>
+  <slot name="list" />
+  <slot name="action" />
+</main>
+
+<style is:inline>
+  .cardContainer {
+    padding: 20px 28px;
+    border: solid 1px var(--kf-color-gray-500);
+    border-radius: 4px;
+  }
+
+  .cardContainer > ul {
+    padding-inline-start: 20px !important;
+    /* padding */
+  }
+
+  .cardContainer > ul > li > p {
+    margin-bottom: 4px !important;
+  }
+</style>
