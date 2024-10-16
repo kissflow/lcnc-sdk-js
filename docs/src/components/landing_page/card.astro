@@ -3,11 +3,13 @@ const { title, description } = Astro.props;
 ---
 
 <main class=`cardContainer`>
-  <header>
-    <h3><b>{title}</b></h3>
-    <h6>{description}</h6>
-  </header>
-  <slot name="list" />
+  <section class="topSection">
+    <header>
+      <h3><b>{title}</b></h3>
+      <h6>{description}</h6>
+    </header>
+    <slot name="list" />
+  </section>
   <slot name="action" />
 </main>
 
@@ -19,6 +21,7 @@ const { title, description } = Astro.props;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 16px;
   }
 
   .cardContainer > ul {
