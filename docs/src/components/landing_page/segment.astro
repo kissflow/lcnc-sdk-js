@@ -25,10 +25,12 @@ import { API_PLATFORM_URL, SDK_DOCS_URL } from "~/constants";
 
     <Fragment slot="action">
       <LinkButton
+        class={"card-button"}
         href={API_PLATFORM_URL}
         variant="primary"
         icon="right-arrow"
         iconPlacement="end"
+        target={"_blank"}
       >
         Learn more about our API
       </LinkButton>
@@ -54,6 +56,7 @@ import { API_PLATFORM_URL, SDK_DOCS_URL } from "~/constants";
 
     <Fragment slot="action">
       <LinkButton
+        class={"card-button"}
         href={SDK_DOCS_URL}
         variant="primary"
         icon="right-arrow"
@@ -64,3 +67,9 @@ import { API_PLATFORM_URL, SDK_DOCS_URL } from "~/constants";
     </Fragment>
   </CustomCard>
 </CardGrid>
+
+<style>
+  .card-button {
+    width: fit-content;
+  }
+</style>
