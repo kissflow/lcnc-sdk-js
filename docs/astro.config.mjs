@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [
     starlight({
       favicon: "/favicon.ico",
-      title: "Kissflow for Developers",
+      title: "Developers",
       logo: {
         light: "./src/assets/logo.light.png",
         dark: "./src/assets/logo.dark.png",
@@ -56,8 +56,9 @@ export default defineConfig({
         },
       ],
       components: {
-        Pagination: "./src/components/Pagination.astro",
+        Footer: "./src/components/footer.astro",
         SocialIcons: "./src/components/social.links.astro",
+        Search: "./src/components/search.astro",
       },
     }),
   ],
