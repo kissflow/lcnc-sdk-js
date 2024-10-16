@@ -6,6 +6,12 @@
   grid-template-columns: 1fr;
 }
 
+@media (min-width: 50rem) {
+  .hero {
+    padding-block: clamp(2.5rem, calc(1rem + 10vmin), 4rem);
+  }
+}
+
 .hero .tagline {
   max-width: 72ch;
 }
