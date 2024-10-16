@@ -11,8 +11,12 @@ import {
 ---
 
 <LinkButton variant="minimal" href={HOME_URL}>Home</LinkButton>
-<LinkButton variant="minimal" href={API_PLATFORM_URL}>API</LinkButton>
+<LinkButton variant="minimal" href={API_PLATFORM_URL} target={"_blank"}
+  >API</LinkButton
+>
 <LinkButton variant="minimal" href={SDK_DOCS_URL}>SDK</LinkButton>
-<LinkButton variant="minimal" href={COMMUNITY_URL}>Community</LinkButton>
+<LinkButton variant="minimal" href={COMMUNITY_URL} target={"_blank"}
+  >Community</LinkButton
+>
 
 <Default {...Astro.props}><slot /></Default>
