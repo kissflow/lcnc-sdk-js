@@ -3,7 +3,7 @@ name: Deploy Documentation
 on:
   # Trigger the workflow every time you push docs changes to the `main` branch
   push:
-    branches: [main, doc-site]
+    branches: [main]
     paths:
       - "docs/**"
 
