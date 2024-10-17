@@ -78,7 +78,7 @@ console.log(kf.user.AppRoles[0])
 
 In Kissflow SDKs, you can initiate both internal and external API calls. 
 
-For internal APIs, refer to the [Developer's Hub](https://api.kissflow.com/).
+For internal APIs, refer to the [Kissflow API documentation](https://api.kissflow.com/).
 
 
 -   You can use the `kf.api` method to fetch internal APIs.

@@ -4,7 +4,7 @@ description: Guide to install Kissflow sdk
 ---
 Kissflow lets you build custom UI components and import them as reusable custom components in your app. You can use plain HTML or frontend frameworks like React to build your component. 
 
-To make your component interact and communicate with your app, you can install the Kissflow SDK in your project. If you already have an existing project, you can follow [these](/lcnc-sdk-js/intro/installation/) instructions to install the SDK package.
+To make your component interact and communicate with your app, you can install the Kissflow SDK in your project. If you already have an existing project, you can follow these instructions to install the SDK package.
 
 ## 1. Creating a new custom component
 
