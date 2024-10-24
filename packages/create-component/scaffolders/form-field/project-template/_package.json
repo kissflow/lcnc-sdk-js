@@ -33,6 +33,14 @@
                 {
                     "name": "document",
                     "message": "Don't use browser's `document` object."
+                },
+                {
+                    "name": "fetch",
+                    "message": "Using browser's fetch api is not allowed."
+                },
+                {
+                    "name": "XMLHttpRequest",
+                    "message": "Using browser's XMLHttpRequest is not allowed."
                 }
             ]
         }
