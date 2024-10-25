@@ -33,14 +33,14 @@
     "engines": {
         "node": ">=18.14.1"
     },
-    "author": "shibi@kissflow.com",
+    "author": "",
     "license": "ISC",
     "dependencies": {
         "@kissflow/form-field-config": "workspace:^",
-        "chalk": "^5.3.0",
-        "ejs": "^3.1.9",
-        "inquirer": "^9.2.13",
-        "latest-version": "^8.0.0",
-        "prettier": "^3.2.5"
+        "chalk": "5.3.0",
+        "ejs": "3.1.9",
+        "inquirer": "9.2.13",
+        "latest-version": "8.0.0",
+        "prettier": "3.2.5"
     }
 }
