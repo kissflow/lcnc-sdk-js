@@ -1,0 +1,34 @@
+---
+const { title, description } = Astro.props;
+---
+
+<main class=`cardContainer`>
+  <section class="topSection">
+    <header>
+      <h3><b>{title}</b></h3>
+      <h6>{description}</h6>
+    </header>
+    <slot name="list" />
+  </section>
+  <slot name="action" />
+</main>
+
+<style is:inline>
+  .cardContainer {
+    padding: 20px 28px;
+    border: solid 2px var(--kf-color-gray-300);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .cardContainer ul {
+    padding-inline-start: 20px !important;
+  }
+
+  .cardContainer ul > li > p {
+    margin-bottom: 4px !important;
+  }
+</style>

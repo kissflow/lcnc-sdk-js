@@ -1,47 +1,24 @@
 ---
-title: Kissflow Javascript Client SDK
-description: Introduction to KF SDK
+title: "Kissflow"
+description: Introduction to kissflow developer documentation.
+template: splash
+hero:
+  title: Kissflow Developer Documentation
+  tagline: Enhance your apps with Kissflow's APIs and SDK. Integrate workflows, build custom UI components, and ensure data security with our user-friendly tools.
+  actions:
+    - text: API docs
+      link: https://api.kissflow.com
+      variant: primary
+      attrs:
+        target: _blank
+
+    - text: SDK resources
+      variant: secondary
+      link: /lcnc-sdk-js/installation/
 ---
 
+import CardSegment from "~/components/landing_page/segment.astro";
 
-Welcome to the Kissflow Lowcode JavaScript SDK repository! This SDK empowers
-developers to seamlessly interact with the Kissflow low-code platform using
-JavaScript.
+import "./landing.css";
 
-
-Within the Kissflow environment, whether in the platform or inside apps, you have built-in support to use these SDKs directly wherever JavaScript events are available. You can access the SDKs using the `kf` namespace. 
-
-Example:
-
-```js
-kf.client.showInfo("Welcome " + kf.user.Name);
-```
-
-### Quick Start
-
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
-
-
-
-<CardGrid>
-  <LinkCard
-  title="Installation"
-  description="Learn how to install the Kissflow SDK in custom components."
-  href="/lcnc-sdk-js/installation/"
-/>
-<LinkCard
-  title="Usage in Apps"
-  description="Learn how to extend your app functionality with the Kissflow SDK."
-  href="/lcnc-sdk-js/app/"
-/>
-<LinkCard
-  title="Usage in Forms"
-  description="Learn how to use the the Kissflow SDK in your Kissflow forms"
-  href="/lcnc-sdk-js/form/about/"
-/>
-<LinkCard
-  title="Usage in Integrations"
-  description="Learn how to use the Kissflow SDK inside Run Script action in Integrations"
-  href="/lcnc-sdk-js/integration/"
-/>
-</CardGrid>
+<CardSegment />

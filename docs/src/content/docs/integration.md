@@ -35,7 +35,7 @@ https://{your_sub_domain}.kissflow.com/user/2/{account_id})**. The Access key
 secret must be passed in the header. Refer
 **[Access keys](https://helpdocs.kissflow.com/user-settings/api-keys#access_keys)**
 to know how to locate your Kissflow API key and secret. Refer the developer
-guide to know more about our **[APIs](https://developers.kissflow.com)**.
+guide to know more about our **[APIs](https://api.kissflow.com)**.
 
 > Note: The API call timeout for this method is 10 seconds.
 

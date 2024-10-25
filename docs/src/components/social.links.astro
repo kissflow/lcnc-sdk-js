@@ -1,0 +1,22 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/SocialIcons.astro";
+import { LinkButton } from "@astrojs/starlight/components";
+import {
+  HOME_URL,
+  SDK_DOCS_URL,
+  API_PLATFORM_URL,
+  COMMUNITY_URL,
+} from "~/constants.js";
+---
+
+<LinkButton variant="minimal" href={HOME_URL}>Home</LinkButton>
+<LinkButton variant="minimal" href={API_PLATFORM_URL} target={"_blank"}
+  >API</LinkButton
+>
+<LinkButton variant="minimal" href={SDK_DOCS_URL}>SDK</LinkButton>
+<LinkButton variant="minimal" href={COMMUNITY_URL} target={"_blank"}
+  >Community</LinkButton
+>
+
+<Default {...Astro.props}><slot /></Default>
