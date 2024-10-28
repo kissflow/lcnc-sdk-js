@@ -21,7 +21,7 @@ const pageInstance = kf.app.openPage("pageId");
 
 ### Returns
 
-Returns [Page instance](/lcnc-sdk-js/app/page/)
+Returns [Page instance](/app/page/)
 
 ### Example scenario
 

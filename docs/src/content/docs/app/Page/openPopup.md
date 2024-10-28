@@ -37,4 +37,4 @@ Popup parameters are optional
 
 ### Returns
 
-Returns a instance of [Popup](/lcnc-sdk-js/app/page/popup/)
+Returns a instance of [Popup](/app/page/popup/)

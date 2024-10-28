@@ -6,7 +6,7 @@ sidebar:
 ---
 
 Deletes a single row from the specified
-[table instance](/lcnc-sdk-js/form/gettable/).
+[table instance](/form/gettable/).
 
 ### Parameter
 
@@ -32,5 +32,5 @@ worktableInstance.deleteRow(“table_row_Id”);
 
 :::note[Note] 
 For bulk operations involving the deletion of more than a row, use the
-[deleteRow()](/lcnc-sdk-js/form/table/deleterows/) instead.
+[deleteRow()](/form/table/deleterows/) instead.
 :::

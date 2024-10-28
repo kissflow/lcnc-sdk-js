@@ -5,8 +5,8 @@ sidebar:
     order: 10
 ---
 
-Returns a [row instance](/lcnc-sdk-js/form/table/row/) of `rowId` from the specified
-[table instance](/lcnc-sdk-js/form/gettable/).
+Returns a [row instance](/form/table/row/) of `rowId` from the specified
+[table instance](/form/gettable/).
 
 From the row instance, you can access methods such as updateField(), getField(), and so on.
 
@@ -36,5 +36,5 @@ rowInstance.updateField({ table_field2: yoe + 1 });
 
 :::note[Note]
 If there is more than one row to be fetched from a table, use
-[getRows()](/lcnc-sdk-js/form/table/getrows/) instead 
+[getRows()](/form/table/getrows/) instead 
 :::
