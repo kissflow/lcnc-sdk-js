@@ -21,7 +21,7 @@ Below are the places where you can use `kf.context`
 When `kf.context` is used inside a custom component code, `watchParams` method
 can be used to subscribe for the changes happen through mapped params
 
-Please refer more about [`watchParams` here](/lcnc-sdk-js/component#watch-params)
+Please refer more about [`watchParams` here](/component#watch-params)
 
 ### Form
 
@@ -33,7 +33,7 @@ let fieldId = "Purchase_request_number";
 let requestNumber = await kf.context.getField(fieldId);
 ```
 
-Please refer more about [Forms and its methods](/lcnc-sdk-js/form/about/)
+Please refer more about [Forms and its methods](/form/about/)
 
 
 ### Child table's Row
@@ -45,7 +45,7 @@ row as project.
 let columnId = "Quantity_of_Product";
 let quantity = await kf.context.getField(columnId);
 ```
-Please refer more about [Rows and its methods](/lcnc-sdk-js/form/table/row/)
+Please refer more about [Rows and its methods](/form/table/row/)
 
 ### Page (onLoad, unLoad)
 
@@ -56,11 +56,11 @@ such as getParameter, setVariable, getVariables can be accessed from it.
 // Make some api call and change the local variable based on that
 kf.context.updateVariable("variableName", "some value");
 ```
-Please refer more about [Page and its method](/lcnc-sdk-js/app/page/)
+Please refer more about [Page and its method](/app/page/)
 
 ### Components
 
 When `kf.context` is used in component event, refresh, show, hide methods from
 component instance can be accessed.
 
-Please refer more about [Components and its method](/lcnc-sdk-js/app/page/component)
+Please refer more about [Components and its method](/app/page/component)

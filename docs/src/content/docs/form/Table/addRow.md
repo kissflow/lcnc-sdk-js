@@ -6,7 +6,7 @@ sidebar:
 ---
 
 Adds a single row to the specified
-[table instance](/lcnc-sdk-js/form/gettable/).
+[table instance](/form/gettable/).
 
 ### Parameter
 
@@ -30,6 +30,6 @@ worktableInstance.addRow({ table_field1: “Microsoft”, table_field2: “2 yea
 
 :::note[Note]
 For bulk operations involving the addition of more than one row to a table, use the
-[addRows()](/lcnc-sdk-js/form/table/addrows/) method instead.
+[addRows()](/form/table/addrows/) method instead.
 :::
 

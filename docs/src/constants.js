@@ -1,6 +1,6 @@
-export const HOME_URL = "/lcnc-sdk-js";
+export const HOME_URL = "/";
 
-export const SDK_DOCS_URL = "/lcnc-sdk-js/installation";
+export const SDK_DOCS_URL = "/installation";
 
 export const API_PLATFORM_URL = "https://api.kissflow.com";
 

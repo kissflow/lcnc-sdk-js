@@ -7,7 +7,7 @@ sidebar:
     #     text: New
 ---
 
-Adds multiple rows to the [table instance](/lcnc-sdk-js/form/gettable/).
+Adds multiple rows to the [table instance](/form/gettable/).
 
 ### Parameter
 

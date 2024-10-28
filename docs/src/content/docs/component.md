@@ -4,7 +4,7 @@ description: Installing and using custom page components
 ---
 Kissflow lets you build page UI components and import them as reusable page components in your app. You can use plain HTML or frontend frameworks like React to build your custom component. Read more to understand the SDK methods available inside page components.
 
-To learn about installing the Kissflow SDK inside page components, follow [these](/lcnc-sdk-js/installation/) instructions.
+To learn about installing the Kissflow SDK inside custom components, follow [these](/installation/) instructions.
 
 
 ### Watch Params
