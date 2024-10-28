@@ -5,7 +5,7 @@ sidebar:
     order: 9
 ---
 
-Deletes multiple rows from the specified [table instance](/lcnc-sdk-js/form/gettable/).
+Deletes multiple rows from the specified [table instance](/form/gettable/).
 
 ### Parameter
 

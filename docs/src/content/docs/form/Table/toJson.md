@@ -5,7 +5,7 @@ sidebar:
     order: 12
 ---
 
-To retrieve data of given [table instance](/lcnc-sdk-js/form/gettable/) as JSON
+To retrieve data of given [table instance](/form/gettable/) as JSON
 
 ### Syntax
 
