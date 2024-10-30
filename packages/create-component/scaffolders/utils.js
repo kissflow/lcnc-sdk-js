@@ -87,13 +87,8 @@ const isBinaryFile = (fileName) => {
 const getFileContentUsingFullPath = (filePath, fileName) => {
     try {
         // Read the file content synchronously
-        if (isBinaryFile(fileName)) {
-            const content = fs.readFileSync(filePath, 'binary')
-            return content
-        } else {
-            const content = fs.readFileSync(filePath, 'utf-8')
-            return content
-        }
+        const content = fs.readFileSync(filePath, isBinaryFile(fileName) ? 'binary': 'utf-8');
+        return content;
     } catch (error) {
         throw new Error('Unable to read file: ', filePath, 'error: ', error)
     }
