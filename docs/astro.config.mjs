@@ -3,7 +3,7 @@ import starlight from "@astrojs/starlight";
 
 export default defineConfig({
   compressHTML: false,
-  site: "https://developers.kissflow.com/",
+  site: "https://kissflow.github.io/",
   base: "/",
   integrations: [
     starlight({
