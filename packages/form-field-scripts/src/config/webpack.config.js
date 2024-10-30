@@ -1,18 +1,16 @@
+import { createRequire } from 'module'
 import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin.js'
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import ESLintPlugin from 'eslint-webpack-plugin'
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin'
+
 import { getAppPackageJson } from '../helpers.js'
 import { getModuleMap } from '../helpers.js'
 import paths from '../paths.js'
 import FormFieldWebpackPlugin from '../form-field-webpack-plugin/index.js'
-import ESLintPlugin from 'eslint-webpack-plugin'
-import { WebpackManifestPlugin } from 'webpack-manifest-plugin'
 
-import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
-import path from 'path'
-
-import { fileURLToPath } from 'url'
-import { dirname } from 'path'
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
