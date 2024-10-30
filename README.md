@@ -39,13 +39,13 @@ window.onload = async function () {
 Details of authenticated user can be accessed as following
 
 ```js
-const { Name, Email, _id, AppRoles } = kf.user;
+const { Name, Email, _id, AppRoles } = kf.user
 ```
 
 ### Role details
 
 -   Retrieve assigned App roles
-This property lists all of the roles assigned to the current user in an app.
+    This property lists all of the roles assigned to the current user in an app.
 
 ##### Syntax
 
@@ -60,6 +60,7 @@ console.log(kf.user.AppRoles)
 ```
 
 ##### returns
+
 This property returns an array of roles assigned to the current user. Each role will have an ID and a name.
 
 ##### Example
@@ -80,11 +81,13 @@ This property returns an array of roles assigned to the current user. Each role 
 ]
 ```
 
-##### Note 
+##### Note
+
 Use this property to return the first role in the list of roles assigned to a user
 console.log(kf.user.AppRoles[0])
 
 ##### Example
+
 ```js
   {
   "_id": "Ro9mhLyuEFn4",
@@ -341,8 +344,8 @@ Use this function to get selected rows on the given `tableId`
 ###### Syntax:
 
 ```js
-let table = await kf.context.getTable("tableId");
-let selectedRows = await table.getSelectedRows();
+let table = await kf.context.getTable('tableId')
+let selectedRows = await table.getSelectedRows()
 ```
 
 ###### Output:
