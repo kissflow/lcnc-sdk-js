@@ -2,6 +2,8 @@
 import CustomCard from "./card.astro";
 import { LinkButton, CardGrid } from "@astrojs/starlight/components";
 import { API_PLATFORM_URL, SDK_DOCS_URL } from "~/constants";
+
+console.log("dev check ----- ", import.meta.env.DEV);
 ---
 
 <CardGrid>
