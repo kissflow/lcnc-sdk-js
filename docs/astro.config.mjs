@@ -62,5 +62,9 @@ export default defineConfig({
       },
     }),
   ],
-  mode: "development",
+  vite: {
+    build: {
+      sourcemap: "inline", // Enables source maps for production builds
+    },
+  },
 });
