@@ -1,0 +1,56 @@
+{
+    "name": "@kissflow/form-field-scripts",
+    "version": "0.0.1",
+    "description": "Scripts to serve, build, lint, test, etc. a Kissflow's custom form field project.",
+    "bin": {
+        "form-field-scripts": "./bin/index.js"
+    },
+    "files": [
+        "package.json",
+        "README.md",
+        "./bin",
+        "./src/",
+        "!./node_modules/**"
+    ],
+    "keywords": [
+        "scripts",
+        "serve",
+        "dev",
+        "build",
+        "lcnc",
+        "OrangeScape",
+        "no-code",
+        "low-code",
+        "platform",
+        "react",
+        "cli",
+        "kissflow",
+        "custom-form-fields"
+    ],
+    "type": "module",
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@babel/core": "7.23.3",
+        "@babel/preset-env": "7.22.9",
+        "@babel/preset-react": "7.22.5",
+        "@kissflow/form-field-config": "workspace:^",
+        "ajv": "8.13.0",
+        "babel-loader": "9.1.3",
+        "boxen": "7.1.1",
+        "chalk": "5.3.0",
+        "chokidar": "3.6.0",
+        "commander": "11.1.0",
+        "cors": "2.8.5",
+        "css-loader": "6.10.0",
+        "eslint": "8.3.0",
+        "eslint-config-react-app": "7.0.1",
+        "eslint-webpack-plugin": "3.1.1",
+        "express": "4.19.2",
+        "mini-css-extract-plugin": "2.9.1",
+        "style-loader": "3.3.4",
+        "webpack": "5.88.2",
+        "webpack-manifest-plugin": "5.0.0",
+        "ws": "8.18.0"
+    }
+}
