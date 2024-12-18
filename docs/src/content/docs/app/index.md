@@ -15,4 +15,5 @@ To retrieve the app’s ID, use `kf.app._id.`
 - Custom components.
 - Across all widgets and popup events inside a page and other page events.
 - Bulk and custom actions in dataforms inside the app.
+- Test
 
