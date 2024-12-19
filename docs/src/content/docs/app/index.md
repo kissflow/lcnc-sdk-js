@@ -15,5 +15,4 @@ The command `kf.app` and its associated methods are accessible in the following:
 - Custom components.
 - Across all widgets and popup events inside a page and other page events.
 - Bulk and custom actions in dataforms inside the app.
-- Test
 

@@ -29,7 +29,7 @@ ctx = {
 
 This function lets you retrieve any external or Kissflow APIs. To access an
 internal Kissflow API, use an absolute URL, **(i.e.,
-https://{your_sub_domain}.kissflow.com/user/2/{account_id})**. The Access key
+https://{your_sub_domain}.kissflow.com/user/2/{account_id})**. The access key
 secret must be passed in the header. Refer
 **[Access keys](https://helpdocs.kissflow.com/user-settings/api-keys#access_keys)**
 to know how to locate your Kissflow API key and secret. Refer the developer

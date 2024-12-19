@@ -27,7 +27,7 @@ columns to the corresponding fields.
 
 | Parameter    | Type   | Description                                                          |
 | ------------- | ------ | -------------------------------------------------------------------- |
-| defaultValues | Object | Object with keys as field Id and its values in respective data types. |
+| defaultValues | Object | An object with keys as field Id and its values in respective data types. |
 
 ##### Syntax
 
@@ -53,9 +53,9 @@ let boardInstance = { location: "India" }; // Location is the the field_id of a 
 boardInstance.importCSV(defaultValues); // All records imported through this importer would have Location field set as India
 ```
 
-> Note:
+> Note
 >
-> 1. Default values are optional
+> 1. Default values are optional.
 > 2. Any variables or parameter can also be mapped in `defaultValues`.
 > 3. If a default value is set by the developer, end users cannot override it.
 > 4. The following field types cannot be set as default: Signature, Aggregation, Geolocation, Sequence number, Scanner, and any other field that are marked as a computed field.
