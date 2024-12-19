@@ -22,7 +22,7 @@ let decisionTableInstance = kf.app.getDecisionTable(decisionTableId);
 
 ### Evaluate
 
-From the instance you can able to evaluate the decision table using `evaluate`
+From the instance you can evaluate the decision table using `evaluate`
 method.
 
 ##### Parameters
@@ -40,7 +40,7 @@ await decisionTableInstance.evaluate(payload);
 
 ##### Return
 
-Returns a decision table output
+Returns a decision table output.
 
 ##### Example
 

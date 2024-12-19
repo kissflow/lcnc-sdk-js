@@ -36,5 +36,5 @@ rowInstance.updateField({ table_field2: yoe + 1 });
 
 :::note[Note]
 If there is more than one row to be fetched from a table, use
-[getRows()](/form/table/getrows/) instead 
+[getRows()](/form/table/getrows/) instead.
 :::
