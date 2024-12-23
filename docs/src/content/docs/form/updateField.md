@@ -11,7 +11,7 @@ Updates the values of all the fields mentioned in the payload object.
 
 | Parameters | type   | description                                                                                                                               |
 | ---------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| payload    | Object | An object where the key represents fieldId (string) and the values correspond to their respective field type (like number for rating/slider, string for text/textarea, etc.) |
+| payload    | Object | An object where the key represents fieldId (string) and the values correspond to their respective field type (like number for rating/slider, string for text/textarea, etc.). |
 
 ### Syntax
 

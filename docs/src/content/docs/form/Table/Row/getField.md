@@ -5,7 +5,7 @@ sidebar:
     order: 14
 ---
 
-To retrieve the current value of column in a row
+To retrieve the current value of column in a row.
 
 ### Parameter
 
@@ -31,7 +31,7 @@ Returns the value of the field, and the data type of the value varies based on t
 
 ### Example
 
-To retrieve the names of the previous companies an employee has worked for from the work experience table, specify the corresponding column ID, table_col1, and retrieve the values. 
+To retrieve the names of the companies an employee has worked for from the work experience table, specify the corresponding column ID, table_col1, and retrieve the values. 
 
 ```js 
 let value = await kf.context.getField(“table_col1”);
