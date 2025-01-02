@@ -12,7 +12,7 @@ Adds a single row to the specified
 
 | Parameters | type   | description                                                                                                                                |
 | ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| payload    | object | n object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.).|
+| payload    | object | An object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.).|
 
 ### Syntax
 
