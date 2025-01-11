@@ -1,6 +1,4 @@
 import React from 'react'
-import PropTypes from 'kf-proptypes/widgets'
-import { Trans } from '@lingui/macro'
 
 import { MF_REMOTE_ERRORS } from './constants.js'
 
@@ -32,19 +30,11 @@ class SystemErrorBoundary extends React.Component {
             // Note that errors that doesn't have perceivedError key are errors that occur after the module has
             // been loaded by module federation...
             if (perceivedError === MF_REMOTE_ERRORS.REMOTE_DOWN.code) {
-                return (
-                    <div>
-                        <Trans>Remote is down</Trans>
-                    </div>
-                )
+                return <div>Remote is down</div>
             } else if (
                 perceivedError === MF_REMOTE_ERRORS.CORRUPT_REMOTE.code
             ) {
-                return (
-                    <div>
-                        <Trans>The remote is corrupt</Trans>
-                    </div>
-                )
+                return <div>The remote is corrupt</div>
             } else if (
                 perceivedError === MF_REMOTE_ERRORS.MODULE_NOT_FOUND.code
             ) {
@@ -52,43 +42,24 @@ class SystemErrorBoundary extends React.Component {
                     const { ifModuleNotFound: IfModuleNotFound } = fallbacks
                     return <IfModuleNotFound />
                 } else {
-                    return (
-                        <div>
-                            <Trans>Module not found</Trans>
-                        </div>
-                    )
+                    return <div>Module not found</div>
                 }
             } else if (
                 perceivedError === MF_REMOTE_ERRORS.HIDE_CUSTOM_COMPONENT.code
             ) {
                 return (
                     <div>
-                        <Trans>
-                            Custom form field not loaded for debugging purposes
-                        </Trans>
+                        Custom form field not loaded for debugging purposes
                     </div>
                 )
             } else {
                 // Errors that occur inside the component after it has been loaded...
-                return (
-                    <div>
-                        <Trans>
-                            Error while rendering the remote component
-                        </Trans>
-                    </div>
-                )
+                return <div>Error while rendering the remote component</div>
             }
         }
 
         return this.props.children
     }
-}
-
-SystemErrorBoundary.propTypes = {
-    children: PropTypes.node,
-    fallbacks: PropTypes.shape({
-        ifModuleNotFound: PropTypes.node,
-    }),
 }
 
 export { SystemErrorBoundary }

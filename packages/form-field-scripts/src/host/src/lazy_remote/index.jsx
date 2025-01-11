@@ -1,5 +1,4 @@
 import React, { useMemo, Suspense, lazy } from 'react'
-import PropTypes from 'kf-proptypes/widgets'
 
 import { MF_REMOTE_ERRORS } from './constants.js'
 import { getRemoteModule } from './helpers.js'
@@ -49,12 +48,4 @@ export function System(props) {
             </Suspense>
         </SystemErrorBoundary>
     )
-}
-
-System.propTypes = {
-    remoteUrl: PropTypes.string,
-    componentName: PropTypes.string,
-    fallbacks: PropTypes.shape({}),
-    props: PropTypes.shape({}),
-    bridge: PropTypes.func,
 }
