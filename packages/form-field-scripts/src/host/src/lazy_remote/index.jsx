@@ -17,6 +17,7 @@ export function System(props) {
         fallbacks,
         props: childProps,
         bridge = defaultBridge,
+        container,
     } = props
 
     const Component = useMemo(
@@ -34,7 +35,11 @@ export function System(props) {
                     })
                 }
 
-                return getRemoteModule({ remoteUrl, moduleName: componentName })
+                return getRemoteModule({
+                    remoteUrl,
+                    moduleName: componentName,
+                    container,
+                })
             })
             return bridge(Component)
         },
