@@ -1,5 +1,5 @@
 ---
-title: Delete Row
+title: Delete row
 description: Deletes a single row form table
 sidebar:
     order: 8
@@ -10,7 +10,7 @@ Deletes a single row from the specified
 
 ### Parameter
 
-| Parameters | type   |
+| Parameters | Type   |
 | ---------- | ------ |
 | rowId      | String |
 

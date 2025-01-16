@@ -1,5 +1,5 @@
 ---
-title: Get Row
+title: Get row
 description: Retrieve a row instance from table
 sidebar:
     order: 10
@@ -13,7 +13,7 @@ From the row instance, you can access methods such as updateField(), getField(),
 
 ### Parameter
 
-| Parameters | type   |
+| Parameters | Type   |
 | ---------- | ------ |
 | rowId      | String |
 

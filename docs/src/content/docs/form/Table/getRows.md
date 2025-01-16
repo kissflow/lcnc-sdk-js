@@ -1,5 +1,5 @@
 ---
-title: Get Rows
+title: Get rows
 description: Retrieve a row instance from table
 sidebar:
     order: 11

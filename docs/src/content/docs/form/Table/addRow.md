@@ -1,5 +1,5 @@
 ---
-title: Add Row
+title: Add row
 description: Appends row details to the table.
 sidebar:
     order: 6
@@ -10,9 +10,9 @@ Adds a single row to the specified
 
 ### Parameter
 
-| Parameters | type   | description                                                                                                                                |
+| Parameters | Type   | Description                                                                                                                                |
 | ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| payload    | object | An object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.).|
+| Payload    | Object | An object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.).|
 
 ### Syntax
 
