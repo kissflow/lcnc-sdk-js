@@ -1,0 +1,19 @@
+{
+    "name": "<%= projectName %>",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "zip": "rm -rf ./custom-page-component.zip ./dist && npm run build && cd ./dist && zip -q -r ../custom-page-component.zip . && rm -rf ../dist",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "engines": {
+        "node": "^18.0.0 || >=20.0.0"
+    },
+    "devDependencies": {
+        "vite": "^5.2.0",
+        "bestzip": "^2.2.1"
+    }
+}
