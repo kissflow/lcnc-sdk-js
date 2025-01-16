@@ -1,5 +1,5 @@
 ---
-title: Get Parent
+title: Get parent
 description: To perform form action over the main form
 sidebar:
     order: 16

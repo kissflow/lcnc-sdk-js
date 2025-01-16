@@ -2,13 +2,13 @@
 title: Board
 description: Usage of board methods
 ---
-With Kissflow Boards, you can create highly adaptable workflows that let you keep track of information and manage work efficiently.
+With Kissflow Board, you can create highly adaptable workflows that let you keep track of information and manage work efficiently.
 
 Get board instance using `getBoard` method from app's interface.
 
 ##### Parameters
 
-| Parameter | Type   |
+| Parameters | Type   |
 | ---------- | ------ |
 | caseId     | String |
 
@@ -25,7 +25,7 @@ columns to the corresponding fields.
 
 ##### Parameters
 
-| Parameter    | Type   | Description                                                          |
+| Parameters    | Type   | Description                                                          |
 | ------------- | ------ | -------------------------------------------------------------------- |
 | defaultValues | Object | An object with keys as field Id and its values in respective data types. |
 

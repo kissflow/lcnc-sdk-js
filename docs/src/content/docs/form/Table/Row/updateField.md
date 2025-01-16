@@ -1,5 +1,5 @@
 ---
-title: Update Field
+title: Update field
 description: Set new value to a column
 sidebar:
     order: 15
@@ -9,9 +9,9 @@ Updates the value of the given columnId in the row.
 
 ### Parameter
 
-| Parameters | type   | description                                                                                                                               |
+| Parameters | Type   | Description                                                                                                                               |
 | ---------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| payload    | Object | An object where the keys represent the fieldId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea, etc.). |
+| Payload    | Object | An object where the keys represent the fieldId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea, etc.). |
 
 ### Syntax
 

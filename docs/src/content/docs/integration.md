@@ -15,7 +15,7 @@ kf.getContext().then((ctx) => {...})
 // or
 let ctx = kf.getContext()
 /*
-fetches contextual information, such as:
+Fetches contextual information, such as:
 ctx = {
   app: {_id },
   account: { _id }
@@ -25,7 +25,7 @@ ctx = {
 
 ---
 
-### 2. Get API via Kissflow Low-code SDK
+### 2. Get API via Kissflow low-code SDK
 
 This function lets you retrieve any external or Kissflow APIs. To access an
 internal Kissflow API, use an absolute URL, **(i.e.,

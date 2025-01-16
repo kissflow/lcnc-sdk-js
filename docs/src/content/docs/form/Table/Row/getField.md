@@ -1,15 +1,15 @@
 ---
-title: Get Field
+title: Get field
 description: Retrieve value of form field
 sidebar:
     order: 14
 ---
 
-To retrieve the current value of column in a row.
+To retrieve the current value of a column in a row.
 
 ### Parameter
 
-| Parameters | type   | description             |
+| Parameters | Type   | Description             |
 | ---------- | ------ | ----------------------- |
 | columnId   | String | Unique Id of the column |
 
