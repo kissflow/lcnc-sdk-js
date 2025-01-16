@@ -1,5 +1,5 @@
 ---
-title: Get Table
+title: Get table
 description: Returns instance of table class
 sidebar:
     order: 3
@@ -10,7 +10,7 @@ Returns an instance of the Table class, providing access to methods such as addR
 
 ### Parameter
 
-| Parameters | type   | description             |
+| Parameters | Type   | Description             |
 | ---------- | ------ | ----------------------- |
 | tableId    | String | Unique Id of the table. |
 

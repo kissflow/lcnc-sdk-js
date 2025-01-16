@@ -5,7 +5,7 @@ sidebar:
     order: 12
 ---
 
-To retrieve data of given [table instance](/form/gettable/) as JSON.
+To retrieve data of the given [table instance](/form/gettable/) as JSON.
 
 ### Syntax
 
