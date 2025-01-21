@@ -1,6 +1,6 @@
 {
     "name": "@kissflow/form-field-config",
-    "version": "0.1.20",
+    "version": "0.0.1",
     "description": "Configurations for Kissflow's custom form field projects.",
     "main": "index.js",
     "scripts": {

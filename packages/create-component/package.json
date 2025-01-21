@@ -1,6 +1,6 @@
 {
     "name": "create-kf-component",
-    "version": "0.1.31",
+    "version": "0.0.5",
     "description": "create-kf-component is a cli tool that scaffolds Javascript based custom component projects that seamlessly integrate into Kissflow.",
     "main": "index.js",
     "bin": {

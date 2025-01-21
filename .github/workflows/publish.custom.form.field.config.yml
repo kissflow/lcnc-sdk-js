@@ -1,13 +1,13 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: Release 'create-component' package to npm registry
+name: Release 'form-field-config' package to npm registry
 
 on:
   push:
     branches: [ main ]
     paths:
-      - 'packages/create-component/**'
+      - 'packages/form-field-config/**'
 
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
@@ -31,7 +31,7 @@ jobs:
           version: 9.15.0
 
       - name: Install dependencies
-        run: pnpm install --filter=create-kf-component --frozen-lockfile --strict-peer-dependencies=false
+        run: pnpm install --filter=form-field-config --frozen-lockfile --strict-peer-dependencies=false
 
       - name: git config
         run: |
@@ -39,8 +39,7 @@ jobs:
           git config --global user.name "sara"
 
 
-      - name: Publish kf-create-component to npm registry
-        run:  pnpm publish:create-component
+      - name: Publish @kissflow/form-field-config to npm registry
+        run:  pnpm publish:form-field-config
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
