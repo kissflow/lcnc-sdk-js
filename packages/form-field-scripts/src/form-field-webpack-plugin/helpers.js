@@ -3,7 +3,7 @@ import { isPlural } from './utils.js'
 import { FILE_MAP } from '@kissflow/form-field-config'
 
 const clearScreen = () => {
-    // process.stdout.write('\x1B[2J\x1B[3J\x1B[H') // Clears screen, scrollback buffer, and moves cursor to the top-left corner
+    process.stdout.write('\x1B[2J\x1B[3J\x1B[H') // Clears screen, scrollback buffer, and moves cursor to the top-left corner
 }
 
 const logSummary = ({ numberOfErrors, numberOfWarnings }) => {
