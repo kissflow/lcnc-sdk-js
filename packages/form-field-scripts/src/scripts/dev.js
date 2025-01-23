@@ -58,7 +58,7 @@ const startDevServer = async () => {
 
         const url =
             cdn.url && cdn.url != '/'
-                ? `https://${cdn.url}${req.path}`
+                ? `https:${cdn.url}${req.path.replace(/^\/+/, '')}`
                 : `https://localhost${req.path}`
 
         const agent = new https.Agent({
@@ -117,7 +117,6 @@ const startDevServer = async () => {
                         res.removeHeader('content-security-policy')
 
                         if (cdn.url && cdn.url != '/') {
-                            console.log('cdn -> ', cdn.url)
                             return response.replaceAll(
                                 cdn.url,
                                 `//127.0.0.1:${PORT}/`
