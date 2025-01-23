@@ -1,3 +1,5 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
 import webpack from 'webpack'
 import webpackConfig from '../config/webpack.config.js'
 import paths from '../paths.js'
@@ -5,7 +7,6 @@ import chokidar from 'chokidar'
 import chalk from 'chalk'
 import express from 'express'
 import { WebSocketServer } from 'ws'
-import http from 'http'
 import cors from 'cors'
 import fs from 'fs'
 import path from 'path'
@@ -20,7 +21,9 @@ import { Readable } from 'stream'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const port = 9090
+const PORT = 9090
+
+const cdn = { url: '' }
 
 const runDevBuild = async () => {
     return new Promise((resolve, reject) => {
@@ -46,19 +49,24 @@ const startDevServer = async () => {
     app.use(cors())
 
     app.use(async (req, res, next) => {
-        console.log('suriya -> ', req.path)
         if (
             req.path.startsWith('/customcomponent/formfield') ||
             req.path.startsWith('/custom_form_field')
         ) {
-            console.log('shibi -> ', req.path)
             return next()
         }
 
-        const url = `https://pegasicdn2.zingworks.com${req.path}`
+        const url =
+            cdn.url && cdn.url != '/'
+                ? `https://${cdn.url}${req.path}`
+                : `https://localhost${req.path}`
+
+        const agent = new https.Agent({
+            rejectUnauthorized: false, // Ignore self-signed certificates
+        })
 
         try {
-            const externalResponse = await fetch(url)
+            const externalResponse = await fetch(url, { agent })
             if (!externalResponse.ok) {
                 return res
                     .status(externalResponse.status)
@@ -80,18 +88,43 @@ const startDevServer = async () => {
     app.use(
         '/customcomponent/formfield',
         createProxyMiddleware({
-            target: 'https://development-platform-extension.fecqa.zingworks.com/customcomponent/formfield',
+            secure: false,
             changeOrigin: true,
-            selfHandleResponse: true, // res.end() will be called internally by responseInterceptor()
+            selfHandleResponse: true,
+            router: (req) => {
+                const publicPath = req.query['publicPath']
+                const origin = req.query['origin']
+                cdn.url = publicPath
+
+                const path = 'customcomponent/formfield'
+
+                if (!origin || origin == 'https://dev.localhost') {
+                    // The request has been made from
+                    // localhost (kf-xg-frontend)...
+                    // I am unable to proxy https://dev.localhost
+                    // for some reason... Currently, I am unble
+                    // pinpoint where the issue is... Is it in
+                    // nodejs? Or http-proxy-server or http?
+                    return `https://localhost/${path}`
+                }
+
+                return `${origin}/${path}`
+            },
             on: {
                 proxyRes: responseInterceptor(
                     async (responseBuffer, proxyRes, req, res) => {
                         const response = responseBuffer.toString('utf8')
                         res.removeHeader('content-security-policy')
-                        return response.replaceAll(
-                            'pegasicdn2.zingworks.com',
-                            `127.0.0.1:${port}`
-                        )
+
+                        if (cdn.url && cdn.url != '/') {
+                            console.log('cdn -> ', cdn.url)
+                            return response.replaceAll(
+                                cdn.url,
+                                `//127.0.0.1:${PORT}/`
+                            )
+                        }
+
+                        return response
                     }
                 ),
             },
@@ -104,9 +137,7 @@ const startDevServer = async () => {
         key: fs.readFileSync(path.join(__dirname, './cert/private.key')),
         cert: fs.readFileSync(path.join(__dirname, './cert/certificate.crt')),
     }
-    const server = http.createServer(app)
-    https.createServer(options, app).listen(port)
-
+    const server = https.createServer(options, app).listen(PORT)
     const wss = new WebSocketServer({ server })
 
     const clients = new Set()
