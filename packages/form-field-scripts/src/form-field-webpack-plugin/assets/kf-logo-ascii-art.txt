@@ -1,9 +1,8 @@
 
 
-     The custom form field dev build is running on port 9090.
-     To view the output, open the live preview in Kissflow Apps
-     custom components page, enter the URL `https://127.0.0.1:9090`,
-     and press enter.
+     The custom field component’s dev build is running on https://127.0.0.1:9090.
+     To preview the custom component, go to the Import component page in the app
+     and enter dev build’s URL in the live preview section.
 
 
 

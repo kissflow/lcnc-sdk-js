@@ -16,7 +16,7 @@ const projectName = await inquirer
         {
             type: 'input',
             name: 'projectName',
-            message: "Enter project's name: ",
+            message: 'Enter the project name: ',
         },
     ])
     .then(({ projectName }) => projectName.trim())
@@ -47,7 +47,7 @@ const { projectTarget } = await inquirer.prompt([
     {
         type: 'list',
         name: 'projectTarget',
-        message: 'What is the project categorgy? ',
+        message: 'Choose the project category: ',
         choices: Object.values(PROJECT_TARGETS),
     },
 ])
@@ -65,7 +65,7 @@ switch (projectTarget) {
             {
                 type: 'list',
                 name: 'framework',
-                message: 'Which framework do you want to use? ',
+                message: 'Choose your preferred framework: ',
                 choices: Object.values(FRAMEWORKS),
             },
         ])
