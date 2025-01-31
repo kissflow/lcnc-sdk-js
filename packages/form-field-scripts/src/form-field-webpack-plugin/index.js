@@ -23,11 +23,22 @@ const getAsciiArtText = () => {
     return asciiArtText
 }
 
+const getPostBuildInstruction = () => {
+    const currentFileUrl = new URL(import.meta.url)
+    const asciiArtPath = path.join(
+        path.dirname(currentFileUrl.pathname),
+        './assets',
+        'post-build-messages.txt'
+    )
+    const asciiArtText = fs.readFileSync(asciiArtPath, 'utf8')
+    return asciiArtText
+}
+
 const banner = () => {
     if (isDevMode) {
         console.log(getAsciiArtText())
     } else {
-        console.log('Build completed.')
+        console.log(getPostBuildInstruction())
     }
 }
 
