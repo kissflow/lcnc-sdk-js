@@ -22,7 +22,7 @@ const pageInstance = kf.app.openPage("pageId");
 ### Returns
 
 The above command returns the
-[Page instance](https://developers.kissflow.com/app/page/).
+[Page instance](/app/page/).
 
 ### Example scenario
 

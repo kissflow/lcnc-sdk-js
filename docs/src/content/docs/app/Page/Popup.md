@@ -44,7 +44,7 @@ Popup parameters are optional.
 
 ### Returns
 
-Returns an instance of [Popup](/https://developers.kissflow.com/app/page/popup/).
+Returns an instance of [Popup](/app/page/popup/).
 
 
 ## Popup parameters
