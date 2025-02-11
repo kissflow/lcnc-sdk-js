@@ -10,7 +10,24 @@ Get a decision table instance using `getDecisionTable` from app's interface.
 
 ##### Parameters
 
-| Parameters | Type   | Description                                                         |
+| Parameter      | type   |
+| --------------- | ------ |
+| decisionTableId | String |
+
+##### Syntax
+
+```js
+let decisionTableInstance = kf.app.getDecisionTable(decisionTableId);
+```
+
+### Evaluate
+
+From the instance you can able to evaluate the decision table using `evaluate`
+method.
+
+##### Parameters
+
+| Parameter | type   | Description                                                         |
 | ---------- | ------ | ------------------------------------------------------------------- |
 | payload    | Object | An object with keys as condition field id and its respective values. |
 
@@ -22,8 +39,9 @@ let payload = { conditionField1: "value", conditionField2: "value" };
 await decisionTableInstance.evaluate(payload);
 ```
 
-From the instance you can evaluate the decision table using `evaluate`
-method.
+##### Return
+
+Returns a decision table output.
 
 ##### Example
 
