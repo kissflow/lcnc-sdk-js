@@ -5,15 +5,14 @@ sidebar:
     order: 7
 ---
 
-To Retrieve value of the page / local variable.
+This command lets you retrieve the value of a local variable.
 
--   Page variables have a limited scope and are specific to each page.
--   Unlike application variables, page variables are not persisted, so they are
-    reinitialized each time the page is revisited.
+- The scope of page variables are limited to the page they are declared in.
+- Page variables do not persist like global variables, therefore revisiting a page will reinitialize all of its page variables.
 
 ### Parameters
 
-| Parameters | type   |
+| Parameter | Type   |
 | ---------- | ------ |
 | variableId | String |
 
@@ -25,8 +24,8 @@ const pageVariable1 = await kf.app.page.getVariable("variableId");
 
 ### Returns
 
-Returns the value of variable, which could be of following data type in relation
-with variable type.
+Returns the value of variable, which could be of the following data type in relation
+with the variable type.
 
 | Variable type | Data type |
 | ------------- | --------- |
@@ -35,7 +34,6 @@ with variable type.
 | DateTime      | String    |
 | Boolean       | Boolean   |
 
-### Example scenario
+### Example
 
-Suppose you have a implemented a custom voting counter component on a page. 
-When a user submits their vote, you can retrieve the counter value and save this data.
+Local variables can be used to store the individual ratings given for different criteria (e.g., communication, teamwork) within the performance review form. Using local variables for the individual ratings would make it easier to calculate the final rating for performance evaluation.

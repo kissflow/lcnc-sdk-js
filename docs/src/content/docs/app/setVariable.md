@@ -5,15 +5,15 @@ sidebar:
     order: 3
 ---
 
-This method lets you update the value of a global variable used in the app.
+This command lets you update the value of a global variable used in the app.
 
 ### Parameters
 
-| Parameters | type                        | Description                                                           |
+| Parameter | Type                        | Description                                                           |
 | ---------- | --------------------------- | --------------------------------------------------------------------- |
-| variableId | String                      | Unique Id of variable                                                 |
-| value      | String or Number or Boolean | New value to variable                                                 |
-| payload    | Object                      | Object with keys as variableId and its values in respective data type |
+| variableId | String                      | Unique Id of the variable.                                                 |
+| value      | String or Number or Boolean | New value to variable.                                                 |
+| payload    | Object                      | Object with keys as variableId and its values in respective data type. |
 
 ### Syntax
 

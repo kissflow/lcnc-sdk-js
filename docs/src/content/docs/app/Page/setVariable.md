@@ -5,15 +5,15 @@ sidebar:
     order: 8
 ---
 
-This method lets you to update a new value to local variables
+This command lets you update a new value to local variables.
 
 ### Parameters
 
-| Parameters | type                        | Description                                                           |
+| Parameter  | Type                        | Description                                                           |
 | ---------- | --------------------------- | --------------------------------------------------------------------- |
-| variableId | String                      | Unique Id of variable                                                 |
-| value      | String or Number or Boolean | New value to variable                                                 |
-| payload    | Object                      | Object with keys as variableId and its values in respective data type |
+| variableId | String                      | Unique Id of the variable.                                            |
+| value      | String or Number or Boolean | New value to the variable.                                            |
+| payload    | Object                      | Object with keys as variableId and its values in respective data type.|
 
 ### Syntax
 
@@ -32,8 +32,7 @@ kf.app.page.setVariable({
 });
 ```
 
-### Example scenario
+### Example
 
-Consider you have fetched employee details such as name, age & address during
-the page's onload event. You can set local variables for all these fields and
-use them on different components inside the page, such as displaying labels or cards.
+Consider you are an HR representative who wants to save a new email address for an employee. Before saving, the app needs to perform a validation check to see if the email already exists in the system.
+In this scenario, a local variable can be set to store the new email address entered by the user during the time the validation process happens. Once the validation is complete and the employee’s new information is saved, the local variable can be released.

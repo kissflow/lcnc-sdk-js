@@ -7,7 +7,7 @@ sidebar:
 
 ## Get component instance
 
-This method lets you to retrieve a component instance
+This command lets you retrieve a component instance.
 
 ###### Syntax
 
@@ -17,15 +17,15 @@ let componentInstance = await kf.app.page.getComponent(componentId);
 
 ###### Parameters
 
-| Parameters  | type   | Description            |
+| Parameter  | Type   | Description            |
 | ----------- | ------ | ---------------------- |
-| componentId | String | Unique Id of Component |
+| componentId | String | Unique ID of the Component. |
 
-Returns a component instance with following methods
+Returns a component instance with following methods:
 
 ### Refresh
 
-This methods lets you to refresh the component.
+This command refreshes a given component.
 
 ###### Syntax
 
@@ -35,7 +35,7 @@ componentInstance.refresh();
 
 ### Hide
 
-This method hides a component from page
+This command hides a component from a page.
 
 ###### Syntax
 
@@ -45,7 +45,7 @@ componentInstance.hide();
 
 ### Show
 
-This method renders a component that has been hidden previously in a page.
+This command renders a component that has been hidden previously in a page.
 
 ###### Syntax
 
@@ -57,8 +57,7 @@ componentInstance.show();
 
 ### OnMount
 
-A lifecycle event for a component which will be called when component is mounted
-/ re-mounted on page.
+A lifecycle event for a component which will be called when component is mounted or re-mounted on page.
 
 ###### Syntax
 
@@ -69,7 +68,7 @@ componentInstance.onMount(listenerFunction);
 ##### Example
 
 ```js
-// Consider setting 2nd tab as active when tab component is mounted
+// Consider setting second tab as active when tab component is mounted.
 componentInstance.onMount(() => {
 	// function logic goes here...
 	componentInstance.setActiveTab(2);
@@ -78,18 +77,18 @@ componentInstance.onMount(() => {
 
 :::note[Note]
 - Any component specific methods that are used on Page load must be called inside component's onMount event.
-- The event `onMount` is applicable only for following components
+- The event `onMount` is applicable only for following components.
 :::
 
 ### 1. Tab
 
 ##### setActiveTab
 
-The method can be used to set a specified tab index as active.
+This command sets a specific tab index as active.
 
 ###### Parameters
 
-| Parameters | type   | Description                  |
+| Parameter | Type   | Description                  |
 | ---------- | ------ | ---------------------------- |
 | tabIndex   | Number | Index of tab starting from 1 |
 
@@ -102,6 +101,6 @@ componentInstance.setActiveTab(tabIndex);
 ###### Example
 
 ```js
-// To set 2nd tab as active
+// To set second tab as active
 componentInstance.setActiveTab(2);
 ```

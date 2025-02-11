@@ -41,7 +41,7 @@ kf.user.AppRoles
 console.log(kf.user.AppRoles)
 ```
 
-##### returns
+##### Returns
 This property returns an array of roles assigned to the current user. Each role will have an ID and a name.
 
 ##### Example

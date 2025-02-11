@@ -5,11 +5,11 @@ sidebar:
     order: 4
 ---
 
-This method lets you to open a page in an app
+This command lets you open a specific page inside an app.
 
 ### Parameters
 
-| Parameters | type   |
+| Parameters | Type   |
 | ---------- | ------ |
 | pageId     | String |
 
@@ -21,18 +21,9 @@ const pageInstance = kf.app.openPage("pageId");
 
 ### Returns
 
-Returns [Page instance](/lcnc-sdk-js/app/page/)
+The above command returns the
+[Page instance](https://developers.kissflow.com/app/page/).
 
 ### Example scenario
 
-Suppose you want to redirect users to their respective pages based on their roles.
-
-```js
-let userRole = kf.user.Role.Name;
-
-if (userRole === "Admin") {
-	kf.app.openPage("Admin_page_id");
-} else {
-	kf.app.openPage("Non_Admin_");
-}
-```
+If you are working with a complex app such as the payroll or employee management app, you can use this command to quickly open a specific page, like the appraisal list.

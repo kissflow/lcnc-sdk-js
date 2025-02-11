@@ -8,7 +8,7 @@ Get board instance using `getBoard` method from app's interface.
 
 ##### Parameters
 
-| Parameters | type   |
+| Parameter | Type   |
 | ---------- | ------ |
 | caseId     | String |
 
@@ -25,9 +25,9 @@ columns to the corresponding fields.
 
 ##### Parameters
 
-| Parameters    | type   | Description                                                          |
+| Parameter    | Type   | Description                                                          |
 | ------------- | ------ | -------------------------------------------------------------------- |
-| defaultValues | Object | Object with keys as field Id and its values in respective data types |
+| defaultValues | Object | Object with keys as field Id and its values in respective data types. |
 
 ##### Syntax
 
@@ -58,5 +58,4 @@ boardInstance.importCSV(defaultValues); // All records imported through this imp
 > 1. Default values are optional
 > 2. Any variables or parameter can also be mapped in `defaultValues`.
 > 3. If a default value is set by the developer, end users cannot override it.
-> 4. Certain fields cannot be set as default, such as auto-calculated fields and
->    sequence numbers.
+> 4. The following field types cannot be set as default: Signature, Aggregation, Geolocation, Sequence number, Scanner, and any other field that are marked as a computed field.

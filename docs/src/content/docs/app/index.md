@@ -7,10 +7,10 @@ sidebar:
 
 There are several SDK methods that you can use to retrieve information from and about the app that is currently in use. Below are a few examples:
 
-To get information about the current active instance of a Kissflow app, use `kf.app` 
+To get information about the current active instance of a Kissflow app, use `kf.app`. 
 To retrieve the app’s ID, use `kf.app._id.`
 
-`kf.app` and its associated methods are accessible in:
+The command `kf.app` and its associated methods are accessible in the following:
 - Forms within the app.
 - Custom components.
 - Across all widgets and popup events inside a page and other page events.

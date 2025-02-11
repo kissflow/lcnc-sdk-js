@@ -1,9 +1,7 @@
 ---
-title: Formatter
-description: Formatter usages
+title: Integration
+description: Methods to run integrations
 ---
-
-# _Kissflow Low-code JavaScript SDK_
 
 Kissflow lets you extend your integrations and run server side functions using the **Run Script** connector. You can use the Kissflow SDK inside the connector to get application and account details and make API calls.
 

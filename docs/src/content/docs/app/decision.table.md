@@ -10,7 +10,7 @@ Get a decision table instance using `getDecisionTable` from app's interface.
 
 ##### Parameters
 
-| Parameters      | type   |
+| Parameter      | type   |
 | --------------- | ------ |
 | decisionTableId | String |
 
@@ -27,9 +27,9 @@ method.
 
 ##### Parameters
 
-| Parameters | type   | Description                                                         |
+| Parameter | type   | Description                                                         |
 | ---------- | ------ | ------------------------------------------------------------------- |
-| payload    | Object | An object with keys as condition field id and its respective values |
+| payload    | Object | An object with keys as condition field id and its respective values. |
 
 ##### Syntax
 
@@ -40,7 +40,7 @@ await decisionTableInstance.evaluate(payload);
 
 ##### Return
 
-Returns a decision table output
+Returns a decision table output.
 
 ##### Example
 
