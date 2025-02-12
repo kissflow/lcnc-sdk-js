@@ -39,9 +39,7 @@ dataformInstance.importCSV(defaultValues);
 
 ##### Example
 
-Consider a scenario where certain fields are not visible to the user(hidden in
-form visibilty). In that case, default values can be used to populate data in
-these hidden fields.
+Consider a scenario where certain fields are not visible to the user (hidden in form visibility). In that case, default values can be used to populate data in these hidden fields.
 
 ```js
 // Get the dataform with the dataform's flow_id
