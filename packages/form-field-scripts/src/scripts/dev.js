@@ -130,6 +130,20 @@ const startDevServer = async () => {
 
                         return (
                             `<style>
+                                 #customFormFieldShowcaseOverlay {
+                                            position: fixed;
+                                            top: 0;
+                                            left: 0;
+                                            width: 100%;
+                                            height: 100%;
+                                            background-color: white; /* Pure white overlay */
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            z-index: 9999; /* Ensures it's above other content */
+                                }
+
+
                                 #customFormFieldShowcaseLoader {
                                             width: 32px;
                                             height: 32px;
@@ -150,20 +164,24 @@ const startDevServer = async () => {
                             </style>` +
                             response.replace(
                                 '<body>',
-                                `<body><div id="customFormFieldShowcaseLoader"></div>`
+                                `<body>
+                                    <div id="customFormFieldShowcaseOverlay">
+                                        <div id="customFormFieldShowcaseLoader"></div>
+                                    </div>
+`
                             ).concat(`
                                   <script>
                                     window.onCustomFormFieldShowcaseLoading = () => {
-                                      const loader = document.getElementById('customFormFieldShowcaseLoader');
-                                      if (loader) {
-                                            loader.style.display = 'block'
+                                      const overlay = document.getElementById('customFormFieldShowcaseOverlay')
+                                      if (overlay) {
+                                            overlay.style.display = 'block';
                                       } 
                                     }
 
                                     window.onCustomFormFieldShowcaseLoaded = () => {
-                                      const loader = document.getElementById('customFormFieldShowcaseLoader');
-                                      if (loader) {
-                                            loader.style.display = 'none'
+                                      const overlay = document.getElementById('customFormFieldShowcaseOverlay');
+                                      if (overlay) {
+                                            overlay.style.display = 'none'
                                       } 
                                     }
                                   </script>`)
@@ -199,6 +217,9 @@ const startDevServer = async () => {
     })
 
     sourceWatcher.on('change', async (path) => {
+        for (const client of clients) {
+            client.send('building')
+        }
         await runDevBuild()
         for (const client of clients) {
             client.send('reload')
