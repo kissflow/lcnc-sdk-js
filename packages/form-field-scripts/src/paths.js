@@ -32,6 +32,7 @@ const resolveModule = (resolveFn, filePath) => {
 }
 
 export default {
+    buildCache: resolveApp('node_modules/build_cache'),
     appPath: resolveApp('.'),
     projectPackageJson: resolveModule(resolveApp, 'package'),
     appBuild: resolveApp('dist'),

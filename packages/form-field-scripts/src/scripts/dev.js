@@ -76,6 +76,7 @@ const startDevServer = async () => {
             // Pass the content-type and file as response
             const contentType = externalResponse.headers.get('content-type')
             res.set('content-type', contentType)
+            res.set('Cache-Control', 'public, max-age=31536000, immutable')
 
             // Convert the body to a readable stream and pipe it to the response
             Readable.from(externalResponse.body).pipe(res)
@@ -115,6 +116,10 @@ const startDevServer = async () => {
                     async (responseBuffer, proxyRes, req, res) => {
                         const response = responseBuffer.toString('utf8')
                         res.removeHeader('content-security-policy')
+                        res.setHeader(
+                            'Cache-Control',
+                            'public, max-age=31536000, immutable'
+                        )
 
                         if (cdn.url && cdn.url != '/') {
                             return response.replaceAll(
@@ -123,7 +128,46 @@ const startDevServer = async () => {
                             )
                         }
 
-                        return response
+                        return (
+                            `<style>
+                                #customFormFieldShowcaseLoader {
+                                            width: 32px;
+                                            height: 32px;
+                                            border: 2px solid #DEEAFF  ;
+                                            border-top: 2px solid #0565FF;
+                                            border-radius: 50%;
+                                            animation: spin 1s linear infinite;
+                                            position: absolute;
+                                            top: 50%;
+                                            left: 50%;
+                                            transform: translate(-50%, -50%);
+                                        }
+
+                                        @keyframes spin {
+                                            0% { transform: translate(-50%, -50%) rotate(0deg); }
+                                            100% { transform: translate(-50%, -50%) rotate(360deg); }
+                                        }
+                            </style>` +
+                            response.replace(
+                                '<body>',
+                                `<body><div id="customFormFieldShowcaseLoader"></div>`
+                            ).concat(`
+                                  <script>
+                                    window.onCustomFormFieldShowcaseLoading = () => {
+                                      const loader = document.getElementById('customFormFieldShowcaseLoader');
+                                      if (loader) {
+                                            loader.style.display = 'block'
+                                      } 
+                                    }
+
+                                    window.onCustomFormFieldShowcaseLoaded = () => {
+                                      const loader = document.getElementById('customFormFieldShowcaseLoader');
+                                      if (loader) {
+                                            loader.style.display = 'none'
+                                      } 
+                                    }
+                                  </script>`)
+                        )
                     }
                 ),
             },

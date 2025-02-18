@@ -31,6 +31,10 @@ export default {
     infrastructureLogging: {
         level: 'none',
     },
+    cache: {
+        type: 'filesystem',
+        cacheDirectory: paths.buildCache,
+    },
     stats: 'none',
     module: {
         rules: [
