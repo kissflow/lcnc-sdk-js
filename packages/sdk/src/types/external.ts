@@ -22,6 +22,7 @@ export type environmentObject = {
 
 export type BoardItem = {
   _id: string;
+  _view_id: string;
 };
 
 export type DataformItem = {
