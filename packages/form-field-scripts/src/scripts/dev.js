@@ -114,15 +114,16 @@ const startDevServer = async () => {
             on: {
                 proxyRes: responseInterceptor(
                     async (responseBuffer, proxyRes, req, res) => {
-                        const response = responseBuffer.toString('utf8')
                         res.removeHeader('content-security-policy')
                         res.setHeader(
                             'Cache-Control',
                             'public, max-age=31536000, immutable'
                         )
 
+                        let response = responseBuffer.toString('utf8')
+
                         if (cdn.url && cdn.url != '/') {
-                            return response.replaceAll(
+                            response = response.replaceAll(
                                 cdn.url,
                                 `//127.0.0.1:${PORT}/`
                             )
