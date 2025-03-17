@@ -1,0 +1,63 @@
+{
+    "name": "<%= projectName %>",
+    "version": "1.0.0",
+    "description": "Custom form field for Kissflow's form",
+    "main": "index.js",
+    "scripts": {
+        "dev": "form-field-scripts dev",
+        "build": "form-field-scripts build",
+        "zip": "rm -rf ./<%= projectName %>.zip ./dist && npm run build && cd ./dist && zip -q -r ../<%= projectName %>.zip . && rm -rf ../dist",
+        "unzip": "rm -rf ./<%= projectName %> && unzip <%= projectName %>.zip -d ./<%= projectName %>"
+    },
+    "type": "module",
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "<%= CUSTOM_FORM_FIELD_SCRIPTS_PACKAGE_NAME %>": "<%= latestFormFieldScriptsVersion %>",
+        "<%= CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME %>": "<%= latestFormFieldModelVersion %>",
+        "unzipper": "^0.10.14",
+        "zip": "^1.2.0"
+    },
+    "engines": {
+        "node": ">=16.0.0 <17.0.0"
+    },
+    "eslintConfig": {
+        "extends": ["react-app"],
+        "rules": {
+            "no-restricted-globals": [
+                "error",
+                {
+                    "name": "window",
+                    "message": "Don't use browser's `window` object."
+                },
+                {
+                    "name": "document",
+                    "message": "Don't use browser's `document` object."
+                },
+                {
+                    "name": "fetch",
+                    "message": "Using browser's fetch api is not allowed."
+                },
+                {
+                    "name": "XMLHttpRequest",
+                    "message": "Using browser's XMLHttpRequest is not allowed."
+                }
+            ]
+        }
+    },
+    "keywords": [
+        "lcnc",
+        "no-code",
+        "low-code",
+        "platform",
+        "react",
+        "cli",
+        "kissflow",
+        "custom-components",
+        "custom-fields"
+    ],
+    "dependencies": {
+        "react": "<%= reactVersion %>",
+        "react-dom": "<%= reactDomVersion %>"
+    }
+}
