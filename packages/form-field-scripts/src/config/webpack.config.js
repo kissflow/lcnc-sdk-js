@@ -28,6 +28,10 @@ export default {
     experiments: {
         outputModule: true,
     },
+    // output: {
+    //     chunkFilename: '[name].[contenthash].bundle.js',
+    // },
+    optimization: { chunkIds: 'named' },
     infrastructureLogging: {
         level: 'none',
     },
