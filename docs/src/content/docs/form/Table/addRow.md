@@ -2,7 +2,7 @@
 title: Add row
 description: Appends row details to the table.
 sidebar:
-    order: 6
+  order: 6
 ---
 
 Adds a single row to the specified
@@ -10,9 +10,9 @@ Adds a single row to the specified
 
 ### Parameter
 
-| Parameters | Type   | Description                                                                                                                                |
-| ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Payload    | Object | An object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.).|
+| Parameters | Type   | Description                                                                                                                                                                        |
+| ---------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Payload    | Object | An object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.). |
 
 ### Syntax
 
@@ -22,7 +22,7 @@ tableInstance.addRow({ columnId1: value, columnId2: value });
 
 ### Example
 
-To add a new work experience entry into the employee work experience table, work_table1, specify the relevant column IDs, table_field1, table_field2, along with their corresponding values. (Kissflow, 2 years). 
+To add a new work experience entry into the employee work experience table, work_table1, specify the relevant column IDs, table_field1, table_field2, along with their corresponding values. (Kissflow, 2 years).
 
 ```js
 worktableInstance.addRow({ table_field1: “Microsoft”, table_field2: “2 years” });
@@ -32,4 +32,3 @@ worktableInstance.addRow({ table_field1: “Microsoft”, table_field2: “2 yea
 For bulk operations involving the addition of more than one row to a table, use the
 [addRows()](/form/table/addrows/) method instead.
 :::
-

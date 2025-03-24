@@ -2,7 +2,7 @@
 title: Get Variable
 description: Retrieve value of variable.
 sidebar:
-    order: 2
+  order: 2
 ---
 
 This command lets you retrieve the value of a global variable used in the app.

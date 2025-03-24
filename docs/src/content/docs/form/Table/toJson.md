@@ -2,7 +2,7 @@
 title: to JSON
 description: Retrieve data of given table as json
 sidebar:
-    order: 12
+  order: 12
 ---
 
 To retrieve data of the given [table instance](/form/gettable/) as JSON.
