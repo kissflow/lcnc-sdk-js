@@ -42,10 +42,10 @@ export default defineConfig({
 					label: "Application",
 					autogenerate: { directory: "app" }
 				},
-				{
-					label: "Custom Component",
-					link: "/component"
-				},
+           {
+                    label: 'Custom Component',
+                    autogenerate: { directory: 'component' },
+                },
 				{
 					label: "Formatter",
 					link: "/formatter"

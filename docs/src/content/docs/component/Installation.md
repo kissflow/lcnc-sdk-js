@@ -1,6 +1,8 @@
 ---
 title: Installation
 description: Guide to install Kissflow sdk
+sidebar:
+    order: 1 
 ---
 Kissflow lets you build custom UI components and import them as reusable custom components in your app. You can use plain HTML or frontend frameworks like React to build your component. 
 
