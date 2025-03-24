@@ -2,7 +2,7 @@
 title: Get Local Variable
 description: Retrieve value of page variable.
 sidebar:
-    order: 7
+  order: 7
 ---
 
 This command lets you retrieve the value of a local variable.
@@ -12,7 +12,7 @@ This command lets you retrieve the value of a local variable.
 
 ### Parameters
 
-| Parameter | Type   |
+| Parameter  | Type   |
 | ---------- | ------ |
 | variableId | String |
 
@@ -37,3 +37,4 @@ with the variable type.
 ### Example
 
 Local variables can be used to store the individual ratings given for different criteria (e.g., communication, teamwork) within the performance review form. Using local variables for the individual ratings would make it easier to calculate the final rating for performance evaluation.
+

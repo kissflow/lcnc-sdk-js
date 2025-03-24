@@ -2,7 +2,7 @@
 title: Component
 description: Gives component instance and their methods
 sidebar:
-    order: 11
+  order: 11
 ---
 
 ## Get component instance
@@ -17,8 +17,8 @@ let componentInstance = await kf.app.page.getComponent(componentId);
 
 ###### Parameters
 
-| Parameter  | Type   | Description            |
-| ----------- | ------ | ---------------------- |
+| Parameter   | Type   | Description                 |
+| ----------- | ------ | --------------------------- |
 | componentId | String | Unique ID of the Component. |
 
 Returns a component instance with following methods:
@@ -70,15 +70,16 @@ componentInstance.onMount(listenerFunction);
 ```js
 // Consider setting second tab as active when tab component is mounted.
 componentInstance.onMount(() => {
-	// function logic goes here...
-	componentInstance.setActiveTab(2);
+  // function logic goes here...
+  componentInstance.setActiveTab(2);
 });
 ```
 
 :::note[Note]
+
 - Any component specific methods that are used on Page load must be called inside component's onMount event.
 - The event `onMount` is applicable only for following components.
-:::
+  :::
 
 ### 1. Tab
 
@@ -89,8 +90,8 @@ This command sets a specific tab index as active.
 ###### Parameters
 
 | Parameter | Type   | Description                  |
-| ---------- | ------ | ---------------------------- |
-| tabIndex   | Number | Index of tab starting from 1 |
+| --------- | ------ | ---------------------------- |
+| tabIndex  | Number | Index of tab starting from 1 |
 
 ###### Syntax
 

@@ -2,7 +2,7 @@
 title: Page Parameters
 description: Retrieve page parameters.
 sidebar:
-    order: 6
+  order: 6
 ---
 
 ## getAllParameters()
@@ -23,8 +23,8 @@ Returns an object.
 
 ```json
 {
-	"parameterName": "Sample value",
-	"parameterName2": "Sample value 2"
+  "parameterName": "Sample value",
+  "parameterName2": "Sample value 2"
 }
 ```
 
@@ -53,4 +53,5 @@ let value = await kf.app.page.getParameter("parameterId");
 Value of single page’s input parameter based on the parameter ID that was passed.
 
 ### Example
+
 In a page that contains the information of all employees in an organization, pass a single person’s employee ID as the parameter ID to obtain information about that particular employee.
