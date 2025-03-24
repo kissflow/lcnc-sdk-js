@@ -10,7 +10,7 @@ Get a decision table instance using `getDecisionTable` from app's interface.
 
 ##### Parameters
 
-| Parameter      | type   |
+| Parameter       | type   |
 | --------------- | ------ |
 | decisionTableId | String |
 
@@ -27,9 +27,9 @@ method.
 
 ##### Parameters
 
-| Parameter | type   | Description                                                         |
-| ---------- | ------ | ------------------------------------------------------------------- |
-| payload    | Object | An object with keys as condition field id and its respective values. |
+| Parameter | type   | Description                                                          |
+| --------- | ------ | -------------------------------------------------------------------- |
+| payload   | Object | An object with keys as condition field id and its respective values. |
 
 ##### Syntax
 
@@ -53,6 +53,6 @@ conditionField2, etc.) along with their corresponding input values
 ```js
 let decisionTableInstance = kf.app.getDecisionTable("Loan_decision_table");
 let decisionOutput = await decisionTableInstance.evaluate({
-	Age_conditionID: 18
+  Age_conditionID: 18,
 });
 ```

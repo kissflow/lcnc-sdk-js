@@ -9,7 +9,7 @@ To begin with, get dataform instance using `getDataform` method from app's inter
 
 ##### Parameters
 
-| Parameter | Type   |
+| Parameter  | Type   |
 | ---------- | ------ |
 | dataformId | String |
 
@@ -26,8 +26,8 @@ the corresponding fields.
 
 ##### Parameters
 
-| Parameters    | Type   | Description                                                          |
-| ------------- | ------ | -------------------------------------------------------------------- |
+| Parameters    | Type   | Description                                                              |
+| ------------- | ------ | ------------------------------------------------------------------------ |
 | defaultValues | Object | An object with keys as field Id and its values in respective data types. |
 
 ##### Syntax
