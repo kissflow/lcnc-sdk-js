@@ -9,7 +9,7 @@ To begin with, get dataform instance using `getDataform` method from app's inter
 
 ##### Parameters
 
-| Parameters | Type   |
+| Parameter  | Type   |
 | ---------- | ------ |
 | dataformId | String |
 
@@ -26,8 +26,8 @@ the corresponding fields.
 
 ##### Parameters
 
-| Parameters    | Type   | Description                                                          |
-| ------------- | ------ | -------------------------------------------------------------------- |
+| Parameters    | Type   | Description                                                              |
+| ------------- | ------ | ------------------------------------------------------------------------ |
 | defaultValues | Object | An object with keys as field Id and its values in respective data types. |
 
 ##### Syntax
@@ -39,19 +39,17 @@ dataformInstance.importCSV(defaultValues);
 
 ##### Example
 
-Consider a scenario where certain fields are not visible to the user(hidden in
-form visibilty). In that case, default values can be used to populate data in
-these hidden fields.
+Consider a scenario where certain fields are not visible to the user (hidden in form visibility). In that case, default values can be used to populate data in these hidden fields.
 
 ```js
 // Get the dataform with the dataform's flow_id
-const dfInstance = kf.app.getDataform("Product_Dataform_A00"); // Product_Dataform_A00 is the flow_id
+const dfInstance = kf.app.getDataform("Product_Dataform_A00"); // Product_Dataform_A00 is the flow_id.
 
 // Set field values for specific fields of the dataform
-let defaultValues = { location: "India" }; // Location is the the field_id of a field inside the dataform
+let defaultValues = { location: "India" }; // Location is the the field_id of a field inside the dataform.
 
 // Pass the field config into the import sdk method
-dfInstance.importCSV(defaultValues); // All records imported through this importer would have Location field set as India
+dfInstance.importCSV(defaultValues); // All records imported through this importer would have the Location field set as India.
 ```
 
 > Note

@@ -33,7 +33,6 @@ let requestNumber = await kf.context.getField(fieldId);
 
 Please refer more about [Forms and its methods](/form/about/)
 
-
 ### Child table's Row
 
 When `kf.context` is used inside a row's field event, it considers the entire
@@ -43,6 +42,7 @@ row as project.
 let columnId = "Quantity_of_Product";
 let quantity = await kf.context.getField(columnId);
 ```
+
 Please refer more about [Rows and its methods](/form/table/row/)
 
 ### Page (onLoad, unLoad)
@@ -54,6 +54,7 @@ such as getParameter, setVariable, getVariables can be accessed from it.
 // Make some api call and change the local variable based on that
 kf.context.updateVariable("variableName", "some value");
 ```
+
 Please refer more about [Page and its method](/app/page/)
 
 ### Components

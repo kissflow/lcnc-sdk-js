@@ -2,22 +2,16 @@
 title: Get Variable
 description: Retrieve value of variable.
 sidebar:
-    order: 2
+  order: 2
 ---
 
-This method lets you retrieve the value of a global variable used in the app.
+This command lets you retrieve the value of a global variable used in the app.
 
--   Application variables are similar to variables in any programming language, with a scope spanning the entire user session within the application. 
+Global variables are similar to variables in any programming language. Users can set variable values in pages, forms, or custom components, and retrieve it from other pages, forms, or custom components within the same app. Once declared, a global variable stays in the app throughout the duration the app is running.
 
--   Users can set variable values in pages, forms, or custom components, and retrieve it from other pages, forms, or custom components within the same application. 
-
-:::note[Note] 
-Value of application variable are stored on local machine of the user and
-    they are always persisted, even if the application reloaded.
-:::
 ### Parameters
 
-| Parameters | type   |
+| Parameters | Type   |
 | ---------- | ------ |
 | variableId | String |
 
@@ -40,4 +34,4 @@ The above syntax will return the value of the variable, with data type correspon
 
 ### Example
 
-This method can be used to retrieve the number of work hours an employee has logged in a particular week.
+This command can be used to retrieve the number of work hours an employee has logged in a particular week.

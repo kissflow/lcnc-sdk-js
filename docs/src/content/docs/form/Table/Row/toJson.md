@@ -2,7 +2,7 @@
 title: to JSON
 description: Retrieve data of given row inside table as json
 sidebar:
-    order: 16
+  order: 16
 ---
 
 To retrieve the data of the current row in JSON format.
