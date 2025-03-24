@@ -2,7 +2,7 @@
 title: Get rows
 description: Retrieve a row instance from table
 sidebar:
-    order: 11
+  order: 11
 ---
 
 Returns list of [row instances](/form/table/row/) from the

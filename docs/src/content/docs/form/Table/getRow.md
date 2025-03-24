@@ -2,14 +2,13 @@
 title: Get row
 description: Retrieve a row instance from table
 sidebar:
-    order: 10
+  order: 10
 ---
 
 Returns a [row instance](/form/table/row/) of `rowId` from the specified
 [table instance](/form/gettable/).
 
 From the row instance, you can access methods such as updateField(), getField(), and so on.
-
 
 ### Parameter
 

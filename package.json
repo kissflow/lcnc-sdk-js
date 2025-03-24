@@ -4,23 +4,13 @@
     "description": "A library that contains essentials packages for Kissflow SDK",
     "main": "index.js",
     "scripts": {
+        "docs-dev": "cd docs/ && pnpm run dev",
         "build:sdk": "cd packages/sdk && pnpm run build",
         "publish:sdk": "cd packages/sdk && pnpm publish",
         "publish:sdk-canary": "cd packages/sdk && pnpm run publish-canary",
-        "publish:create-component": "cd packages/create-component && pnpm publish",
-        "publish:form-field-scripts": "cd packages/form-field-scripts && pnpm publish",
-        "publish:form-field-config": "cd packages/form-field-config && pnpm publish"
+        "publish:create-component": "cd packages/create-component && pnpm publish"
     },
     "keywords": [],
-    "engines": {
-        "node": ">=18.14.1"
-    },
     "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "@eslint/js": "^9.7.0",
-        "eslint": "^9.7.0",
-        "globals": "^15.8.0",
-        "typescript-eslint": "^7.17.0"
-    }
+    "license": "ISC"
 }

@@ -3,8 +3,7 @@ title: Formatter
 description: Formatter usages
 ---
 
-When the queried data type does not align with Kissflow’s pre-defined data types, you must format them accordingly. Here are a few formatters that you can choose from. 
-
+When the queried data type does not align with Kissflow’s pre-defined data types, you must format them accordingly. Here are a few formatters that you can choose from.
 
 ### Date
 

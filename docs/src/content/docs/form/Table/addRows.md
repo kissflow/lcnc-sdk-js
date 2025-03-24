@@ -2,25 +2,25 @@
 title: Add rows
 description: Appends multiple rows details to the table.
 sidebar:
-    order: 7
-    # badge:
-    #     text: New
+  order: 7
+  # badge:
+  #     text: New
 ---
 
 Adds multiple rows to the [table instance](/form/gettable/).
 
 ### Parameter
 
-| Parameters | Type  | Description                                                                                                                                          |
-| ---------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Parameters | Type  | Description                                                                                                                                                                        |
+| ---------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Payload    | Array | Array of objects where keys represent the columnId(string) and its values correspond to the respective field types (like number for rating/slider, string for text/textarea etc.). |
 
 ### Syntax
 
 ```js
 tableInstance.addRows([
-	{ columnId1: value, columnId2: value }, // row 1
-	{ columnId1: value, columnId2: value } // row 2
+  { columnId1: value, columnId2: value }, // row 1
+  { columnId1: value, columnId2: value }, // row 2
 ]);
 ```
 
