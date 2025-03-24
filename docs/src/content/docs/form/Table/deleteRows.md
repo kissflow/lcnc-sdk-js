@@ -1,15 +1,15 @@
 ---
-title: Delete Rows
+title: Delete rows
 description: Delete multiple rows form table
 sidebar:
     order: 9
 ---
 
-Deletes multiple rows from the specified [table instance](/lcnc-sdk-js/form/gettable/).
+Deletes multiple rows from the specified [table instance](/form/gettable/).
 
 ### Parameter
 
-| Parameters | type             |
+| Parameters | Type             |
 | ---------- | ---------------- |
 | rows       | Array of Strings |
 

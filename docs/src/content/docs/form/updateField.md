@@ -1,5 +1,5 @@
 ---
-title: Update Field
+title: Update field
 description: Set new value to a field
 sidebar:
     order: 2
@@ -9,9 +9,9 @@ Updates the values of all the fields mentioned in the payload object.
 
 ### Parameter
 
-| Parameters | type   | description                                                                                                                               |
+| Parameters | Type   | Description                                                                                                                               |
 | ---------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| payload    | Object | An object where the key represents fieldId (string) and the values correspond to their respective field type (like number for rating/slider, string for text/textarea, etc.) |
+| payload    | Object | An object where the key represents fieldId (string) and the values correspond to their respective field type (like number for rating/slider, string for text/textarea, etc.). |
 
 ### Syntax
 

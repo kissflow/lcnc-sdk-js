@@ -1,5 +1,5 @@
 ---
-title: Add Rows
+title: Add rows
 description: Appends multiple rows details to the table.
 sidebar:
     order: 7
@@ -7,13 +7,13 @@ sidebar:
     #     text: New
 ---
 
-Adds multiple rows to the [table instance](/lcnc-sdk-js/form/gettable/).
+Adds multiple rows to the [table instance](/form/gettable/).
 
 ### Parameter
 
-| Parameters | type  | description                                                                                                                                          |
+| Parameters | Type  | Description                                                                                                                                          |
 | ---------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| payload    | array | Array of objects where keys represent the columnId(string) and its values correspond to the respective field types (like number for rating/slider, string for text/textarea etc.). |
+| Payload    | Array | Array of objects where keys represent the columnId(string) and its values correspond to the respective field types (like number for rating/slider, string for text/textarea etc.). |
 
 ### Syntax
 

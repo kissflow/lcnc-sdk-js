@@ -1,12 +1,12 @@
 ---
-title: Get Rows
+title: Get rows
 description: Retrieve a row instance from table
 sidebar:
     order: 11
 ---
 
-Returns list of [row instances](/lcnc-sdk-js/form/table/row/) from the
-[table instance](/lcnc-sdk-js/form/gettable/).
+Returns list of [row instances](/form/table/row/) from the
+[table instance](/form/gettable/).
 
 ### Syntax
 

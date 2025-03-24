@@ -1,0 +1,21 @@
+.page > .header {
+  border-block-end: solid 1px var(--kf-color-gray-300);
+}
+
+.hero {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 50rem) {
+  .hero {
+    padding-block: clamp(2.5rem, calc(1rem + 10vmin), 4rem);
+  }
+}
+
+.hero .tagline {
+  max-width: 72ch;
+}
+
+.hero > .stack > .actions {
+  gap: 16px;
+}

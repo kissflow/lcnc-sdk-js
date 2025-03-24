@@ -2,13 +2,13 @@
 title: Board
 description: Usage of board methods
 ---
-With Kissflow Boards, you can create highly adaptable workflows that let you keep track of information and manage work efficiently.
+With Kissflow Board, you can create highly adaptable workflows that let you keep track of information and manage work efficiently.
 
 Get board instance using `getBoard` method from app's interface.
 
 ##### Parameters
 
-| Parameters | type   |
+| Parameters | Type   |
 | ---------- | ------ |
 | caseId     | String |
 
@@ -25,9 +25,9 @@ columns to the corresponding fields.
 
 ##### Parameters
 
-| Parameters    | type   | Description                                                          |
+| Parameters    | Type   | Description                                                          |
 | ------------- | ------ | -------------------------------------------------------------------- |
-| defaultValues | Object | Object with keys as field Id and its values in respective data types |
+| defaultValues | Object | An object with keys as field Id and its values in respective data types. |
 
 ##### Syntax
 
@@ -53,9 +53,9 @@ let boardInstance = { location: "India" }; // Location is the the field_id of a 
 boardInstance.importCSV(defaultValues); // All records imported through this importer would have Location field set as India
 ```
 
-> Note:
+> Note
 >
-> 1. Default values are optional
+> 1. Default values are optional.
 > 2. Any variables or parameter can also be mapped in `defaultValues`.
 > 3. If a default value is set by the developer, end users cannot override it.
 > 4. Certain fields cannot be set as default, such as auto-calculated fields and

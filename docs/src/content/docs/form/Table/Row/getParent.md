@@ -1,5 +1,5 @@
 ---
-title: Get Parent
+title: Get parent
 description: To perform form action over the main form
 sidebar:
     order: 16
@@ -18,7 +18,7 @@ kf.context.getParent();
 ### Returns
 
 Returns an instance of `Form` class using which we can perform any action on the
-main form
+main form.
 
 #### Example
 

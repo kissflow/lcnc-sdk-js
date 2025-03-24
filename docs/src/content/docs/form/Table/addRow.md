@@ -1,18 +1,18 @@
 ---
-title: Add Row
+title: Add row
 description: Appends row details to the table.
 sidebar:
     order: 6
 ---
 
 Adds a single row to the specified
-[table instance](/lcnc-sdk-js/form/gettable/).
+[table instance](/form/gettable/).
 
 ### Parameter
 
-| Parameters | type   | description                                                                                                                                |
+| Parameters | Type   | Description                                                                                                                                |
 | ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| payload    | object | n object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.) |
+| Payload    | Object | An object where the keys represent the columnId (string) and the values correspond to their respective field types (like number for rating/slider, string for text/textarea etc.).|
 
 ### Syntax
 
@@ -30,6 +30,6 @@ worktableInstance.addRow({ table_field1: “Microsoft”, table_field2: “2 yea
 
 :::note[Note]
 For bulk operations involving the addition of more than one row to a table, use the
-[addRows()](/lcnc-sdk-js/form/table/addrows/) method instead.
+[addRows()](/form/table/addrows/) method instead.
 :::
 

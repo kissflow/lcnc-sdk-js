@@ -1,5 +1,5 @@
 ---
-title: Get Field
+title: Get field
 description: Retrieve value of form field
 sidebar:
     order: 1
@@ -9,7 +9,7 @@ To retrieve the current value of a form field.
 
 ### Parameter
 
-| Parameters | type   | description             |
+| Parameters | Type   | Description             |
 | ---------- | ------ | ----------------------- |
 | fieldId    | String | Unique Id of the field. |
 

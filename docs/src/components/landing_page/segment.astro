@@ -1,0 +1,77 @@
+---
+import CustomCard from "./card.astro";
+import { LinkButton, CardGrid } from "@astrojs/starlight/components";
+import { API_PLATFORM_URL, SDK_DOCS_URL } from "~/constants";
+
+console.log("dev check ----- ", import.meta.env.DEV);
+---
+
+<CardGrid>
+  <CustomCard
+    title={"Kissflow APIs"}
+    description={"Integrate Kissflow's workflow capabilities into your apps using our internal APIs."}
+  >
+    <Fragment slot="list">
+      <ul>
+        <li>
+          <b>User-friendly endpoints.</b>
+        </li>
+        <li>
+          <b> Robust security measures.</b>
+        </li>
+        <li>
+          <b>Supports multiple programming languages. </b>
+        </li>
+      </ul>
+    </Fragment>
+
+    <Fragment slot="action">
+      <LinkButton
+        class={"card-button"}
+        href={API_PLATFORM_URL}
+        variant="primary"
+        icon="right-arrow"
+        iconPlacement="end"
+        target={"_blank"}
+      >
+        Learn more about our APIs
+      </LinkButton>
+    </Fragment>
+  </CustomCard>
+  <CustomCard
+    title={"Kissflow SDK"}
+    description={"Build custom UI components and integrate them with your app using our feature-rich development kit."}
+  >
+    <Fragment slot="list">
+      <ul>
+        <li>
+          <b>Create UI components from scratch.</b>
+        </li>
+        <li>
+          <b>Flexible development toolkit.</b>
+        </li>
+        <li>
+          <b>Seamless interaction between components and your app.</b>
+        </li>
+      </ul>
+    </Fragment>
+
+    <Fragment slot="action">
+      <LinkButton
+        class={"card-button"}
+        href={SDK_DOCS_URL}
+        variant="primary"
+        icon="right-arrow"
+        iconPlacement="end"
+      >
+        Explore our SDK resources
+      </LinkButton>
+    </Fragment>
+  </CustomCard>
+</CardGrid>
+
+<style>
+  .card-button {
+    width: fit-content;
+  }
+</style>
