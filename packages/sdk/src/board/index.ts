@@ -16,7 +16,7 @@ export class Board extends BaseSDK {
 		});
 	}
 
-	openForm(item: BoardItem) {
+	openForm(item: BoardItem) {		
 		if (!item._id) {
 			return Promise.reject({
 				message: "Instance Id (_id) is required"
@@ -24,7 +24,8 @@ export class Board extends BaseSDK {
 		}
 		return this._postMessageAsync(LISTENER_CMDS.BOARD_OPEN_FORM, {
 			flowId: this._id,
-			itemId: item._id
+			itemId: item._id,
+			viewId: item._view_id
 		});
 	}
 }

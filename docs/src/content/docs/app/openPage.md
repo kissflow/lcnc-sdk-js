@@ -2,7 +2,7 @@
 title: Open Page
 description: Opens a page inside application
 sidebar:
-    order: 4
+  order: 4
 ---
 
 This command lets you open a specific page inside an app.
