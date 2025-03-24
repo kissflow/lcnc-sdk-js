@@ -1,5 +1,5 @@
 ---
-title: page Components
+title: Page Components
 description: Installing and using custom page components
 ---
 
