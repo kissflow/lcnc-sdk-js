@@ -3,8 +3,6 @@ title: Context
 description: Context usage
 ---
 
-Some random changes
-
 The `kf.context` method lets you access specific method based on the entity
 where you're using it.
 
