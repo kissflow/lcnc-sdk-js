@@ -11,7 +11,7 @@ into your project:
 import KFSDK from "@kissflow/lowcode-client-sdk";
 let kf;
 (async function () {
-	kf = await KFSDK.initialize();
+  kf = await KFSDK.initialize();
 })();
 ```
 
@@ -30,7 +30,7 @@ Then SDK can be initialized as:
 ```js
 let kf;
 window.onload = async function () {
-	kf = await window.kf.initialize();
+  kf = await window.kf.initialize();
 };
 ```
 
@@ -109,20 +109,20 @@ let resp = await kf.api(url, config)
 
 ## Table of contents
 
--   [1. Context](#1-context)
-    -   [Custom Components](#custom-component)
-    -   [Form](#custom-component)
-        -   [Form Table](#form-table)
-        -   [Table Row](#table-row)
--   [2. Client](#2-client)
--   [3. Application](#3-application)
--   [4. Page](#4-page)
--   [5. Component](#5-component)
-    -   [Standard Component methods](#standard-component-methods)
-    -   [Component Specific methods](#component-specific-methods)
-        -   [Tab](#521-tab-component)
--   [6. Popup](#6-popup)
--   [7. Formatter](#7-formatter)
+- [1. Context](#1-context)
+  - [Custom Components](#custom-component)
+  - [Form](#custom-component)
+    - [Form Table](#form-table)
+    - [Table Row](#table-row)
+- [2. Client](#2-client)
+- [3. Application](#3-application)
+- [4. Page](#4-page)
+- [5. Component](#5-component)
+  - [Standard Component methods](#standard-component-methods)
+  - [Component Specific methods](#component-specific-methods)
+    - [Tab](#521-tab-component)
+- [6. Popup](#6-popup)
+- [7. Formatter](#7-formatter)
 
 ## 1) Context
 
@@ -141,7 +141,7 @@ application.
 
 ```js
 kf.context.watchParams(function (data) {
-	console.log(data);
+  console.log(data);
 });
 ```
 
@@ -233,10 +233,10 @@ Appends multiple rows details to the table.
 const table = kf.context.getTable(tableId);
 let accumulator = [];
 someArrayOfObjects.forEach(function (rowDetail) {
-	accumulator.push({
-		columnId1: rowDetail[columnId1],
-		columnId2: rowDetail[columnId2]
-	});
+  accumulator.push({
+    columnId1: rowDetail[columnId1],
+    columnId2: rowDetail[columnId2],
+  });
 });
 await table.addRows(accumulator);
 ```
@@ -480,8 +480,8 @@ const appVarible1 = await kf.app.getVariable("variableId");
 let value = await kf.app.setVariable("variableId", value);
 // or
 await kf.app.setVariable({
-	variableId_1: "value_1",
-	variableId_2: 3345
+  variableId_1: "value_1",
+  variableId_2: 3345,
 });
 ```
 
@@ -491,8 +491,8 @@ await kf.app.setVariable({
 
 ```js
 const pageInputParameters = {
-	param1: value,
-	param2: value
+  param1: value,
+  param2: value,
 };
 kf.app.openPage(pageId, pageInputParameters);
 // Note: Page Input parameters are optional.
@@ -575,8 +575,8 @@ Component onMount takes in callBack function as argument.
 
 ```js
 component.onMount(() => {
-	// function logic goes here... For eg.
-	// component.setActiveTab(2)
+  // function logic goes here... For eg.
+  // component.setActiveTab(2)
 });
 ```
 
@@ -696,7 +696,7 @@ these hidden fields.
 const boardInstance = kf.app.getBoard("Asset_Tracking_A00"); // Asset_Tracking_A00 is the flow_id
 
 // Set field values for specific fields of the board
-let boardInstance = { location: "India" }; // Location is the the field_id of a field inside the board
+let defaultValues = { location: "India" }; // Location is the the field_id of a field inside the board
 
 // Pass the field config into the import sdk method
 boardInstance.importCSV(defaultValues); // All records imported through this importer would have Location field set as India
