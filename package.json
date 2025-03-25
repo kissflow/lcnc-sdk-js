@@ -4,7 +4,7 @@
     "description": "A library that contains essentials packages for Kissflow SDK",
     "main": "index.js",
     "scripts": {
-        "docs-dev": "cd docs/ && pnpm run dev",
+        "dev:docs": "cd docs && pnpm run dev",
         "build:sdk": "cd packages/sdk && pnpm run build",
         "publish:sdk": "cd packages/sdk && pnpm publish",
         "publish:sdk-canary": "cd packages/sdk && pnpm run publish-canary",
