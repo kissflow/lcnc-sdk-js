@@ -1,5 +1,5 @@
-import { defineConfig } from "astro/config";
-import starlight from "@astrojs/starlight";
+import { defineConfig } from 'astro/config'
+import starlight from '@astrojs/starlight'
 
 export default defineConfig({
     compressHTML: false,
@@ -44,7 +44,7 @@ export default defineConfig({
                 },
                 {
                     label: 'Custom Component',
-                    autogenerate: { directory: 'component' },
+                    autogenerate: { directory: 'components' },
                 },
                 {
                     label: 'Formatter',
