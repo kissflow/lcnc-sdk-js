@@ -20,9 +20,9 @@ npm install
 npm run dev
 ```
 
-The project will contain the following files, `FormField.jsx`, `ReadonlyTable.jsx`, `EditableTable.jsx`, and `Card.jsx` for the web layout.
+The project will contain the following files, `FormField.jsx`, `DataTable.jsx`, `Sheet.jsx`, and `Card.jsx` for the web layout.
 
-And for the mobile/PWA layout, `FormField.jsx` and `ReadonlyTable.jsx` files.
+And for the mobile/PWA layout, `FormField.jsx` and `DataTable.jsx` files.
 Among these, it is mandatory that you write code for the web's `FormField.jsx` file. You can choose to skip coding for the other views. However, <a href="https://community.kissflow.com/t/35yfjp0/custom-form-field-components#what-happens-if-the-custom-form-field-does-not-have-ui-configuration" target="_blank" rel="noopener noreferrer">this will affect</a> how your form field appears in the UI.
 
 Once development is done, you can use the `npm run zip` command to generate a .zip file of your form field. You can then import this .zip file directly into Kissflow as a custom form field.
