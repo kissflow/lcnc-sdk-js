@@ -5,7 +5,7 @@ sidebar:
   order: 2 
 ---
 
-## To create a custom sform field project,
+## To create a custom form field project,
 
 ```base
 npm create kf-component
