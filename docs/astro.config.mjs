@@ -19,12 +19,12 @@ export default defineConfig({
             customCss: ['./src/styles/override.css'],
             sidebar: [
                 {
-                    label: 'Getting started',
+                    label: 'Home',
                     link: '/',
                 },
                 {
-                    label: 'Installation',
-                    link: '/installation',
+                    label: 'Getting started',
+                    link: '/gettingstarted',
                 },
                 {
                     label: 'Utilities',
