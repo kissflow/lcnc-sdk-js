@@ -4,9 +4,9 @@ const PLATFORMS = {
 }
 
 const FORM_FIELD_COMPONENTS = {
-    EDITABLE_TABLE: 'EditableTable',
+    SHEET: 'Sheet',
     FORM_FIELD: 'FormField',
-    READONLY_TABLE: 'ReadonlyTable',
+    DATA_TABLE: 'DataTable',
     CARD: 'Card',
 }
 
@@ -63,12 +63,12 @@ const FILE_MAP = {
             isMandatory: true,
             fileExtension: 'jsx',
         },
-        [FORM_FIELD_COMPONENTS.EDITABLE_TABLE]: {
+        [FORM_FIELD_COMPONENTS.SHEET]: {
             moduleFolderPath: `src/${PLATFORMS.WEB}/`,
             isMandatory: false,
             fileExtension: 'jsx',
         },
-        [FORM_FIELD_COMPONENTS.READONLY_TABLE]: {
+        [FORM_FIELD_COMPONENTS.DATA_TABLE]: {
             moduleFolderPath: `src/${PLATFORMS.WEB}/`,
             isMandatory: false,
             fileExtension: 'jsx',
@@ -85,7 +85,7 @@ const FILE_MAP = {
             isMandatory: false,
             fileExtension: 'jsx',
         },
-        [FORM_FIELD_COMPONENTS.READONLY_TABLE]: {
+        [FORM_FIELD_COMPONENTS.DATA_TABLE]: {
             moduleFolderPath: `src/${PLATFORMS.PWA}/`,
             isMandatory: false,
             fileExtension: 'jsx',
