@@ -1,0 +1,33 @@
+{
+    "name": "@kissflow/form-field-config",
+    "version": "0.0.1",
+    "description": "Configurations for Kissflow's custom form field projects.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js",
+        "./helpers": "./src/helpers.js"
+    },
+    "keywords": [
+        "no-code",
+        "low-code",
+        "platform",
+        "React",
+        "CLI",
+        "Kissflow",
+        "custom-form-fields"
+    ],
+    "files": [
+        "package.json",
+        "./src",
+        "!./node_modules/**"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "chalk": "5.3.0"
+    }
+}

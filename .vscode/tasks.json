@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "eslint",
+            "type": "shell",
+            "command": "eslint",
+            "args": ["."],
+            "problemMatcher": ["$eslint-stylish"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

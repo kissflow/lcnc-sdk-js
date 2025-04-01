@@ -1,0 +1,12 @@
+import {
+    FORM_FIELD_COMPONENTS,
+    PLATFORMS,
+} from '<%= CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME %>'
+
+const formFieldConfig = {
+        <% Object.keys(formFieldConfig).forEach(platform => { %>
+        [PLATFORMS.<%= getFormFieldPlatformKey(platform) %>]: { <% Object.entries(formFieldConfig[platform]).forEach(([componentName, component]) => { %> [FORM_FIELD_COMPONENTS.<%= getFormFieldComponentKey(componentName) %>]: './<%= component.moduleFolderPath %><%= componentName %>.<%= component.fileExtension %>',<% }) %>
+        },<% }) %>
+}
+
+export default formFieldConfig
