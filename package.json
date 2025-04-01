@@ -8,7 +8,9 @@
         "build:sdk": "cd packages/sdk && pnpm run build",
         "publish:sdk": "cd packages/sdk && pnpm publish",
         "publish:sdk-canary": "cd packages/sdk && pnpm run publish-canary",
-        "publish:create-component": "cd packages/create-component && pnpm publish"
+        "publish:create-component": "cd packages/create-component && pnpm publish",
+        "publish:form-field-scripts": "cd packages/form-field-scripts && pnpm publish",
+        "publish:form-field-config": "cd packages/form-field-config && pnpm publish"
     },
     "keywords": [],
     "author": "",
