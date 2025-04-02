@@ -1,5 +1,6 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
+import fetch from 'node-fetch' // `fetch` is not available natively for node versions < 18.
 import webpack from 'webpack'
 import webpackConfig from '../config/webpack.config.js'
 import paths from '../paths.js'
