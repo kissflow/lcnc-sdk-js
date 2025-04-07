@@ -25,6 +25,7 @@ const __dirname = path.dirname(__filename)
 const PORT = 9090
 
 const cdn = { url: '' }
+const origin = { url: '' }
 
 const runDevBuild = async () => {
     return new Promise((resolve, reject) => {
@@ -57,10 +58,18 @@ const startDevServer = async () => {
             return next()
         }
 
-        const url =
-            cdn.url && cdn.url != '/'
-                ? `https:${cdn.url}${req.path.replace(/^\/+/, '')}`
-                : `https://localhost${req.path}`
+        let url = ''
+
+        if (
+            // Add to this if else chain as you discover new scripts. :(
+            req.path.endsWith('cloudflare-static/rocket-loader.min.js')
+        ) {
+            url = origin.url + req.path
+        } else if (cdn.url && cdn.url != '/') {
+            url = `https:${cdn.url}${req.path.replace(/^\/+/, '')}` // remove '/' infront of the request path.
+        } else {
+            url = `https://localhost${req.path}`
+        }
 
         const agent = new https.Agent({
             rejectUnauthorized: false, // Ignore self-signed certificates
@@ -95,22 +104,27 @@ const startDevServer = async () => {
             selfHandleResponse: true,
             router: (req) => {
                 const publicPath = req.query['publicPath']
-                const origin = req.query['origin']
-                cdn.url = publicPath
+                cdn.url = publicPath // Storing the public path, will use later.
 
                 const path = 'customcomponent/formfield'
 
-                if (!origin || origin == 'https://dev.localhost') {
+                if (
+                    !req.query['origin'] ||
+                    req.query['origin'] === 'https://dev.localhost'
+                ) {
                     // The request has been made from
                     // localhost (kf-xg-frontend)...
                     // I am unable to proxy https://dev.localhost
                     // for some reason... Currently, I am unble
                     // pinpoint where the issue is... Is it in
                     // nodejs? Or http-proxy-server or http?
+                    origin.url = `https://localhost`
                     return `https://localhost/${path}`
                 }
 
-                return `${origin}/${path}`
+                origin.url = req.query['origin']
+
+                return `${req.query['origin']}/${path}`
             },
             on: {
                 proxyRes: responseInterceptor(
