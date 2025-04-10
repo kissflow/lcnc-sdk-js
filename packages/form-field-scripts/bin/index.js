@@ -24,6 +24,13 @@ program
         runScript('build.js')
     })
 
+program
+    .command('zip')
+    .description('Zip the build artifacts.')
+    .action(async () => {
+        runScript('zip.js')
+    })
+
 async function runScript(script) {
     try {
         await performPreBuildtimeChecks()
