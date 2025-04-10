@@ -2,6 +2,7 @@ import path from 'path'
 import { clearScreen } from './helpers.js'
 import { logSummary } from './helpers.js'
 import { performOnetimeChecks, performRuntimeChecks } from './verifications.js'
+import { fileURLToPath } from 'url'
 import webpack from 'webpack'
 import chalk from 'chalk'
 
@@ -14,8 +15,9 @@ import fs from 'fs'
 
 const getAsciiArtText = () => {
     const currentFileUrl = new URL(import.meta.url)
+    const currentFilePath = fileURLToPath(currentFileUrl) // Decodes %20 to space
     const asciiArtPath = path.join(
-        path.dirname(currentFileUrl.pathname),
+        path.dirname(currentFilePath),
         './assets',
         'kf-logo-ascii-art.txt'
     )
@@ -25,8 +27,9 @@ const getAsciiArtText = () => {
 
 const getPostBuildInstruction = () => {
     const currentFileUrl = new URL(import.meta.url)
+    const currentFilePath = fileURLToPath(currentFileUrl) // Decodes %20 to space
     const asciiArtPath = path.join(
-        path.dirname(currentFileUrl.pathname),
+        path.dirname(currentFilePath),
         './assets',
         'post-build-messages.txt'
     )
