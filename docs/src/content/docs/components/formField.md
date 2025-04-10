@@ -9,15 +9,56 @@ Kissflow lets you build your own custom form fields as custom components to use 
 
 ##### To create a custom form field project,
 
--   `npm create kf-component`
--   Enter project's name.
--   Choose `form field`.
--   Run the following commands,
+##### Prerequisites
+
+-   Node.js
+-   A version manager for Node.js, preferably [NVM](https://github.com/nvm-sh/nvm).
+
+To create a custom form field project,
+
+```bash
+npx create kf-component@latest
+```
+
+Enter the project's name and choose `form field`.
+
+Node.js 16.x.x is the recommended version for this project.
+
+Install Node.js version 16.x.x using NVM.
+
+```bash
+nvm install 16
+```
+
+Set Node.js 16.x.x as the default version on your machine to ensure your code editor configures itself correctly.
+
+```bash
+nvm alias 16
+```
+
+Change directory to your project and open it using your prefered code editor,
 
 ```bash
 cd <your-project-name>
-npm install
+code . # for vscode or nvim . for neovim
+```
+
+Install dependencies,
+
+```bash
+npm i
+```
+
+To serve the project for development,
+
+```bash
 npm run dev
+```
+
+To build the project,
+
+```bash
+npm run zip
 ```
 
 The project will contain the following files, `FormField.jsx`, `DataTable.jsx`, `Sheet.jsx`, and `Card.jsx` for the web layout.
