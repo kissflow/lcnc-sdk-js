@@ -51,7 +51,7 @@ export function FormField(props) {
             type="text"
             value={value}
             placeholder="User's name"
-            onchange={(e) => updateValue(e.target.value)}
+            onChange={(e) => updateValue(e.target.value)}
         />
     )
 }
