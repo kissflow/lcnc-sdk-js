@@ -6,8 +6,7 @@
     "scripts": {
         "dev": "form-field-scripts dev",
         "build": "form-field-scripts build",
-        "zip": "rm -rf ./<%= projectName %>.zip ./dist && npm run build && cd ./dist && zip -q -r ../<%= projectName %>.zip . && rm -rf ../dist",
-        "unzip": "rm -rf ./<%= projectName %> && unzip <%= projectName %>.zip -d ./<%= projectName %>"
+        "zip": "rm -rf ./<%= projectName %>.zip ./dist && npm run build && cd ./dist && zip -q -r ../<%= projectName %>.zip . && rm -rf ../dist"
     },
     "type": "module",
     "author": "",
