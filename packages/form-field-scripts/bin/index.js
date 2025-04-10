@@ -37,7 +37,7 @@ async function runScript(script) {
         const __filename = fileURLToPath(import.meta.url)
         const __dirname = dirname(__filename)
         const scriptPath = resolve(__dirname, '../src/scripts/', script)
-        execSync(`node ${scriptPath}`, {
+        execSync(`node "${scriptPath}"`, {
             stdio: 'inherit',
         })
     } catch (error) {
