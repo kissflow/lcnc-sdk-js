@@ -127,10 +127,7 @@ export default {
             failOnError: true,
             context: paths.appSrc,
             cache: true,
-            cacheLocation: path.resolve(
-                paths.appNodeModules,
-                '.cache/.eslintcache'
-            ),
+            cacheLocation: paths.eslintCache,
             cwd: paths.appPath,
             resolvePluginsRelativeTo: __dirname,
         }),

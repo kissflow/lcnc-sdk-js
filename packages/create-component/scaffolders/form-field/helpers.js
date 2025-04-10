@@ -1,5 +1,6 @@
 import { FILE_MAP } from '@kissflow/form-field-config'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 const getFormFieldConfig = () => {
     const formFieldConfig = Object.entries(FILE_MAP).reduce(
@@ -22,7 +23,7 @@ const getFormFieldConfig = () => {
 }
 
 const getProjectTemplatePath = () => {
-    const currentModuleFile = new URL(import.meta.url).pathname
+    const currentModuleFile = fileURLToPath(import.meta.url)
     const currentModuleDirectory = path.dirname(currentModuleFile)
     return path.resolve(currentModuleDirectory, './project-template/')
 }

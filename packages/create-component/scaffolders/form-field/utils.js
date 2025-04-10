@@ -2,9 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import latestVersion from 'latest-version'
 import chalk from 'chalk'
+import { fileURLToPath } from 'url'
+
 
 const readFileContentRelativeToCurrentFile = (relativePath) => {
-    const currentModuleFile = new URL(import.meta.url).pathname
+    const currentModuleFile = fileURLToPath(import.meta.url)
     const currentModuleDirectory = path.dirname(currentModuleFile)
     const absolutePath = path.resolve(currentModuleDirectory, relativePath)
 

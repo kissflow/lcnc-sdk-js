@@ -5,6 +5,7 @@ import {
     FORM_FIELD_ERROR,
     UNABLE_TO_PARSE_FORM_FIELD_CONFIG,
 } from './form-field-webpack-plugin/errors.js'
+import { pathToFileURL } from 'url'
 
 const getModuleMap = () => {
     const components = formFieldProjectConfig
@@ -26,10 +27,9 @@ const getModuleMap = () => {
 }
 
 const getFormFieldProjectConfig = async () => {
+    const fileUrl = pathToFileURL(paths.formFieldProjectConfig)
     try {
-        const formFieldProjectConfig = await import(
-            paths.formFieldProjectConfig
-        )
+        const formFieldProjectConfig = await import(fileUrl)
         return formFieldProjectConfig.default
     } catch (err) {
         if (err instanceof Error && err.code === 'ERR_MODULE_NOT_FOUND') {
@@ -39,8 +39,7 @@ const getFormFieldProjectConfig = async () => {
         }
         throw new FORM_FIELD_ERROR({
             title: 'Unknown error',
-            description:
-                'Unknown error encountered while reading `form-field.config.js`.',
+            description: err
         })
     }
 }

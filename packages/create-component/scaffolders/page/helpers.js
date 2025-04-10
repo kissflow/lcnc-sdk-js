@@ -1,8 +1,9 @@
 import { FRAMEWORKS } from './constants.js'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 const getTemplatePath = (template) => {
-    const currentModuleFile = new URL(import.meta.url).pathname
+    const currentModuleFile =  fileURLToPath(import.meta.url)
     const currentModuleDirectory = path.dirname(currentModuleFile)
     switch (template) {
         case FRAMEWORKS.REACT:
