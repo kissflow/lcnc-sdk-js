@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "zip": "rm -rf ./custom-page-component.zip ./dist && npm run build && cd ./dist && zip -q -r ../custom-page-component.zip . && rm -rf ../dist",
+        "zip": "node scripts/zip.js",
         "build": "vite build",
         "preview": "vite preview"
     },
@@ -14,6 +14,6 @@
     },
     "devDependencies": {
         "vite": "^5.2.0",
-        "bestzip": "^2.2.1"
+        "archiver": "^7.0.1"
     }
 }

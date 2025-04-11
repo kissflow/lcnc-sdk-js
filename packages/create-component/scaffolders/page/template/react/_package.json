@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "zip": "rm -rf ./custom-page-component.zip ./dist && npm run build && cd ./dist && zip -q -r ../custom-page-component.zip . && rm -rf ../dist",
+        "zip": "node scripts/zip.js",
         "build": "vite build",
         "preview": "vite preview"
     },
@@ -26,6 +26,6 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.5",
         "vite": "^5.1.6",
-        "bestzip": "^2.2.1"
+        "archiver": "^7.0.1"
     }
 }
