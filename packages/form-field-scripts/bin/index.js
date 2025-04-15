@@ -45,7 +45,7 @@ async function runScript(script) {
         const __dirname = dirname(__filename)
         const scriptPath = resolve(__dirname, '../src/scripts/', script)
         execSync(`node "${scriptPath}"`, {
-            stdio: 'inherit',
+            stdio: 'inherit'
         })
     } catch (error) {
         console.log(chalk.bold.red('Unable to run script, ', error))

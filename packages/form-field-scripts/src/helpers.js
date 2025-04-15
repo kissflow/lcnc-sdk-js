@@ -2,7 +2,7 @@ import paths from './paths.js'
 import {
     FORM_FIELD_CONFIG_NOT_FOUND,
     FORM_FIELD_ERROR,
-    UNABLE_TO_PARSE_FORM_FIELD_CONFIG,
+    UNABLE_TO_PARSE_FORM_FIELD_CONFIG
 } from './form-field-webpack-plugin/errors.js'
 import { pathToFileURL } from 'url'
 import fs from 'fs'
@@ -41,7 +41,7 @@ const getFormFieldProjectConfig = async () => {
         }
         throw new FORM_FIELD_ERROR({
             title: 'Unknown error',
-            description: err,
+            description: err
         })
     }
 }
@@ -59,13 +59,13 @@ export {
     getModuleMap,
     getAppPackageJson,
     formFieldProjectConfig,
-    getFormFieldProjectConfig,
+    getFormFieldProjectConfig
 }
 
 export async function zipDirectoryContent(sourceDirectory, zipFilePath) {
     const output = fs.createWriteStream(zipFilePath)
     const archive = archiver('zip', {
-        zlib: { level: 9 },
+        zlib: { level: 9 }
     })
 
     return new Promise((resolve, reject) => {

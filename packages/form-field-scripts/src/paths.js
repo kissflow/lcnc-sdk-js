@@ -16,7 +16,7 @@ const moduleFileExtensions = [
     // "tsx",
     'json',
     // "web.jsx",
-    'jsx',
+    'jsx'
 ]
 
 const resolveModule = (resolveFn, filePath) => {
@@ -41,5 +41,5 @@ export default {
     appSrc: resolveApp('src'),
     appNodeModules: resolveApp('node_modules'),
     devDist: resolveApp('node_modules/dev_dist'),
-    eslintCache: resolveApp('node_modules/.cache/.eslintcache'),
+    eslintCache: resolveApp('node_modules/.cache/.eslintcache')
 }

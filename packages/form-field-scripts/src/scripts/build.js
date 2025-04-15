@@ -8,7 +8,7 @@ export function build() {
     const compiler = webpack(
         Object.assign(webpackConfig, {
             mode: 'production',
-            output: { uniqueName: '_' + randomUUID() }, // this is done
+            output: { uniqueName: '_' + randomUUID() } // this is done
             // inorder to prevent collision between builds... Since
             // usage of custom form fields are going to be very low
             // and 'crypto' is a good native lib, I have decided
