@@ -11,13 +11,13 @@ Kissflow lets you build page UI components and import them as reusable page comp
 
 If you're starting a project from scratch, you can create a Kissflow custom component package using npm
 
-```js
-npm create kf-component
+```bash
+npx create-kf-component@latest
 ```
 
 You will be prompted to provide a name for your component and choose between **HTML** or **React**. Once installed, run the following commands:
 
-```js
+```bash
 cd componentname
 npm install
 npm run dev
@@ -33,7 +33,7 @@ Once development is done, you can use the **`npm run build`** command to build a
 
 If you have an existing project based on a framework like React that you wish to convert to a Kissflow custom component, you can install and import the Kissflow SDK as an `npm` module.
 
-```js
+```bash
 npm install @kissflow/lowcode-client-sdk
 ```
 
