@@ -24,18 +24,6 @@ Enter the project's name and choose `form field`.
 Node.js 16.x.x is the recommended version for this project.
 :::
 
-Install Node.js version 16.x.x using NVM.
-
-```bash
-nvm install 16
-```
-
-To ensure your code editor picks up the correct Node.js version automatically, set Node.js 16 as the default on your machine using:
-
-```bash
-nvm alias default 16
-```
-
 Change directory to your project and open it using your preferred code editor,
 
 ```bash
