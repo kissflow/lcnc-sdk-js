@@ -7,16 +7,39 @@ sidebar:
 
 Kissflow lets you build your own custom form fields as custom components to use across all forms in your app. A custom form field must be written using JavaScript and built using the React framework. Follow the installation and building instructions provided below.
 
-##### To create a custom form field project,
+##### Prerequisites
 
--   `npm create kf-component`
--   Enter project's name.
--   Choose `form field`.
--   Run the following commands,
+-   Node.js
+-   A version manager for Node.js, preferably <a href="https://github.com/nvm-sh/nvm" target="_blank">NVM</a> or <a href="https://github.com/Schniz/fnm" target="_blank">fnm</a>.
+
+To create a custom form field project,
+
+```bash
+npx create kf-component@latest
+```
+
+Enter the project's name and choose `form field`.
+
+:::note[Note]
+Node.js 16.x.x is the recommended version for this project.
+:::
+
+Change directory to your project and open it using your preferred code editor,
 
 ```bash
 cd <your-project-name>
+code . # To open the project using VS Code.
+```
+
+To install dependencies,
+
+```bash
 npm install
+```
+
+To run a dev build,
+
+```bash
 npm run dev
 ```
 
@@ -64,8 +87,8 @@ Holds all the methods associated with performing an action, such as updating a f
 ```js
 const api = {
     actions: {
-        updateValue,
-    },
+        updateValue
+    }
 }
 ```
 
