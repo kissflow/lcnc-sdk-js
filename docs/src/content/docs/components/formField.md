@@ -10,7 +10,7 @@ Kissflow lets you build your own custom form fields as custom components to use 
 ##### Prerequisites
 
 -   Node.js
--   A version manager for Node.js, preferably <a href="https://github.com/nvm-sh/nvm" target="_blank">NVM</a> or <a href="https://github.com/Schniz/fnm" target="_blank">fnm</a>.
+-   A version manager for Node.js
 
 To create a custom form field project,
 
@@ -64,11 +64,11 @@ The property **Value** is the current value of the field.
 The example demonstrates how the field's current value is displayed within a native HTML input text box. When a new value is entered, the field updates accordingly, and the change is communicated to the Kissflow form using the `updateValue` method.
 
 ```js
-import React from 'react'
+import React from "react";
 
 export function FormField(props) {
-    const { value, actions } = props
-    const { updateValue } = actions
+    const { value, actions } = props;
+    const { updateValue } = actions;
     return (
         <input
             type="text"
@@ -76,7 +76,7 @@ export function FormField(props) {
             placeholder="User's name"
             onChange={(e) => updateValue(e.target.value)}
         />
-    )
+    );
 }
 ```
 
@@ -89,7 +89,7 @@ const api = {
     actions: {
         updateValue
     }
-}
+};
 ```
 
 #### updateValue
@@ -105,10 +105,10 @@ This function updates the current [value](#value) of the custom form field.
 ###### Example
 
 ```js
-const { value } = props
+const { value } = props;
 onClick = () => {
-    updateValue(value + 1)
-}
+    updateValue(value + 1);
+};
 ```
 
 In the above example, if the field’s type is number, its value would increment by 1.
