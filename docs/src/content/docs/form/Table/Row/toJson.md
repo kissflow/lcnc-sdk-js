@@ -10,7 +10,7 @@ To retrieve the data of the current row in JSON format.
 ### Syntax
 
 ```js
-const json = await kf.context.toJSON();
+const json = await rowInstance.toJSON();
 ```
 
 ##### Example output
