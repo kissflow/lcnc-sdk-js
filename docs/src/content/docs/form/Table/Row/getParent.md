@@ -12,7 +12,7 @@ When working at the row level, use this method to refer to data from the primary
 ### Syntax
 
 ```js
-kf.context.getParent();
+rowInstance.getParent();
 ```
 
 ### Returns
@@ -29,8 +29,8 @@ let tableJSON = await worktableInstance.toJSON();
 let totalYOE = 0;
 tableJSON.forEach(data => totalYOE += data[“table_field2”])
 
-let parentForm = await kf.context.getParent();
-parentForm.update({"totalYOE":  totalYOE});
+let parentForm = await rowInstance.getParent();
+parentForm.updateField({"totalYOE":  totalYOE});
 
 ```
 
