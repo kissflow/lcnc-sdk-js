@@ -23,7 +23,7 @@ npm install
 npm run dev
 ```
 
-Once development is done, you can use the **`npm run build`** command to build and compress the project into a zip file. You can then import this zip file directly into Kissflow as a custom component.
+Once development is done, you can use the **`npm run zip`** command to build and compress the project into a zip file. You can then import this zip file directly into Kissflow as a custom component.
 
 > This package is exclusively designed for the client side of your projects. Therefore, we only support ECMAScript modules (es modules) and Universal Module Definition (UMD) formats of JavaScript.
 
