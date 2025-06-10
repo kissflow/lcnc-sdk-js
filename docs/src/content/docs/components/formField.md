@@ -15,7 +15,7 @@ Kissflow lets you build your own custom form fields as custom components to use 
 To create a custom form field project,
 
 ```bash
-npx create kf-component@latest
+npx create-kf-component@latest
 ```
 
 Enter the project's name and choose `form field`.
