@@ -21,13 +21,13 @@ let payload = {
     "sliderColumn": 9,
     "textColumn": "new value",
 };
-kf.context.updateField(payload).then((res) => {...})
+rowInstance.updateField(payload).then((res) => {...})
 ```
 
 or
 
 ```js
-let value = await kf.context.updateField(payload);
+let value = await rowInstance.updateField(payload);
 ```
 
 ### Returns
@@ -42,5 +42,5 @@ To update the values of background check completion in your employee data form, 
 let payload = {
     "columnId6": “Pending”,
 };
-kf.context.updateField(payload).then((res) => {...})
+rowInstance.updateField(payload).then((res) => {...})
 ```
