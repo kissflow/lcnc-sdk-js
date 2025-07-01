@@ -16,7 +16,7 @@
         "<%= CUSTOM_FORM_FIELD_MODEL_PACKAGE_NAME %>": "<%= latestFormFieldModelVersion %>"
     },
     "engines": {
-        "node": ">=16.0.0 <17.0.0"
+         "node": "^18.0.0 || >=20.0.0"
     },
     "eslintConfig": {
         "extends": ["react-app"],
