@@ -54,3 +54,8 @@ export type DataformQueryResponse = {
   page?: number;
   pageSize?: number;
 };
+
+export type DataformCreateItemOptions = {
+  data?: object;
+  viewId?: string;
+};

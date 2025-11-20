@@ -1,5 +1,10 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import { DataformItem, DataformQueryOptions, DataformQueryResponse } from "../types/external";
+import {
+	DataformItem,
+	DataformQueryOptions,
+	DataformQueryResponse,
+	DataformCreateItemOptions
+} from "../types/external";
 
 export class Dataform extends BaseSDK {
 	private _id: string;
@@ -22,6 +27,19 @@ export class Dataform extends BaseSDK {
 			pageSize: options?.pageSize || 50,
 			filters: options?.filters || {},
 			sortBy: options?.sortBy || []
+		});
+	}
+
+	/**
+	 * Create a new item in this dataform
+	 * @param options - Creation options (data: initial field values, viewId: optional view ID)
+	 * @returns Promise containing the newly created item with _id
+	 */
+	createItem(options?: DataformCreateItemOptions): Promise<DataformItem> {
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_CREATE_ITEM, {
+			flowId: this._id,
+			data: options?.data || {},
+			viewId: options?.viewId || ""
 		});
 	}
 
