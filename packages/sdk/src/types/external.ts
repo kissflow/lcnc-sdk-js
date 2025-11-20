@@ -39,3 +39,18 @@ export type FetchOptions = {
   body?: string | object;
   headers?: object;
 };
+
+export type DataformQueryOptions = {
+  searchValue?: string;
+  pageNumber?: number;
+  pageSize?: number;
+  filters?: object;
+  sortBy?: Array<{ field: string; isDescending: boolean }>;
+};
+
+export type DataformQueryResponse = {
+  items: any[];
+  total: number;
+  page?: number;
+  pageSize?: number;
+};
