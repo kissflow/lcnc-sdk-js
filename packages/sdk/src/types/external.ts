@@ -59,3 +59,9 @@ export type DataformCreateItemOptions = {
   data?: object;
   viewId?: string;
 };
+
+export type DataformUpdateItemOptions = {
+  itemId: string;  // Required: the _id of the item to update
+  data: object;    // Required: the updated field values
+  viewId?: string; // Optional: view ID for view-specific update
+};
