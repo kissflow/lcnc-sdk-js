@@ -29,6 +29,12 @@ export type DataformItem = {
   _id: string;
 };
 
+export type DataformFieldOptions = {
+  flowId: string;
+  instanceId: string;
+  fieldId: string;
+};
+
 export type ProcessItem = {
   _id: string;
   _activity_instance_id: string;

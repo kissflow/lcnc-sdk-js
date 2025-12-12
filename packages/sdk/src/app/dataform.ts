@@ -5,7 +5,8 @@ import {
 	DataformQueryOptions,
 	DataformQueryResponse,
 	DataformCreateItemOptions,
-	DataformUpdateItemOptions
+	DataformUpdateItemOptions,
+	DataformFieldOptions
 } from "../types/external";
 
 export class Dataform extends BaseSDK {
@@ -124,4 +125,14 @@ export class Dataform extends BaseSDK {
 			return new Form((response.storeId || instanceId || ""), this._id );
 		});
 	}
+
+
+	getFieldOptions(options?: DataformFieldOptions): Promise<DataformQueryResponse> {
+			return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELD_OPTIONS, {
+				flowId: this._id,
+				instanceId: options?.instanceId || "",
+				fieldId: options?.fieldId || ""
+			});
+		}
+
 }
