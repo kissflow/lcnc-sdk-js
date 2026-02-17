@@ -1,0 +1,17 @@
+{
+    "folders": [
+        {
+            "name": "lcnc-sdk-js",
+            "path": "."
+        },
+        {
+            "name": "custom-form-dynamic",
+            "path": "../Custom Components/custom-form-dynamic"
+        },
+        {
+            "name": "kf-xg-frontend",
+            "path": "../OS/kf-xg-frontend"
+        }
+    ],
+    "settings": {}
+}
