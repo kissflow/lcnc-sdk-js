@@ -78,8 +78,8 @@ export class Process extends BaseSDK {
      * // Get tasks for specific activity/step
      * const { items } = await process.getMyTasks({ activityId: "Approval_Step" });
      */
-    getMyTasks(options?: ProcessMyTasksOptions): Promise<ProcessQueryResponse> {
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_TASKS, {
+    getMyTasksItems(options?: ProcessMyTasksOptions): Promise<ProcessQueryResponse> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_TASKS_ITEMS, {
             flowId: this._id,
             activityId: options?.activityId || "",
             payload: options?.payload || {},
@@ -100,8 +100,8 @@ export class Process extends BaseSDK {
      * const process = kf.app.getProcess("LeaveRequest");
      * const { items } = await process.getParticipated();
      */
-    getParticipated(options?: ProcessParticipatedOptions): Promise<ProcessQueryResponse> {
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PARTICIPATED, {
+    getParticipatedItems(options?: ProcessParticipatedOptions): Promise<ProcessQueryResponse> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PARTICIPATED_ITEMS, {
             flowId: this._id,
             activityId: options?.activityId || "",
             payload: options?.payload || {},

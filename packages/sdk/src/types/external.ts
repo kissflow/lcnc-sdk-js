@@ -72,14 +72,18 @@ export type ProcessMyItemsOptions = BaseQueryOptions & {
 };
 
 export type ProcessMyTasksOptions = BaseQueryOptions & {
-  activityId?: string;  // Filter by specific activity/step
+  activityId?: string;
+  payload?: object;
 };
 
 export type ProcessParticipatedOptions = BaseQueryOptions & {
-  activityId?: string;  // Filter by specific activity/step
+  activityId?: string;
+  payload?: object;
 };
 
-export type ProcessAdminOptions = BaseQueryOptions;
+export type ProcessAdminOptions = BaseQueryOptions & {
+  payload?: object;
+};
 
 export type ProcessQueryResponse = QueryResponse;
 
@@ -153,7 +157,10 @@ export type FetchOptions = {
 // Dataform Types
 // ============================================
 
-export type DataformQueryOptions = BaseQueryOptions;
+export type DataformQueryOptions = BaseQueryOptions & {
+  viewId?: string;
+  payload?: object;
+};
 
 export type DataformQueryResponse = QueryResponse;
 
