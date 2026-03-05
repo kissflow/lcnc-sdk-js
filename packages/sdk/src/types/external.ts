@@ -57,11 +57,6 @@ export type DataformItem = {
   _id: string;
 };
 
-export type DataformFieldOptions = {
-  flowId: string;
-  instanceId: string;
-  fieldId: string;
-};
 
 export type ProcessItem = {
   _id: string;
@@ -106,37 +101,31 @@ export type ProcessDeleteItemOptions = {
   instanceId: string;
 };
 
-export type ProcessFieldOptions = {
-  instanceId: string;
-  activityInstanceId?: string;
-  fieldId: string;
-};
-
-export type ProcessApproveOptions = {
+export type ProcessSubmitItemOptions = {
   instanceId: string;
   activityInstanceId: string;
   comment?: string;
 };
 
-export type ProcessRejectOptions = {
+export type ProcessRejectItemOptions = {
   instanceId: string;
   activityInstanceId: string;
   comment: string;
 };
 
-export type ProcessWithdrawOptions = {
+export type ProcessWithdrawItemOptions = {
   instanceId: string;
   comment?: string;
 };
 
-export type ProcessSendbackOptions = {
+export type ProcessSendbackItemOptions = {
   instanceId: string;
   activityInstanceId: string;
   stepId: string;
   comment: string;
 };
 
-export type ProcessReassignOptions = {
+export type ProcessReassignItemOptions = {
   instanceId: string;
   activityInstanceId: string;
   reassignTo: object;
@@ -145,12 +134,12 @@ export type ProcessReassignOptions = {
   reassignedFrom?: object[];
 };
 
-export type ProcessRestartOptions = {
+export type ProcessRestartItemOptions = {
   instanceId: string;
   activityInstanceId: string;
 };
 
-export type ProcessDiscardOptions = {
+export type ProcessDiscardItemOptions = {
   instanceId: string;
 };
 
@@ -189,11 +178,11 @@ export type DataformDeleteItemOptions = {
   viewId?: string;
 };
 
-export type DataformDiscardOptions = {
+export type DataformDiscardItemOptions = {
   viewId?: string;
 };
 
-export type DataformSubmitOptions = {
+export type DataformSubmitItemOptions = {
   itemId: string;
   data?: object;
   viewId?: string;
@@ -208,16 +197,7 @@ export type BoardGetItemsOptions = BaseQueryOptions & {
   payload?: object;
 };
 
-export type BoardGetItemsCountOptions = {
-  viewId: string;  // Required: view ID for fetching count
-  payload?: object;
-};
-
 export type BoardQueryResponse = QueryResponse;
-
-export type BoardCountResponse = {
-  count: number;
-};
 
 export type BoardGetItemOptions = {
   instanceId: string;
@@ -236,9 +216,14 @@ export type BoardDeleteItemOptions = {
   instanceId: string;  // Required: the _id of the item to delete
 };
 
-export type BoardFieldOptions = {
+export type BoardSubmitItemOptions = {
   instanceId: string;
-  fieldId: string;
+  comment?: string;
 };
+
+export type BoardDiscardItemOptions = {
+  instanceId: string;
+};
+
 
 

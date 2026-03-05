@@ -1,5 +1,4 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import { Form } from "../form";
 import {
     ProcessItem,
     ProcessGetItemOptions,
@@ -11,14 +10,13 @@ import {
     ProcessCreateItemOptions,
     ProcessUpdateItemOptions,
     ProcessDeleteItemOptions,
-    ProcessFieldOptions,
-    ProcessApproveOptions,
-    ProcessRejectOptions,
-    ProcessWithdrawOptions,
-    ProcessSendbackOptions,
-    ProcessReassignOptions,
-    ProcessRestartOptions,
-    ProcessDiscardOptions
+    ProcessSubmitItemOptions,
+    ProcessRejectItemOptions,
+    ProcessWithdrawItemOptions,
+    ProcessSendbackItemOptions,
+    ProcessReassignItemOptions,
+    ProcessRestartItemOptions,
+    ProcessDiscardItemOptions
 } from "../types/external";
 import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
 
@@ -198,60 +196,6 @@ export class Process extends BaseSDK {
     }
 
     /**
-     * Initialize a form for a process instance with all necessary setup
-     * Fetches schema, item data, creates and initializes the form store
-     *
-     * @param instanceId - Optional instance ID. If omitted, creates a new process instance
-     * @param activityInstanceId - Optional activity instance ID. Required when editing existing instance
-     * @returns Promise with Form instance ready to use
-     *
-     * @example
-     * // Create new process instance
-     * const process = kf.app.getProcess("LeaveRequest");
-     * const form = await process.initForm();
-     * await form.updateField({ LeaveType: "Annual" });
-     *
-     * // Edit existing process instance
-     * const form = await process.initForm("item_123", "activity_456");
-     * const data = await form.toJSON();
-     */
-    initForm(instanceId?: string, activityInstanceId?: string): Promise<Form> {
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_INIT_FORM, {
-            flowId: this._id,
-            instanceId: instanceId || "",
-            activityInstanceId: activityInstanceId || ""
-        }).then((response: any) => {
-            return new Form(response.storeId || instanceId || "", this._id);
-        });
-    }
-
-    /**
-     * Get field options for dropdown/lookup fields
-     * @param options - Field options (instanceId, activityInstanceId, fieldId)
-     * @returns Promise containing the field options
-     *
-     * @example
-     * const process = kf.app.getProcess("LeaveRequest");
-     * const options = await process.getFieldOptions({
-     *   instanceId: "item_123",
-     *   fieldId: "LeaveType"
-     * });
-     */
-    getFieldOptions(options: ProcessFieldOptions): Promise<any> {
-        const error = requireFieldsAsync([
-            { value: options.instanceId, name: "instanceId" },
-            { value: options.fieldId, name: "fieldId" }
-        ]);
-        if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_FIELD_OPTIONS, {
-            flowId: this._id,
-            instanceId: options.instanceId,
-            activityInstanceId: options.activityInstanceId || "",
-            fieldId: options.fieldId
-        });
-    }
-
-    /**
      * Open the form UI for a process instance
      * @param item - Process item with _id and _activity_instance_id
      */
@@ -269,19 +213,19 @@ export class Process extends BaseSDK {
     }
 
     /**
-     * Approve (submit) a process task
+     * Submit a process task
      * @param options - instanceId, activityInstanceId, optional comment
      *
      * @example
-     * await process.approve({ instanceId: "item_123", activityInstanceId: "act_456" });
+     * await process.submitItem({ instanceId: "item_123", activityInstanceId: "act_456" });
      */
-    approve(options: ProcessApproveOptions): Promise<void> {
+    submitItem(options: ProcessSubmitItemOptions): Promise<void> {
         const error = requireFieldsAsync([
             { value: options.instanceId, name: "instanceId" },
             { value: options.activityInstanceId, name: "activityInstanceId" }
         ]);
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_APPROVE, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_SUBMIT_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId,
             activityInstanceId: options.activityInstanceId,
@@ -296,14 +240,14 @@ export class Process extends BaseSDK {
      * @example
      * await process.reject({ instanceId: "item_123", activityInstanceId: "act_456", comment: "Not approved" });
      */
-    reject(options: ProcessRejectOptions): Promise<void> {
+    rejectItem(options: ProcessRejectItemOptions): Promise<void> {
         const error = requireFieldsAsync([
             { value: options.instanceId, name: "instanceId" },
             { value: options.activityInstanceId, name: "activityInstanceId" },
             { value: options.comment, name: "comment" }
         ]);
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_REJECT, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_REJECT_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId,
             activityInstanceId: options.activityInstanceId,
@@ -318,10 +262,10 @@ export class Process extends BaseSDK {
      * @example
      * await process.withdraw({ instanceId: "item_123", comment: "Withdrawing request" });
      */
-    withdraw(options: ProcessWithdrawOptions): Promise<void> {
+    withdrawItem(options: ProcessWithdrawItemOptions): Promise<void> {
         const error = requireFieldAsync(options.instanceId, "instanceId");
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_WITHDRAW, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_WITHDRAW_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId,
             comment: options.comment || ""
@@ -335,7 +279,7 @@ export class Process extends BaseSDK {
      * @example
      * await process.sendback({ instanceId: "item_123", activityInstanceId: "act_456", stepId: "step_789", comment: "Please revise" });
      */
-    sendback(options: ProcessSendbackOptions): Promise<void> {
+    sendbackItem(options: ProcessSendbackItemOptions): Promise<void> {
         const error = requireFieldsAsync([
             { value: options.instanceId, name: "instanceId" },
             { value: options.activityInstanceId, name: "activityInstanceId" },
@@ -343,7 +287,7 @@ export class Process extends BaseSDK {
             { value: options.comment, name: "comment" }
         ]);
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_SENDBACK, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_SENDBACK_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId,
             activityInstanceId: options.activityInstanceId,
@@ -359,7 +303,7 @@ export class Process extends BaseSDK {
      * @example
      * await process.reassign({ instanceId: "item_123", activityInstanceId: "act_456", reassignTo: { _id: "user_789" }, comment: "Reassigning to manager" });
      */
-    reassign(options: ProcessReassignOptions): Promise<void> {
+    reassignItem(options: ProcessReassignItemOptions): Promise<void> {
         const error = requireFieldsAsync([
             { value: options.instanceId, name: "instanceId" },
             { value: options.activityInstanceId, name: "activityInstanceId" },
@@ -367,7 +311,7 @@ export class Process extends BaseSDK {
             { value: options.comment, name: "comment" }
         ]);
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_REASSIGN, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_REASSIGN_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId,
             activityInstanceId: options.activityInstanceId,
@@ -385,13 +329,13 @@ export class Process extends BaseSDK {
      * @example
      * await process.restart({ instanceId: "item_123", activityInstanceId: "act_456" });
      */
-    restart(options: ProcessRestartOptions): Promise<void> {
+    restartItem(options: ProcessRestartItemOptions): Promise<void> {
         const error = requireFieldsAsync([
             { value: options.instanceId, name: "instanceId" },
             { value: options.activityInstanceId, name: "activityInstanceId" }
         ]);
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_RESTART, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_RESTART_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId,
             activityInstanceId: options.activityInstanceId
@@ -405,10 +349,10 @@ export class Process extends BaseSDK {
      * @example
      * await process.discard({ instanceId: "item_123" });
      */
-    discard(options: ProcessDiscardOptions): Promise<void> {
+    discardItem(options: ProcessDiscardItemOptions): Promise<void> {
         const error = requireFieldAsync(options.instanceId, "instanceId");
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_DISCARD, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_DISCARD_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId
         });

@@ -1,16 +1,14 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import { Form } from "../form";
 import {
     BoardItem,
     BoardGetItemOptions,
     BoardGetItemsOptions,
-    BoardGetItemsCountOptions,
     BoardQueryResponse,
-    BoardCountResponse,
     BoardCreateItemOptions,
     BoardUpdateItemOptions,
     BoardDeleteItemOptions,
-    BoardFieldOptions
+    BoardSubmitItemOptions,
+    BoardDiscardItemOptions,
 } from "../types/external";
 import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
 
@@ -86,25 +84,6 @@ export class Board extends BaseSDK {
     }
 
     /**
-     * Get items count from a board view
-     * @param options - Query options (viewId required, payload optional)
-     * @returns Promise containing count
-     *
-     * @example
-     * const board = kf.app.getBoard("Inventory");
-     * const { count } = await board.getItemsCount({ viewId: "AllItems_View" });
-     */
-    getItemsCount(options: BoardGetItemsCountOptions): Promise<BoardCountResponse> {
-        const error = requireFieldAsync(options.viewId, "viewId");
-        if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_ITEMS_COUNT, {
-            flowId: this._id,
-            viewId: options.viewId,
-            payload: options.payload || {}
-        });
-    }
-
-    /**
      * Create a new board item
      * @param options - Creation options (data: initial field values)
      * @returns Promise containing the newly created item with _id
@@ -161,109 +140,28 @@ export class Board extends BaseSDK {
     }
 
     /**
-     * Initialize a form for a board item with all necessary setup
-     * Fetches schema, item data, creates and initializes the form store
-     *
-     * @param instanceId - Optional instance ID. If omitted, creates a new board item
-     * @returns Promise with Form instance ready to use
-     *
-     * @example
-     * // Create new board item
-     * const board = kf.app.getBoard("Inventory");
-     * const form = await board.initForm();
-     * await form.updateField({ Name: "New Item" });
-     *
-     * // Edit existing board item
-     * const form = await board.initForm("item_123");
-     * const data = await form.toJSON();
+     * Submit a board item
+     * @param options - instanceId, optional comment
      */
-    initForm(instanceId?: string): Promise<Form> {
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_INIT_FORM, {
-            flowId: this._id,
-            instanceId: instanceId || ""
-        }).then((response: any) => {
-            return new Form(response.storeId || instanceId || "", this._id);
-        });
-    }
-
-    /**
-     * Get field options for dropdown/lookup fields
-     * @param options - Field options (instanceId, fieldId)
-     * @returns Promise containing the field options
-     *
-     * @example
-     * const board = kf.app.getBoard("Inventory");
-     * const options = await board.getFieldOptions({
-     *   instanceId: "item_123",
-     *   fieldId: "Category"
-     * });
-     */
-    getFieldOptions(options: BoardFieldOptions): Promise<any> {
-        const error = requireFieldsAsync([
-            { value: options.instanceId, name: "instanceId" },
-            { value: options.fieldId, name: "fieldId" }
-        ]);
+    submitItem(options: BoardSubmitItemOptions): Promise<void> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_FIELD_OPTIONS, {
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_SUBMIT_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId,
-            fieldId: options.fieldId
         });
     }
 
     /**
-     * Approve a case instance
-     * @param approveType - The approval type (default: "approve")
-     *
-     * @example
-     * const case_ = kf.app.getCase("LeaveCase");
-     * await case_.approve();
+     * Discard a board item
+     * @param options - instanceId
      */
-    approve(approveType: string = "approve"): Promise<void> {
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_APPROVE, {
-            caseId: this._id,
-            approveType
-        });
-    }
-
-    /**
-     * Archive a case instance
-     *
-     * @example
-     * const case_ = kf.app.getCase("LeaveCase");
-     * await case_.archive();
-     */
-    archive(): Promise<void> {
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_ARCHIVE, {
-            caseId: this._id
-        });
-    }
-
-    /**
-     * Unarchive a case instance
-     *
-     * @example
-     * const case_ = kf.app.getCase("LeaveCase");
-     * await case_.unarchive();
-     */
-    unarchive(): Promise<void> {
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_UNARCHIVE, {
-            caseId: this._id
-        });
-    }
-
-    /**
-     * Duplicate a case instance
-     * @param options - Optional data overrides for the duplicated case
-     *
-     * @example
-     * const case_ = kf.app.getCase("LeaveCase");
-     * await case_.duplicate({ data: { Name: "Copy of original" } });
-     */
-    duplicate(options?: { data?: object }): Promise<void> {
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_DUPLICATE, {
-            caseId: this._id,
-            data: options?.data || {}
+    discardItem(options: BoardDiscardItemOptions): Promise<void> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_DISCARD_ITEM, {
+            flowId: this._id,
+            instanceId: options.instanceId
         });
     }
 

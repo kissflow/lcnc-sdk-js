@@ -28,16 +28,6 @@ export class Form extends BaseSDK {
 			data: args
 		});
 	}
-	getValidationErrors() {
-		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_VALIDATION_ERRORS, {
-			instanceId: this.instanceId
-		});
-	}
-	getFormConfiguration() {
-		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_CONFIGURATION, {
-			instanceId: this.instanceId
-		});
-	}
 	getTable(tableId: string) {
 		return new Table(this.instanceId, tableId);
 	}
