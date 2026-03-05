@@ -88,6 +88,10 @@ export type ProcessAdminOptions = BaseQueryOptions;
 
 export type ProcessQueryResponse = QueryResponse;
 
+export type ProcessGetItemOptions = {
+  instanceId: string;
+};
+
 export type ProcessCreateItemOptions = {
   data?: object;
 };
@@ -106,6 +110,48 @@ export type ProcessFieldOptions = {
   instanceId: string;
   activityInstanceId?: string;
   fieldId: string;
+};
+
+export type ProcessApproveOptions = {
+  instanceId: string;
+  activityInstanceId: string;
+  comment?: string;
+};
+
+export type ProcessRejectOptions = {
+  instanceId: string;
+  activityInstanceId: string;
+  comment: string;
+};
+
+export type ProcessWithdrawOptions = {
+  instanceId: string;
+  comment?: string;
+};
+
+export type ProcessSendbackOptions = {
+  instanceId: string;
+  activityInstanceId: string;
+  stepId: string;
+  comment: string;
+};
+
+export type ProcessReassignOptions = {
+  instanceId: string;
+  activityInstanceId: string;
+  reassignTo: object;
+  comment: string;
+  reassignType?: "initiator" | "approver" | "admin";
+  reassignedFrom?: object[];
+};
+
+export type ProcessRestartOptions = {
+  instanceId: string;
+  activityInstanceId: string;
+};
+
+export type ProcessDiscardOptions = {
+  instanceId: string;
 };
 
 export type FetchOptions = {
@@ -133,6 +179,26 @@ export type DataformUpdateItemOptions = {
   viewId?: string; // Optional: view ID for view-specific update
 };
 
+export type DataformGetItemOptions = {
+  itemId: string;
+  viewId?: string;
+};
+
+export type DataformDeleteItemOptions = {
+  itemId: string;
+  viewId?: string;
+};
+
+export type DataformDiscardOptions = {
+  viewId?: string;
+};
+
+export type DataformSubmitOptions = {
+  itemId: string;
+  data?: object;
+  viewId?: string;
+};
+
 // ============================================
 // Board Types
 // ============================================
@@ -153,6 +219,10 @@ export type BoardCountResponse = {
   count: number;
 };
 
+export type BoardGetItemOptions = {
+  instanceId: string;
+};
+
 export type BoardCreateItemOptions = {
   data?: object;
 };
@@ -170,3 +240,5 @@ export type BoardFieldOptions = {
   instanceId: string;
   fieldId: string;
 };
+
+

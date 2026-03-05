@@ -2,6 +2,7 @@ import { BaseSDK, LISTENER_CMDS } from "../core";
 import { Form } from "../form";
 import {
     ProcessItem,
+    ProcessGetItemOptions,
     ProcessMyItemsOptions,
     ProcessMyTasksOptions,
     ProcessParticipatedOptions,
@@ -10,7 +11,14 @@ import {
     ProcessCreateItemOptions,
     ProcessUpdateItemOptions,
     ProcessDeleteItemOptions,
-    ProcessFieldOptions
+    ProcessFieldOptions,
+    ProcessApproveOptions,
+    ProcessRejectOptions,
+    ProcessWithdrawOptions,
+    ProcessSendbackOptions,
+    ProcessReassignOptions,
+    ProcessRestartOptions,
+    ProcessDiscardOptions
 } from "../types/external";
 import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
 
@@ -20,6 +28,20 @@ export class Process extends BaseSDK {
     constructor(flowId: string) {
         super();
         this._id = flowId;
+    }
+
+    /**
+     * Get a single process instance by ID
+     * @param options - instanceId (required)
+     * @returns Promise containing the instance data
+     */
+    getItem(options: ProcessGetItemOptions): Promise<ProcessItem> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ITEM, {
+            flowId: this._id,
+            instanceId: options.instanceId
+        });
     }
 
     /**
@@ -62,6 +84,7 @@ export class Process extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_TASKS, {
             flowId: this._id,
             activityId: options?.activityId || "",
+            payload: options?.payload || {},
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
@@ -83,6 +106,7 @@ export class Process extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PARTICIPATED, {
             flowId: this._id,
             activityId: options?.activityId || "",
+            payload: options?.payload || {},
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
@@ -103,6 +127,7 @@ export class Process extends BaseSDK {
     getAdminItems(options?: ProcessAdminOptions): Promise<ProcessQueryResponse> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ADMIN_ITEMS, {
             flowId: this._id,
+            payload: options?.payload || {},
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
@@ -240,6 +265,181 @@ export class Process extends BaseSDK {
             flowId: this._id,
             instanceId: item._id,
             activityInstanceId: item._activity_instance_id,
+        });
+    }
+
+    /**
+     * Approve (submit) a process task
+     * @param options - instanceId, activityInstanceId, optional comment
+     *
+     * @example
+     * await process.approve({ instanceId: "item_123", activityInstanceId: "act_456" });
+     */
+    approve(options: ProcessApproveOptions): Promise<void> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_APPROVE, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId,
+            comment: options.comment || ""
+        });
+    }
+
+    /**
+     * Reject a process task
+     * @param options - instanceId, activityInstanceId, comment (required)
+     *
+     * @example
+     * await process.reject({ instanceId: "item_123", activityInstanceId: "act_456", comment: "Not approved" });
+     */
+    reject(options: ProcessRejectOptions): Promise<void> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" },
+            { value: options.comment, name: "comment" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_REJECT, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId,
+            comment: options.comment
+        });
+    }
+
+    /**
+     * Withdraw a process instance (initiator only)
+     * @param options - instanceId, optional comment
+     *
+     * @example
+     * await process.withdraw({ instanceId: "item_123", comment: "Withdrawing request" });
+     */
+    withdraw(options: ProcessWithdrawOptions): Promise<void> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_WITHDRAW, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            comment: options.comment || ""
+        });
+    }
+
+    /**
+     * Send back a process task to a previous step
+     * @param options - instanceId, activityInstanceId, stepId (target step), comment (required)
+     *
+     * @example
+     * await process.sendback({ instanceId: "item_123", activityInstanceId: "act_456", stepId: "step_789", comment: "Please revise" });
+     */
+    sendback(options: ProcessSendbackOptions): Promise<void> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" },
+            { value: options.stepId, name: "stepId" },
+            { value: options.comment, name: "comment" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_SENDBACK, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId,
+            stepId: options.stepId,
+            comment: options.comment
+        });
+    }
+
+    /**
+     * Reassign a process task to another user
+     * @param options - instanceId, activityInstanceId, reassignTo (user object), comment (required), optional reassignType and reassignedFrom
+     *
+     * @example
+     * await process.reassign({ instanceId: "item_123", activityInstanceId: "act_456", reassignTo: { _id: "user_789" }, comment: "Reassigning to manager" });
+     */
+    reassign(options: ProcessReassignOptions): Promise<void> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" },
+            { value: options.reassignTo, name: "reassignTo" },
+            { value: options.comment, name: "comment" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_REASSIGN, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId,
+            reassignTo: options.reassignTo,
+            comment: options.comment,
+            reassignType: options.reassignType || "approver",
+            reassignedFrom: options.reassignedFrom || []
+        });
+    }
+
+    /**
+     * Restart a rejected/withdrawn process instance
+     * @param options - instanceId, activityInstanceId
+     *
+     * @example
+     * await process.restart({ instanceId: "item_123", activityInstanceId: "act_456" });
+     */
+    restart(options: ProcessRestartOptions): Promise<void> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_RESTART, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId
+        });
+    }
+
+    /**
+     * Discard a draft process instance
+     * @param options - instanceId
+     *
+     * @example
+     * await process.discard({ instanceId: "item_123" });
+     */
+    discard(options: ProcessDiscardOptions): Promise<void> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_DISCARD, {
+            flowId: this._id,
+            instanceId: options.instanceId
+        });
+    }
+
+    getFields(): Promise<any> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_FIELDS, {
+            flowId: this._id
+        });
+    }
+
+    getMyTaskFields(options: { activityId: string }): Promise<any> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MYTASK_FIELDS, {
+            flowId: this._id,
+            activityId: options.activityId,
+            isParticipated: false
+        });
+    }
+
+    getParticipatedFields(options: { activityId: string }): Promise<any> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PARTICIPATED_FIELDS, {
+            flowId: this._id,
+            activityId: options.activityId,
+            isParticipated: true
+        });
+    }
+
+    getMyItemsFields(options: { status: string }): Promise<any> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_ITEMS_FIELDS, {
+            flowId: this._id,
+            status: options.status
         });
     }
 }

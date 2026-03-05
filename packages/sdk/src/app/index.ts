@@ -6,7 +6,7 @@ import { Page } from "./page";
 import { AppContext } from "../types/internal";
 
 import { DecisionTable } from "./decisiontable";
-import { Dataform } from "./dataform";
+import { Dataform } from "../dataform";
 import { Board } from "../board";
 import { Process } from "../process";
 
@@ -58,6 +58,10 @@ export class Application extends BaseSDK {
 
 	getProcess(flowId: string) {
 		return new Process(flowId);
+	}
+
+	getCase(caseId: string): Board {
+		return new Board(caseId);
 	}
 }
 

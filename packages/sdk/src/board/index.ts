@@ -2,6 +2,7 @@ import { BaseSDK, LISTENER_CMDS } from "../core";
 import { Form } from "../form";
 import {
     BoardItem,
+    BoardGetItemOptions,
     BoardGetItemsOptions,
     BoardGetItemsCountOptions,
     BoardQueryResponse,
@@ -43,6 +44,20 @@ export class Board extends BaseSDK {
             flowId: this._id,
             itemId: item._id,
             viewId: item._view_id
+        });
+    }
+
+    /**
+     * Get a single board/case item by instance ID
+     * @param options - instanceId (required)
+     * @returns Promise containing the item data
+     */
+    getItem(options: BoardGetItemOptions): Promise<BoardItem> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_ITEM, {
+            flowId: this._id,
+            instanceId: options.instanceId
         });
     }
 
@@ -193,6 +208,75 @@ export class Board extends BaseSDK {
             flowId: this._id,
             instanceId: options.instanceId,
             fieldId: options.fieldId
+        });
+    }
+
+    /**
+     * Approve a case instance
+     * @param approveType - The approval type (default: "approve")
+     *
+     * @example
+     * const case_ = kf.app.getCase("LeaveCase");
+     * await case_.approve();
+     */
+    approve(approveType: string = "approve"): Promise<void> {
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_APPROVE, {
+            caseId: this._id,
+            approveType
+        });
+    }
+
+    /**
+     * Archive a case instance
+     *
+     * @example
+     * const case_ = kf.app.getCase("LeaveCase");
+     * await case_.archive();
+     */
+    archive(): Promise<void> {
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_ARCHIVE, {
+            caseId: this._id
+        });
+    }
+
+    /**
+     * Unarchive a case instance
+     *
+     * @example
+     * const case_ = kf.app.getCase("LeaveCase");
+     * await case_.unarchive();
+     */
+    unarchive(): Promise<void> {
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_UNARCHIVE, {
+            caseId: this._id
+        });
+    }
+
+    /**
+     * Duplicate a case instance
+     * @param options - Optional data overrides for the duplicated case
+     *
+     * @example
+     * const case_ = kf.app.getCase("LeaveCase");
+     * await case_.duplicate({ data: { Name: "Copy of original" } });
+     */
+    duplicate(options?: { data?: object }): Promise<void> {
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_DUPLICATE, {
+            caseId: this._id,
+            data: options?.data || {}
+        });
+    }
+
+    getFields(): Promise<any> {
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_FIELDS, {
+            flowId: this._id
+        });
+    }
+
+    getViewFields(options: { viewId: string }): Promise<any> {
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_VIEW_FIELDS, {
+            flowId: this._id,
+            viewId: options.viewId
         });
     }
 }

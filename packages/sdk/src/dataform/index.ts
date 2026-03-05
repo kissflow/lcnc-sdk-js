@@ -6,7 +6,11 @@ import {
 	DataformQueryResponse,
 	DataformCreateItemOptions,
 	DataformUpdateItemOptions,
-	DataformFieldOptions
+	DataformFieldOptions,
+	DataformGetItemOptions,
+	DataformDeleteItemOptions,
+	DataformDiscardOptions,
+	DataformSubmitOptions
 } from "../types/external";
 
 export class Dataform extends BaseSDK {
@@ -25,11 +29,29 @@ export class Dataform extends BaseSDK {
 	getItems(options?: DataformQueryOptions): Promise<DataformQueryResponse> {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_ITEMS, {
 			flowId: this._id,
+			viewId: options?.viewId || "",
+			payload: options?.payload || {},
 			searchValue: options?.searchValue || "",
 			pageNumber: options?.pageNumber || 1,
 			pageSize: options?.pageSize || 50,
 			filters: options?.filters || {},
 			sortBy: options?.sortBy || []
+		});
+	}
+
+	/**
+	 * Get a single item by ID from this dataform
+	 * @param options - itemId (required), optional viewId
+	 * @returns Promise containing the item data
+	 */
+	getItem(options: DataformGetItemOptions): Promise<DataformItem> {
+		if (!options.itemId) {
+			return Promise.reject({ message: "itemId is required" });
+		}
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_ITEM, {
+			flowId: this._id,
+			itemId: options.itemId,
+			viewId: options.viewId || ""
 		});
 	}
 
@@ -134,5 +156,69 @@ export class Dataform extends BaseSDK {
 				fieldId: options?.fieldId || ""
 			});
 		}
+
+	/**
+	 * Delete an item from this dataform
+	 * @param options - itemId (required), optional viewId
+	 *
+	 * @example
+	 * await dataform.deleteItem({ itemId: "item_123" });
+	 */
+	deleteItem(options: DataformDeleteItemOptions): Promise<void> {
+		if (!options.itemId) {
+			return Promise.reject({ message: "itemId is required" });
+		}
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_DELETE_ITEM, {
+			flowId: this._id,
+			itemId: options.itemId,
+			viewId: options.viewId || ""
+		});
+	}
+
+	/**
+	 * Discard the current draft for this dataform
+	 * @param options - optional viewId
+	 *
+	 * @example
+	 * await dataform.discard();
+	 */
+	discard(options?: DataformDiscardOptions): Promise<void> {
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_DISCARD, {
+			flowId: this._id,
+			viewId: options?.viewId || ""
+		});
+	}
+
+	/**
+	 * Submit/finalize a dataform item
+	 * @param options - itemId (required), optional data and viewId
+	 *
+	 * @example
+	 * await dataform.submit({ itemId: "item_123" });
+	 */
+	submit(options: DataformSubmitOptions): Promise<void> {
+		if (!options.itemId) {
+			return Promise.reject({ message: "itemId is required" });
+		}
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_SUBMIT, {
+			flowId: this._id,
+			itemId: options.itemId,
+			data: options.data || {},
+			viewId: options.viewId || ""
+		});
+	}
+
+	getViewFields(options: { viewId: string }): Promise<any> {
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_VIEW_FIELDS, {
+			flowId: this._id,
+			viewId: options.viewId
+		});
+	}
+
+	getFields(): Promise<any> {
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELDS, {
+			flowId: this._id
+		});
+	}
 
 }

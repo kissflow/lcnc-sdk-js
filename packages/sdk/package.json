@@ -1,6 +1,6 @@
 {
-	"name": "@kissflow/lowcode-client-sdk",
-	"version": "1.0.39",
+	"name": "lowcode-client-sdk",
+	"version": "1.0.41",
 	"description": "JavaScript SDK for developing over the Kissflow lowcode platform",
 	"types": "dist/index.d.ts",
 	"files": [
@@ -30,7 +30,7 @@
 		"url": "git+https://github.com/kissflow/lcnc-sdk-js.git"
 	},
 	"keywords": [],
-	"author": "Vivek Madurai<vivek@kissflow.com>",
+	"author": "Abdul<abdul@kissflow.com>",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/kissflow/lcnc-sdk-js/issues"
