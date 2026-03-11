@@ -2,13 +2,11 @@ import { BaseSDK, LISTENER_CMDS } from "../core";
 
 export class Form extends BaseSDK {
 	private instanceId: string;
-	private flowId: string;
 	type: string;
-	constructor(instanceId: string, flowId?: string) {
+	constructor(instanceId: string) {
 		super();
 		this.type = "Form";
 		this.instanceId = instanceId;
-		this.flowId = flowId
 	}
 	toJSON() {
 		return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
@@ -23,7 +21,6 @@ export class Form extends BaseSDK {
 	}
 	updateField(args: object) {
 		return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
-			flowId: this.flowId,
 			instanceId: this.instanceId,
 			data: args
 		});
