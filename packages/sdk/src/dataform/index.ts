@@ -21,7 +21,7 @@ export class Dataform extends BaseSDK {
 
 	/**
 	 * Get all items from this dataform with optional filtering, sorting, and pagination
-	 * @param options - Query options (searchValue, pageNumber, pageSize, filters, sortBy)
+	 * @param options - Query options (searchValue, pageNumber, pageSize, payload)
 	 * @returns Promise containing items and total count
 	 */
 	getItems(options?: DataformQueryOptions): Promise<DataformQueryResponse> {
@@ -32,8 +32,6 @@ export class Dataform extends BaseSDK {
 			searchValue: options?.searchValue || "",
 			pageNumber: options?.pageNumber || 1,
 			pageSize: options?.pageSize || 50,
-			filters: options?.filters || {},
-			sortBy: options?.sortBy || []
 		});
 	}
 
@@ -150,10 +148,10 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
-	getFields(options: { viewId: string }): Promise<any> {
+	getFields(options?: { viewId?: string }): Promise<any> {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELDS, {
 			flowId: this._id,
-			viewId: options.viewId
+			viewId: options?.viewId || ""
 		});
 	}
 

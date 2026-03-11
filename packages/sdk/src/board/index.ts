@@ -61,7 +61,7 @@ export class Board extends BaseSDK {
 
     /**
      * Get items from a board view
-     * @param options - Query options (viewId required, searchValue, pageNumber, pageSize, filters, sortBy, payload)
+     * @param options - Query options (viewId required, searchValue, pageNumber, pageSize, payload)
      * @returns Promise containing items array and total count
      *
      * @example
@@ -77,8 +77,6 @@ export class Board extends BaseSDK {
             searchValue: options.searchValue || "",
             pageNumber: options.pageNumber || 1,
             pageSize: options.pageSize || 50,
-            filters: options.filters || {},
-            sortBy: options.sortBy || [],
             payload: options.payload || {}
         });
     }
@@ -165,10 +163,10 @@ export class Board extends BaseSDK {
         });
     }
 
-    getFields(options: { viewId: string }): Promise<any> {
+    getFields(options?: { viewId?: string }): Promise<any> {
         return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_FIELDS, {
             flowId: this._id,
-            viewId: options.viewId
+            viewId: options?.viewId || ""
         });
     }
 }

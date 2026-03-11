@@ -2,11 +2,6 @@
 // Shared Base Types
 // ============================================
 
-export type SortField = {
-  field: string;
-  isDescending: boolean;
-};
-
 export type QueryResponse = {
   items: any[];
   total: number;
@@ -18,8 +13,24 @@ export type BaseQueryOptions = {
   searchValue?: string;
   pageNumber?: number;
   pageSize?: number;
-  filters?: object;
-  sortBy?: SortField[];
+};
+
+export type PayloadSortItem = {
+  Id: string;
+  SortType: "ASC" | "DESC";
+};
+
+export type PayloadOptions = {
+  Columns?: any[];
+  Filters?: any;
+  Sort?: PayloadSortItem[];
+  FilterParam?: any;
+};
+
+export type ProcessPayloadOptions = {
+  Columns?: any[];
+  Filters?: any;
+  Sort?: PayloadSortItem[];
 };
 
 // ============================================
@@ -69,20 +80,21 @@ export type ProcessItem = {
 
 export type ProcessMyItemsOptions = BaseQueryOptions & {
   status?: string;  // "draft" | "inprogress" | "completed" | "rejected"
+  payload?: ProcessPayloadOptions;
 };
 
 export type ProcessMyTasksOptions = BaseQueryOptions & {
   activityId?: string;
-  payload?: object;
+  payload?: ProcessPayloadOptions;
 };
 
 export type ProcessParticipatedOptions = BaseQueryOptions & {
   activityId?: string;
-  payload?: object;
+  payload?: ProcessPayloadOptions;
 };
 
 export type ProcessAdminOptions = BaseQueryOptions & {
-  payload?: object;
+  payload?: ProcessPayloadOptions;
 };
 
 export type ProcessQueryResponse = QueryResponse;
@@ -167,7 +179,7 @@ export type FetchOptions = {
 
 export type DataformQueryOptions = BaseQueryOptions & {
   viewId?: string;
-  payload?: object;
+  payload?: PayloadOptions;
 };
 
 export type DataformQueryResponse = QueryResponse;
@@ -209,7 +221,7 @@ export type DataformSubmitItemOptions = {
 
 export type BoardGetItemsOptions = BaseQueryOptions & {
   viewId: string;  // Required: view ID for fetching items
-  payload?: object;
+  payload?: PayloadOptions;
 };
 
 export type BoardQueryResponse = QueryResponse;

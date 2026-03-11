@@ -45,7 +45,7 @@ export class Process extends BaseSDK {
 
     /**
      * Get my items from this process (items I initiated)
-     * @param options - Query options (status, searchValue, pageNumber, pageSize, filters, sortBy)
+     * @param options - Query options (status, searchValue, pageNumber, pageSize, payload)
      * @returns Promise containing items and total count
      *
      * @example
@@ -62,8 +62,7 @@ export class Process extends BaseSDK {
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
-            filters: options?.filters || {},
-            sortBy: options?.sortBy || []
+            payload: options?.payload || {}
         });
     }
 
@@ -87,8 +86,6 @@ export class Process extends BaseSDK {
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
-            filters: options?.filters || {},
-            sortBy: options?.sortBy || []
         });
     }
 
@@ -109,8 +106,6 @@ export class Process extends BaseSDK {
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
-            filters: options?.filters || {},
-            sortBy: options?.sortBy || []
         });
     }
 
@@ -130,8 +125,6 @@ export class Process extends BaseSDK {
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
-            filters: options?.filters || {},
-            sortBy: options?.sortBy || []
         });
     }
 
