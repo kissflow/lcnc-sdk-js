@@ -150,16 +150,10 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
-	getViewFields(options: { viewId: string }): Promise<any> {
-		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_VIEW_FIELDS, {
+	getFields(options: { viewId: string }): Promise<any> {
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELDS, {
 			flowId: this._id,
 			viewId: options.viewId
-		});
-	}
-
-	getFields(): Promise<any> {
-		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELDS, {
-			flowId: this._id
 		});
 	}
 

@@ -165,14 +165,8 @@ export class Board extends BaseSDK {
         });
     }
 
-    getFields(): Promise<any> {
+    getFields(options: { viewId: string }): Promise<any> {
         return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_FIELDS, {
-            flowId: this._id
-        });
-    }
-
-    getViewFields(options: { viewId: string }): Promise<any> {
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_VIEW_FIELDS, {
             flowId: this._id,
             viewId: options.viewId
         });

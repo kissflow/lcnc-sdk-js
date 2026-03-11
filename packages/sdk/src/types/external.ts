@@ -138,6 +138,14 @@ export type ProcessReassignItemOptions = {
   reassignedFrom?: object[];
 };
 
+export type ProcessGetReassigneesOptions = {
+  instanceId: string;
+  activityInstanceId: string;
+  pageNumber?: number;
+  pageSize?: number;
+  query?: string;
+};
+
 export type ProcessRestartItemOptions = {
   instanceId: string;
   activityInstanceId: string;

@@ -15,6 +15,7 @@ import {
     ProcessWithdrawItemOptions,
     ProcessSendbackItemOptions,
     ProcessReassignItemOptions,
+    ProcessGetReassigneesOptions,
     ProcessRestartItemOptions,
     ProcessDiscardItemOptions
 } from "../types/external";
@@ -319,6 +320,26 @@ export class Process extends BaseSDK {
             comment: options.comment,
             reassignType: options.reassignType || "approver",
             reassignedFrom: options.reassignedFrom || []
+        });
+    }
+
+    /**
+     * Get list of eligible reassignees for a process task
+     * @param options - instanceId, activityInstanceId, optional pageNumber, pageSize, query
+     */
+    getReassignees(options: ProcessGetReassigneesOptions): Promise<any> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_REASSIGNEES, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId,
+            pageNumber: options.pageNumber || 1,
+            pageSize: options.pageSize || 50,
+            query: options.query
         });
     }
 
