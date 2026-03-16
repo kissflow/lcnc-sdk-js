@@ -46,6 +46,29 @@ export class Board extends BaseSDK {
     }
 
     /**
+     * Get items from a board view
+     * @param options - Query options (viewId, searchValue, pageNumber, pageSize, payload)
+     * @returns Promise containing items array and total count
+     *
+     * @example
+     * const board = kf.app.getBoard("Inventory");
+     * const { items } = await board.getItems({ viewId: "AllItems_View" });
+     */
+    getItems(options?: BoardGetItemsOptions): Promise<BoardQueryResponse> {
+        const error = requireFieldAsync(options.viewId, "viewId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_ITEMS, {
+            flowId: this._id,
+            viewId: options?.viewId || "",
+            searchValue: options?.searchValue || "",
+            pageNumber: options?.pageNumber || 1,
+            pageSize: options?.pageSize || 50,
+            payload: options?.payload || {}
+        });
+    }
+
+
+    /**
      * Get a single board/case item by instance ID
      * @param options - instanceId (required)
      * @returns Promise containing the item data
@@ -56,28 +79,6 @@ export class Board extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId
-        });
-    }
-
-    /**
-     * Get items from a board view
-     * @param options - Query options (viewId required, searchValue, pageNumber, pageSize, payload)
-     * @returns Promise containing items array and total count
-     *
-     * @example
-     * const board = kf.app.getBoard("Inventory");
-     * const { items } = await board.getItems({ viewId: "AllItems_View" });
-     */
-    getItems(options: BoardGetItemsOptions): Promise<BoardQueryResponse> {
-        const error = requireFieldAsync(options.viewId, "viewId");
-        if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_ITEMS, {
-            flowId: this._id,
-            viewId: options.viewId,
-            searchValue: options.searchValue || "",
-            pageNumber: options.pageNumber || 1,
-            pageSize: options.pageSize || 50,
-            payload: options.payload || {}
         });
     }
 

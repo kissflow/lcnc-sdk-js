@@ -30,20 +30,6 @@ export class Process extends BaseSDK {
     }
 
     /**
-     * Get a single process instance by ID
-     * @param options - instanceId (required)
-     * @returns Promise containing the instance data
-     */
-    getItem(options: ProcessGetItemOptions): Promise<ProcessItem> {
-        const error = requireFieldAsync(options.instanceId, "instanceId");
-        if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ITEM, {
-            flowId: this._id,
-            instanceId: options.instanceId
-        });
-    }
-
-    /**
      * Get my items from this process (items I initiated)
      * @param options - Query options (status, searchValue, pageNumber, pageSize, payload)
      * @returns Promise containing items and total count
@@ -125,6 +111,20 @@ export class Process extends BaseSDK {
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
+        });
+    }
+
+    /**
+     * Get a single process instance by ID
+     * @param options - instanceId (required)
+     * @returns Promise containing the instance data
+     */
+    getItem(options: ProcessGetItemOptions): Promise<ProcessItem> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ITEM, {
+            flowId: this._id,
+            instanceId: options.instanceId
         });
     }
 
@@ -398,6 +398,15 @@ export class Process extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_ITEMS_FIELDS, {
             flowId: this._id,
             status: options.status
+        });
+    }
+
+    getProgress(options: { instanceId: string }): Promise<any> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PROGRESS, {
+            flowId: this._id,
+            instanceId: options.instanceId
         });
     }
 }

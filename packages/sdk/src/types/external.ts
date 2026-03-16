@@ -220,7 +220,7 @@ export type DataformSubmitItemOptions = {
 // ============================================
 
 export type BoardGetItemsOptions = BaseQueryOptions & {
-  viewId: string;  // Required: view ID for fetching items
+  viewId?: string;
   payload?: PayloadOptions;
 };
 
