@@ -44,7 +44,7 @@ export class Process extends BaseSDK {
     getMyItems(options?: ProcessMyItemsOptions): Promise<ProcessQueryResponse> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_ITEMS, {
             flowId: this._id,
-            status: options?.status || "draft",
+            status: options?.status || "all",
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,

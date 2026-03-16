@@ -79,7 +79,7 @@ export type ProcessItem = {
 // ============================================
 
 export type ProcessMyItemsOptions = BaseQueryOptions & {
-  status?: string;  // "draft" | "inprogress" | "completed" | "rejected"
+  status?: "draft" | "inprogress" | "completed" | "withdrawn" | "rejected" | "all";
   payload?: ProcessPayloadOptions;
 };
 

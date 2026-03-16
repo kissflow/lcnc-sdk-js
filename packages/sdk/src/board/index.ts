@@ -10,7 +10,7 @@ import {
     BoardSubmitItemOptions,
     BoardDiscardItemOptions,
 } from "../types/external";
-import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
+import { requireFieldAsync } from "../utils/validation";
 
 export class Board extends BaseSDK {
     private _id: string;
@@ -55,8 +55,6 @@ export class Board extends BaseSDK {
      * const { items } = await board.getItems({ viewId: "AllItems_View" });
      */
     getItems(options?: BoardGetItemsOptions): Promise<BoardQueryResponse> {
-        const error = requireFieldAsync(options.viewId, "viewId");
-        if (error) return error;
         return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_ITEMS, {
             flowId: this._id,
             viewId: options?.viewId || "",

@@ -1,4 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
+import { requireFieldAsync } from "../utils/validation";
 import {
 	DataformItem,
 	DataformQueryOptions,
@@ -41,9 +42,8 @@ export class Dataform extends BaseSDK {
 	 * @returns Promise containing the item data
 	 */
 	getItem(options: DataformGetItemOptions): Promise<DataformItem> {
-		if (!options.itemId) {
-			return Promise.reject({ message: "itemId is required" });
-		}
+		const error = requireFieldAsync(options.itemId, "itemId");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_ITEM, {
 			flowId: this._id,
 			itemId: options.itemId,
@@ -86,11 +86,8 @@ export class Dataform extends BaseSDK {
 	}
 
 	openForm(item: DataformItem) {
-		if (!item._id) {
-			return Promise.reject({
-				message: "Instance Id (_id) is required"
-			});
-		}
+		const error = requireFieldAsync(item._id, "Instance Id (_id)");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_OPEN_FORM, {
 			flowId: this._id,
 			itemId: item._id
@@ -105,9 +102,8 @@ export class Dataform extends BaseSDK {
 	 * await dataform.deleteItem({ itemId: "item_123" });
 	 */
 	deleteItem(options: DataformDeleteItemOptions): Promise<void> {
-		if (!options.itemId) {
-			return Promise.reject({ message: "itemId is required" });
-		}
+		const error = requireFieldAsync(options.itemId, "itemId");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_DELETE_ITEM, {
 			flowId: this._id,
 			itemId: options.itemId,
@@ -137,9 +133,8 @@ export class Dataform extends BaseSDK {
 	 * await dataform.submit({ itemId: "item_123" });
 	 */
 	submitItem(options: DataformSubmitItemOptions): Promise<void> {
-		if (!options.itemId) {
-			return Promise.reject({ message: "itemId is required" });
-		}
+		const error = requireFieldAsync(options.itemId, "itemId");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_SUBMIT_ITEM, {
 			flowId: this._id,
 			itemId: options.itemId,
