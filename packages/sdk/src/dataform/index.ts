@@ -70,6 +70,8 @@ export class Dataform extends BaseSDK {
 	 * @returns Promise containing the updated item
 	 */
 	updateItem(options: DataformUpdateItemOptions): Promise<DataformItem> {
+		const error = requireFieldAsync(options.itemId, "itemId");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_UPDATE_ITEM, {
 			flowId: this._id,
 			itemId: options.itemId,
