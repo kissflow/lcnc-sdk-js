@@ -29,10 +29,10 @@ export class Dataform extends BaseSDK {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_ITEMS, {
 			flowId: this._id,
 			viewId: options?.viewId || "",
-			payload: options?.payload || {},
 			searchValue: options?.searchValue || "",
 			pageNumber: options?.pageNumber || 1,
 			pageSize: options?.pageSize || 50,
+			payload: options?.payload || {},
 		});
 	}
 
@@ -80,6 +80,10 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
+	/**
+	 * Import items from a CSV file into this dataform
+	 * @param defaultValues - Optional default field values to apply to all imported items
+	 */
 	importCSV(defaultValues?: object) {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_IMPORT_CSV, {
 			flowId: this._id,
@@ -87,6 +91,10 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
+	/**
+	 * Open the form UI for an existing dataform item
+	 * @param item - Dataform item with _id
+	 */
 	openForm(item: DataformItem) {
 		const error = requireFieldAsync(item._id, "Instance Id (_id)");
 		if (error) return error;
@@ -118,7 +126,7 @@ export class Dataform extends BaseSDK {
 	 * @param options - optional viewId
 	 *
 	 * @example
-	 * await dataform.discard();
+	 * await dataform.discardItem();
 	 */
 	discardItem(options?: DataformDiscardItemOptions): Promise<void> {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_DISCARD_ITEM, {
@@ -132,7 +140,7 @@ export class Dataform extends BaseSDK {
 	 * @param options - itemId (required), optional data and viewId
 	 *
 	 * @example
-	 * await dataform.submit({ itemId: "item_123" });
+	 * await dataform.submitItem({ itemId: "item_123" });
 	 */
 	submitItem(options: DataformSubmitItemOptions): Promise<void> {
 		const error = requireFieldAsync(options.itemId, "itemId");
@@ -145,6 +153,10 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
+	/**
+	 * Get field definitions for this dataform
+	 * @param options - Optional viewId to scope fields to a specific view
+	 */
 	getFields(options?: { viewId?: string }): Promise<any> {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELDS, {
 			flowId: this._id,

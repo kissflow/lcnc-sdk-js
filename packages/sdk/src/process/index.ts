@@ -54,50 +54,50 @@ export class Process extends BaseSDK {
 
     /**
      * Get my pending tasks from this process (tasks assigned to me)
-     * @param options - Query options (activityId, searchValue, pageNumber, pageSize, filters, sortBy)
+     * @param options - Query options (activityId, searchValue, pageNumber, pageSize, payload)
      * @returns Promise containing tasks and total count
      *
      * @example
      * const process = kf.app.getProcess("LeaveRequest");
      * // Get all pending tasks
-     * const { items } = await process.getMyTasks();
+     * const { items } = await process.getMyTasksItems();
      * // Get tasks for specific activity/step
-     * const { items } = await process.getMyTasks({ activityId: "Approval_Step" });
+     * const { items } = await process.getMyTasksItems({ activityId: "Approval_Step" });
      */
     getMyTasksItems(options?: ProcessMyTasksOptions): Promise<ProcessQueryResponse> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_TASKS_ITEMS, {
             flowId: this._id,
             activityId: options?.activityId || "",
-            payload: options?.payload || {},
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
+            payload: options?.payload || {},
         });
     }
 
     /**
      * Get items I participated in (items where I took action)
-     * @param options - Query options (searchValue, pageNumber, pageSize, filters, sortBy)
+     * @param options - Query options (activityId, searchValue, pageNumber, pageSize, payload)
      * @returns Promise containing items and total count
      *
      * @example
      * const process = kf.app.getProcess("LeaveRequest");
-     * const { items } = await process.getParticipated();
+     * const { items } = await process.getParticipatedItems();
      */
     getParticipatedItems(options?: ProcessParticipatedOptions): Promise<ProcessQueryResponse> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PARTICIPATED_ITEMS, {
             flowId: this._id,
             activityId: options?.activityId || "",
-            payload: options?.payload || {},
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
+            payload: options?.payload || {},
         });
     }
 
     /**
      * Get all items as admin (requires admin access)
-     * @param options - Query options (searchValue, pageNumber, pageSize, filters, sortBy)
+     * @param options - Query options (searchValue, pageNumber, pageSize, payload)
      * @returns Promise containing items and total count
      *
      * @example
@@ -107,10 +107,10 @@ export class Process extends BaseSDK {
     getAdminItems(options?: ProcessAdminOptions): Promise<ProcessQueryResponse> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ADMIN_ITEMS, {
             flowId: this._id,
-            payload: options?.payload || {},
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
+            payload: options?.payload || {},
         });
     }
 
@@ -372,12 +372,19 @@ export class Process extends BaseSDK {
         });
     }
 
+    /**
+     * Get field definitions for this process
+     */
     getFields(): Promise<any> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_FIELDS, {
             flowId: this._id
         });
     }
 
+    /**
+     * Get field definitions for a specific task step (my tasks view)
+     * @param options - activityId of the target step
+     */
     getMyTaskFields(options: { activityId: string }): Promise<any> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MYTASK_FIELDS, {
             flowId: this._id,
@@ -386,6 +393,10 @@ export class Process extends BaseSDK {
         });
     }
 
+    /**
+     * Get field definitions for a specific task step (participated view)
+     * @param options - activityId of the target step
+     */
     getParticipatedFields(options: { activityId: string }): Promise<any> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PARTICIPATED_FIELDS, {
             flowId: this._id,
@@ -394,6 +405,10 @@ export class Process extends BaseSDK {
         });
     }
 
+    /**
+     * Get field definitions for the my items view filtered by status
+     * @param options - status filter (e.g. "draft", "inprogress", "all")
+     */
     getMyItemsFields(options: { status: string }): Promise<any> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_ITEMS_FIELDS, {
             flowId: this._id,
@@ -401,6 +416,11 @@ export class Process extends BaseSDK {
         });
     }
 
+
+    /**
+     * Get the progress/timeline of a process instance
+     * @param options - instanceId (required)
+     */
     getProgress(options: { instanceId: string }): Promise<any> {
         const error = requireFieldAsync(options.instanceId, "instanceId");
         if (error) return error;

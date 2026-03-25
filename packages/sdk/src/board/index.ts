@@ -138,7 +138,7 @@ export class Board extends BaseSDK {
 
     /**
      * Submit a board item
-     * @param options - instanceId, optional comment
+     * @param options - instanceId
      */
     submitItem(options: BoardSubmitItemOptions): Promise<void> {
         const error = requireFieldAsync(options.instanceId, "instanceId");
@@ -162,6 +162,10 @@ export class Board extends BaseSDK {
         });
     }
 
+    /**
+     * Get field definitions for this board
+     * @param options - Optional viewId to scope fields to a specific view
+     */
     getFields(options?: { viewId?: string }): Promise<any> {
         return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_FIELDS, {
             flowId: this._id,
