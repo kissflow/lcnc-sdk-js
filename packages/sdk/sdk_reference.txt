@@ -128,7 +128,7 @@ Methods:
     - Returns: Promise<ProcessItem>
 
   getMyItems({ status?, searchValue?, pageNumber?, pageSize?, payload? })
-    - status: "draft" | "inprogress" | "completed" (optional, default: "draft")
+    - status: "draft" | "inprogress" | "completed" | "withdrawn" | "rejected" | "all" (optional, default: "all")
     - payload (ProcessPayloadOptions, optional): { Columns?, Filters?, Sort?: [{Id, SortType: "ASC"|"DESC"}] }
     - Returns: Promise<{ Data: ProcessItem[], count: number }>
 
@@ -149,9 +149,10 @@ Methods:
     - Returns: Promise<ProcessItem>
     - Example: const item = await process.createItem({ data: { LeaveType: "Annual" } });
 
-  updateItem({ instanceId, activityInstanceId, data? })
+  updateItem({ instanceId, activityInstanceId, data })
     - instanceId (string, REQUIRED)
     - activityInstanceId (string, REQUIRED): from item._activity_instance_id
+    - data (object, REQUIRED): fields to update
     - Returns: Promise<ProcessItem>
 
   deleteItem({ instanceId })
@@ -385,7 +386,7 @@ Methods:
 
   Note: filtering and sorting are passed via payload, NOT as top-level options.
 
-== COLUMN SHAPE (returned by getItems, getFields, getViewFields) ==
+== COLUMN SHAPE (returned by getItems, getFields) ==
 
   Column {
     Id: string           — field ID used to access item[col.Id]
