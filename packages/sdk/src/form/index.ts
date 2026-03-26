@@ -21,6 +21,7 @@ export class Form extends BaseSDK {
 	}
 	updateField(args: object) {
 		return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
+			instanceId: this.instanceId,
 			data: args
 		});
 	}
