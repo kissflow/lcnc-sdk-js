@@ -70,9 +70,9 @@ export class Client extends BaseSDK {
 	 * a self-contained `data:image/...;base64,...` URL that can be used as `<img src>`
 	 * without any CORS issues.
 	 *
-	 * @param imageValue - The image field value object returned by `form.getField()`.
-	 *   Must contain a `key` property and optionally a `photos` array.
-	 *   Uses `photos[1]` (preview resolution) when available, falls back to `key`.
+	 * @param imageValue - The image field value must contain a `key` property and 
+	 * optionally a `photos` array. Uses `photos[1]` (preview resolution) when available, 
+	 * falls back to `key`.
 	 * @returns A promise that resolves with the base64 data URL string.
 	 *
 	 * @example
