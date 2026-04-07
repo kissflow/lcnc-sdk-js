@@ -2,11 +2,6 @@
 // Shared Base Types
 // ============================================
 
-export type SortField = {
-  field: string;
-  isDescending: boolean;
-};
-
 export type QueryResponse = {
   items: any[];
   total: number;
@@ -18,8 +13,24 @@ export type BaseQueryOptions = {
   searchValue?: string;
   pageNumber?: number;
   pageSize?: number;
-  filters?: object;
-  sortBy?: SortField[];
+};
+
+export type PayloadSortItem = {
+  Id: string;
+  SortType: "ASC" | "DESC";
+};
+
+export type PayloadOptions = {
+  Columns?: any[];
+  Filters?: any;
+  Sort?: PayloadSortItem[];
+  FilterParam?: any;
+};
+
+export type ProcessPayloadOptions = {
+  Columns?: any[];
+  Filters?: any;
+  Sort?: PayloadSortItem[];
 };
 
 // ============================================
@@ -57,11 +68,6 @@ export type DataformItem = {
   _id: string;
 };
 
-export type DataformFieldOptions = {
-  flowId: string;
-  instanceId: string;
-  fieldId: string;
-};
 
 export type ProcessItem = {
   _id: string;
@@ -73,18 +79,23 @@ export type ProcessItem = {
 // ============================================
 
 export type ProcessMyItemsOptions = BaseQueryOptions & {
-  status?: string;  // "draft" | "inprogress" | "completed" | "rejected"
+  status?: "draft" | "inprogress" | "completed" | "withdrawn" | "rejected" | "all";
+  payload?: ProcessPayloadOptions;
 };
 
 export type ProcessMyTasksOptions = BaseQueryOptions & {
-  activityId?: string;  // Filter by specific activity/step
+  activityId?: string;
+  payload?: ProcessPayloadOptions;
 };
 
 export type ProcessParticipatedOptions = BaseQueryOptions & {
-  activityId?: string;  // Filter by specific activity/step
+  activityId?: string;
+  payload?: ProcessPayloadOptions;
 };
 
-export type ProcessAdminOptions = BaseQueryOptions;
+export type ProcessAdminOptions = BaseQueryOptions & {
+  payload?: ProcessPayloadOptions;
+};
 
 export type ProcessQueryResponse = QueryResponse;
 
@@ -106,37 +117,31 @@ export type ProcessDeleteItemOptions = {
   instanceId: string;
 };
 
-export type ProcessFieldOptions = {
-  instanceId: string;
-  activityInstanceId?: string;
-  fieldId: string;
-};
-
-export type ProcessApproveOptions = {
+export type ProcessSubmitItemOptions = {
   instanceId: string;
   activityInstanceId: string;
   comment?: string;
 };
 
-export type ProcessRejectOptions = {
+export type ProcessRejectItemOptions = {
   instanceId: string;
   activityInstanceId: string;
   comment: string;
 };
 
-export type ProcessWithdrawOptions = {
+export type ProcessWithdrawItemOptions = {
   instanceId: string;
   comment?: string;
 };
 
-export type ProcessSendbackOptions = {
+export type ProcessSendbackItemOptions = {
   instanceId: string;
   activityInstanceId: string;
   stepId: string;
   comment: string;
 };
 
-export type ProcessReassignOptions = {
+export type ProcessReassignItemOptions = {
   instanceId: string;
   activityInstanceId: string;
   reassignTo: object;
@@ -145,12 +150,20 @@ export type ProcessReassignOptions = {
   reassignedFrom?: object[];
 };
 
-export type ProcessRestartOptions = {
+export type ProcessGetReassigneesOptions = {
+  instanceId: string;
+  activityInstanceId: string;
+  pageNumber?: number;
+  pageSize?: number;
+  query?: string;
+};
+
+export type ProcessRestartItemOptions = {
   instanceId: string;
   activityInstanceId: string;
 };
 
-export type ProcessDiscardOptions = {
+export type ProcessDiscardItemOptions = {
   instanceId: string;
 };
 
@@ -164,7 +177,10 @@ export type FetchOptions = {
 // Dataform Types
 // ============================================
 
-export type DataformQueryOptions = BaseQueryOptions;
+export type DataformQueryOptions = BaseQueryOptions & {
+  viewId?: string;
+  payload?: PayloadOptions;
+};
 
 export type DataformQueryResponse = QueryResponse;
 
@@ -189,11 +205,11 @@ export type DataformDeleteItemOptions = {
   viewId?: string;
 };
 
-export type DataformDiscardOptions = {
+export type DataformDiscardItemOptions = {
   viewId?: string;
 };
 
-export type DataformSubmitOptions = {
+export type DataformSubmitItemOptions = {
   itemId: string;
   data?: object;
   viewId?: string;
@@ -204,20 +220,11 @@ export type DataformSubmitOptions = {
 // ============================================
 
 export type BoardGetItemsOptions = BaseQueryOptions & {
-  viewId: string;  // Required: view ID for fetching items
-  payload?: object;
-};
-
-export type BoardGetItemsCountOptions = {
-  viewId: string;  // Required: view ID for fetching count
-  payload?: object;
+  viewId?: string;
+  payload?: PayloadOptions;
 };
 
 export type BoardQueryResponse = QueryResponse;
-
-export type BoardCountResponse = {
-  count: number;
-};
 
 export type BoardGetItemOptions = {
   instanceId: string;
@@ -236,9 +243,14 @@ export type BoardDeleteItemOptions = {
   instanceId: string;  // Required: the _id of the item to delete
 };
 
-export type BoardFieldOptions = {
+export type BoardSubmitItemOptions = {
   instanceId: string;
-  fieldId: string;
+  comment?: string;
 };
+
+export type BoardDiscardItemOptions = {
+  instanceId: string;
+};
+
 
 

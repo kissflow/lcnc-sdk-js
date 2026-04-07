@@ -1,16 +1,15 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import { Form } from "../form";
+import { requireFieldAsync } from "../utils/validation";
 import {
 	DataformItem,
 	DataformQueryOptions,
 	DataformQueryResponse,
 	DataformCreateItemOptions,
 	DataformUpdateItemOptions,
-	DataformFieldOptions,
 	DataformGetItemOptions,
 	DataformDeleteItemOptions,
-	DataformDiscardOptions,
-	DataformSubmitOptions
+	DataformDiscardItemOptions,
+	DataformSubmitItemOptions
 } from "../types/external";
 
 export class Dataform extends BaseSDK {
@@ -23,19 +22,17 @@ export class Dataform extends BaseSDK {
 
 	/**
 	 * Get all items from this dataform with optional filtering, sorting, and pagination
-	 * @param options - Query options (searchValue, pageNumber, pageSize, filters, sortBy)
+	 * @param options - Query options (searchValue, pageNumber, pageSize, payload)
 	 * @returns Promise containing items and total count
 	 */
 	getItems(options?: DataformQueryOptions): Promise<DataformQueryResponse> {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_ITEMS, {
 			flowId: this._id,
 			viewId: options?.viewId || "",
-			payload: options?.payload || {},
 			searchValue: options?.searchValue || "",
 			pageNumber: options?.pageNumber || 1,
 			pageSize: options?.pageSize || 50,
-			filters: options?.filters || {},
-			sortBy: options?.sortBy || []
+			payload: options?.payload || {},
 		});
 	}
 
@@ -45,9 +42,8 @@ export class Dataform extends BaseSDK {
 	 * @returns Promise containing the item data
 	 */
 	getItem(options: DataformGetItemOptions): Promise<DataformItem> {
-		if (!options.itemId) {
-			return Promise.reject({ message: "itemId is required" });
-		}
+		const error = requireFieldAsync(options.itemId, "itemId");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_ITEM, {
 			flowId: this._id,
 			itemId: options.itemId,
@@ -74,6 +70,8 @@ export class Dataform extends BaseSDK {
 	 * @returns Promise containing the updated item
 	 */
 	updateItem(options: DataformUpdateItemOptions): Promise<DataformItem> {
+		const error = requireFieldAsync(options.itemId, "itemId");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_UPDATE_ITEM, {
 			flowId: this._id,
 			itemId: options.itemId,
@@ -82,6 +80,10 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
+	/**
+	 * Import items from a CSV file into this dataform
+	 * @param defaultValues - Optional default field values to apply to all imported items
+	 */
 	importCSV(defaultValues?: object) {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_IMPORT_CSV, {
 			flowId: this._id,
@@ -89,73 +91,18 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
+	/**
+	 * Open the form UI for an existing dataform item
+	 * @param item - Dataform item with _id
+	 */
 	openForm(item: DataformItem) {
-		if (!item._id) {
-			return Promise.reject({
-				message: "Instance Id (_id) is required"
-			});
-		}
+		const error = requireFieldAsync(item._id, "Instance Id (_id)");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_OPEN_FORM, {
 			flowId: this._id,
 			itemId: item._id
 		});
 	}
-
-	/**
-	 * Get a form instance for a specific dataform record
-	 * This returns a Form instance that uses the shared form store
-	 * allowing you to manage dataform records with form SDK methods
-	 *
-	 * @param instanceId - The instance ID of the dataform record
-	 * @returns Form instance for managing the record
-	 *
-	 * @example
-	 * const dataform = kf.app.getDataform("EmpMaster");
-	 * const form = dataform.getForm("emp_123");
-	 * const data = await form.toJSON();
-	 * await form.updateField({ firstName: "John" });
-	 */
-	//TO BE REMOVED
-	getForm(instanceId: string): Form {
-		return new Form(instanceId, this._id);
-	}
-
-	/**
-	 * Initialize a form with all necessary data (schema, item data, form store)
-	 * This is the recommended way to create a custom form for dataform records
-	 * It automatically handles fetching schema, item data, and initializing the form store
-	 *
-	 * @param instanceId - Optional instance ID of the dataform record. If omitted, creates a new record
-	 * @returns Promise with Form instance ready to use
-	 *
-	 * @example
-	 * // Load existing record
-	 * const dataform = kf.app.getDataform("EmpMaster");
-	 * const form = await dataform.initForm("emp_123");
-	 * const data = await form.toJSON();
-	 *
-	 * // Create new record
-	 * const form = await dataform.initForm();
-	 * await form.updateField({ firstName: "John" });
-	 */
-	initForm(instanceId?: string): Promise<Form> {
-		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_INIT_FORM, {
-			flowId: this._id,
-			instanceId: instanceId || ""
-		}).then((response: any) => {
-			// The response contains the storeId, return a Form instance
-			return new Form((response.storeId || instanceId || ""), this._id );
-		});
-	}
-
-
-	getFieldOptions(options?: DataformFieldOptions): Promise<DataformQueryResponse> {
-			return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELD_OPTIONS, {
-				flowId: this._id,
-				instanceId: options?.instanceId || "",
-				fieldId: options?.fieldId || ""
-			});
-		}
 
 	/**
 	 * Delete an item from this dataform
@@ -165,9 +112,8 @@ export class Dataform extends BaseSDK {
 	 * await dataform.deleteItem({ itemId: "item_123" });
 	 */
 	deleteItem(options: DataformDeleteItemOptions): Promise<void> {
-		if (!options.itemId) {
-			return Promise.reject({ message: "itemId is required" });
-		}
+		const error = requireFieldAsync(options.itemId, "itemId");
+		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_DELETE_ITEM, {
 			flowId: this._id,
 			itemId: options.itemId,
@@ -180,10 +126,10 @@ export class Dataform extends BaseSDK {
 	 * @param options - optional viewId
 	 *
 	 * @example
-	 * await dataform.discard();
+	 * await dataform.discardItem();
 	 */
-	discard(options?: DataformDiscardOptions): Promise<void> {
-		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_DISCARD, {
+	discardItem(options?: DataformDiscardItemOptions): Promise<void> {
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_DISCARD_ITEM, {
 			flowId: this._id,
 			viewId: options?.viewId || ""
 		});
@@ -194,13 +140,12 @@ export class Dataform extends BaseSDK {
 	 * @param options - itemId (required), optional data and viewId
 	 *
 	 * @example
-	 * await dataform.submit({ itemId: "item_123" });
+	 * await dataform.submitItem({ itemId: "item_123" });
 	 */
-	submit(options: DataformSubmitOptions): Promise<void> {
-		if (!options.itemId) {
-			return Promise.reject({ message: "itemId is required" });
-		}
-		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_SUBMIT, {
+	submitItem(options: DataformSubmitItemOptions): Promise<void> {
+		const error = requireFieldAsync(options.itemId, "itemId");
+		if (error) return error;
+		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_SUBMIT_ITEM, {
 			flowId: this._id,
 			itemId: options.itemId,
 			data: options.data || {},
@@ -208,16 +153,14 @@ export class Dataform extends BaseSDK {
 		});
 	}
 
-	getViewFields(options: { viewId: string }): Promise<any> {
-		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_VIEW_FIELDS, {
-			flowId: this._id,
-			viewId: options.viewId
-		});
-	}
-
-	getFields(): Promise<any> {
+	/**
+	 * Get field definitions for this dataform
+	 * @param options - Optional viewId to scope fields to a specific view
+	 */
+	getFields(options?: { viewId?: string }): Promise<any> {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELDS, {
-			flowId: this._id
+			flowId: this._id,
+			viewId: options?.viewId || ""
 		});
 	}
 

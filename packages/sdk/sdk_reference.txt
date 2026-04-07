@@ -1,0 +1,404 @@
+# Kissflow SDK Reference
+# Source: packages/sdk-mcp/src/data/reference.ts
+# Used as system prompt context for Claude API
+
+== INITIALIZATION ==
+
+import KFSDK from "lowcode-client-sdk";
+const kf = await KFSDK.initialize();
+
+After initialization:
+  kf.app       → Application (access flows)
+  kf.client    → Client (UI notifications, confirm dialogs)
+  kf.page      → Page (parameters, variables, popups)
+  kf.context   → CustomComponent (watchParams)
+  kf.formatter → Formatter (date, number, currency formatting)
+
+== CLASSES ==
+
+--- Class: Dataform ---
+Description: Interact with a Kissflow Dataform. Get, create, update, delete, and submit items.
+Instantiation: const dataform = kf.app.getDataform("YourDataformId");
+
+Methods:
+
+  getItems(options?)
+    - options (DataformQueryOptions, optional): viewId, searchValue, pageNumber, pageSize, payload
+    - payload (PayloadOptions, optional): { Columns?, Filters?, Sort?: [{Id, SortType: "ASC"|"DESC"}], FilterParam? }
+    - Returns: Promise<{ Data: DataformItem[], count: number, Columns: Column[] }>
+    - Example: const { Data: items, count, Columns } = await dataform.getItems({ pageSize: 20, pageNumber: 1 });
+
+  getItem({ itemId, viewId? })
+    - itemId (string, REQUIRED): unique identifier of the item
+    - viewId (string, optional)
+    - Returns: Promise<DataformItem>
+    - Example: const item = await dataform.getItem({ itemId: "item_123" });
+
+  createItem({ data?, viewId? })
+    - data (object, optional): initial field values
+    - Returns: Promise<DataformItem>
+    - Example: const item = await dataform.createItem({ data: { Name: "New Entry" } });
+
+  updateItem({ itemId, data, viewId? })
+    - itemId (string, REQUIRED)
+    - data (object, REQUIRED): key-value pairs of fields to update
+    - Returns: Promise<DataformItem>
+    - Example: await dataform.updateItem({ itemId: "item_123", data: { Status: "Active" } });
+
+  deleteItem({ itemId, viewId? })
+    - itemId (string, REQUIRED)
+    - Returns: Promise<void>
+    - Example: await dataform.deleteItem({ itemId: "item_123" });
+
+  submitItem({ itemId, data?, viewId? })
+    - itemId (string, REQUIRED)
+    - Returns: Promise<void>
+    - Example: await dataform.submitItem({ itemId: "item_123" });
+
+  discardItem({ viewId? })
+    - Returns: Promise<void>
+
+  openForm(item)
+    - item (DataformItem, REQUIRED): must have _id
+    - Returns: Promise<void>
+
+  getFields({ viewId? })
+    - viewId (string, optional): omit for all fields, or pass a view ID to filter by view
+    - Returns: Promise<Column[]>
+    - Example: const fields = await dataform.getFields({ viewId: "AllItems_View" });
+
+--- Class: Board ---
+Description: Interact with a Kissflow Board (Case). Get, create, update, delete, submit, and discard items by view.
+Instantiation: const board = kf.app.getBoard("YourBoardId");
+
+Methods:
+
+  getItems({ viewId?, searchValue?, pageNumber?, pageSize?, payload? })
+    - viewId (string, optional): find in Kissflow → Board → Views tab → copy View ID. defaults to `${flowId}_all`.
+    - payload (PayloadOptions, optional): { Columns?, Filters?, Sort?: [{Id, SortType: "ASC"|"DESC"}], FilterParam? }
+    - Returns: Promise<{ Data: BoardItem[], count: number, Columns: Column[] }>
+    - Example: const { Data: items, Columns } = await board.getItems({ viewId: "AllItems_View" });
+
+  getItem({ instanceId })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<BoardItem>
+    - Example: const item = await board.getItem({ instanceId: "item_123" });
+
+  createItem({ data? })
+    - data (object, optional): initial field values
+    - Returns: Promise<BoardItem>
+    - Example: const item = await board.createItem({ data: { Name: "New Item" } });
+
+  updateItem({ instanceId, data })
+    - instanceId (string, REQUIRED)
+    - data (object, REQUIRED)
+    - Returns: Promise<BoardItem>
+    - Example: await board.updateItem({ instanceId: "item_123", data: { Status: "Done" } });
+
+  deleteItem({ instanceId })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<void>
+    - Example: await board.deleteItem({ instanceId: "item_123" });
+
+  submitItem({ instanceId, comment? })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<void>
+
+  discardItem({ instanceId })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<void>
+
+  openForm(item)
+    - item (BoardItem, REQUIRED): must have _id and _view_id
+    - Returns: Promise<void>
+
+  getFields({ viewId? })
+    - viewId (string, optional): omit for all fields, or pass a view ID to filter by view
+    - Returns: Promise<Column[]>
+    - Example: const fields = await board.getFields({ viewId: "AllItems_View" });
+
+--- Class: Process ---
+Description: Interact with a Kissflow Process. Start, update, submit, reject, withdraw, reassign instances.
+Instantiation: const process = kf.app.getProcess("YourProcessId");
+
+Methods:
+
+  getItem({ instanceId })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<ProcessItem>
+
+  getMyItems({ status?, searchValue?, pageNumber?, pageSize?, payload? })
+    - status: "draft" | "inprogress" | "completed" | "withdrawn" | "rejected" | "all" (optional, default: "all")
+    - payload (ProcessPayloadOptions, optional): { Columns?, Filters?, Sort?: [{Id, SortType: "ASC"|"DESC"}] }
+    - Returns: Promise<{ Data: ProcessItem[], count: number }>
+
+  getMyTasksItems({ activityId?, searchValue?, pageNumber?, pageSize?, payload? })
+    - payload (ProcessPayloadOptions, optional): { Columns?, Filters?, Sort?: [{Id, SortType: "ASC"|"DESC"}] }
+    - Returns: Promise<{ Data: ProcessItem[], count: number }>
+    - Example: const { Data: items } = await process.getMyTasksItems();
+
+  getParticipatedItems({ activityId?, pageNumber?, pageSize?, payload? })
+    - payload (ProcessPayloadOptions, optional): { Columns?, Filters?, Sort?: [{Id, SortType: "ASC"|"DESC"}] }
+    - Returns: Promise<{ Data: ProcessItem[], count: number }>
+
+  getAdminItems({ searchValue?, pageNumber?, pageSize?, payload? })
+    - payload (ProcessPayloadOptions, optional): { Columns?, Filters?, Sort?: [{Id, SortType: "ASC"|"DESC"}] }
+    - Returns: Promise<{ Data: ProcessItem[], count: number }>
+
+  createItem({ data? })
+    - Returns: Promise<ProcessItem>
+    - Example: const item = await process.createItem({ data: { LeaveType: "Annual" } });
+
+  updateItem({ instanceId, activityInstanceId, data })
+    - instanceId (string, REQUIRED)
+    - activityInstanceId (string, REQUIRED): from item._activity_instance_id
+    - data (object, REQUIRED): fields to update
+    - Returns: Promise<ProcessItem>
+
+  deleteItem({ instanceId })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<void>
+
+  openForm(item)
+    - item (ProcessItem, REQUIRED): must have _id and _activity_instance_id
+    - Returns: Promise<void>
+
+  submitItem({ instanceId, activityInstanceId, comment? })
+    - instanceId (string, REQUIRED)
+    - activityInstanceId (string, REQUIRED)
+    - Returns: Promise<void>
+
+  rejectItem({ instanceId, activityInstanceId, comment })
+    - instanceId (string, REQUIRED)
+    - activityInstanceId (string, REQUIRED)
+    - comment (string, REQUIRED): rejection reason is mandatory
+    - Returns: Promise<void>
+
+  withdrawItem({ instanceId, comment? })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<void>
+
+  sendbackItem({ instanceId, activityInstanceId, stepId, comment })
+    - instanceId (string, REQUIRED)
+    - activityInstanceId (string, REQUIRED)
+    - stepId (string, REQUIRED)
+    - comment (string, REQUIRED)
+    - Returns: Promise<void>
+
+  reassignItem({ instanceId, activityInstanceId, reassignTo, comment, reassignType? })
+    - instanceId (string, REQUIRED)
+    - activityInstanceId (string, REQUIRED)
+    - reassignTo (object, REQUIRED): { _id: "user_id", Name?: "User Name" }
+    - comment (string, REQUIRED)
+    - reassignType: "approver" | "initiator" | "admin" (optional, default: "approver")
+    - Returns: Promise<void>
+
+  getReassignees({ instanceId, activityInstanceId, pageNumber?, pageSize?, query? })
+    - instanceId (string, REQUIRED)
+    - activityInstanceId (string, REQUIRED)
+    - pageNumber (number, optional, default: 1)
+    - pageSize (number, optional, default: 50)
+    - query (string, optional): search string to filter users
+    - Returns: Promise<any> — list of eligible reassignees
+    - Example: const users = await process.getReassignees({ instanceId: "item_123", activityInstanceId: "act_456" });
+
+  restartItem({ instanceId, activityInstanceId })
+    - instanceId (string, REQUIRED)
+    - activityInstanceId (string, REQUIRED)
+    - Returns: Promise<void>
+
+  discardItem({ instanceId })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<void>
+
+  getFields()
+    - Returns: Promise<Column[]> — all field definitions for this process
+    - Example: const fields = await process.getFields();
+
+  getMyTaskFields({ activityId })
+    - activityId (string, REQUIRED)
+    - Returns: Promise<Column[]> — field definitions for a specific task/activity step
+    - Example: const fields = await process.getMyTaskFields({ activityId: "Approval_Step" });
+
+  getParticipatedFields({ activityId })
+    - activityId (string, REQUIRED)
+    - Returns: Promise<Column[]> — field definitions for participated activity view
+    - Example: const fields = await process.getParticipatedFields({ activityId: "Approval_Step" });
+
+  getMyItemsFields({ status })
+    - status (string, REQUIRED): "draft" | "inprogress" | "completed"
+    - Returns: Promise<Column[]> — field definitions for the my items view with given status
+    - Example: const fields = await process.getMyItemsFields({ status: "draft" });
+
+  getProgress({ instanceId })
+    - instanceId (string, REQUIRED)
+    - Returns: Promise<any> — step-by-step workflow progress: Steps[], _progress (0-100), _stage, _status, ProcessName
+    - Example: const progress = await process.getProgress({ instanceId: "item_123" });
+
+--- Class: Page ---
+Description: Access page parameters, variables, and UI actions. Available as kf.page.
+
+Methods:
+
+  getParameter(key)              → Promise<any>   — key (REQUIRED)
+  getAllParameters()              → Promise<object>
+  getVariable(key)               → Promise<any>   — key (REQUIRED)
+  setVariable(key, value?)       → Promise<void>  — key (REQUIRED); pass object to set multiple
+  openPopup(popupId, params?)    → Promise<void>  — popupId (REQUIRED)
+  getComponent(componentId)      → Promise<Component> — componentId (REQUIRED)
+
+--- Class: Popup ---
+Description: Access popup parameters and control popup lifecycle. Available as kf.app.page.popup.
+
+Methods:
+
+  getParameter(key)   → Promise<any>     — key (REQUIRED)
+  getAllParameters()  → Promise<object>
+  close()            → Promise<void>
+  getComponent(componentId) → Promise<Component> — componentId (REQUIRED)
+
+--- Class: Component ---
+Description: Control a Kissflow page/popup component. Obtained via page.getComponent() or popup.getComponent().
+
+Methods:
+
+  refresh()           → Promise<void>
+  onMount(callback)   → void — callback (Function, REQUIRED)
+
+--- Class: Client ---
+Description: Show UI notifications, confirmations, and redirects. Available as kf.client.
+
+Methods:
+
+  showInfo(message)
+    - message (string, REQUIRED)
+    - Returns: Promise<void>
+    - Example: await kf.client.showInfo("Record saved successfully!");
+
+  showConfirm({ title, content, okText?, cancelText? })
+    - title (string, REQUIRED)
+    - content (string, REQUIRED)
+    - Returns: Promise<boolean>
+    - Example: const ok = await kf.client.showConfirm({ title: "Delete?", content: "Are you sure?" });
+
+  redirect(url)
+    - url (string, REQUIRED)
+    - Returns: Promise<void>
+
+--- Class: Formatter ---
+Description: Format values per account locale. Available as kf.formatter.
+
+Methods:
+
+  toDate(date)                    → Promise<string> — ISO date string
+  toDateTime(date)                → Promise<string> — ISO datetime string
+  toNumber(value)                 → Promise<string>
+  toCurrency(value, currencyCode) → Promise<string> — currencyCode e.g. "USD"
+  toBoolean(value)                → Promise<string>
+
+--- Class: Application ---
+Description: Top-level SDK object for accessing flows, variables, and navigation. Available as kf.app.
+
+Methods:
+
+  getDataform(flowId)    → Dataform  — flowId (REQUIRED)
+  getBoard(flowId)       → Board     — flowId (REQUIRED)
+  getProcess(flowId)     → Process   — flowId (REQUIRED)
+  getVariable(key)       → Promise<any>
+  setVariable(key, val?) → Promise<void>
+  openPage(pageId, pageParams?) → Promise<void>
+
+--- Class: CustomComponent ---
+Description: Custom component context. Available as kf.context after kf.initialize().
+
+Methods:
+
+  watchParams(callback)
+    - callback ((data: any) => any, REQUIRED): called on every param update
+    - Returns: void
+    - Example: kf.context.watchParams((params) => { console.log(params); });
+
+== REQUIRED PARAMS QUICK REFERENCE ==
+
+  Dataform.getItem          → itemId
+  Dataform.updateItem       → itemId, data
+  Dataform.deleteItem       → itemId
+  Dataform.submitItem       → itemId
+  Dataform.openForm         → item
+  Dataform.getFields        → viewId (optional)
+  Board.getItem             → instanceId
+  Board.updateItem          → instanceId, data
+  Board.deleteItem          → instanceId
+  Board.submitItem          → instanceId
+  Board.discardItem         → instanceId
+  Board.openForm            → item
+  Board.getFields           → viewId (optional)
+  Process.getItem           → instanceId
+  Process.updateItem        → instanceId, activityInstanceId
+  Process.deleteItem        → instanceId
+  Process.openForm          → item (_id + _activity_instance_id)
+  Process.submitItem        → instanceId, activityInstanceId
+  Process.rejectItem        → instanceId, activityInstanceId, comment
+  Process.withdrawItem      → instanceId
+  Process.sendbackItem      → instanceId, activityInstanceId, stepId, comment
+  Process.reassignItem      → instanceId, activityInstanceId, reassignTo, comment
+  Process.getReassignees    → instanceId, activityInstanceId
+  Process.restartItem       → instanceId, activityInstanceId
+  Process.discardItem       → instanceId
+  Process.getMyTaskFields   → activityId
+  Process.getParticipatedFields → activityId
+  Process.getMyItemsFields  → status
+  Process.getProgress       → instanceId
+  Page.getParameter         → key
+  Page.getVariable          → key
+  Page.setVariable          → key
+  Page.openPopup            → popupId
+  Page.getComponent         → componentId
+  Popup.getParameter        → key
+  Popup.getComponent        → componentId
+  Client.showInfo           → message
+  Client.showConfirm        → title, content
+  Client.redirect           → url
+  Application.getDataform   → flowId
+  Application.getBoard      → flowId
+  Application.getProcess    → flowId
+  Application.openPage      → pageId
+  CustomComponent.watchParams → callback
+
+== PAYLOAD SHAPE (used by getItems / getMyItems / getMyTasksItems / getParticipatedItems / getAdminItems) ==
+
+  PayloadOptions (Dataform):
+    Columns?:     any[]              — column list to return
+    Filters?:     any                — filter expression
+    Sort?:        PayloadSortItem[]  — [{ Id: "FieldId", SortType: "ASC" | "DESC" }]
+    FilterParam?: any                — additional filter parameter
+
+  PayloadOptions (Board):
+    Columns?:     any[]              — column list to return
+    Filters?:     any                — filter expression
+    Sort?:        PayloadSortItem[]  — [{ Id: "FieldId", SortType: "ASC" | "DESC" }]
+    FilterParam?: any                — additional filter parameter
+
+  ProcessPayloadOptions (Process — no FilterParam):
+    Columns?:     any[]
+    Filters?:     any
+    Sort?:        PayloadSortItem[]
+
+  Note: filtering and sorting are passed via payload, NOT as top-level options.
+
+== COLUMN SHAPE (returned by getItems, getFields) ==
+
+  Column {
+    Id: string           — field ID used to access item[col.Id]
+    Name: string         — display label
+    Type: string         — field type
+    IsInternal: boolean  — if true, skip in UI (system field)
+    IsSystemField: boolean
+    ReadOnly: boolean
+    Required: boolean
+    Model: string
+    Widget: string | null
+  }
+
+  Pattern: const visibleCols = Columns.filter(col => !col.IsInternal);
+

@@ -59,10 +59,6 @@ export class Application extends BaseSDK {
 	getProcess(flowId: string) {
 		return new Process(flowId);
 	}
-
-	getCase(caseId: string): Board {
-		return new Board(caseId);
-	}
 }
 
 
