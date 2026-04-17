@@ -41,7 +41,8 @@ export class Board extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.BOARD_OPEN_FORM, {
             flowId: this._id,
             itemId: item._id,
-            viewId: item._view_id
+            viewId: item._view_id,
+            fullscreen: item.fullscreen || false
         });
     }
 

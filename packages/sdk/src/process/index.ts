@@ -203,6 +203,7 @@ export class Process extends BaseSDK {
             flowId: this._id,
             instanceId: item._id,
             activityInstanceId: item._activity_instance_id,
+            fullscreen: item.fullscreen || false
         });
     }
 
