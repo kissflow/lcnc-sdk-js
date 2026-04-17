@@ -66,7 +66,7 @@ export type BoardItem = {
 };
 
 export type DataformItem = {
-  fullscreen: any;
+  fullscreen: boolean;
   _id: string;
 };
 
