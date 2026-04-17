@@ -60,16 +60,19 @@ export type environmentObject = {
 };
 
 export type BoardItem = {
+  fullscreen: boolean;
   _id: string;
   _view_id: string;
 };
 
 export type DataformItem = {
+  fullscreen: any;
   _id: string;
 };
 
 
 export type ProcessItem = {
+  fullscreen: boolean;
   _id: string;
   _activity_instance_id: string;
 };

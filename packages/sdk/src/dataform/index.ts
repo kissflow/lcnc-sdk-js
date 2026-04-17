@@ -100,7 +100,8 @@ export class Dataform extends BaseSDK {
 		if (error) return error;
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_OPEN_FORM, {
 			flowId: this._id,
-			itemId: item._id
+			itemId: item._id,
+			fullscreen: item.fullscreen || false
 		});
 	}
 
