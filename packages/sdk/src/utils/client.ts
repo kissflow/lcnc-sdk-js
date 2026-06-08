@@ -82,4 +82,52 @@ export class Client extends BaseSDK {
 	getImageUrl(imageValue: Record<string, unknown>) {
 		return this._postMessageAsync(LISTENER_CMDS.GET_IMAGE_URL, { imageValue });
 	}
+
+	/**
+	 * Open the platform's file picker, upload the selected file, and resolve with
+	 * its metadata.
+	 *
+	 * Custom components (iframes) cannot access the platform's authenticated upload
+	 * endpoints directly. This method opens the file picker in the parent window
+	 * (which has the required session), runs the full select → upload flow, and
+	 * resolves once the upload completes with the uploaded file's metadata
+	 * (including `key`, `name`, `size`, `photos`, etc. — the same shape consumed by
+	 * `getImageUrl`).
+	 *
+	 * @param options - File picker configuration (e.g. `fileExtensions`, `maxSize`,
+	 * `maxCount`, `imageProps`).
+	 * @returns A promise that resolves with the uploaded file's metadata object, or
+	 * `null` if the user closes the picker without completing an upload.
+	 *
+	 * @example
+	 * const file = await kf.client.openFilePicker({ fileExtensions: ["JPG", "PNG"] });
+	 * if (file) onChange(file);
+	 */
+	openFilePicker(options: Record<string, unknown>) {
+		return this._postMessageAsync(LISTENER_CMDS.FILEPICKER_OPEN, { options });
+	}
+
+	/**
+	 * Open the platform's file preview (lightbox) for one or more files.
+	 *
+	 * `files` always accepts an array — pass a single-element array for fields like
+	 * `Image`, or the full list for multi-file fields like `Attachment`. The host's
+	 * preview UI natively renders next/prev navigation across the array; the SDK
+	 * just passes the file list through, no extra navigation surface is needed here.
+	 *
+	 * @param args - Preview configuration.
+	 * @param args.files - Array of file metadata objects to preview.
+	 * @param args.indexOfFile - Index of the file to open the preview on (default: 0).
+	 * @returns A promise that resolves once the user closes the preview.
+	 *
+	 * @example
+	 * await kf.client.openFilePreview({ files: [imageFieldValue] });
+	 * await kf.client.openFilePreview({ files: attachmentFieldValue, indexOfFile: 2 });
+	 */
+	openFilePreview(args: { files: Record<string, unknown>[]; indexOfFile?: number }) {
+		return this._postMessageAsync(LISTENER_CMDS.FILEPREVIEW_OPEN, {
+			files: args.files,
+			indexOfFile: args.indexOfFile ?? 0
+		});
+	}
 }
