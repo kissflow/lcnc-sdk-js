@@ -84,24 +84,33 @@ export class Client extends BaseSDK {
 	}
 
 	/**
-	 * Open the platform's file picker, upload the selected file, and resolve with
-	 * its metadata.
+	 * Open the platform's file picker, upload the selected file(s), and resolve
+	 * with their metadata.
 	 *
 	 * Custom components (iframes) cannot access the platform's authenticated upload
 	 * endpoints directly. This method opens the file picker in the parent window
 	 * (which has the required session), runs the full select → upload flow, and
-	 * resolves once the upload completes with the uploaded file's metadata
-	 * (including `key`, `name`, `size`, `photos`, etc. — the same shape consumed by
-	 * `getImageUrl`).
+	 * resolves once all uploads settle with an array of the uploaded files'
+	 * metadata (each including `key`, `name`, `size`, `photos`, etc. — the same
+	 * shape consumed by `getImageUrl`).
+	 *
+	 * Always resolves with an array — a single-element array for single-file
+	 * pickers (e.g. `maxCount: 1` for `Image`), one entry per uploaded file for
+	 * multi-file pickers (e.g. `Attachment`). Resolves with `[]` if the user closes
+	 * the picker without completing any upload.
 	 *
 	 * @param options - File picker configuration (e.g. `fileExtensions`, `maxSize`,
 	 * `maxCount`, `imageProps`).
-	 * @returns A promise that resolves with the uploaded file's metadata object, or
-	 * `null` if the user closes the picker without completing an upload.
+	 * @returns A promise that resolves with an array of uploaded file metadata
+	 * objects (empty if the picker was closed without uploading anything).
 	 *
 	 * @example
-	 * const file = await kf.client.openFilePicker({ fileExtensions: ["JPG", "PNG"] });
-	 * if (file) onChange(file);
+	 * const files = await kf.client.openFilePicker({ fileExtensions: ["JPG", "PNG"] });
+	 * if (files.length) onChange(files[0]); // single-file consumer (Image)
+	 *
+	 * @example
+	 * const files = await kf.client.openFilePicker({ maxCount: 10 });
+	 * if (files.length) onChange([...existing, ...files]); // multi-file consumer (Attachment)
 	 */
 	openFilePicker(options: Record<string, unknown>) {
 		return this._postMessageAsync(LISTENER_CMDS.FILEPICKER_OPEN, { options });
