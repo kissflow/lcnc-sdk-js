@@ -218,7 +218,9 @@ export class Dataform extends BaseSDK {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_GET_FIELD_OPTIONS, {
 			flowId: this._id,
 			instanceId: options?.instanceId || "",
-			fieldId: options?.fieldId || ""
+			fieldId: options?.fieldId || "",
+			tableId: options?.tableId,
+			tableRowId: options?.tableRowId
 		});
 	}
 }

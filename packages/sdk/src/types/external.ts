@@ -171,6 +171,8 @@ export type ProcessFieldOptions = {
   instanceId: string;
   activityInstanceId: string;
   fieldId: string;
+  tableId?: string;
+  tableRowId?: string;
 };
 
 
@@ -225,6 +227,8 @@ export type DataformSubmitItemOptions = {
 export type DataformFieldOptions = {
   instanceId: string;
   fieldId: string;
+  tableId?: string;
+  tableRowId?: string;
 };
 
 // ============================================

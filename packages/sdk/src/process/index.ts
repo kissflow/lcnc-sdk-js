@@ -489,7 +489,9 @@ export class Process extends BaseSDK {
                 flowId: this._id,
                 instanceId: options?.instanceId || "",
                 activityInstanceId: options?.activityInstanceId,
-                fieldId: options?.fieldId || ""
+                fieldId: options?.fieldId || "",
+                tableId: options?.tableId,
+                tableRowId: options?.tableRowId
             }
         );
     }
