@@ -64,15 +64,20 @@ export class Process extends BaseSDK {
      * // Get tasks for specific activity/step
      * const { items } = await process.getMyTasksItems({ activityId: "Approval_Step" });
      */
-    getMyTasksItems(options?: ProcessMyTasksOptions): Promise<ProcessQueryResponse> {
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_TASKS_ITEMS, {
-            flowId: this._id,
-            activityId: options?.activityId || "",
-            searchValue: options?.searchValue || "",
-            pageNumber: options?.pageNumber || 1,
-            pageSize: options?.pageSize || 50,
-            payload: options?.payload || {},
-        });
+    getMyTasksItems(
+        options?: ProcessMyTasksOptions
+    ): Promise<ProcessQueryResponse> {
+        return this._postMessageAsync(
+            LISTENER_CMDS.PROCESS_GET_MY_TASKS_ITEMS,
+            {
+                flowId: this._id,
+                activityId: options?.activityId || "",
+                searchValue: options?.searchValue || "",
+                pageNumber: options?.pageNumber || 1,
+                pageSize: options?.pageSize || 50,
+                payload: options?.payload || {}
+            }
+        );
     }
 
     /**
@@ -84,15 +89,20 @@ export class Process extends BaseSDK {
      * const process = kf.app.getProcess("LeaveRequest");
      * const { items } = await process.getParticipatedItems();
      */
-    getParticipatedItems(options?: ProcessParticipatedOptions): Promise<ProcessQueryResponse> {
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PARTICIPATED_ITEMS, {
-            flowId: this._id,
-            activityId: options?.activityId || "",
-            searchValue: options?.searchValue || "",
-            pageNumber: options?.pageNumber || 1,
-            pageSize: options?.pageSize || 50,
-            payload: options?.payload || {},
-        });
+    getParticipatedItems(
+        options?: ProcessParticipatedOptions
+    ): Promise<ProcessQueryResponse> {
+        return this._postMessageAsync(
+            LISTENER_CMDS.PROCESS_GET_PARTICIPATED_ITEMS,
+            {
+                flowId: this._id,
+                activityId: options?.activityId || "",
+                searchValue: options?.searchValue || "",
+                pageNumber: options?.pageNumber || 1,
+                pageSize: options?.pageSize || 50,
+                payload: options?.payload || {}
+            }
+        );
     }
 
     /**
@@ -104,13 +114,15 @@ export class Process extends BaseSDK {
      * const process = kf.app.getProcess("LeaveRequest");
      * const { items } = await process.getAdminItems();
      */
-    getAdminItems(options?: ProcessAdminOptions): Promise<ProcessQueryResponse> {
+    getAdminItems(
+        options?: ProcessAdminOptions
+    ): Promise<ProcessQueryResponse> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ADMIN_ITEMS, {
             flowId: this._id,
             searchValue: options?.searchValue || "",
             pageNumber: options?.pageNumber || 1,
             pageSize: options?.pageSize || 50,
-            payload: options?.payload || {},
+            payload: options?.payload || {}
         });
     }
 
@@ -196,14 +208,16 @@ export class Process extends BaseSDK {
     openForm(item: ProcessItem) {
         const error = requireFieldsAsync([
             { value: item._id, name: "Instance Id (_id)" },
-            { value: item._activity_instance_id, name: "Activity Instance Id (_activity_instance_id)" }
+            {
+                value: item._activity_instance_id,
+                name: "Activity Instance Id (_activity_instance_id)"
+            }
         ]);
         if (error) return error;
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_OPEN_FORM, {
             flowId: this._id,
             instanceId: item._id,
-            activityInstanceId: item._activity_instance_id,
-            fullscreen: item.fullscreen || false
+            activityInstanceId: item._activity_instance_id
         });
     }
 
@@ -399,11 +413,14 @@ export class Process extends BaseSDK {
      * @param options - activityId of the target step
      */
     getParticipatedFields(options: { activityId: string }): Promise<any> {
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PARTICIPATED_FIELDS, {
-            flowId: this._id,
-            activityId: options.activityId,
-            isParticipated: true
-        });
+        return this._postMessageAsync(
+            LISTENER_CMDS.PROCESS_GET_PARTICIPATED_FIELDS,
+            {
+                flowId: this._id,
+                activityId: options.activityId,
+                isParticipated: true
+            }
+        );
     }
 
     /**
@@ -411,12 +428,14 @@ export class Process extends BaseSDK {
      * @param options - status filter (e.g. "draft", "inprogress", "all")
      */
     getMyItemsFields(options: { status: string }): Promise<any> {
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_MY_ITEMS_FIELDS, {
-            flowId: this._id,
-            status: options.status
-        });
+        return this._postMessageAsync(
+            LISTENER_CMDS.PROCESS_GET_MY_ITEMS_FIELDS,
+            {
+                flowId: this._id,
+                status: options.status
+            }
+        );
     }
-
 
     /**
      * Get the progress/timeline of a process instance

@@ -8,7 +8,7 @@ import {
     BoardUpdateItemOptions,
     BoardDeleteItemOptions,
     BoardSubmitItemOptions,
-    BoardDiscardItemOptions,
+    BoardDiscardItemOptions
 } from "../types/external";
 import { requireFieldAsync } from "../utils/validation";
 
@@ -41,8 +41,7 @@ export class Board extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.BOARD_OPEN_FORM, {
             flowId: this._id,
             itemId: item._id,
-            viewId: item._view_id,
-            fullscreen: item.fullscreen || false
+            viewId: item._view_id
         });
     }
 
@@ -65,7 +64,6 @@ export class Board extends BaseSDK {
             payload: options?.payload || {}
         });
     }
-
 
     /**
      * Get a single board/case item by instance ID
@@ -146,7 +144,7 @@ export class Board extends BaseSDK {
         if (error) return error;
         return this._postMessageAsync(LISTENER_CMDS.BOARD_SUBMIT_ITEM, {
             flowId: this._id,
-            instanceId: options.instanceId,
+            instanceId: options.instanceId
         });
     }
 
