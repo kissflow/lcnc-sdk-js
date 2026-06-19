@@ -68,6 +68,7 @@ export type BoardItem = {
 export type DataformItem = {
   fullscreen?: boolean;
   _id: string;
+  _view_id?: string;
 };
 
 

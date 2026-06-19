@@ -93,7 +93,7 @@ export class Dataform extends BaseSDK {
 
 	/**
 	 * Open the form UI for an existing dataform item
-	 * @param item - Dataform item with _id
+	 * @param item - Dataform item with _id and optional _view_id
 	 */
 	openForm(item: DataformItem) {
 		const error = requireFieldAsync(item._id, "Instance Id (_id)");
@@ -101,6 +101,7 @@ export class Dataform extends BaseSDK {
 		return this._postMessageAsync(LISTENER_CMDS.DATAFORM_OPEN_FORM, {
 			flowId: this._id,
 			itemId: item._id,
+			viewId: item._view_id || "",
 			fullscreen: item.fullscreen || false
 		});
 	}
