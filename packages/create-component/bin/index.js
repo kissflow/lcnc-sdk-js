@@ -6,6 +6,7 @@ import chalk from 'chalk'
 
 import { PROJECT_TARGETS } from '../scaffolders/constants.js'
 import { FRAMEWORKS } from '../scaffolders/page/constants.js'
+import { appScaffolder } from '../scaffolders/app/index.js'
 import { formFieldScaffolder } from '../scaffolders/form-field/index.js'
 import { pageScaffolder } from '../scaffolders/page/index.js'
 import { isValidPackageName, makeDirectory } from '../scaffolders/utils.js'
@@ -74,6 +75,23 @@ switch (projectTarget) {
             projectFolderPath,
             projectName,
             framework,
+        })
+        break
+    }
+
+    case PROJECT_TARGETS.APP: {
+        const { appId } = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'appId',
+                message: 'Enter the Kissflow App ID this UI is for: ',
+            },
+        ])
+
+        appScaffolder({
+            projectFolderPath,
+            projectName,
+            appId: appId.trim(),
         })
         break
     }

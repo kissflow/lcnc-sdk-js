@@ -33,6 +33,7 @@ export interface AppContext {
 
 export interface PageContext {
 	pageId: string;
+	initialRoute?: string;
 }
 
 export interface PopupContext {

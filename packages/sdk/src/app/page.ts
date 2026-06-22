@@ -10,6 +10,7 @@ export class Page extends BaseSDK {
 	_id: string;
 	popup: Popup;
 	type: string;
+	_route: string;
 	// variable: PageVariable;
 
 	constructor(props: PageContext, isCustomComponent: boolean = false) {
@@ -17,6 +18,7 @@ export class Page extends BaseSDK {
 		this.type = "Page";
 		this.popup = new Popup({});
 		this._id = props.pageId;
+		this._route = props.initialRoute ?? "";
 		// /* Note: Synchronous variable read/write is not supported for custom components
 		//  * as it is not possible to use Atomics.wait in the main thread and iframe thread
 		//  */
@@ -56,6 +58,18 @@ export class Page extends BaseSDK {
 			true,
 			(data) => new Component(data)
 		);
+	}
+	/**
+	 * Notify the Kissflow host that the custom UI navigated to `path`,
+	 * so the parent browser URL mirrors the route. Used by the App UI framework.
+	 */
+	setRoute(path: string) {
+		this._route = path;
+		return this._postMessage(LISTENER_CMDS.CC_SET_ROUTE, { route: path });
+	}
+	/** Returns the initial deep-link route the page was opened with. */
+	getRoute(): string {
+		return this._route;
 	}
 }
 

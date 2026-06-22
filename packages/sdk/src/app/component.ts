@@ -92,4 +92,22 @@ export class CustomComponent extends BaseSDK {
 			callBack
 		);
 	}
+	/**
+	 * Subscribe to route changes pushed by the Kissflow host
+	 * (parent back/forward or deep-link). Used by the App UI framework
+	 * to keep the in-iframe router in sync with the parent URL.
+	 */
+	watchRoute(callBack: (data: { route: string }) => any) {
+		this._postMessage(
+			LISTENER_CMDS.CC_WATCH_ROUTE,
+			{
+				id: this._id,
+				eventName: EVENT_TYPES.CC_ON_ROUTE_CHANGE,
+				eventConfig: {
+					once: false
+				}
+			},
+			callBack
+		);
+	}
 }

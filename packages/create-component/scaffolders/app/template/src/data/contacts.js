@@ -1,0 +1,88 @@
+// Mock data for the demo. In a real app you'd fetch this via `kf.api(...)`
+// or a Kissflow dataform/process.
+export const contacts = [
+  {
+    id: 1,
+    name: "Ada Lovelace",
+    role: "CTO",
+    company: "Analytical Engines",
+    email: "ada@analyticalengines.io",
+    phone: "+1 202 555 0101",
+    status: "active",
+    color: "#6366f1",
+  },
+  {
+    id: 2,
+    name: "Grace Hopper",
+    role: "VP Engineering",
+    company: "Cobol Systems",
+    email: "grace@cobolsystems.com",
+    phone: "+1 202 555 0142",
+    status: "active",
+    color: "#0ea5e9",
+  },
+  {
+    id: 3,
+    name: "Alan Turing",
+    role: "Head of Research",
+    company: "Bletchley Labs",
+    email: "alan@bletchleylabs.uk",
+    phone: "+44 20 7946 0958",
+    status: "lead",
+    color: "#10b981",
+  },
+  {
+    id: 4,
+    name: "Katherine Johnson",
+    role: "Director of Flight",
+    company: "Orbital Dynamics",
+    email: "katherine@orbitaldynamics.space",
+    phone: "+1 757 555 0173",
+    status: "active",
+    color: "#f59e0b",
+  },
+  {
+    id: 5,
+    name: "Linus Torvalds",
+    role: "Principal Engineer",
+    company: "Kernel Co.",
+    email: "linus@kernel.co",
+    phone: "+358 9 555 0188",
+    status: "lead",
+    color: "#ef4444",
+  },
+  {
+    id: 6,
+    name: "Margaret Hamilton",
+    role: "Software Lead",
+    company: "Apollo Guidance",
+    email: "margaret@apolloguidance.org",
+    phone: "+1 281 555 0190",
+    status: "churned",
+    color: "#8b5cf6",
+  },
+  {
+    id: 7,
+    name: "Tim Berners-Lee",
+    role: "Founder",
+    company: "Web Foundation",
+    email: "tim@webfoundation.org",
+    phone: "+44 20 7946 0321",
+    status: "active",
+    color: "#ec4899",
+  },
+  {
+    id: 8,
+    name: "Barbara Liskov",
+    role: "Chief Scientist",
+    company: "Substitution Inc.",
+    email: "barbara@substitution.inc",
+    phone: "+1 617 555 0144",
+    status: "lead",
+    color: "#14b8a6",
+  },
+];
+
+export function getContact(id) {
+  return contacts.find((c) => String(c.id) === String(id));
+}

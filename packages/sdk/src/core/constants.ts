@@ -56,6 +56,8 @@ export const LISTENER_CMDS = {
 	// CC Refers to custom components
 	CC_INITIALIZE: "CC_INITIALIZE",
 	CC_WATCH_PARAMS: "CC_WATCH_PARAMS",
+	CC_SET_ROUTE: "CC_SET_ROUTE",
+	CC_WATCH_ROUTE: "CC_WATCH_ROUTE",
 
 	// Window NDEF READER commands
 	WINDOW_NDEF_READER_NEW: "WINDOW_NDEF_READER_NEW",
@@ -132,7 +134,8 @@ export const LISTENER_CMDS = {
 
 export const EVENT_TYPES = {
 	COMPONENT_ON_MOUNT: "componentOnMount",
-	CC_ON_PARAMS_CHANGE: "onCustomComponentParamsChange"
+	CC_ON_PARAMS_CHANGE: "onCustomComponentParamsChange",
+	CC_ON_ROUTE_CHANGE: "onCustomComponentRouteChange"
 };
 
 export const DEFAULTS = {
