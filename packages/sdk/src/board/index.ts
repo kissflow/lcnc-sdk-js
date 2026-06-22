@@ -10,7 +10,7 @@ import {
     BoardDeleteItemOptions,
     BoardSubmitItemOptions,
     BoardDiscardItemOptions,
-    BoardFieldOptions,
+    BoardFieldOptions
 } from "../types/external";
 import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
 
@@ -66,7 +66,6 @@ export class Board extends BaseSDK {
             payload: options?.payload || {}
         });
     }
-
 
     /**
      * Get a single board/case item by instance ID
@@ -147,7 +146,7 @@ export class Board extends BaseSDK {
         if (error) return error;
         return this._postMessageAsync(LISTENER_CMDS.BOARD_SUBMIT_ITEM, {
             flowId: this._id,
-            instanceId: options.instanceId,
+            instanceId: options.instanceId
         });
     }
 
@@ -175,7 +174,7 @@ export class Board extends BaseSDK {
         });
     }
 
-     /**
+    /**
      * Initialize a form for a board item with all necessary setup
      * Fetches schema, item data, creates and initializes the form store
      *
