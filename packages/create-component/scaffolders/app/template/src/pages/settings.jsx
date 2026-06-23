@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useKf } from "@kissflow/app-ui";
-
-import { AppShell } from "../components/app-shell.jsx";
+import { useKf, usePageTitle } from "@kissflow/app-ui";
 
 // src/pages/settings.jsx → route "/settings"
 export default function Settings() {
+  usePageTitle("Settings");
   const kf = useKf();
   const [api, setApi] = useState({ status: "idle" });
 
@@ -20,7 +19,7 @@ export default function Settings() {
   }
 
   return (
-    <AppShell title="Settings">
+    <>
       <h2>Kissflow context</h2>
       <p className="hint">Everything below comes from the live SDK (`useKf()`).</p>
       <dl className="details">
@@ -62,9 +61,7 @@ export default function Settings() {
       {api.status === "done" && (
         <pre className="code">{JSON.stringify(api.data, null, 2)}</pre>
       )}
-      {api.status === "error" && (
-        <pre className="code error">{api.message}</pre>
-      )}
-    </AppShell>
+      {api.status === "error" && <pre className="code error">{api.message}</pre>}
+    </>
   );
 }

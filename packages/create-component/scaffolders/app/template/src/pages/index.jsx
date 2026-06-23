@@ -1,10 +1,10 @@
-import { KfLink, useKf } from "@kissflow/app-ui";
+import { KfLink, useKf, usePageTitle } from "@kissflow/app-ui";
 
-import { AppShell } from "../components/app-shell.jsx";
 import { contacts } from "../data/contacts.js";
 
 // src/pages/index.jsx → route "/"
 export default function Dashboard() {
+  usePageTitle("Dashboard");
   const kf = useKf();
   const firstName = kf.user?.Name?.split(" ")[0];
 
@@ -16,7 +16,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <AppShell title="Dashboard">
+    <>
       <p className="greeting">
         Welcome back{firstName ? `, ${firstName}` : ""} 👋
       </p>
@@ -53,6 +53,6 @@ export default function Dashboard() {
           </KfLink>
         ))}
       </div>
-    </AppShell>
+    </>
   );
 }

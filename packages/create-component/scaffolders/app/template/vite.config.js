@@ -21,6 +21,12 @@ export default defineConfig({
   ],
   // Relative asset paths so the built bundle works from a zip or any mount point.
   base: "",
+  // Force a single copy of react / react-router so @kissflow/app-ui's MemoryRouter
+  // and your pages' hooks share one RouterContext (otherwise the production build
+  // can bundle two copies → "Cannot destructure property 'future' of … null").
+  resolve: {
+    dedupe: ["react", "react-dom", "react-router-dom"],
+  },
   build: { target: "es2022" },
   server: {
     port: 3000,

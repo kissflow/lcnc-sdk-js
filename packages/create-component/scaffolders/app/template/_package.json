@@ -7,7 +7,8 @@
         "dev": "vite",
         "build": "vite build",
         "preview": "vite preview",
-        "zip": "node scripts/zip.js"
+        "zip": "node scripts/zip.js",
+        "kf:sync": "kf-sync"
     },
     "dependencies": {
         "@kissflow/app-ui": "latest",

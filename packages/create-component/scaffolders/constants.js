@@ -2,6 +2,8 @@ const renames = {
     _gitignore: '.gitignore',
     '_package.json': 'package.json',
     '_README.md': 'README.md',
+    '_CLAUDE.md': 'CLAUDE.md',
+    '_env.example': '.env.example',
     '_settings.json': 'settings.json',
     'form-field.config.ejs': 'form-field.config.js',
     _npmrc: '.npmrc',

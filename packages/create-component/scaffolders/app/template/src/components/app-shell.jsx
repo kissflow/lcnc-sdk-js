@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { useKf } from "@kissflow/app-ui";
+import { useKf, usePageTitle } from "@kissflow/app-ui";
 
-// Sidebar nav. NavLink is a plain react-router link — RouteSync mirrors *any*
-// navigation to the parent Kissflow URL, so you can use KfLink or NavLink freely.
+// Root layout (passed to <KfApp layout={AppShell} />). Renders ONCE and stays
+// mounted across navigation — the sidebar keeps its state, only `children`
+// (the matched route) swaps. Pages set the header via usePageTitle("…").
 const NAV_ITEMS = [
   { to: "/", label: "Dashboard", end: true, icon: "▣" },
   { to: "/contacts", label: "Contacts", icon: "☷" },
@@ -17,8 +18,9 @@ function initials(name = "") {
     .join("");
 }
 
-export function AppShell({ title, children }) {
+export function AppShell({ children }) {
   const kf = useKf();
+  const title = usePageTitle();
 
   return (
     <div className="shell">

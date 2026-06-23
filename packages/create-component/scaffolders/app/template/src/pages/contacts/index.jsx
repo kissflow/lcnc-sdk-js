@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { KfLink } from "@kissflow/app-ui";
+import { KfLink, usePageTitle } from "@kissflow/app-ui";
 
-import { AppShell } from "../../components/app-shell.jsx";
 import { contacts } from "../../data/contacts.js";
 
 // src/pages/contacts/index.jsx → route "/contacts"
 export default function Contacts() {
+  usePageTitle("Contacts");
   const [query, setQuery] = useState("");
 
   const term = query.trim().toLowerCase();
@@ -16,7 +16,7 @@ export default function Contacts() {
     : contacts;
 
   return (
-    <AppShell title="Contacts">
+    <>
       <input
         className="search"
         type="search"
@@ -45,6 +45,6 @@ export default function Contacts() {
           <p className="empty">No contacts match “{query}”.</p>
         )}
       </div>
-    </AppShell>
+    </>
   );
 }

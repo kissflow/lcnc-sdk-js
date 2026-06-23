@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
-import { KfLink, useKfRouter } from "@kissflow/app-ui";
+import { KfLink, useKfRouter, usePageTitle } from "@kissflow/app-ui";
 
-import { AppShell } from "../../components/app-shell.jsx";
 import { getContact } from "../../data/contacts.js";
 
 // src/pages/contacts/[id].jsx → dynamic route "/contacts/:id"
@@ -9,19 +8,18 @@ export default function ContactDetail() {
   const { id } = useParams();
   const router = useKfRouter();
   const contact = getContact(id);
+  usePageTitle(contact ? contact.name : "Contact");
 
   if (!contact) {
     return (
-      <AppShell title="Contact">
-        <p className="empty">
-          No contact with id “{id}”. <KfLink to="/contacts">Back to list</KfLink>
-        </p>
-      </AppShell>
+      <p className="empty">
+        No contact with id “{id}”. <KfLink to="/contacts">Back to list</KfLink>
+      </p>
     );
   }
 
   return (
-    <AppShell title={contact.name}>
+    <>
       <button className="link-btn" onClick={() => router.back()}>
         ← Back
       </button>
@@ -60,6 +58,6 @@ export default function ContactDetail() {
         This is a dynamic route (<code>/contacts/{id}</code>). Refresh the page —
         Kissflow deep-links you straight back here via the synced URL.
       </p>
-    </AppShell>
+    </>
   );
 }
