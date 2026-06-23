@@ -181,6 +181,26 @@ export type ProcessFieldOptions = {
     tableRowId?: string;
 };
 
+export type ProcessAttachmentFile = {
+    id: string;
+    name: string;
+    key: string;
+    size?: number;
+    fileExtension?: string;
+};
+
+export type ProcessParseAttachmentOptions = {
+    instanceId: string; // form.instanceId (form store id), same convention as getFieldOptions
+    activityInstanceId: string;
+    fieldId: string;
+    file: ProcessAttachmentFile;
+};
+
+export type ProcessAttachmentParseResult = {
+    appliedFields: string[]; // field IDs auto-filled into the form store
+    suggestedBy: string; // name of the parsed file
+};
+
 export type FetchOptions = {
     method?: string;
     body?: string | object;

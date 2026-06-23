@@ -19,7 +19,9 @@ import {
     ProcessGetReassigneesOptions,
     ProcessRestartItemOptions,
     ProcessDiscardItemOptions,
-    ProcessFieldOptions
+    ProcessFieldOptions,
+    ProcessParseAttachmentOptions,
+    ProcessAttachmentParseResult
 } from "../types/external";
 import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
 
@@ -470,10 +472,11 @@ export class Process extends BaseSDK {
      * const form = await dataform.initForm();
      * await form.updateField({ firstName: "John" });
      */
-    initForm(instanceId?: string): Promise<Form> {
+    initForm(instanceId?: string, activityInstanceId?: string): Promise<Form> {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_INIT_FORM, {
             flowId: this._id,
-            instanceId: instanceId || ""
+            instanceId: instanceId || "",
+            activityInstanceId: activityInstanceId || ""
         }).then((response: any) => {
             // The response contains the storeId, return a Form instance
             return new Form(response.storeId || instanceId || "", this._id);
@@ -483,16 +486,45 @@ export class Process extends BaseSDK {
     getFieldOptions(
         options?: ProcessFieldOptions
     ): Promise<ProcessQueryResponse> {
-        return this._postMessageAsync(
-            LISTENER_CMDS.DATAFORM_GET_FIELD_OPTIONS,
-            {
-                flowId: this._id,
-                instanceId: options?.instanceId || "",
-                activityInstanceId: options?.activityInstanceId,
-                fieldId: options?.fieldId || "",
-                tableId: options?.tableId,
-                tableRowId: options?.tableRowId
-            }
-        );
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_FIELD_OPTIONS, {
+            flowId: this._id,
+            instanceId: options?.instanceId || "",
+            activityInstanceId: options?.activityInstanceId || "",
+            fieldId: options?.fieldId || "",
+            tableId: options?.tableId,
+            tableRowId: options?.tableRowId
+        });
+    }
+
+    /**
+     * Trigger AI document parsing on an uploaded file for a Smart Attachment field.
+     * Matches native platform behavior: matching empty fields are auto-filled directly
+     * into the form store (respecting field permissions) — no separate apply step needed.
+     * Call `form.toJSON()` afterward to read the updated values.
+     *
+     * @example
+     * const form = await process.initForm();
+     * const files = await kf.client.openFilePicker({ fileExtensions: ["pdf"], maxCount: 1 });
+     * await form.updateField({ [fieldId]: files });
+     * await process.parseAttachment({ instanceId: form.instanceId, fieldId, file: files[0] });
+     * const updated = await form.toJSON(); // other fields now auto-filled
+     */
+    parseAttachment(
+        options: ProcessParseAttachmentOptions
+    ): Promise<ProcessAttachmentParseResult> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" },
+            { value: options.fieldId, name: "fieldId" },
+            { value: options.file, name: "file" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_PARSE_ATTACHMENT, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId,
+            fieldId: options.fieldId,
+            file: options.file
+        });
     }
 }

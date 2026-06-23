@@ -1,165 +1,168 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
 
 export class Form extends BaseSDK {
-	private instanceId: string;
-	private flowId: string;
-	type: string;
-	constructor(instanceId: string, flowId?: string) {
-		super();
-		this.type = "Form";
-		this.instanceId = instanceId;
-		this.flowId = flowId
-	}
-	toJSON() {
-		return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
-			instanceId: this.instanceId
-		});
-	}
-	getField(fieldId: string) {
-		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
-			instanceId: this.instanceId,
-			fieldId
-		});
-	}
-	updateField(args: object) {
-		return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
-			flowId: this.flowId,
-			instanceId: this.instanceId,
-			data: args
-		});
-	}
-	getValidationErrors() {
-		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_VALIDATION_ERRORS, {
-			instanceId: this.instanceId
-		});
-	}
-	getFormConfiguration() {
-		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_CONFIGURATION, {
-			instanceId: this.instanceId
-		});
-	}
-	getTable(tableId: string) {
-		return new Table(this.instanceId, tableId);
-	}
+    private instanceId: string;
+    private flowId: string;
+    type: string;
+    constructor(instanceId: string, flowId?: string) {
+        super();
+        this.type = "Form";
+        this.instanceId = instanceId;
+        this.flowId = flowId;
+    }
+    toJSON() {
+        return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+            instanceId: this.instanceId
+        });
+    }
+    getField(fieldId: string) {
+        return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
+            instanceId: this.instanceId,
+            fieldId
+        });
+    }
+    updateField(args: object) {
+        return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
+            flowId: this.flowId,
+            instanceId: this.instanceId,
+            data: args
+        });
+    }
+    getValidationErrors() {
+        return this._postMessageAsync(
+            LISTENER_CMDS.GET_FORM_VALIDATION_ERRORS,
+            {
+                instanceId: this.instanceId
+            }
+        );
+    }
+    getFormConfiguration() {
+        return this._postMessageAsync(LISTENER_CMDS.GET_FORM_CONFIGURATION, {
+            instanceId: this.instanceId
+        });
+    }
+    getTable(tableId: string) {
+        return new Table(this.instanceId, tableId);
+    }
 }
 
 class Table extends BaseSDK {
-	private tableId: string;
-	private instanceId: string;
+    private tableId: string;
+    private instanceId: string;
 
-	constructor(instanceId: string, tableId: string) {
-		super();
-		this.tableId = tableId;
-		this.instanceId = instanceId;
-	}
+    constructor(instanceId: string, tableId: string) {
+        super();
+        this.tableId = tableId;
+        this.instanceId = instanceId;
+    }
 
-	// list of obj of rows
-	toJSON() {
-		return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
-			instanceId: this.instanceId,
-			tableId: this.tableId
-		});
-	}
+    // list of obj of rows
+    toJSON() {
+        return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+            instanceId: this.instanceId,
+            tableId: this.tableId
+        });
+    }
 
-	getSelectedRows() {
-		return this._postMessageAsync(LISTENER_CMDS.GET_SELECTED_TABLE_ROWS, {
-			instanceId: this.instanceId,
-			tableId: this.tableId
-		})
-	}
+    getSelectedRows() {
+        return this._postMessageAsync(LISTENER_CMDS.GET_SELECTED_TABLE_ROWS, {
+            instanceId: this.instanceId,
+            tableId: this.tableId
+        });
+    }
 
-	getRows(): TableForm[] {
-		// list of TableForm class
-		return this._postMessageAsync(
-			LISTENER_CMDS.GET_TABLE_ROWS,
-			{ instanceId: this.instanceId, tableId: this.tableId },
-			true, // has callBack
-			(data) => {
-				return data.map(
-					(row) =>
-						new TableForm(this.instanceId, this.tableId, row.id)
-				);
-			}
-		);
-	}
+    getRows(): TableForm[] {
+        // list of TableForm class
+        return this._postMessageAsync(
+            LISTENER_CMDS.GET_TABLE_ROWS,
+            { instanceId: this.instanceId, tableId: this.tableId },
+            true, // has callBack
+            (data) => {
+                return data.map(
+                    (row) =>
+                        new TableForm(this.instanceId, this.tableId, row.id)
+                );
+            }
+        );
+    }
 
-	getRow(rowId: string) {
-		return new TableForm(this.instanceId, this.tableId, rowId);
-	}
+    getRow(rowId: string) {
+        return new TableForm(this.instanceId, this.tableId, rowId);
+    }
 
-	addRow(rowObject: object) {
-		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROW, {
-			instanceId: this.instanceId,
-			tableId: this.tableId,
-			rowObject
-		});
-	}
+    addRow(rowObject: object) {
+        return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROW, {
+            instanceId: this.instanceId,
+            tableId: this.tableId,
+            rowObject
+        });
+    }
 
-	addRows(rows: object[]) {
-		return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROWS, {
-			instanceId: this.instanceId,
-			tableId: this.tableId,
-			rows
-		});
-	}
+    addRows(rows: object[]) {
+        return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROWS, {
+            instanceId: this.instanceId,
+            tableId: this.tableId,
+            rows
+        });
+    }
 
-	deleteRow(rowId: string) {
-		return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
-			instanceId: this.instanceId,
-			tableId: this.tableId,
-			rows: [rowId],
-		});
-	}
+    deleteRow(rowId: string) {
+        return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
+            instanceId: this.instanceId,
+            tableId: this.tableId,
+            rows: [rowId]
+        });
+    }
 
-	deleteRows(rows: string[]) {
-		return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
-			instanceId: this.instanceId,
-			tableId: this.tableId,
-			rows
-		});
-	}
+    deleteRows(rows: string[]) {
+        return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
+            instanceId: this.instanceId,
+            tableId: this.tableId,
+            rows
+        });
+    }
 }
 
 export class TableForm extends BaseSDK {
-	private instanceId: string;
-	private tableId: string;
-	private rowId: string;
-	type: string;
+    private instanceId: string;
+    private tableId: string;
+    private rowId: string;
+    type: string;
 
-	constructor(instanceId: string, tableId: string, rowId: string) {
-		super();
-		this.instanceId = instanceId;
-		this.type = "TabelForm";
-		this.tableId = tableId;
-		this.rowId = rowId;
-	}
+    constructor(instanceId: string, tableId: string, rowId: string) {
+        super();
+        this.instanceId = instanceId;
+        this.type = "TabelForm";
+        this.tableId = tableId;
+        this.rowId = rowId;
+    }
 
-	getParent() {
-		return new Form(this.instanceId);
-	}
+    getParent() {
+        return new Form(this.instanceId);
+    }
 
-	toJSON() {
-		return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
-			tableId: this.tableId,
-			rowId: this.rowId
-		});
-	}
+    toJSON() {
+        return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+            tableId: this.tableId,
+            rowId: this.rowId
+        });
+    }
 
-	getField(fieldId: string) {
-		return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
-			instanceId: this.instanceId,
-			tableId: this.tableId,
-			rowId: this.rowId,
-			fieldId
-		});
-	}
+    getField(fieldId: string) {
+        return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
+            instanceId: this.instanceId,
+            tableId: this.tableId,
+            rowId: this.rowId,
+            fieldId
+        });
+    }
 
-	updateField(args: object) {
-		return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
-			instanceId: this.instanceId,
-			tableId: this.tableId,
-			rowId: this.rowId,
-			data: args
-		});
-	}
+    updateField(args: object) {
+        return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
+            instanceId: this.instanceId,
+            tableId: this.tableId,
+            rowId: this.rowId,
+            data: args
+        });
+    }
 }
