@@ -1,5 +1,5 @@
 {
-    "name": "@kissflow/lowcode-client-sdk",
+    "name": "@sooryakanth/lowcode-client-sdk",
     "version": "1.0.45",
     "description": "JavaScript SDK for developing over the Kissflow lowcode platform",
     "types": "dist/index.d.ts",
@@ -24,6 +24,9 @@
         "serve": "http-server -p 8080",
         "prepare": "pnpm run build",
         "publish-canary": "pnpm publish --tag canary"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "repository": {
         "type": "git",

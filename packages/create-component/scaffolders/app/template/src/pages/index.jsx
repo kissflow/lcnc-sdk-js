@@ -1,4 +1,4 @@
-import { KfLink, useKf, usePageTitle } from "@kissflow/app-ui";
+import { KfLink, useKf, usePageTitle } from "@sooryakanth/app-ui";
 
 import { contacts } from "../data/contacts.js";
 

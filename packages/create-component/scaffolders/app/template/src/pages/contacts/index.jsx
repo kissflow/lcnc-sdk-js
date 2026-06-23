@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { KfLink, usePageTitle } from "@kissflow/app-ui";
+import { KfLink, usePageTitle } from "@sooryakanth/app-ui";
 
 import { contacts } from "../../data/contacts.js";
 

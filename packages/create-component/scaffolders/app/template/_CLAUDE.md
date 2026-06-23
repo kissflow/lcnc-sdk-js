@@ -1,7 +1,7 @@
 # Building <%= projectName %> (Kissflow App UI for <%= appId %>)
 
 This is a **custom UI for Kissflow app `<%= appId %>`** — a Vite + React SPA
-(`@kissflow/app-ui`) that renders full-screen inside Kissflow and talks to it
+(`@sooryakanth/app-ui`) that renders full-screen inside Kissflow and talks to it
 through the Kissflow SDK.
 
 ## Your role
@@ -16,7 +16,7 @@ app's data and what the developer wants, then build and refine pages for it.
 - `src/**`, styles, and small helpers in `lib/` you author
 
 **Do NOT** (out of scope — don't go here unless the developer explicitly asks):
-- Don't modify `@kissflow/app-ui`, the SDK, or anything in `node_modules` — the
+- Don't modify `@sooryakanth/app-ui`, the SDK, or anything in `node_modules` — the
   framework is a black box you build **on top of**, not something to "improve".
 - Don't hand-edit `lib/kf-context.md` / `lib/kf-schema.json` — they're generated;
   refresh with `npm run kf:sync`.
@@ -27,6 +27,24 @@ app's data and what the developer wants, then build and refine pages for it.
 
 Default to **building the app**. When the request is vague, propose concrete
 screens based on the app's data models (see below) and get building.
+
+## Design — original and modern, not a reskin of the demo
+
+The bundled **Acme CRM** demo (`src/pages/*`, `src/components/app-shell.jsx`,
+`src/data/*`) only exists to show how routing, the layout, and the SDK wire
+together. **It is not a design template.** Two failure modes to avoid:
+
+- **Don't reskin it.** Before building, delete the demo pages/components/data and
+  design fresh for *this* app's domain and data models — a finance approvals app and
+  an inventory app should look like different products, not the CRM with new labels.
+  Pick the layout from what the app does (not always sidebar + table).
+- **Don't ship dated UI.** Aim for a modern, polished 2025 look — generous
+  whitespace, clear type hierarchy, one restrained accent colour, soft depth, real
+  hover/empty/loading states.
+
+**Read [`agents/design-guidelines.md`](./agents/design-guidelines.md)** before
+building — it has the design tokens, layout patterns, component recipes, and a
+do/don't list. Follow it.
 
 ## First: know the app's data
 
@@ -42,21 +60,19 @@ Re-run `npm run kf:sync` whenever the app's models/roles change.
 
 ## Routing — file-based (`src/pages/**`)
 
-| File | Route |
-| --- | --- |
-| `src/pages/index.jsx` | `/` |
-| `src/pages/contacts/index.jsx` | `/contacts` |
-| `src/pages/contacts/[id].jsx` | `/contacts/:id` (dynamic) |
-| `src/pages/settings.jsx` | `/settings` |
+A file under `src/pages/` becomes a route. `index.jsx` → `/`, `about.jsx` → `/about`,
+`items/[id].jsx` → `/items/:id` (dynamic). (The demo's `contacts/*` routes are just
+examples — replace them with your app's screens.)
 
 Navigate with `<KfLink to="…">` or `const r = useKfRouter(); r.push("…")`. The parent
 Kissflow browser URL mirrors the route automatically — never call the SDK for routing.
 
 ## Layouts (like Next.js)
 
-- **Root layout:** `src/components/app-shell.jsx`, passed once via
-  `<KfApp routes={routes} layout={AppShell} />` in `src/main.jsx`. It's persistent
-  (renders once; only the route swaps in as `children`).
+- **Root layout:** a component passed once via `<KfApp routes={routes} layout={AppShell} />`
+  in `src/main.jsx`. It's persistent (renders once; only the route swaps in as
+  `children`). The demo's `src/components/app-shell.jsx` is one example — design your
+  own shell (or no shell) to fit the app.
 - **Section layout:** a file next to a folder of the same name (e.g.
   `src/pages/contacts.jsx` beside `src/pages/contacts/`) wraps that section — render
   an `<Outlet/>`.
@@ -65,7 +81,7 @@ Kissflow browser URL mirrors the route automatically — never call the SDK for 
 ## Talking to Kissflow (in the browser)
 
 ```jsx
-import { useKf } from "@kissflow/app-ui";
+import { useKf } from "@sooryakanth/app-ui";
 const kf = useKf();                                   // initialized SDK
 kf.user;  kf.account;                                 // current user / account
 const form = kf.app.getDataform("<DataformId>");      // a data model handle

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useKf, usePageTitle } from "@kissflow/app-ui";
+import { useKf, usePageTitle } from "@sooryakanth/app-ui";
 
 // src/pages/settings.jsx → route "/settings"
 export default function Settings() {

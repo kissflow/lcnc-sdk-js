@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { KfLink, useKfRouter, usePageTitle } from "@kissflow/app-ui";
+import { KfLink, useKfRouter, usePageTitle } from "@sooryakanth/app-ui";
 
 import { getContact } from "../../data/contacts.js";
 

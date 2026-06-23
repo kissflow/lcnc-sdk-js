@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useKf, usePageTitle } from "@kissflow/app-ui";
+import { useKf, usePageTitle } from "@sooryakanth/app-ui";
 
 // Root layout (passed to <KfApp layout={AppShell} />). Renders ONCE and stays
 // mounted across navigation — the sidebar keeps its state, only `children`
@@ -43,7 +43,7 @@ export function AppShell({ children }) {
             </NavLink>
           ))}
         </nav>
-        <div className="sidebar-foot">Built with @kissflow/app-ui</div>
+        <div className="sidebar-foot">Built with @sooryakanth/app-ui</div>
       </aside>
 
       <div className="main">

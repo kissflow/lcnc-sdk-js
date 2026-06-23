@@ -1,10 +1,13 @@
 {
-    "name": "create-kf-component",
-    "version": "0.0.9",
-    "description": "create-kf-component is a cli tool that scaffolds Javascript based custom component projects that seamlessly integrate into Kissflow.",
+    "name": "@sooryakanth/create-kf-app",
+    "version": "0.1.2",
+    "description": "CLI that scaffolds Kissflow custom UI / custom component projects.",
     "main": "index.js",
     "bin": {
-        "create-kf-component": "./bin/index.js"
+        "create-kf-app": "./bin/index.js"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "type": "module",
     "files": [
@@ -36,7 +39,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@kissflow/form-field-config": "workspace:^",
+        "@kissflow/form-field-config": "^0.0.2",
         "chalk": "5.3.0",
         "ejs": "3.1.9",
         "inquirer": "9.2.13",

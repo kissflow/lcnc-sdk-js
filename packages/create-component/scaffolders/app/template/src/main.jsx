@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { KfApp } from "@kissflow/app-ui";
+import { KfApp } from "@sooryakanth/app-ui";
 import routes from "~react-pages";
 
 import { AppShell } from "./components/app-shell.jsx";
