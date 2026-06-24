@@ -1,6 +1,6 @@
-# Building <%= projectName %> (Kissflow App UI for <%= appId %>)
+# Building <%= projectName %> (Kissflow App UI)
 
-This is a **custom UI for Kissflow app `<%= appId %>`** — a Vite + React SPA
+This is a **custom UI for a Kissflow app** — a Vite + React SPA
 (`@sooryakanth/app-ui`) that renders full-screen inside Kissflow and talks to it
 through the Kissflow SDK.
 

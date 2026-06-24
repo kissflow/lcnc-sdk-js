@@ -5,6 +5,6 @@
 # Kissflow domain, e.g. dev-play.kissflow.com (no protocol)
 KF_DOMAIN=
 KF_ACCOUNT_ID=
-KF_APP_ID=<%= appId %>
+KF_APP_ID=
 KF_ACCESS_KEY_ID=
 KF_ACCESS_KEY_SECRET=

@@ -16,12 +16,11 @@ const templateDir = path.resolve(
     './template'
 )
 
-async function appScaffolder({ projectFolderPath, projectName, appId }) {
+async function appScaffolder({ projectFolderPath, projectName }) {
     const projectTemplateFiles = getAllFilePathsRecursively(templateDir)
 
     const templateData = {
         projectName,
-        appId,
     }
 
     for (const file of projectTemplateFiles) {

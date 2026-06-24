@@ -1,6 +1,6 @@
 # <%= projectName %>
 
-A full custom UI for the Kissflow app **<%= appId %>**, built with
+A full custom UI for your Kissflow app, built with
 [`@sooryakanth/app-ui`](https://www.npmjs.com/package/@sooryakanth/app-ui) — a Vite +
 React framework with **folder-based routing** (`src/pages/**`) that renders inside
 Kissflow and keeps the browser URL in sync with your routes.
@@ -12,9 +12,9 @@ npm install
 npm run dev          # https://localhost:3000
 ```
 
-Then in Kissflow, open app `<%= appId %>` → **Settings → Custom UI**, toggle it on,
+Then in Kissflow, open your app → **Settings → Custom UI**, toggle it on,
 paste `https://localhost:3000`, and Save. Open the app — your UI renders full-screen
-under `/application/<%= appId %>/ui`.
+under `/application/<your-app-id>/ui`.
 
 ## Routing
 
