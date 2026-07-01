@@ -3,18 +3,27 @@ import react from "@vitejs/plugin-react";
 import Pages from "vite-plugin-pages";
 import path from "node:path";
 import { writeFileSync } from "node:fs";
+import tailwindcss from "@tailwindcss/vite";
+
+// TEMPORARILY DISABLED: live-data proxy. Runtime data goes through the Kissflow
+// SDK only; .env keys are for kf-sync/kf-import (metadata) — not runtime fetching.
+// To re-enable, uncomment this import and the kfLiveProxy() plugin below.
+// import { kfLiveProxy } from "./vite-kf-live.js";
 
 export default defineConfig({
   plugins: [
     react(),
+    tailwindcss(),
     // src/pages/**.jsx → routes. e.g. src/pages/items/[id].jsx → /items/:id
     Pages({ dirs: "src/pages" }),
+    // /__kf/* → real Kissflow REST (admin key attached server-side). Dev only.
+    // kfLiveProxy(),
     {
       name: "emit-kf-manifest",
       writeBundle() {
         writeFileSync(
           path.resolve(__dirname, "dist/manifest.json"),
-          JSON.stringify({ Category: "Page", Framework: "React" }, null, 2),
+          JSON.stringify({ Category: "Application", Framework: "React" }, null, 2),
         );
       },
     },
@@ -23,9 +32,12 @@ export default defineConfig({
   base: "",
   // Force a single copy of react / react-router so @sooryakanth/app-ui's MemoryRouter
   // and your pages' hooks share one RouterContext (otherwise the production build
-  // can bundle two copies → "Cannot destructure property 'future' of … null").
+  // bundles two copies → "Cannot destructure property 'future' of … null").
   resolve: {
     dedupe: ["react", "react-dom", "react-router-dom"],
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
   },
   build: { target: "es2022" },
   server: {

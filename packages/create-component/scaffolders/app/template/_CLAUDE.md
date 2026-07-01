@@ -85,7 +85,7 @@ import { useKf } from "@sooryakanth/app-ui";
 const kf = useKf();                                   // initialized SDK
 kf.user;  kf.account;                                 // current user / account
 const form = kf.app.getDataform("<DataformId>");      // a data model handle
-const { items } = await form.getItems();
+const { Data } = await form.getItems();
 ```
 
 **Read [`agents/kissflow-sdk.md`](./agents/kissflow-sdk.md)** for the full SDK API —

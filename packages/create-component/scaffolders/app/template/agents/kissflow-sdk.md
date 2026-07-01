@@ -39,7 +39,7 @@ A dataform is a simple data table. Items are keyed by `_id`.
 ```js
 const form = kf.app.getDataform("Catalog_Types_A00");
 
-const { items, total } = await form.getItems({
+const { Data, count, Columns } = await form.getItems({
   searchValue: "",      // optional text search
   pageNumber: 1,        // default 1
   pageSize: 50,         // default 50
@@ -66,7 +66,7 @@ A workflow. Items carry both an instance id (`_id`) and an activity instance id
 ```js
 const proc = kf.app.getProcess("Purchase_Request_A00");
 
-// queries (all return { items, total })
+// queries (all return { Data, count, Columns })
 await proc.getMyItems({ status: "all" });          // "all" | "draft" | "inprogress"
 await proc.getMyTasksItems({ activityId: "" });    // tasks assigned to me
 await proc.getParticipatedItems();                 // items I acted on
@@ -98,7 +98,7 @@ A board/case model. Items are keyed by `instanceId` (`_id`).
 ```js
 const board = kf.app.getBoard("Inventory");
 
-const { items, total } = await board.getItems({ viewId: "AllItems_View" });
+const { Data, count, Columns } = await board.getItems({ viewId: "AllItems_View" });
 const item    = await board.getItem({ instanceId: "id_123" });
 const created = await board.createItem({ data: { Name: "New Item" } });
 await board.updateItem({ instanceId: "id_123", data: { Name: "Updated" } });

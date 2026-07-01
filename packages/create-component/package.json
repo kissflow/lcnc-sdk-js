@@ -1,10 +1,10 @@
 {
     "name": "@sooryakanth/create-kf-app",
-    "version": "0.1.3",
+    "version": "0.1.6",
     "description": "CLI that scaffolds Kissflow custom UI / custom component projects.",
     "main": "index.js",
     "bin": {
-        "create-kf-app": "./bin/index.js"
+        "create-kf-app": "bin/index.js"
     },
     "publishConfig": {
         "access": "public"
