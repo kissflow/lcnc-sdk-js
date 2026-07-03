@@ -1,0 +1,10 @@
+# Copy to .env and fill in. Used by `npm run kf:sync` to pull this app's data
+# models + roles into lib/. These are server-to-server ADMIN access keys — keep
+# .env out of git (it is gitignored). They are NOT used by the running UI.
+
+# Kissflow domain, e.g. dev-play.kissflow.com (no protocol)
+KF_DOMAIN=
+KF_ACCOUNT_ID=
+KF_APP_ID=
+KF_ACCESS_KEY_ID=
+KF_ACCESS_KEY_SECRET=

@@ -1,13 +1,13 @@
 {
-    "name": "@abdul-kissflow/create-kf-component",
-    "version": "0.0.9",
-    "publishConfig": {
-        "access": "public"
-    },
-    "description": "create-kf-component is a cli tool that scaffolds Javascript based custom component projects that seamlessly integrate into Kissflow.",
+    "name": "@abdul-kissflow/create-kf-app",
+    "version": "0.1.7",
+    "description": "CLI that scaffolds Kissflow custom UI / custom component projects.",
     "main": "index.js",
     "bin": {
-        "create-kf-component": "./bin/index.js"
+        "create-kf-app": "bin/index.js"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "type": "module",
     "files": [
