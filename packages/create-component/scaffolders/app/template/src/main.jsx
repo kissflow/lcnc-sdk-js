@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { KfApp } from "@sooryakanth/app-ui";
+import { KfApp } from "@abdul-kissflow/app-ui";
 import routes from "~react-pages";
 
 import { AppShell } from "./components/app-shell.jsx";
@@ -14,5 +14,5 @@ applyTheme(getTheme());
 
 // AppShell is the persistent root layout (like Next's app/layout.tsx).
 createRoot(document.getElementById("root")).render(
-  <KfApp routes={routes} layout={AppShell} />,
+    <KfApp routes={routes} layout={AppShell} />
 );

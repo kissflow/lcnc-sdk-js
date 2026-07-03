@@ -30,7 +30,7 @@ export default defineConfig({
   ],
   // Relative asset paths so the built bundle works from a zip or any mount point.
   base: "",
-  // Force a single copy of react / react-router so @sooryakanth/app-ui's MemoryRouter
+  // Force a single copy of react / react-router so @abdul-kissflow/app-ui's MemoryRouter
   // and your pages' hooks share one RouterContext (otherwise the production build
   // bundles two copies → "Cannot destructure property 'future' of … null").
   resolve: {

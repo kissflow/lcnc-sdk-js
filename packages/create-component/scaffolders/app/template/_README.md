@@ -1,7 +1,7 @@
 # <%= projectName %>
 
 A full custom UI for your Kissflow app, built with
-[`@sooryakanth/app-ui`](https://www.npmjs.com/package/@sooryakanth/app-ui) — a Vite +
+[`@abdul-kissflow/app-ui`](https://www.npmjs.com/package/@abdul-kissflow/app-ui) — a Vite +
 React framework with **folder-based routing** (`src/pages/**`) that renders inside
 Kissflow and keeps the browser URL in sync with your routes.
 
@@ -20,12 +20,12 @@ under `/application/<your-app-id>/ui`.
 
 Add a file under `src/pages/`:
 
-| File | Route |
-| --- | --- |
-| `src/pages/index.jsx` | `/` |
-| `src/pages/contacts/index.jsx` | `/contacts` |
-| `src/pages/contacts/[id].jsx` | `/contacts/:id` |
-| `src/pages/settings.jsx` | `/settings` |
+| File                           | Route           |
+| ------------------------------ | --------------- |
+| `src/pages/index.jsx`          | `/`             |
+| `src/pages/contacts/index.jsx` | `/contacts`     |
+| `src/pages/contacts/[id].jsx`  | `/contacts/:id` |
+| `src/pages/settings.jsx`       | `/settings`     |
 
 Navigate with `<KfLink to="/contacts">` or `useKfRouter().push("/contacts")`. The parent
 Kissflow URL mirrors the route automatically.
@@ -37,11 +37,11 @@ the contents of `src/pages/` with your own app.
 ## Use the Kissflow SDK
 
 ```jsx
-import { useKf } from "@sooryakanth/app-ui";
+import { useKf } from "@abdul-kissflow/app-ui";
 
 function MyComponent() {
-  const kf = useKf();
-  // kf.user, kf.account, kf.app, kf.api(...), ...
+    const kf = useKf();
+    // kf.user, kf.account, kf.app, kf.api(...), ...
 }
 ```
 

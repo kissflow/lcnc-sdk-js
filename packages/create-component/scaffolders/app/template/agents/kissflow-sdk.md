@@ -1,28 +1,28 @@
 # Kissflow SDK reference (for building app UI pages)
 
 How to read and write Kissflow data from a page in this app. The SDK is the
-`@sooryakanth/lowcode-client-sdk` instance returned by `useKf()` from `@sooryakanth/app-ui`.
+`@abdul-kissflow/lowcode-client-sdk` instance returned by `useKf()` from `@abdul-kissflow/app-ui`.
 
 > **Always get flow/model ids and field ids from [`../lib/kf-context.md`](../lib/kf-context.md)**
 > (run `npm run kf:sync` to generate it). Don't invent ids.
 
 ```jsx
-import { useKf } from "@sooryakanth/app-ui";
+import { useKf } from "@abdul-kissflow/app-ui";
 
 function Example() {
-  const kf = useKf();           // ready-to-use SDK instance
-  // ...every method below is async — await it.
+    const kf = useKf(); // ready-to-use SDK instance
+    // ...every method below is async — await it.
 }
 ```
 
 ## Who / where (context)
 
-| Access | Returns |
-| --- | --- |
-| `kf.user` | `{ _id, Name, Email, Role, AppRoles }` — current user + their app roles |
-| `kf.account` | `{ _id }` — current account |
-| `kf.env` | `{ isMobile }` |
-| `kf.context.watchParams(cb)` | subscribe to params the host passes in |
+| Access                       | Returns                                                                 |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `kf.user`                    | `{ _id, Name, Email, Role, AppRoles }` — current user + their app roles |
+| `kf.account`                 | `{ _id }` — current account                                             |
+| `kf.env`                     | `{ isMobile }`                                                          |
+| `kf.context.watchParams(cb)` | subscribe to params the host passes in                                  |
 
 Use `kf.user.AppRoles` to gate UI by role (role ids/names are in `lib/kf-context.md`).
 
@@ -40,21 +40,24 @@ A dataform is a simple data table. Items are keyed by `_id`.
 const form = kf.app.getDataform("Catalog_Types_A00");
 
 const { Data, count, Columns } = await form.getItems({
-  searchValue: "",      // optional text search
-  pageNumber: 1,        // default 1
-  pageSize: 50,         // default 50
-  viewId: "",           // optional view
-  payload: {},          // optional filter payload
+    searchValue: "", // optional text search
+    pageNumber: 1, // default 1
+    pageSize: 50, // default 50
+    viewId: "", // optional view
+    payload: {} // optional filter payload
 }); // returns { Columns, Data, count }
 
-const item   = await form.getItem({ itemId: "id_123" });
+const item = await form.getItem({ itemId: "id_123" });
 const created = await form.createItem({ data: { Name: "New", Amount: 10 } });
-const updated = await form.updateItem({ itemId: "id_123", data: { Amount: 20 } });
+const updated = await form.updateItem({
+    itemId: "id_123",
+    data: { Amount: 20 }
+});
 await form.deleteItem({ itemId: "id_123" });
-await form.submitItem({ itemId: "id_123" });     // finalize a draft
-await form.discardItem();                        // discard current draft
-const fields = await form.getFields();           // field definitions
-await form.openForm({ _id: "id_123" });          // open the native form UI
+await form.submitItem({ itemId: "id_123" }); // finalize a draft
+await form.discardItem(); // discard current draft
+const fields = await form.getFields(); // field definitions
+await form.openForm({ _id: "id_123" }); // open the native form UI
 ```
 
 ### Process — `kf.app.getProcess(id)`
@@ -98,8 +101,10 @@ A board/case model. Items are keyed by `instanceId` (`_id`).
 ```js
 const board = kf.app.getBoard("Inventory");
 
-const { Data, count, Columns } = await board.getItems({ viewId: "AllItems_View" });
-const item    = await board.getItem({ instanceId: "id_123" });
+const { Data, count, Columns } = await board.getItems({
+    viewId: "AllItems_View"
+});
+const item = await board.getItem({ instanceId: "id_123" });
 const created = await board.createItem({ data: { Name: "New Item" } });
 await board.updateItem({ instanceId: "id_123", data: { Name: "Updated" } });
 await board.deleteItem({ instanceId: "id_123" });
@@ -124,7 +129,7 @@ const result = await dt.evaluate({ region: "US", tier: "gold" });
 // App variables (shared across the app)
 await kf.app.getVariable("CartTotal");
 await kf.app.setVariable("CartTotal", 42);
-await kf.app.setVariable({ CartTotal: 42, Currency: "USD" });   // batch
+await kf.app.setVariable({ CartTotal: 42, Currency: "USD" }); // batch
 
 // Navigate to a built-in Kissflow page (not your custom routes)
 await kf.app.openPage("PageId", { someParam: "x" });
@@ -138,7 +143,7 @@ await kf.app.page.openPopup("PopupId", { param: "x" });
 ```
 
 > For navigation **within your own UI**, use `KfLink` / `useKfRouter()` from
-> `@sooryakanth/app-ui` — not `openPage`. See [`../CLAUDE.md`](../CLAUDE.md).
+> `@abdul-kissflow/app-ui` — not `openPage`. See [`../CLAUDE.md`](../CLAUDE.md).
 
 ---
 
@@ -148,14 +153,16 @@ await kf.app.page.openPopup("PopupId", { param: "x" });
 await kf.client.showInfo("Saved successfully");
 
 const { action } = await kf.client.showConfirm({
-  title: "Delete record?",
-  content: "This cannot be undone.",
-  okText: "Delete",
-  cancelText: "Cancel",
+    title: "Delete record?",
+    content: "This cannot be undone.",
+    okText: "Delete",
+    cancelText: "Cancel"
 });
-if (action === "OK") { /* ... */ }
+if (action === "OK") {
+    /* ... */
+}
 
-kf.client.redirect("https://example.com");        // navigate the platform
+kf.client.redirect("https://example.com"); // navigate the platform
 
 // Kissflow-hosted images can't load directly in the iframe (CORS) — resolve to base64:
 const src = await kf.client.getImageUrl(imageFieldValue);
@@ -180,10 +187,14 @@ Escape hatch for any Kissflow REST endpoint, authenticated as the current user.
 The flow helpers above cover most needs — reach for this only when there's no helper.
 
 ```js
-const data = await kf.api(`/dataform/2/${kf.account._id}/Catalog_Types_A00/list`);
+const data = await kf.api(
+    `/dataform/2/${kf.account._id}/Catalog_Types_A00/list`
+);
 await kf.api(`/process/2/${kf.account._id}/Purchase_Request_A00/...`, {
-  method: "POST",
-  body: { /* ... */ },
+    method: "POST",
+    body: {
+        /* ... */
+    }
 });
 ```
 
@@ -191,8 +202,8 @@ await kf.api(`/process/2/${kf.account._id}/Purchase_Request_A00/...`, {
 
 ## Rules of thumb
 
-- **Everything is async** — `await` every SDK call.
-- **Ids are not guessable** — read model ids, field ids, and role ids from `lib/kf-context.md`.
-- **Process actions need `instanceId` + `activityInstanceId`**; dataform/board actions need just the item id.
-- **Read/write fields by their field id** (the `Id` column in `lib/kf-context.md`), not the display name.
-- Wrap calls in `try/catch`; surface failures with `kf.client.showInfo`.
+-   **Everything is async** — `await` every SDK call.
+-   **Ids are not guessable** — read model ids, field ids, and role ids from `lib/kf-context.md`.
+-   **Process actions need `instanceId` + `activityInstanceId`**; dataform/board actions need just the item id.
+-   **Read/write fields by their field id** (the `Id` column in `lib/kf-context.md`), not the display name.
+-   Wrap calls in `try/catch`; surface failures with `kf.client.showInfo`.
