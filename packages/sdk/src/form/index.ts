@@ -1,29 +1,46 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
 
 export class Form extends BaseSDK {
-    private instanceId: string;
+    // The Zustand form store's lookup key — internal only, used to route the
+    // store-bound commands below. Never expose this as `instanceId`: that
+    // name is reserved for the real record id (see below).
+    private storeId: string;
     private flowId: string;
     type: string;
-    constructor(instanceId: string, flowId?: string) {
+    // The real record id and (process-only) activity instance id — what a
+    // caller means by "instanceId" for REST-style calls like getFieldOptions
+    // or parseAttachment, which have nothing to do with the form store.
+    instanceId: string;
+    activityInstanceId?: string;
+    constructor(
+        storeId: string,
+        flowId: string,
+        instanceId: string,
+        activityInstanceId?: string
+    ) {
         super();
         this.type = "Form";
-        this.instanceId = instanceId;
+        this.storeId = storeId;
         this.flowId = flowId;
+        this.instanceId = instanceId;
+        this.activityInstanceId = activityInstanceId;
     }
     toJSON() {
         return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+            storeId: this.storeId,
             instanceId: this.instanceId
         });
     }
     getField(fieldId: string) {
         return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             fieldId
         });
     }
     updateField(args: object) {
         return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
-            flowId: this.flowId,
+            storeId: this.storeId,
             instanceId: this.instanceId,
             data: args
         });
@@ -32,33 +49,51 @@ export class Form extends BaseSDK {
         return this._postMessageAsync(
             LISTENER_CMDS.GET_FORM_VALIDATION_ERRORS,
             {
+                storeId: this.storeId,
                 instanceId: this.instanceId
             }
         );
     }
     getFormConfiguration() {
         return this._postMessageAsync(LISTENER_CMDS.GET_FORM_CONFIGURATION, {
+            storeId: this.storeId,
+            instanceId: this.instanceId
+        });
+    }
+    getFieldState() {
+        return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD_STATE, {
+            storeId: this.storeId,
             instanceId: this.instanceId
         });
     }
     getTable(tableId: string) {
-        return new Table(this.instanceId, tableId);
+        return new Table(this.storeId, this.flowId, this.instanceId, tableId);
     }
 }
 
 class Table extends BaseSDK {
-    private tableId: string;
+    private storeId: string;
+    private flowId: string;
     private instanceId: string;
+    private tableId: string;
 
-    constructor(instanceId: string, tableId: string) {
+    constructor(
+        storeId: string,
+        flowId: string,
+        instanceId: string,
+        tableId: string
+    ) {
         super();
         this.tableId = tableId;
+        this.storeId = storeId;
+        this.flowId = flowId;
         this.instanceId = instanceId;
     }
 
     // list of obj of rows
     toJSON() {
         return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             tableId: this.tableId
         });
@@ -66,6 +101,7 @@ class Table extends BaseSDK {
 
     getSelectedRows() {
         return this._postMessageAsync(LISTENER_CMDS.GET_SELECTED_TABLE_ROWS, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             tableId: this.tableId
         });
@@ -75,23 +111,40 @@ class Table extends BaseSDK {
         // list of TableForm class
         return this._postMessageAsync(
             LISTENER_CMDS.GET_TABLE_ROWS,
-            { instanceId: this.instanceId, tableId: this.tableId },
+            {
+                storeId: this.storeId,
+                instanceId: this.instanceId,
+                tableId: this.tableId
+            },
             true, // has callBack
             (data) => {
                 return data.map(
                     (row) =>
-                        new TableForm(this.instanceId, this.tableId, row.id)
+                        new TableForm(
+                            this.storeId,
+                            this.flowId,
+                            this.instanceId,
+                            this.tableId,
+                            row.id
+                        )
                 );
             }
         );
     }
 
     getRow(rowId: string) {
-        return new TableForm(this.instanceId, this.tableId, rowId);
+        return new TableForm(
+            this.storeId,
+            this.flowId,
+            this.instanceId,
+            this.tableId,
+            rowId
+        );
     }
 
     addRow(rowObject: object) {
         return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROW, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             tableId: this.tableId,
             rowObject
@@ -100,6 +153,7 @@ class Table extends BaseSDK {
 
     addRows(rows: object[]) {
         return this._postMessageAsync(LISTENER_CMDS.ADD_TABLE_ROWS, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             tableId: this.tableId,
             rows
@@ -108,6 +162,7 @@ class Table extends BaseSDK {
 
     deleteRow(rowId: string) {
         return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             tableId: this.tableId,
             rows: [rowId]
@@ -116,6 +171,7 @@ class Table extends BaseSDK {
 
     deleteRows(rows: string[]) {
         return this._postMessageAsync(LISTENER_CMDS.DELETE_TABLE_ROW, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             tableId: this.tableId,
             rows
@@ -124,13 +180,23 @@ class Table extends BaseSDK {
 }
 
 export class TableForm extends BaseSDK {
+    private storeId: string;
+    private flowId: string;
     private instanceId: string;
     private tableId: string;
     private rowId: string;
     type: string;
 
-    constructor(instanceId: string, tableId: string, rowId: string) {
+    constructor(
+        storeId: string,
+        flowId: string,
+        instanceId: string,
+        tableId: string,
+        rowId: string
+    ) {
         super();
+        this.storeId = storeId;
+        this.flowId = flowId;
         this.instanceId = instanceId;
         this.type = "TabelForm";
         this.tableId = tableId;
@@ -138,11 +204,13 @@ export class TableForm extends BaseSDK {
     }
 
     getParent() {
-        return new Form(this.instanceId);
+        return new Form(this.storeId, this.flowId, this.instanceId);
     }
 
     toJSON() {
         return this._postMessageAsync(LISTENER_CMDS.TO_JSON, {
+            storeId: this.storeId,
+            instanceId: this.instanceId,
             tableId: this.tableId,
             rowId: this.rowId
         });
@@ -150,6 +218,7 @@ export class TableForm extends BaseSDK {
 
     getField(fieldId: string) {
         return this._postMessageAsync(LISTENER_CMDS.GET_FORM_FIELD, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             tableId: this.tableId,
             rowId: this.rowId,
@@ -159,6 +228,7 @@ export class TableForm extends BaseSDK {
 
     updateField(args: object) {
         return this._postMessageAsync(LISTENER_CMDS.UPDATE_FORM, {
+            storeId: this.storeId,
             instanceId: this.instanceId,
             tableId: this.tableId,
             rowId: this.rowId,

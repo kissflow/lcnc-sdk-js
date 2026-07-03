@@ -2,6 +2,7 @@ import { userObject, accountObject, environmentObject } from "./external";
 
 export interface SDKContext {
     formInstanceId: string;
+    flowId: string;
     tableId: string;
     tableRowId: string;
     componentId: string;

@@ -1,4 +1,4 @@
-import { FILE_MAP } from '@kissflow/form-field-config'
+import { FILE_MAP } from '@abdul-kissflow/form-field-config'
 import path from 'path'
 import { fileURLToPath } from 'url'
 

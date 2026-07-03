@@ -1,6 +1,9 @@
 {
-    "name": "@kissflow/form-field-scripts",
+    "name": "@abdul-kissflow/form-field-scripts",
     "version": "0.0.7",
+    "publishConfig": {
+        "access": "public"
+    },
     "description": "Scripts to serve, build, lint, test, etc. a Kissflow's custom form field project.",
     "bin": {
         "form-field-scripts": "./bin/index.js"
@@ -34,7 +37,7 @@
         "@babel/core": "7.23.3",
         "@babel/preset-env": "7.22.9",
         "@babel/preset-react": "7.22.5",
-        "@kissflow/form-field-config": "workspace:^",
+        "@abdul-kissflow/form-field-config": "workspace:^",
         "ajv": "8.13.0",
         "archiver": "^7.0.1",
         "babel-loader": "9.1.3",

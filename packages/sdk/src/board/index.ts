@@ -179,6 +179,7 @@ export class Board extends BaseSDK {
      * Fetches schema, item data, creates and initializes the form store
      *
      * @param instanceId - Optional instance ID. If omitted, creates a new board item
+     * @param viewId - Optional view ID to scope the form's schema/permissions to a specific view
      * @returns Promise with Form instance ready to use
      *
      * @example
@@ -190,13 +191,21 @@ export class Board extends BaseSDK {
      * // Edit existing board item
      * const form = await board.initForm("item_123");
      * const data = await form.toJSON();
+     *
+     * // Edit existing board item scoped to a view
+     * const form = await board.initForm("item_123", "Inventory_View");
      */
-    initForm(instanceId?: string): Promise<Form> {
+    initForm(instanceId?: string, viewId?: string): Promise<Form> {
         return this._postMessageAsync(LISTENER_CMDS.BOARD_INIT_FORM, {
             flowId: this._id,
-            instanceId: instanceId || ""
+            instanceId: instanceId || "",
+            viewId: viewId || ""
         }).then((response: any) => {
-            return new Form(response.storeId || instanceId || "", this._id);
+            return new Form(
+                response.storeId || instanceId || "",
+                this._id,
+                response.itemId || instanceId
+            );
         });
     }
 
@@ -221,7 +230,10 @@ export class Board extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.BOARD_GET_FIELD_OPTIONS, {
             flowId: this._id,
             instanceId: options.instanceId,
-            fieldId: options.fieldId
+            fieldId: options.fieldId,
+            fieldType: options.fieldType,
+            tableId: options?.tableId,
+            tableRowId: options?.tableRowId
         });
     }
 }

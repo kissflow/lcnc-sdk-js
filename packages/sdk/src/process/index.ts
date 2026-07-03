@@ -479,7 +479,12 @@ export class Process extends BaseSDK {
             activityInstanceId: activityInstanceId || ""
         }).then((response: any) => {
             // The response contains the storeId, return a Form instance
-            return new Form(response.storeId || instanceId || "", this._id);
+            return new Form(
+                response.storeId || instanceId || "",
+                this._id,
+                response.itemId || instanceId,
+                response.activityInstanceId || activityInstanceId
+            );
         });
     }
 
@@ -491,6 +496,7 @@ export class Process extends BaseSDK {
             instanceId: options?.instanceId || "",
             activityInstanceId: options?.activityInstanceId || "",
             fieldId: options?.fieldId || "",
+            fieldType: options?.fieldType,
             tableId: options?.tableId,
             tableRowId: options?.tableRowId
         });

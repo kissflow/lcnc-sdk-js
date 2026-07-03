@@ -168,30 +168,12 @@ export class Dataform extends BaseSDK {
     }
 
     /**
-     * Get a form instance for a specific dataform record
-     * This returns a Form instance that uses the shared form store
-     * allowing you to manage dataform records with form SDK methods
-     *
-     * @param instanceId - The instance ID of the dataform record
-     * @returns Form instance for managing the record
-     *
-     * @example
-     * const dataform = kf.app.getDataform("EmpMaster");
-     * const form = dataform.getForm("emp_123");
-     * const data = await form.toJSON();
-     * await form.updateField({ firstName: "John" });
-     */
-    //TO BE REMOVED
-    getForm(instanceId: string): Form {
-        return new Form(instanceId, this._id);
-    }
-
-    /**
      * Initialize a form with all necessary data (schema, item data, form store)
      * This is the recommended way to create a custom form for dataform records
      * It automatically handles fetching schema, item data, and initializing the form store
      *
      * @param instanceId - Optional instance ID of the dataform record. If omitted, creates a new record
+     * @param viewId - Optional view ID to scope the form's schema/permissions to a specific view
      * @returns Promise with Form instance ready to use
      *
      * @example
@@ -200,17 +182,25 @@ export class Dataform extends BaseSDK {
      * const form = await dataform.initForm("emp_123");
      * const data = await form.toJSON();
      *
+     * // Load existing record scoped to a view
+     * const form = await dataform.initForm("emp_123", "EmpMaster_View");
+     *
      * // Create new record
      * const form = await dataform.initForm();
      * await form.updateField({ firstName: "John" });
      */
-    initForm(instanceId?: string): Promise<Form> {
+    initForm(instanceId?: string, viewId?: string): Promise<Form> {
         return this._postMessageAsync(LISTENER_CMDS.DATAFORM_INIT_FORM, {
             flowId: this._id,
-            instanceId: instanceId || ""
+            instanceId: instanceId || "",
+            viewId: viewId || ""
         }).then((response: any) => {
             // The response contains the storeId, return a Form instance
-            return new Form(response.storeId || instanceId || "", this._id);
+            return new Form(
+                response.storeId || instanceId || "",
+                this._id,
+                response.itemId || instanceId
+            );
         });
     }
 
@@ -223,6 +213,7 @@ export class Dataform extends BaseSDK {
                 flowId: this._id,
                 instanceId: options?.instanceId || "",
                 fieldId: options?.fieldId || "",
+                fieldType: options?.fieldType,
                 tableId: options?.tableId,
                 tableRowId: options?.tableRowId
             }

@@ -177,6 +177,8 @@ export type ProcessFieldOptions = {
     instanceId: string;
     activityInstanceId: string;
     fieldId: string;
+    /** Skip the server-side model lookup by supplying the field's type directly. */
+    fieldType?: string;
     tableId?: string;
     tableRowId?: string;
 };
@@ -190,7 +192,7 @@ export type ProcessAttachmentFile = {
 };
 
 export type ProcessParseAttachmentOptions = {
-    instanceId: string; // form.instanceId (form store id), same convention as getFieldOptions
+    instanceId: string; // form.instanceId (process record id)
     activityInstanceId: string;
     fieldId: string;
     file: ProcessAttachmentFile;
@@ -252,6 +254,8 @@ export type DataformSubmitItemOptions = {
 export type DataformFieldOptions = {
     instanceId: string;
     fieldId: string;
+    /** Skip the server-side model lookup by supplying the field's type directly. */
+    fieldType?: string;
     tableId?: string;
     tableRowId?: string;
 };
@@ -296,4 +300,8 @@ export type BoardDiscardItemOptions = {
 export type BoardFieldOptions = {
     instanceId: string;
     fieldId: string;
+    /** Skip the server-side model lookup by supplying the field's type directly. */
+    fieldType?: string;
+    tableId?: string;
+    tableRowId?: string;
 };
