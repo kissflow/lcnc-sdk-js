@@ -2,99 +2,104 @@
 
 Two rules above all:
 
-1. **The bundled demo (Acme CRM) is a *wiring* reference, not a design template.**
-   It exists to show how routing, the layout, and the SDK connect — nothing more.
-   **Do not reskin it.** Before building, delete `src/pages/*`, `src/components/*`,
-   and `src/data/*` and design fresh for *this* app's domain and data models
-   (`lib/kf-context.md`). A finance approvals app and a field-inspection app should
-   look like different products, not the CRM with renamed labels.
+1. **The bundled demo (Acme dashboard) is a *wiring* reference, not a design template.**
+   It shows how routing, the layout shell, the theme system, and the SDK connect —
+   nothing more. **Don't reskin it.** Before building, delete `src/pages/*` and
+   `src/data/*` and design fresh for *this* app's domain and data models
+   (`lib/kf-context.md`). A finance-approvals app and a field-inspection app should look
+   like different products, not the demo with renamed labels.
+
+   **Keep `src/components/ui/*` (the shadcn/ui library) and `src/components/app-shell.jsx`** —
+   those are your building blocks, not demo content.
 
 2. **Design for a 2025 bar.** Generated UIs tend to look dated. Hit the bar below.
 
 ---
 
-## Start from the domain, not a layout
+## You start with shadcn/ui — use it
+
+This project ships **shadcn/ui** (New York style) pre-installed in `src/components/ui/*`:
+Button, Card, Table, Dialog, Sheet, Select, Command (⌘K / combobox), DropdownMenu,
+Popover, Tabs, Badge, Avatar, Calendar / DatePicker, Checkbox, Switch, Input, Label,
+Tooltip, Accordion, Separator, Skeleton, Sonner (toasts), and Chart (recharts wrapper).
+
+**This is your quick-start palette — reach for it first** so you get a polished,
+accessible, consistent result out of the box. Compose and extend these freely, and
+**build your own components on top** when the domain needs something shadcn doesn't have
+(a kanban board, a gantt, a map, a specialised record card) — style those with the same
+tokens below so they sit alongside the primitives seamlessly.
+
+- Need a component that isn't here? Add it: `npx shadcn@latest add <name>`.
+- Charts: use **recharts** via the shadcn `Chart` wrapper (`ui/chart.jsx`) — it themes
+  series with `--chart-1..5` for you.
+
+## Colour + theme — tokens only, never hex
+
+The palette is a **token system** (shadcn + Tailwind v4, oklch) already wired in
+`src/index.css`. **Never hardcode colours** (`#4f46e5`, `bg-[#f8fafc]`) — always use the
+semantic Tailwind utilities so light/dark and theme-switching just work:
+
+| use | utility |
+|---|---|
+| page / app background | `bg-background` `text-foreground` |
+| cards, panels, popovers | `bg-card` / `bg-popover` (+ `-foreground`) |
+| muted / secondary text | `text-muted-foreground` |
+| primary action / active | `bg-primary text-primary-foreground` |
+| subtle fills / hovers | `bg-muted` / `bg-accent` |
+| borders, inputs, rings | `border-border` `ring-ring` |
+| destructive | `bg-destructive` / `text-destructive` |
+| chart series | `var(--chart-1..5)` (via the Chart wrapper) |
+
+**Accent + light/dark are switchable** via the theme registry — see
+[`theming.md`](./theming.md). Presets (violet, blue, emerald, rose, amber, orange) each
+recolour `--primary` / `--ring` / `--sidebar` / `--chart-*` in light **and** dark by
+setting `data-theme` on `<html>`. Pick the preset that fits the app's brand (or add one)
+instead of hand-picking hex. Dark mode is `class="dark"` on `<html>` — already toggled in
+the shell.
+
+## What makes it look current — do / don't
+
+**Do**
+- Generous whitespace + a clear type hierarchy (big bold titles, calm body, muted meta).
+- Cards with a **subtle** border *or* soft shadow — not both heavy (`border bg-card`).
+- Restrained colour: mostly neutral tokens; `primary` only for primary actions / active state.
+- Rounded corners (shadcn's `rounded-lg` / `rounded-md`; pills = `rounded-full` for tags).
+- Real **states**: hover, `focus-visible` ring, disabled, empty, loading, error.
+- **Skeleton** loaders (`ui/skeleton`) for content, not centred spinners.
+- Status as soft **`Badge`s** (tinted variants), never raw coloured text.
+- Micro-interactions: 120–160ms transitions on hover/press; `transform` / `opacity` only.
+- Responsive: usable narrow — the iframe can be mobile (`kf.env.isMobile`); the shell
+  already has a mobile drawer, follow that pattern.
+
+**Don't (these read as dated)**
+- Hardcoded hex / arbitrary `bg-[#...]` — breaks theming + dark mode.
+- Heavy 1–2px gray borders on everything / boxes-in-boxes.
+- Cramped spacing, tiny gray text everywhere.
+- Raw browser `<table>` / `<button>` / `<select>` / `<input>` — use the shadcn equivalents.
+- Glossy gradients, bevels, drop-shadow text, pure-black (`#000`) on white.
+- `alert()` / `confirm()` — use a `sonner` toast or a shadcn `Dialog`, or the SDK's
+  `kf.client.showInfo` / `showConfirm`.
+
+## Structure — start from the domain, not a layout
 
 Pick the structure from what the app *does* and its data — don't default to
 "sidebar + table" every time:
 
 - A few records, action-oriented → **dashboard / card grid** with primary actions.
 - One main list users live in → **list/detail** (master-detail), maybe split-pane.
-- A workflow/approval process → **task inbox + record view** with a clear status rail.
+- A workflow / approval process → **task inbox + record view** with a clear status rail.
 - Reporting → **metric cards + charts**, filters up top.
 - A single entity to manage → **focused form / detail page**, no nav at all.
 
-Match the navigation to scope: 1–2 areas need no sidebar (just a header); 3+ areas
-warrant a sidebar or top tabs. Don't add chrome you don't need.
-
-## Visual system — drop these tokens in and build on them
-
-Put this in `src/styles/tokens.css` and import it once. Modern, neutral, one accent.
-
-```css
-:root {
-  /* neutrals (slate) */
-  --bg: #f8fafc; --surface: #ffffff; --border: #e8edf2;
-  --text: #0f172a; --text-muted: #64748b;
-  /* one accent — recolor per app/brand */
-  --accent: #4f46e5; --accent-soft: #eef2ff; --accent-text: #ffffff;
-  /* semantic */
-  --success: #16a34a; --warn: #d97706; --danger: #dc2626;
-  /* type scale */
-  --fs-xs: 12px; --fs-sm: 13px; --fs-md: 14px; --fs-lg: 16px;
-  --fs-xl: 20px; --fs-2xl: 28px; --fs-3xl: 36px;
-  /* spacing (4px base) */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-6: 24px;
-  --s-8: 32px; --s-12: 48px;
-  /* radius + depth */
-  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-full: 999px;
-  --shadow-sm: 0 1px 2px rgb(15 23 42 / 5%);
-  --shadow-md: 0 1px 2px rgb(15 23 42 / 4%), 0 8px 24px rgb(15 23 42 / 6%);
-  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-body { font-family: var(--font); color: var(--text); background: var(--bg); }
-```
-
-(For type, you can pull **Inter** from Google Fonts in `index.html` — it instantly
-modernises the look vs. default system fonts.)
-
-## What makes it look current — do / don't
-
-**Do**
-- Generous whitespace and a clear type hierarchy (big bold titles, calm body, muted meta).
-- Cards/surfaces with a **subtle** border *or* soft shadow — pick one, not both heavy.
-- Restrained colour: mostly neutrals, the accent only for primary actions/active state.
-- Rounded corners (`--r-md` on cards, `--r-sm` on inputs/buttons, pills for tags).
-- Real **states**: hover, focus-visible (accent ring), disabled, empty, loading, error.
-- **Skeleton loaders** for content, not centred spinners.
-- Status as **soft tinted pills** (`background: tint; color: strong`), never raw text.
-- Micro-interactions: 120–160ms transitions on hover/press; `transform`/`opacity` only.
-- Responsive: usable narrow (the iframe can be mobile — check `kf.env.isMobile`).
-
-**Don't (these read as dated)**
-- Heavy 1–2px gray borders on everything / boxes-in-boxes.
-- Cramped spacing, tiny 11px gray text everywhere.
-- Default browser styling for `<table>`, `<button>`, `<select>`, `<input>`.
-- Glossy gradients, bevels, drop-shadow text, harsh pure-black (#000) or pure-white panels on white.
-- `alert()`/`confirm()` for feedback — use `kf.client.showInfo` / `showConfirm`.
-- One accent colour smeared across every element.
-
-## Components — quick recipes
-
-- **Buttons:** primary = solid `--accent`; secondary = `--surface` + border; tertiary = ghost.
-  Comfortable padding (`8px 14px`), `--r-sm`, hover darken ~6%, visible focus ring.
-- **Inputs:** label above, `1px var(--border)`, focus → accent border + soft ring; clear error text.
-- **Cards:** `--surface`, `--r-md`, `--shadow-sm`, `--s-6` padding; hover lift only if clickable.
-- **Lists/tables:** roomy rows (~48px), subtle row hover, sticky header, right-align numbers;
-  prefer a card list on mobile.
-- **Empty state:** icon/illustration + one-line explanation + a primary CTA. Never a blank screen.
-- **Page header:** title (`--fs-2xl`, weight 700) + short subtitle + primary action on the right.
+Match navigation to scope: 1–2 areas need no sidebar (just a header); 3+ areas warrant
+the shell's sidebar or top tabs. Don't add chrome you don't need.
 
 ## Polish checklist (before you call it done)
 
-- [ ] Looks nothing like the Acme CRM demo.
+- [ ] Looks nothing like the demo dashboard.
+- [ ] Built on shadcn/ui primitives (+ custom components where the domain needs them).
+- [ ] Zero hardcoded colours — semantic tokens only; works in light **and** dark.
 - [ ] Loading + empty + error states for every data view.
-- [ ] One accent colour, used sparingly; the rest neutral.
-- [ ] Consistent spacing (the `--s-*` scale) and radius.
-- [ ] Keyboard focus is visible; clickable things are real `<button>`/`<a>`.
+- [ ] `primary` used sparingly; the rest neutral.
+- [ ] Keyboard focus visible; clickable things are real `<button>` / `<a>` (or shadcn).
 - [ ] Reads well on a narrow width.
