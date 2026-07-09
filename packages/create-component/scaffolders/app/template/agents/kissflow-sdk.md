@@ -123,6 +123,31 @@ const result = await dt.evaluate({ region: "US", tier: "gold" });
 
 ---
 
+## Forms — create/edit a record (the `Form` component)
+
+To create or edit a **record** of a data model, don't hand-build inputs — use the bundled
+**`Form`** component (`src/components/form`), driven by the `useForm` hook. It reads the model's
+real Kissflow form configuration and renders every field type (text/number/currency/date/select/
+user/lookup/attachment/signature/… + child tables) with the SDK's own validation.
+
+```jsx
+import { Form } from "@/components/form";
+// in a Dialog/Sheet, or a dedicated form page:
+<Form flowType="dataform" flowId="EmpMaster" instanceId={id} />   // omit instanceId → new record
+```
+
+Under the hood (`src/hooks/useForm.js`) it uses the SDK **form** API:
+`kf.app.getDataform|getBoard|getProcess(flowId).initForm(instanceId)` →
+`getFormConfiguration()` (section/field/child-table layout), `updateField(id, value)`
+(auto-validated), `getValidationErrors()`, `getFieldOptions(id)`, `getTable(id)` (child-table
+add/delete/update rows), `toJSON()` (current values). The SDK auto-persists; `useForm().save()`
+just re-validates + clears the dirty flag. Field rendering is extensible via the registries
+`src/components/fields/` (standalone) and `src/components/tablefields/` (child-table cells);
+unknown `Type` falls back to text. Data only loads **inside Kissflow** (`window.kf`); locally the
+component shows the "use inside Kissflow" gate.
+
+---
+
 ## App & page state
 
 ```js

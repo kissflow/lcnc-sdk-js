@@ -1,6 +1,6 @@
 {
     "name": "@abdul-kissflow/create-kf-app",
-    "version": "0.1.7",
+    "version": "0.1.9",
     "description": "CLI that scaffolds Kissflow custom UI / custom component projects.",
     "main": "index.js",
     "bin": {

@@ -1,6 +1,6 @@
 {
     "name": "@abdul-kissflow/lowcode-client-sdk",
-    "version": "1.0.45",
+    "version": "1.0.46",
     "description": "JavaScript SDK for developing over the Kissflow lowcode platform",
     "types": "dist/index.d.ts",
     "files": [

@@ -9,8 +9,10 @@ Two rules above all:
    (`lib/kf-context.md`). A finance-approvals app and a field-inspection app should look
    like different products, not the demo with renamed labels.
 
-   **Keep `src/components/ui/*` (the shadcn/ui library) and `src/components/app-shell.jsx`** —
-   those are your building blocks, not demo content.
+   **Keep `src/components/ui/*` (the shadcn/ui primitives) as your library** — but
+   `src/components/app-shell.jsx` and `src/components/form/*` are **starting points to ADAPT,
+   not fixtures to keep.** Shipping either one essentially unchanged (recoloured at most) is the
+   single biggest reason generated apps feel generic — see "Adapt the shell + the record form".
 
 2. **Design for a 2025 bar.** Generated UIs tend to look dated. Hit the bar below.
 
@@ -93,6 +95,47 @@ Pick the structure from what the app *does* and its data — don't default to
 
 Match navigation to scope: 1–2 areas need no sidebar (just a header); 3+ areas warrant
 the shell's sidebar or top tabs. Don't add chrome you don't need.
+
+## Adapt the shell + the record form — MANDATORY
+
+Two scaffold pieces are working *starting points*, not finished UI, and the default failure is
+shipping them almost untouched. Don't:
+
+- **App shell (`src/components/app-shell.jsx`)** — do NOT merely recolour it and add nav items.
+  Pick the shell that fits THIS app + audience and rebuild it accordingly: a consumer / mobile
+  app usually wants a **bottom tab-bar**; an admin/ops tool a **sidebar**; a single-purpose tool
+  just a **top header** (or no chrome — see Structure above). Restructure the header (brand,
+  search, profile, notifications, role switch), the nav shape, and the content frame to the
+  domain. Two different apps must have visibly different shells — not the same sidebar in a
+  different colour.
+- **Record form (`src/components/form`)** — the dynamic Form renders every field generically;
+  that is a functional default, not a designed form. For each record you MUST adapt it to the
+  app + the flow: group and order fields into meaningful **sections**, de-emphasise or hide the
+  noise, choose the right chrome for the context (inline panel vs `Dialog` vs `Sheet` vs full
+  page), and style it with the app's tokens, spacing, and section headers so it reads as built
+  for this app. Never drop the raw default Form into a modal and call it done.
+
+## Data patterns — multi-flow reads & derived metrics
+
+Two patterns that keep multi-flow, report-derived apps robust:
+
+- **Scope error/empty state to the CORE flow(s) only.** When a page reads **multiple flows**, don't
+  aggregate one `error` across all of them and blank the whole page. A permission error on a
+  *secondary* lookup — a flow the current role may not be allowed to read (e.g. Category, Supplier) —
+  must **degrade to empty / a secondary-error notice, NOT blank the entire page**. Key the page-level
+  `ErrorState` on the core flow(s); surface secondary failures as an empty state or an inline
+  `secondaryError`. (A role without Category/Supplier access should still see the dashboard, not a
+  blanked screen.)
+
+- **Derive computed values in ONE shared helper — but prefer platform formulas where they fit.**
+  Kissflow **does persist** process-level computed fields and child-table column formulas through
+  publish (the old "formulas strip on publish" belief was wrong) — so a clean *per-record* formula
+  (a line total, a signed quantity) is best modelled as a **platform computed field**: single source,
+  no UI math. Reach for client-side derivation only for values that genuinely aren't on the record —
+  **cross-flow rollups** (on-hand across all movements), **report-derived** aggregates, low-stock /
+  avg-consumption. For those, put every derivation in one shared **`src/lib/metrics.js`** the whole app
+  imports (one canonical on-hand / valuation helper), not recomputed per component — one source of
+  truth, one place to fix. (PATTERN — create `metrics.js` per app; not pre-scaffolded.)
 
 ## Polish checklist (before you call it done)
 
