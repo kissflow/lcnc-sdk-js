@@ -8,6 +8,7 @@ import { PROJECT_TARGETS } from '../scaffolders/constants.js'
 import { FRAMEWORKS } from '../scaffolders/page/constants.js'
 import { formFieldScaffolder } from '../scaffolders/form-field/index.js'
 import { pageScaffolder } from '../scaffolders/page/index.js'
+import { formScaffolder } from '../scaffolders/form/index.js'
 import { isValidPackageName, makeDirectory } from '../scaffolders/utils.js'
 import { join } from 'path'
 
@@ -75,6 +76,11 @@ switch (projectTarget) {
             projectName,
             framework,
         })
+        break
+    }
+
+    case PROJECT_TARGETS.FORM: {
+        formScaffolder({ projectFolderPath, projectName })
         break
     }
 
