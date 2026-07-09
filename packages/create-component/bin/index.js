@@ -10,6 +10,7 @@ import { FRAMEWORKS } from '../scaffolders/page/constants.js'
 import { appScaffolder } from '../scaffolders/app/index.js'
 import { formFieldScaffolder } from '../scaffolders/form-field/index.js'
 import { pageScaffolder } from '../scaffolders/page/index.js'
+import { formScaffolder } from '../scaffolders/form/index.js'
 import { isValidPackageName, makeDirectory } from '../scaffolders/utils.js'
 import { join } from 'path'
 
@@ -114,6 +115,11 @@ switch (projectTarget) {
         break
     }
 
+    case PROJECT_TARGETS.FORM: {
+        formScaffolder({ projectFolderPath, projectName })
+        break
+    }
+
     case PROJECT_TARGETS.APP: {
         appScaffolder({
             projectFolderPath,
@@ -121,7 +127,7 @@ switch (projectTarget) {
         })
         break
     }
-
+    
     default:
         throw new Error('Invalid projectTarget... ' + projectTarget)
 }

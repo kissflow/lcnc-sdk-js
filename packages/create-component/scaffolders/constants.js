@@ -24,6 +24,7 @@ const prettierConfig = {
 const PROJECT_TARGETS = {
     FORM_FIELD: 'form-field',
     PAGE: 'page',
+    FORM: 'form',
     APP: 'app',
 }
 
