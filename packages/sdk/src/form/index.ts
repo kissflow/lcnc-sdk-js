@@ -67,7 +67,13 @@ export class Form extends BaseSDK {
         });
     }
     getTable(tableId: string) {
-        return new Table(this.storeId, this.flowId, this.instanceId, tableId);
+        return new Table(
+            this.storeId,
+            this.flowId,
+            this.instanceId,
+            tableId,
+            this.activityInstanceId
+        );
     }
 }
 
@@ -76,18 +82,21 @@ class Table extends BaseSDK {
     private flowId: string;
     private instanceId: string;
     private tableId: string;
+    private activityInstanceId?: string;
 
     constructor(
         storeId: string,
         flowId: string,
         instanceId: string,
-        tableId: string
+        tableId: string,
+        activityInstanceId?: string
     ) {
         super();
         this.tableId = tableId;
         this.storeId = storeId;
         this.flowId = flowId;
         this.instanceId = instanceId;
+        this.activityInstanceId = activityInstanceId;
     }
 
     // list of obj of rows
@@ -119,13 +128,14 @@ class Table extends BaseSDK {
             true, // has callBack
             (data) => {
                 return data.map(
-                    (row) =>
+                    (row: { id: string }) =>
                         new TableForm(
                             this.storeId,
                             this.flowId,
                             this.instanceId,
                             this.tableId,
-                            row.id
+                            row.id,
+                            this.activityInstanceId
                         )
                 );
             }
@@ -138,7 +148,8 @@ class Table extends BaseSDK {
             this.flowId,
             this.instanceId,
             this.tableId,
-            rowId
+            rowId,
+            this.activityInstanceId
         );
     }
 
@@ -185,6 +196,7 @@ export class TableForm extends BaseSDK {
     private instanceId: string;
     private tableId: string;
     private rowId: string;
+    private activityInstanceId?: string;
     type: string;
 
     constructor(
@@ -192,7 +204,8 @@ export class TableForm extends BaseSDK {
         flowId: string,
         instanceId: string,
         tableId: string,
-        rowId: string
+        rowId: string,
+        activityInstanceId?: string
     ) {
         super();
         this.storeId = storeId;
@@ -201,10 +214,16 @@ export class TableForm extends BaseSDK {
         this.type = "TabelForm";
         this.tableId = tableId;
         this.rowId = rowId;
+        this.activityInstanceId = activityInstanceId;
     }
 
     getParent() {
-        return new Form(this.storeId, this.flowId, this.instanceId);
+        return new Form(
+            this.storeId,
+            this.flowId,
+            this.instanceId,
+            this.activityInstanceId
+        );
     }
 
     toJSON() {

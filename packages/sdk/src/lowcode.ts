@@ -14,10 +14,10 @@ import {
 } from "./types/external";
 
 class LowcodeSDK extends BaseSDK {
-    context: Component | Form | TableForm | Page | Popup;
+    context!: Component | Form | TableForm | Page | Popup;
     client: Client;
     formatter: Formatter;
-    app: Application;
+    app!: Application;
     user: userObject;
     env: environmentObject;
     account: accountObject;
@@ -26,6 +26,11 @@ class LowcodeSDK extends BaseSDK {
 
     constructor(props: SDKContext) {
         super();
+        // This is the legacy widget-embed context (component placed on an
+        // existing platform-rendered form), not the initForm() flow — there's
+        // no separate store id here, so formInstanceId doubles as both
+        // storeId and instanceId. Contrast with Process/Board/Dataform.initForm(),
+        // which get a distinct storeId back from the platform.
         if (props.tableId && props.tableRowId) {
             this.context = new TableForm(
                 props.formInstanceId,
