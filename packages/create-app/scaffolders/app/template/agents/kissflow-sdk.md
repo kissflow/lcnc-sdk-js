@@ -89,8 +89,8 @@ await proc.discardItem({ instanceId });
 await proc.deleteItem({ instanceId });
 
 // admin (needs admin access)
-const adminItem = await proc.getAdminData({ instanceId: "id_123" });
-await proc.updateAdminData({ instanceId: "id_123", data: { LeaveType: "Sick" } });
+const adminItem = await proc.getAdminItem({ instanceId: "id_123" });
+await proc.updateAdminItem({ instanceId: "id_123", data: { LeaveType: "Sick" } });
 
 // metadata
 await proc.getFields();

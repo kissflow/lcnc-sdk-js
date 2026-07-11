@@ -124,11 +124,11 @@ export type ProcessDeleteItemOptions = {
     instanceId: string;
 };
 
-export type ProcessGetAdminDataOptions = {
+export type ProcessGetAdminItemOptions = {
     instanceId: string;
 };
 
-export type ProcessUpdateAdminDataOptions = {
+export type ProcessUpdateAdminItemOptions = {
     instanceId: string;
     data: object;
 };

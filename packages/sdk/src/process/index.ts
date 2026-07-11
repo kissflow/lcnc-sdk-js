@@ -11,8 +11,8 @@ import {
     ProcessCreateItemOptions,
     ProcessUpdateItemOptions,
     ProcessDeleteItemOptions,
-    ProcessGetAdminDataOptions,
-    ProcessUpdateAdminDataOptions,
+    ProcessGetAdminItemOptions,
+    ProcessUpdateAdminItemOptions,
     ProcessSubmitItemOptions,
     ProcessRejectItemOptions,
     ProcessWithdrawItemOptions,
@@ -218,12 +218,12 @@ export class Process extends BaseSDK {
      *
      * @example
      * const process = kf.app.getProcess("LeaveRequest");
-     * const item = await process.getAdminData({ instanceId: "item_123" });
+     * const item = await process.getAdminItem({ instanceId: "item_123" });
      */
-    getAdminData(options: ProcessGetAdminDataOptions): Promise<ProcessItem> {
+    getAdminItem(options: ProcessGetAdminItemOptions): Promise<ProcessItem> {
         const error = requireFieldAsync(options.instanceId, "instanceId");
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ADMIN_DATA, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ADMIN_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId
         });
@@ -236,17 +236,17 @@ export class Process extends BaseSDK {
      *
      * @example
      * const process = kf.app.getProcess("LeaveRequest");
-     * await process.updateAdminData({ instanceId: "item_123", data: { LeaveType: "Sick" } });
+     * await process.updateAdminItem({ instanceId: "item_123", data: { LeaveType: "Sick" } });
      */
-    updateAdminData(
-        options: ProcessUpdateAdminDataOptions
+    updateAdminItem(
+        options: ProcessUpdateAdminItemOptions
     ): Promise<ProcessItem> {
         const error = requireFieldsAsync([
             { value: options.instanceId, name: "instanceId" },
             { value: options.data, name: "data" }
         ]);
         if (error) return error;
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_UPDATE_ADMIN_DATA, {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_UPDATE_ADMIN_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId,
             data: options.data
