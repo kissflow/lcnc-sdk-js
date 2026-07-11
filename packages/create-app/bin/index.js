@@ -5,23 +5,17 @@ import * as fs from "fs";
 import chalk from "chalk";
 import { parseArgs } from "node:util";
 
-import { PROJECT_TARGETS } from "../scaffolders/constants.js";
-import { FRAMEWORKS } from "../scaffolders/page/constants.js";
-import { formFieldScaffolder } from "../scaffolders/form-field/index.js";
-import { pageScaffolder } from "../scaffolders/page/index.js";
-import { formScaffolder } from "../scaffolders/form/index.js";
+import { appScaffolder } from "../scaffolders/app/index.js";
 import { isValidPackageName, makeDirectory } from "../scaffolders/utils.js";
 import { join } from "path";
 
 // Non-interactive flags (so AI agents / CI can scaffold in one command):
-//   create-kf-component --target page --name my-page --yes
+//   create-kf-app --name my-app --yes
 // Any value not supplied as a flag falls back to an interactive prompt, unless
 // --yes is set (then a missing required value is an error instead of a prompt).
 const { values: flags } = parseArgs({
   options: {
     name: { type: "string" },
-    target: { type: "string" },
-    framework: { type: "string" },
     yes: { type: "boolean", short: "y" }
   },
   strict: false,
@@ -72,59 +66,15 @@ if (fs.existsSync(projectFolderPath)) {
   process.exit(1);
 }
 
-const projectTarget = await resolveValue(flags.target, "target", {
-  type: "list",
-  name: "projectTarget",
-  message: "Choose the project category: ",
-  choices: Object.values(PROJECT_TARGETS)
-});
-
-if (!Object.values(PROJECT_TARGETS).includes(projectTarget)) {
-  console.log(
-    chalk.red(
-      `Invalid --target '${projectTarget}'. Use one of: ${Object.values(
-        PROJECT_TARGETS
-      ).join(", ")}.`
-    )
-  );
-  process.exit(1);
-}
-
 makeDirectory(projectFolderPath);
 
-switch (projectTarget) {
-  case PROJECT_TARGETS.FORM_FIELD: {
-    formFieldScaffolder({ projectFolderPath, projectName, projectTarget });
-    break;
-  }
-
-  case PROJECT_TARGETS.PAGE: {
-    const framework = await resolveValue(flags.framework, "framework", {
-      type: "list",
-      name: "framework",
-      message: "Choose your preferred framework: ",
-      choices: Object.values(FRAMEWORKS)
-    });
-
-    pageScaffolder({
-      projectFolderPath,
-      projectName,
-      framework
-    });
-    break;
-  }
-
-  case PROJECT_TARGETS.FORM: {
-    formScaffolder({ projectFolderPath, projectName });
-    break;
-  }
-
-  default:
-    throw new Error("Invalid projectTarget... " + projectTarget);
-}
+await appScaffolder({
+  projectFolderPath,
+  projectName
+});
 
 console.log(
   chalk.green(
-    `\n✓ Created '${projectName}' (${projectTarget}). Next: cd ${projectName} && npm install`
+    `\n✓ Created '${projectName}'. Next: cd ${projectName} && npm install`
   )
 );

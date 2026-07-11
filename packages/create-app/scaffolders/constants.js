@@ -5,7 +5,6 @@ const renames = {
   "_CLAUDE.md": "CLAUDE.md",
   "_env.example": ".env.example",
   "_settings.json": "settings.json",
-  "form-field.config.ejs": "form-field.config.js",
   _npmrc: ".npmrc",
   "_eslintrc.cjs": ".eslintrc.cjs",
   _gitkeep: ".gitkeep",
@@ -21,12 +20,6 @@ const prettierConfig = {
   singleQuote: false
 };
 
-const PROJECT_TARGETS = {
-  FORM_FIELD: "form-field",
-  PAGE: "page",
-  FORM: "form"
-};
-
 const BINARY_FILE_EXTENSIONS = ["png", "jpg", "jpeg"];
 
-export { renames, prettierConfig, PROJECT_TARGETS, BINARY_FILE_EXTENSIONS };
+export { renames, prettierConfig, BINARY_FILE_EXTENSIONS };
