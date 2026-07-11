@@ -14,5 +14,5 @@ applyTheme(getTheme());
 
 // AppShell is the persistent root layout (like Next's app/layout.tsx).
 createRoot(document.getElementById("root")).render(
-    <KfApp routes={routes} layout={AppShell} />
+  <KfApp routes={routes} layout={AppShell} />
 );

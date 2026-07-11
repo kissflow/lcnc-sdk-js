@@ -23,10 +23,14 @@ export default defineConfig({
       writeBundle() {
         writeFileSync(
           path.resolve(__dirname, "dist/manifest.json"),
-          JSON.stringify({ Category: "Application", Framework: "React" }, null, 2),
+          JSON.stringify(
+            { Category: "Application", Framework: "React" },
+            null,
+            2
+          )
         );
-      },
-    },
+      }
+    }
   ],
   // Relative asset paths so the built bundle works from a zip or any mount point.
   base: "",
@@ -36,8 +40,8 @@ export default defineConfig({
   resolve: {
     dedupe: ["react", "react-dom", "react-router-dom"],
     alias: {
-      "@": path.resolve(__dirname, "src"),
-    },
+      "@": path.resolve(__dirname, "src")
+    }
   },
   build: { target: "es2022" },
   server: {
@@ -46,7 +50,7 @@ export default defineConfig({
     // HTTPS so the Kissflow (https) shell can iframe this without mixed-content blocks.
     https: {
       cert: path.resolve("./cert/localhost.crt"),
-      key: path.resolve("./cert/localhost.key"),
-    },
-  },
+      key: path.resolve("./cert/localhost.key")
+    }
+  }
 });

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef } from "react";
 
 /**
  * Parses the raw getFormConfiguration() response into a clean schema object.
@@ -60,8 +60,8 @@ export function useForm(flowType, flowId, instanceId) {
   const originalDataRef = useRef({});
   const formInstanceRef = useRef(null);
   const flowInstanceRef = useRef(null);
-  const formDataRef = useRef({});   // always-fresh copy of formData for getTable rows getter
-  const tableOpsRef = useRef({});   // memoized table op objects per tableId
+  const formDataRef = useRef({}); // always-fresh copy of formData for getTable rows getter
+  const tableOpsRef = useRef({}); // memoized table op objects per tableId
 
   // Keep formDataRef in sync with formData state
   useEffect(() => {
@@ -70,13 +70,18 @@ export function useForm(flowType, flowId, instanceId) {
 
   // Get flow instance (dataform / board / process) — for flow-level ops like getFieldOptions
   const getFlowInstance = useCallback(async () => {
-    if (!window.kf) throw new Error('SDK not initialized. Make sure window.kf is available.');
+    if (!window.kf)
+      throw new Error("SDK not initialized. Make sure window.kf is available.");
     if (flowInstanceRef.current) return flowInstanceRef.current;
-    if (!flowType || !flowId) throw new Error('getFlowInstance requires both flowType and flowId');
+    if (!flowType || !flowId)
+      throw new Error("getFlowInstance requires both flowType and flowId");
 
-    if (flowType === 'dataform')     flowInstanceRef.current = window.kf.app.getDataform(flowId);
-    else if (flowType === 'board')   flowInstanceRef.current = window.kf.app.getBoard(flowId);
-    else if (flowType === 'process') flowInstanceRef.current = window.kf.app.getProcess(flowId);
+    if (flowType === "dataform")
+      flowInstanceRef.current = window.kf.app.getDataform(flowId);
+    else if (flowType === "board")
+      flowInstanceRef.current = window.kf.app.getBoard(flowId);
+    else if (flowType === "process")
+      flowInstanceRef.current = window.kf.app.getProcess(flowId);
     else throw new Error(`Unknown flow type: ${flowType}`);
 
     return flowInstanceRef.current;
@@ -84,7 +89,8 @@ export function useForm(flowType, flowId, instanceId) {
 
   // Get form instance — initialized via initForm() on the flow instance
   const getFormInstance = useCallback(async () => {
-    if (!window.kf) throw new Error('SDK not initialized. Make sure window.kf is available.');
+    if (!window.kf)
+      throw new Error("SDK not initialized. Make sure window.kf is available.");
     if (formInstanceRef.current) return formInstanceRef.current;
 
     if (flowType && flowId) {
@@ -101,10 +107,14 @@ export function useForm(flowType, flowId, instanceId) {
         setIsNewRecord(false);
         return formInstanceRef.current;
       }
-      throw new Error('Form context not available. Ensure component is placed on a form page.');
+      throw new Error(
+        "Form context not available. Ensure component is placed on a form page."
+      );
     }
 
-    throw new Error('useForm requires (flowType, flowId) or a page form context');
+    throw new Error(
+      "useForm requires (flowType, flowId) or a page form context"
+    );
   }, [flowType, flowId, instanceId, getFlowInstance]);
 
   // Initialize form: load data + config in parallel
@@ -119,7 +129,7 @@ export function useForm(flowType, flowId, instanceId) {
 
         const [data, rawConfig] = await Promise.all([
           formInstance.toJSON(),
-          formInstance.getFormConfiguration(),
+          formInstance.getFormConfiguration()
         ]);
 
         setFormData(data || {});
@@ -127,8 +137,8 @@ export function useForm(flowType, flowId, instanceId) {
         originalDataRef.current = JSON.parse(JSON.stringify(data || {}));
         setIsDirty(false);
       } catch (err) {
-        setError(err.message || 'Failed to load form');
-        console.error('Form initialization error:', err);
+        setError(err.message || "Failed to load form");
+        console.error("Form initialization error:", err);
       } finally {
         setLoading(false);
       }
@@ -149,14 +159,15 @@ export function useForm(flowType, flowId, instanceId) {
         const currentData = await formInstance.toJSON();
         if (currentData[fieldId] === value) return true;
 
-        const { formData: updatedData, error: fieldError } = await formInstance.updateField({ [fieldId]: value });
+        const { formData: updatedData, error: fieldError } =
+          await formInstance.updateField({ [fieldId]: value });
         setFormData(updatedData || {});
         setErrors(fieldError || {});
         setIsDirty(true);
         return true;
       } catch (err) {
-        setError(err.message || 'Failed to update field');
-        console.error('Field update error:', err);
+        setError(err.message || "Failed to update field");
+        console.error("Field update error:", err);
         throw err;
       }
     },
@@ -188,8 +199,8 @@ export function useForm(flowType, flowId, instanceId) {
         setIsDirty(true);
         return true;
       } catch (err) {
-        setError(err.message || 'Failed to update fields');
-        console.error('Fields update error:', err);
+        setError(err.message || "Failed to update fields");
+        console.error("Fields update error:", err);
         throw err;
       }
     },
@@ -203,8 +214,8 @@ export function useForm(flowType, flowId, instanceId) {
         const formInstance = await getFormInstance();
         return formInstance.getField(fieldId);
       } catch (err) {
-        setError(err.message || 'Failed to get field');
-        console.error('Get field error:', err);
+        setError(err.message || "Failed to get field");
+        console.error("Get field error:", err);
         throw err;
       }
     },
@@ -217,10 +228,13 @@ export function useForm(flowType, flowId, instanceId) {
       try {
         const flowInstance = await getFlowInstance();
         const formInstance = await getFormInstance();
-        return flowInstance.getFieldOptions({ fieldId, instanceId: formInstance.instanceId });
+        return flowInstance.getFieldOptions({
+          fieldId,
+          instanceId: formInstance.instanceId
+        });
       } catch (err) {
-        setError(err.message || 'Failed to get field options');
-        console.error('Get field options error:', err);
+        setError(err.message || "Failed to get field options");
+        console.error("Get field options error:", err);
         throw err;
       }
     },
@@ -244,7 +258,7 @@ export function useForm(flowType, flowId, instanceId) {
       setErrors(validationErrors || {});
 
       if (Object.keys(validationErrors || {}).length > 0) {
-        setError('Form has validation errors. Please fix them before saving.');
+        setError("Form has validation errors. Please fix them before saving.");
         return false;
       }
 
@@ -252,8 +266,8 @@ export function useForm(flowType, flowId, instanceId) {
       setIsDirty(false);
       return true;
     } catch (err) {
-      setError(err.message || 'Failed to save form');
-      console.error('Save error:', err);
+      setError(err.message || "Failed to save form");
+      console.error("Save error:", err);
       throw err;
     } finally {
       setLoading(false);
@@ -275,7 +289,8 @@ export function useForm(flowType, flowId, instanceId) {
     (tableId) => {
       if (tableOpsRef.current[tableId]) return tableOpsRef.current[tableId];
 
-      const getSDKTable = async () => (await getFormInstance()).getTable(tableId);
+      const getSDKTable = async () =>
+        (await getFormInstance()).getTable(tableId);
 
       const refresh = async () => {
         const data = await (await getFormInstance()).toJSON();
@@ -303,7 +318,11 @@ export function useForm(flowType, flowId, instanceId) {
           await refresh();
         },
         updateRow: async (rowId, fieldId, value) => {
-          await (await getSDKTable()).getRow(rowId).updateField({ [fieldId]: value });
+          await (
+            await getSDKTable()
+          )
+            .getRow(rowId)
+            .updateField({ [fieldId]: value });
           await refresh();
         },
         getRowField: async (rowId, fieldId) => {
@@ -311,7 +330,7 @@ export function useForm(flowType, flowId, instanceId) {
         },
         getSelectedRows: async () => {
           return (await getSDKTable()).getSelectedRows();
-        },
+        }
       };
 
       return tableOpsRef.current[tableId];
@@ -339,6 +358,6 @@ export function useForm(flowType, flowId, instanceId) {
     reset,
 
     // Table ops
-    getTable,
+    getTable
   };
 }

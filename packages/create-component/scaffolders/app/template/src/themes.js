@@ -11,7 +11,7 @@ export const THEMES = [
   { id: "rose", label: "Rose", swatch: "oklch(0.586 0.253 17.585)" },
   { id: "amber", label: "Amber", swatch: "oklch(0.769 0.188 70.08)" },
   { id: "orange", label: "Orange", swatch: "oklch(0.646 0.222 41.116)" },
-  { id: "neutral", label: "Neutral", swatch: "oklch(0.205 0 0)" },
+  { id: "neutral", label: "Neutral", swatch: "oklch(0.205 0 0)" }
 ];
 
 export const DEFAULT_THEME = "violet";

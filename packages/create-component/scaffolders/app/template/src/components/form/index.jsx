@@ -1,110 +1,119 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useForm } from '../../hooks/useForm.js'
-import { FormLayout } from './layout.jsx'
+import { useCallback, useEffect, useState } from "react";
+import { useForm } from "../../hooks/useForm.js";
+import { FormHeader } from "./FormHeader.jsx";
+import { FormBody } from "./FormBody.jsx";
+import { FormAction } from "./FormAction.jsx";
 
 export function Form({
+  flowType,
+  flowId,
+  viewId,
+  instanceId,
+  activityInstanceId,
+  title
+}) {
+  const {
+    formData,
+    config,
+    errors,
+    loading,
+    error,
+    isSaving,
+    isNewRecord,
+    formActions,
+    reassignFromCandidates,
+    updateField,
+    runAction,
+    getFieldOptions,
+    parseAttachment,
+    getTable,
+    getReassignees
+  } = useForm({
     flowType,
     flowId,
     viewId,
     instanceId,
-    activityInstanceId,
-    title,
-}) {
-    const [submitSuccess, setSubmitSuccess] = useState(false)
+    activityInstanceId
+  });
 
-    const {
-        formData,
-        config,
-        errors,
-        updateField,
-        save,
-        reset,
-        loading,
-        error,
-        isDirty,
-        isNewRecord,
-        getFieldOptions,
-        parseAttachment,
-        getTable,
-    } = useForm({
-        flowType,
-        flowId,
-        viewId,
-        instanceId,
-        activityInstanceId,
-    })
+  const [localState, setLocalState] = useState(formData);
 
-    const [localState, setLocalState] = useState(formData)
+  useEffect(() => {
+    setLocalState(formData);
+  }, [formData]);
 
-    useEffect(() => {
-        setLocalState(formData)
-    }, [formData])
+  const handleLocalChange = useCallback((fieldId, value) => {
+    setLocalState((prev) => ({ ...prev, [fieldId]: value }));
+  }, []);
 
-    const handleLocalChange = useCallback((fieldId, value) => {
-        setLocalState((prev) => ({ ...prev, [fieldId]: value }))
-    }, [])
+  const handleFieldBlur = useCallback(
+    async (fieldId, value) => {
+      try {
+        await updateField(fieldId, value);
+      } catch (err) {
+        console.error("Field update failed:", err);
+      }
+    },
+    [updateField]
+  );
 
-    const handleFieldBlur = useCallback(
-        async (fieldId, value) => {
-            try {
-                await updateField(fieldId, value)
-                setSubmitSuccess(false)
-            } catch (err) {
-                console.error('Field update failed:', err)
-            }
-        },
-        [updateField]
-    )
+  // Run any lifecycle action (Submit/Discard for dataform/board, or the
+  // full workflow-action set for process) through the hook's single
+  // dispatcher. The embedding page is responsible for navigating away from
+  // a completed/withdrawn item.
+  const handleAction = useCallback(
+    async (action, extra) => {
+      try {
+        return await runAction(action, extra);
+      } catch (err) {
+        console.error(`Action "${action}" failed:`, err);
+        return false;
+      }
+    },
+    [runAction]
+  );
 
-    const handleSave = useCallback(async () => {
-        setSubmitSuccess(false)
-        try {
-            const success = await save()
-            if (success) setSubmitSuccess(true)
-            return success
-        } catch (err) {
-            console.error('Save failed:', err)
-            return false
-        }
-    }, [save])
+  // formPermission is the outer VBAC gate (whole flow/view access) — it
+  // overrides every field's own Permission when ReadOnly.
+  const isFormReadOnly = config.formPermission === "View";
 
-    const handleReset = useCallback(() => {
-        reset()
-        setSubmitSuccess(false)
-    }, [reset])
+  const visibleSections = Array.isArray(config.sections)
+    ? config.sections.filter((s) => !s.IsHidden)
+    : [];
 
-    // formPermission is the outer VBAC gate (whole flow/view access) — it
-    // overrides every field's own Permission when ReadOnly.
-    const isFormReadOnly = config.formPermission === 'View'
+  return (
+    <div className="min-h-screen bg-(--color-background) font-sans">
+      <FormHeader
+        title={title}
+        isNewRecord={isNewRecord}
+        isSaving={isSaving}
+        isFormReadOnly={isFormReadOnly}
+      />
 
-    const visibleSections = Array.isArray(config.sections)
-        ? config.sections.filter((s) => !s.IsHidden)
-        : []
+      <FormBody
+        sections={visibleSections}
+        localState={localState}
+        errors={errors}
+        loading={loading}
+        error={error}
+        isFormReadOnly={isFormReadOnly}
+        onFieldChange={handleLocalChange}
+        onFieldBlur={handleFieldBlur}
+        getFieldOptions={getFieldOptions}
+        parseAttachment={parseAttachment}
+        getTable={getTable}
+      />
 
-    return (
-        <>
-            <FormLayout
-                title={title}
-                flowType={flowType}
-                sections={visibleSections}
-                formData={formData}
-                config={config}
-                localState={localState}
-                errors={errors}
-                loading={loading}
-                error={error}
-                isDirty={isDirty}
-                isNewRecord={isNewRecord}
-                isFormReadOnly={isFormReadOnly}
-                submitSuccess={submitSuccess}
-                onFieldChange={handleLocalChange}
-                onFieldBlur={handleFieldBlur}
-                onSave={handleSave}
-                onReset={handleReset}
-                getFieldOptions={getFieldOptions}
-                parseAttachment={parseAttachment}
-                getTable={getTable}
-            />
-        </>
-    )
+      <FormAction
+        flowType={flowType}
+        formActions={formActions}
+        reassignFromCandidates={reassignFromCandidates}
+        onAction={handleAction}
+        getReassignees={getReassignees}
+        loading={loading}
+        isNewRecord={isNewRecord}
+        isFormReadOnly={isFormReadOnly}
+      />
+    </div>
+  );
 }

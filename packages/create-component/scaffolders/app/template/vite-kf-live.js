@@ -23,7 +23,10 @@ function loadDotEnv(root) {
     if (eq === -1) continue;
     const k = line.slice(0, eq).trim();
     let v = line.slice(eq + 1).trim();
-    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+    if (
+      (v.startsWith('"') && v.endsWith('"')) ||
+      (v.startsWith("'") && v.endsWith("'"))
+    ) {
       v = v.slice(1, -1);
     }
     out[k] = v;
@@ -41,14 +44,20 @@ export function kfLiveProxy() {
 
     config(_, { root } = {}) {
       env = loadDotEnv(root || process.cwd());
-      live = Boolean(env.KF_DOMAIN && env.KF_ACCESS_KEY_ID && env.KF_ACCESS_KEY_SECRET);
+      live = Boolean(
+        env.KF_DOMAIN && env.KF_ACCESS_KEY_ID && env.KF_ACCESS_KEY_SECRET
+      );
       return {
-        define: { "import.meta.env.VITE_KF_LIVE": JSON.stringify(live ? "1" : "") },
+        define: {
+          "import.meta.env.VITE_KF_LIVE": JSON.stringify(live ? "1" : "")
+        }
       };
     },
 
     configResolved() {
-      const where = live ? `live → ${env.KF_DOMAIN} (app ${env.KF_APP_ID})` : "off (no .env keys)";
+      const where = live
+        ? `live → ${env.KF_DOMAIN} (app ${env.KF_APP_ID})`
+        : "off (no .env keys)";
       console.info(`\n  ⬡ kf-live-proxy: ${where}\n`);
     },
 
@@ -58,7 +67,13 @@ export function kfLiveProxy() {
         // connect strips the "/__kf" mount, so req.url is the remainder.
         if (req.url === "/__status") {
           res.setHeader("Content-Type", "application/json");
-          res.end(JSON.stringify({ live: true, domain: env.KF_DOMAIN, appId: env.KF_APP_ID }));
+          res.end(
+            JSON.stringify({
+              live: true,
+              domain: env.KF_DOMAIN,
+              appId: env.KF_APP_ID
+            })
+          );
           return;
         }
         const target = `https://${env.KF_DOMAIN}${req.url}`;
@@ -75,20 +90,28 @@ export function kfLiveProxy() {
             headers: {
               "Content-Type": "application/json",
               "X-Access-Key-Id": env.KF_ACCESS_KEY_ID,
-              "X-Access-Key-Secret": env.KF_ACCESS_KEY_SECRET,
+              "X-Access-Key-Secret": env.KF_ACCESS_KEY_SECRET
             },
-            body,
+            body
           });
           const text = await upstream.text();
           res.statusCode = upstream.status;
-          res.setHeader("Content-Type", upstream.headers.get("content-type") || "application/json");
+          res.setHeader(
+            "Content-Type",
+            upstream.headers.get("content-type") || "application/json"
+          );
           res.end(text);
         } catch (err) {
           res.statusCode = 502;
           res.setHeader("Content-Type", "application/json");
-          res.end(JSON.stringify({ error: "kf-live-proxy upstream error", message: String(err?.message ?? err) }));
+          res.end(
+            JSON.stringify({
+              error: "kf-live-proxy upstream error",
+              message: String(err?.message ?? err)
+            })
+          );
         }
       });
-    },
+    }
   };
 }

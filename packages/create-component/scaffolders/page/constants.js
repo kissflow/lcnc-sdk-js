@@ -1,6 +1,6 @@
 const FRAMEWORKS = {
-    VANNILA: 'HTML',
-    REACT: 'React',
-}
+  VANNILA: "HTML",
+  REACT: "React"
+};
 
-export { FRAMEWORKS }
+export { FRAMEWORKS };
