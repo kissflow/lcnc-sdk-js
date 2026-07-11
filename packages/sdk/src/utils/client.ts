@@ -1,5 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import type { FilePickerOptions, UploadableFile } from "../types/internal";
+import { FilePickerOptions, UploadableFile } from "../types/internal";
 
 export class Client extends BaseSDK {
     /**
