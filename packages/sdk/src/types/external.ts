@@ -107,6 +107,7 @@ export type ProcessQueryResponse = QueryResponse;
 
 export type ProcessGetItemOptions = {
     instanceId: string;
+    activityInstanceId: string;
 };
 
 export type ProcessCreateItemOptions = {
@@ -121,6 +122,15 @@ export type ProcessUpdateItemOptions = {
 
 export type ProcessDeleteItemOptions = {
     instanceId: string;
+};
+
+export type ProcessGetAdminDataOptions = {
+    instanceId: string;
+};
+
+export type ProcessUpdateAdminDataOptions = {
+    instanceId: string;
+    data: object;
 };
 
 export type ProcessSubmitItemOptions = {

@@ -74,7 +74,7 @@ await proc.getMyItems({ status: "all" });          // "all" | "draft" | "inprogr
 await proc.getMyTasksItems({ activityId: "" });    // tasks assigned to me
 await proc.getParticipatedItems();                 // items I acted on
 await proc.getAdminItems();                        // all items (needs admin)
-const item = await proc.getItem({ instanceId: "id_123" });
+const item = await proc.getItem({ instanceId: "id_123", activityInstanceId: "act_456" });
 
 // lifecycle
 const started = await proc.createItem({ data: { LeaveType: "Annual" } });
@@ -87,6 +87,10 @@ await proc.reassignItem({ instanceId, activityInstanceId, reassignTo: { _id }, c
 await proc.restartItem({ instanceId, activityInstanceId });
 await proc.discardItem({ instanceId });
 await proc.deleteItem({ instanceId });
+
+// admin (needs admin access)
+const adminItem = await proc.getAdminData({ instanceId: "id_123" });
+await proc.updateAdminData({ instanceId: "id_123", data: { LeaveType: "Sick" } });
 
 // metadata
 await proc.getFields();

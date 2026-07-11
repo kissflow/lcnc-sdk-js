@@ -11,6 +11,8 @@ import {
     ProcessCreateItemOptions,
     ProcessUpdateItemOptions,
     ProcessDeleteItemOptions,
+    ProcessGetAdminDataOptions,
+    ProcessUpdateAdminDataOptions,
     ProcessSubmitItemOptions,
     ProcessRejectItemOptions,
     ProcessWithdrawItemOptions,
@@ -132,15 +134,19 @@ export class Process extends BaseSDK {
 
     /**
      * Get a single process instance by ID
-     * @param options - instanceId (required)
+     * @param options - instanceId, activityInstanceId (both required)
      * @returns Promise containing the instance data
      */
     getItem(options: ProcessGetItemOptions): Promise<ProcessItem> {
-        const error = requireFieldAsync(options.instanceId, "instanceId");
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" }
+        ]);
         if (error) return error;
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ITEM, {
             flowId: this._id,
-            instanceId: options.instanceId
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId
         });
     }
 
@@ -202,6 +208,48 @@ export class Process extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_DELETE_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId
+        });
+    }
+
+    /**
+     * Get a single process instance as admin (requires admin access)
+     * @param options - instanceId (required)
+     * @returns Promise containing the instance data
+     *
+     * @example
+     * const process = kf.app.getProcess("LeaveRequest");
+     * const item = await process.getAdminData({ instanceId: "item_123" });
+     */
+    getAdminData(options: ProcessGetAdminDataOptions): Promise<ProcessItem> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ADMIN_DATA, {
+            flowId: this._id,
+            instanceId: options.instanceId
+        });
+    }
+
+    /**
+     * Update a process instance as admin (requires admin access)
+     * @param options - instanceId, data (required)
+     * @returns Promise containing the updated item
+     *
+     * @example
+     * const process = kf.app.getProcess("LeaveRequest");
+     * await process.updateAdminData({ instanceId: "item_123", data: { LeaveType: "Sick" } });
+     */
+    updateAdminData(
+        options: ProcessUpdateAdminDataOptions
+    ): Promise<ProcessItem> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.data, name: "data" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_UPDATE_ADMIN_DATA, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            data: options.data
         });
     }
 
