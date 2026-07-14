@@ -20,7 +20,7 @@ importers:
         specifier: ^0.32.5
         version: 0.32.6
 
-  packages/app-ui:
+  packages/app-core:
     dependencies:
       '@abdul-kissflow/lowcode-client-sdk':
         specifier: workspace:*

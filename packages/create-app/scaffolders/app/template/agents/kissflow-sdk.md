@@ -1,13 +1,13 @@
 # Kissflow SDK reference (for building app UI pages)
 
 How to read and write Kissflow data from a page in this app. The SDK is the
-`@abdul-kissflow/lowcode-client-sdk` instance returned by `useKf()` from `@abdul-kissflow/app-ui`.
+`@abdul-kissflow/lowcode-client-sdk` instance returned by `useKf()` from `@abdul-kissflow/app-core`.
 
 > **Always get flow/model ids and field ids from [`../lib/kf-context.md`](../lib/kf-context.md)**
 > (run `npm run kf:sync` to generate it). Don't invent ids.
 
 ```jsx
-import { useKf } from "@abdul-kissflow/app-ui";
+import { useKf } from "@abdul-kissflow/app-core";
 
 function Example() {
     const kf = useKf(); // ready-to-use SDK instance
@@ -191,7 +191,7 @@ await kf.app.page.openPopup("PopupId", { param: "x" });
 ```
 
 > For navigation **within your own UI**, use `KfLink` / `useKfRouter()` from
-> `@abdul-kissflow/app-ui` — not `openPage`. See [`../CLAUDE.md`](../CLAUDE.md).
+> `@abdul-kissflow/app-core` — not `openPage`. See [`../CLAUDE.md`](../CLAUDE.md).
 
 ---
 

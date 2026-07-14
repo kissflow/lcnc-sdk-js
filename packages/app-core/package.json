@@ -1,5 +1,5 @@
 {
-    "name": "@abdul-kissflow/app-ui",
+    "name": "@abdul-kissflow/app-core",
     "version": "0.3.0",
     "description": "Kissflow App UI framework runtime: SDK bootstrap, file-based routing host, and route sync with the Kissflow parent URL.",
     "type": "module",

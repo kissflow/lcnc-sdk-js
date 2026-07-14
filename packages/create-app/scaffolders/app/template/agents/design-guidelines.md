@@ -13,7 +13,7 @@ Two rules above all:
    a recoloured sidebar.
 
    **The only things you keep as-is:** the shadcn/ui primitives in `src/components/ui/*` (your
-   component library) and the app-ui framework wiring (`KfApp` / `layout`, `KfLink`, `useKfRouter`,
+   component library) and the app-core framework wiring (`KfApp` / `layout`, `KfLink`, `useKfRouter`,
    the theme registry, the dynamic `Form` engine). The shell, the navigation, the pages, and how a
    record form is presented are **all yours to design** — see "Build the app's shell + record form".
 
