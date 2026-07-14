@@ -1,0 +1,153 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Theme-preset registry.
+
+   Each preset overrides only the ACCENT tokens (primary / ring / sidebar accent
+   + a cohesive 5-step chart ramp) on top of the neutral base in index.css. The
+   base color (background, card, border, muted…) stays neutral — swapping a preset
+   only re-tints the accent, exactly like the shadcn "create" customizer.
+
+   Apply: set <html data-theme="violet"> (no attribute = neutral, the index.css
+   default). Light = [data-theme=x]; dark = [data-theme=x].dark. Loaded AFTER
+   index.css (see main.jsx) so these win by source order.
+
+   Add a preset: copy a block, pick an oklch HUE, keep the chart ramp formula.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Violet (default) ─────────────────────────────────────────────────────── */
+[data-theme="violet"] {
+  --primary: oklch(0.541 0.281 293.009);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: var(--primary);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-ring: var(--primary);
+  --chart-1: oklch(0.55 0.22 293);
+  --chart-2: oklch(0.62 0.19 293);
+  --chart-3: oklch(0.69 0.15 293);
+  --chart-4: oklch(0.76 0.12 293);
+  --chart-5: oklch(0.83 0.08 293);
+}
+[data-theme="violet"].dark {
+  --primary: oklch(0.606 0.25 292.717);
+  --chart-1: oklch(0.62 0.2 293);
+  --chart-2: oklch(0.68 0.17 293);
+  --chart-3: oklch(0.74 0.14 293);
+  --chart-4: oklch(0.8 0.1 293);
+  --chart-5: oklch(0.86 0.07 293);
+}
+
+/* ── Blue ─────────────────────────────────────────────────────────────────── */
+[data-theme="blue"] {
+  --primary: oklch(0.546 0.245 262.881);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: var(--primary);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-ring: var(--primary);
+  --chart-1: oklch(0.55 0.22 262);
+  --chart-2: oklch(0.62 0.19 262);
+  --chart-3: oklch(0.69 0.15 262);
+  --chart-4: oklch(0.76 0.12 262);
+  --chart-5: oklch(0.83 0.08 262);
+}
+[data-theme="blue"].dark {
+  --primary: oklch(0.623 0.214 259.815);
+  --chart-1: oklch(0.62 0.2 262);
+  --chart-2: oklch(0.68 0.17 262);
+  --chart-3: oklch(0.74 0.14 262);
+  --chart-4: oklch(0.8 0.1 262);
+  --chart-5: oklch(0.86 0.07 262);
+}
+
+/* ── Emerald ──────────────────────────────────────────────────────────────── */
+[data-theme="emerald"] {
+  --primary: oklch(0.596 0.145 163.225);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: var(--primary);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-ring: var(--primary);
+  --chart-1: oklch(0.55 0.13 163);
+  --chart-2: oklch(0.62 0.13 163);
+  --chart-3: oklch(0.69 0.12 163);
+  --chart-4: oklch(0.76 0.1 163);
+  --chart-5: oklch(0.83 0.08 163);
+}
+[data-theme="emerald"].dark {
+  --primary: oklch(0.696 0.17 162.48);
+  --chart-1: oklch(0.62 0.15 163);
+  --chart-2: oklch(0.68 0.14 163);
+  --chart-3: oklch(0.74 0.12 163);
+  --chart-4: oklch(0.8 0.1 163);
+  --chart-5: oklch(0.86 0.07 163);
+}
+
+/* ── Rose ─────────────────────────────────────────────────────────────────── */
+[data-theme="rose"] {
+  --primary: oklch(0.586 0.253 17.585);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: var(--primary);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-ring: var(--primary);
+  --chart-1: oklch(0.55 0.22 17);
+  --chart-2: oklch(0.62 0.2 17);
+  --chart-3: oklch(0.69 0.16 17);
+  --chart-4: oklch(0.76 0.12 17);
+  --chart-5: oklch(0.83 0.08 17);
+}
+[data-theme="rose"].dark {
+  --primary: oklch(0.645 0.246 16.439);
+  --chart-1: oklch(0.62 0.22 17);
+  --chart-2: oklch(0.68 0.19 17);
+  --chart-3: oklch(0.74 0.15 17);
+  --chart-4: oklch(0.8 0.11 17);
+  --chart-5: oklch(0.86 0.07 17);
+}
+
+/* ── Amber (light accent → dark foreground) ──────────────────────────────── */
+[data-theme="amber"] {
+  --primary: oklch(0.769 0.188 70.08);
+  --primary-foreground: oklch(0.279 0.041 70.08);
+  --ring: var(--primary);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-ring: var(--primary);
+  --chart-1: oklch(0.62 0.15 70);
+  --chart-2: oklch(0.69 0.16 70);
+  --chart-3: oklch(0.76 0.18 70);
+  --chart-4: oklch(0.83 0.16 70);
+  --chart-5: oklch(0.89 0.12 70);
+}
+[data-theme="amber"].dark {
+  --primary: oklch(0.828 0.189 84.429);
+  --primary-foreground: oklch(0.279 0.041 70.08);
+  --chart-1: oklch(0.66 0.16 70);
+  --chart-2: oklch(0.73 0.17 70);
+  --chart-3: oklch(0.8 0.17 70);
+  --chart-4: oklch(0.86 0.14 70);
+  --chart-5: oklch(0.92 0.1 70);
+}
+
+/* ── Orange ───────────────────────────────────────────────────────────────── */
+[data-theme="orange"] {
+  --primary: oklch(0.646 0.222 41.116);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: var(--primary);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-ring: var(--primary);
+  --chart-1: oklch(0.58 0.2 41);
+  --chart-2: oklch(0.65 0.21 41);
+  --chart-3: oklch(0.72 0.18 41);
+  --chart-4: oklch(0.79 0.15 41);
+  --chart-5: oklch(0.86 0.1 41);
+}
+[data-theme="orange"].dark {
+  --primary: oklch(0.705 0.213 47.604);
+  --chart-1: oklch(0.64 0.21 41);
+  --chart-2: oklch(0.71 0.2 41);
+  --chart-3: oklch(0.78 0.17 41);
+  --chart-4: oklch(0.84 0.13 41);
+  --chart-5: oklch(0.9 0.09 41);
+}

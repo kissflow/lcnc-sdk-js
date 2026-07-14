@@ -1,46 +1,49 @@
 {
-    "name": "create-kf-component",
-    "version": "0.0.9",
-    "description": "create-kf-component is a cli tool that scaffolds Javascript based custom component projects that seamlessly integrate into Kissflow.",
-    "main": "index.js",
-    "bin": {
-        "create-kf-component": "./bin/index.js"
-    },
-    "type": "module",
-    "files": [
-        "bin",
-        "scaffolders",
-        "package.json",
-        "README.md",
-        "!./node_modules/**"
-    ],
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-        "lcnc",
-        "OrangeScape",
-        "no-code",
-        "low-code",
-        "platform",
-        "react",
-        "cli",
-        "kissflow",
-        "scaffolder",
-        "vite",
-        "webpack"
-    ],
-    "engines": {
-        "node": ">=18.14.1"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "@kissflow/form-field-config": "workspace:^",
-        "chalk": "5.3.0",
-        "ejs": "3.1.9",
-        "inquirer": "9.2.13",
-        "latest-version": "8.0.0",
-        "prettier": "3.2.5"
-    }
+  "name": "@kissflow/create-kf-component",
+  "version": "0.0.12",
+  "description": "CLI that scaffolds Kissflow custom page, form, and form-field component projects.",
+  "main": "index.js",
+  "bin": {
+    "create-kf-component": "bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "files": [
+    "bin",
+    "scaffolders",
+    "package.json",
+    "README.md",
+    "!./node_modules/**"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lcnc",
+    "OrangeScape",
+    "no-code",
+    "low-code",
+    "platform",
+    "react",
+    "cli",
+    "kissflow",
+    "scaffolder",
+    "vite",
+    "webpack"
+  ],
+  "engines": {
+    "node": ">=18.14.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@kissflow/form-field-config": "workspace:^",
+    "chalk": "5.3.0",
+    "ejs": "3.1.9",
+    "inquirer": "9.2.13",
+    "latest-version": "8.0.0",
+    "prettier": "3.2.5"
+  }
 }

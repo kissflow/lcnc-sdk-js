@@ -1,4 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
+import { Form } from "../form";
 import {
     ProcessItem,
     ProcessGetItemOptions,
@@ -10,6 +11,8 @@ import {
     ProcessCreateItemOptions,
     ProcessUpdateItemOptions,
     ProcessDeleteItemOptions,
+    ProcessGetAdminItemOptions,
+    ProcessUpdateAdminItemOptions,
     ProcessSubmitItemOptions,
     ProcessRejectItemOptions,
     ProcessWithdrawItemOptions,
@@ -17,7 +20,10 @@ import {
     ProcessReassignItemOptions,
     ProcessGetReassigneesOptions,
     ProcessRestartItemOptions,
-    ProcessDiscardItemOptions
+    ProcessDiscardItemOptions,
+    ProcessFieldOptions,
+    ProcessParseAttachmentOptions,
+    ProcessAttachmentParseResult
 } from "../types/external";
 import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
 
@@ -128,15 +134,19 @@ export class Process extends BaseSDK {
 
     /**
      * Get a single process instance by ID
-     * @param options - instanceId (required)
+     * @param options - instanceId, activityInstanceId (both required)
      * @returns Promise containing the instance data
      */
     getItem(options: ProcessGetItemOptions): Promise<ProcessItem> {
-        const error = requireFieldAsync(options.instanceId, "instanceId");
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" }
+        ]);
         if (error) return error;
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ITEM, {
             flowId: this._id,
-            instanceId: options.instanceId
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId
         });
     }
 
@@ -198,6 +208,48 @@ export class Process extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_DELETE_ITEM, {
             flowId: this._id,
             instanceId: options.instanceId
+        });
+    }
+
+    /**
+     * Get a single process instance as admin (requires admin access)
+     * @param options - instanceId (required)
+     * @returns Promise containing the instance data
+     *
+     * @example
+     * const process = kf.app.getProcess("LeaveRequest");
+     * const item = await process.getAdminItem({ instanceId: "item_123" });
+     */
+    getAdminItem(options: ProcessGetAdminItemOptions): Promise<ProcessItem> {
+        const error = requireFieldAsync(options.instanceId, "instanceId");
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_ADMIN_ITEM, {
+            flowId: this._id,
+            instanceId: options.instanceId
+        });
+    }
+
+    /**
+     * Update a process instance as admin (requires admin access)
+     * @param options - instanceId, data (required)
+     * @returns Promise containing the updated item
+     *
+     * @example
+     * const process = kf.app.getProcess("LeaveRequest");
+     * await process.updateAdminItem({ instanceId: "item_123", data: { LeaveType: "Sick" } });
+     */
+    updateAdminItem(
+        options: ProcessUpdateAdminItemOptions
+    ): Promise<ProcessItem> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.data, name: "data" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_UPDATE_ADMIN_ITEM, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            data: options.data
         });
     }
 
@@ -447,6 +499,86 @@ export class Process extends BaseSDK {
         return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_PROGRESS, {
             flowId: this._id,
             instanceId: options.instanceId
+        });
+    }
+
+    /**
+     * Initialize a form with all necessary data (schema, item data, form store)
+     * This is the recommended way to create a custom form for dataform records
+     * It automatically handles fetching schema, item data, and initializing the form store
+     *
+     * @param instanceId - Optional instance ID of the dataform record. If omitted, creates a new record
+     * @returns Promise with Form instance ready to use
+     *
+     * @example
+     * // Load existing record
+     * const dataform = kf.app.getDataform("EmpMaster");
+     * const form = await dataform.initForm("emp_123");
+     * const data = await form.toJSON();
+     *
+     * // Create new record
+     * const form = await dataform.initForm();
+     * await form.updateField({ firstName: "John" });
+     */
+    initForm(instanceId?: string, activityInstanceId?: string): Promise<Form> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_INIT_FORM, {
+            flowId: this._id,
+            instanceId: instanceId || "",
+            activityInstanceId: activityInstanceId || ""
+        }).then((response: any) => {
+            // The response contains the storeId, return a Form instance
+            return new Form(
+                response.storeId || instanceId || "",
+                this._id,
+                response.itemId || instanceId,
+                response.activityInstanceId || activityInstanceId
+            );
+        });
+    }
+
+    getFieldOptions(
+        options?: ProcessFieldOptions
+    ): Promise<ProcessQueryResponse> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_GET_FIELD_OPTIONS, {
+            flowId: this._id,
+            instanceId: options?.instanceId || "",
+            activityInstanceId: options?.activityInstanceId || "",
+            fieldId: options?.fieldId || "",
+            fieldType: options?.fieldType,
+            tableId: options?.tableId,
+            tableRowId: options?.tableRowId
+        });
+    }
+
+    /**
+     * Trigger AI document parsing on an uploaded file for a Smart Attachment field.
+     * Matches native platform behavior: matching empty fields are auto-filled directly
+     * into the form store (respecting field permissions) — no separate apply step needed.
+     * Call `form.toJSON()` afterward to read the updated values.
+     *
+     * @example
+     * const form = await process.initForm();
+     * const files = await kf.client.openFilePicker({ fileExtensions: ["pdf"], maxCount: 1 });
+     * await form.updateField({ [fieldId]: files });
+     * await process.parseAttachment({ instanceId: form.instanceId, fieldId, file: files[0] });
+     * const updated = await form.toJSON(); // other fields now auto-filled
+     */
+    parseAttachment(
+        options: ProcessParseAttachmentOptions
+    ): Promise<ProcessAttachmentParseResult> {
+        const error = requireFieldsAsync([
+            { value: options.instanceId, name: "instanceId" },
+            { value: options.activityInstanceId, name: "activityInstanceId" },
+            { value: options.fieldId, name: "fieldId" },
+            { value: options.file, name: "file" }
+        ]);
+        if (error) return error;
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_PARSE_ATTACHMENT, {
+            flowId: this._id,
+            instanceId: options.instanceId,
+            activityInstanceId: options.activityInstanceId,
+            fieldId: options.fieldId,
+            file: options.file
         });
     }
 }

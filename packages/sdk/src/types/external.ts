@@ -75,6 +75,25 @@ export type ProcessItem = {
 };
 
 // ============================================
+// Form Field Value Types
+// ============================================
+
+// The value shape a Geolocation field is stored/read as across the platform
+// (native forms and custom forms alike) — Latitude/Longitude are stringified
+// on save, matching the native Geolocation field's saved representation.
+export type GeolocationValue = {
+    Address?: string;
+    Latitude: string;
+    Longitude: string;
+    City?: string;
+    State?: string;
+    Country?: string;
+    ZipCode?: string;
+    Area?: string;
+    PlaceId?: string;
+};
+
+// ============================================
 // Process Types
 // ============================================
 
@@ -107,6 +126,7 @@ export type ProcessQueryResponse = QueryResponse;
 
 export type ProcessGetItemOptions = {
     instanceId: string;
+    activityInstanceId: string;
 };
 
 export type ProcessCreateItemOptions = {
@@ -121,6 +141,15 @@ export type ProcessUpdateItemOptions = {
 
 export type ProcessDeleteItemOptions = {
     instanceId: string;
+};
+
+export type ProcessGetAdminItemOptions = {
+    instanceId: string;
+};
+
+export type ProcessUpdateAdminItemOptions = {
+    instanceId: string;
+    data: object;
 };
 
 export type ProcessSubmitItemOptions = {
@@ -173,6 +202,36 @@ export type ProcessDiscardItemOptions = {
     instanceId: string;
 };
 
+export type ProcessFieldOptions = {
+    instanceId: string;
+    activityInstanceId: string;
+    fieldId: string;
+    /** Skip the server-side model lookup by supplying the field's type directly. */
+    fieldType?: string;
+    tableId?: string;
+    tableRowId?: string;
+};
+
+export type ProcessAttachmentFile = {
+    id: string;
+    name: string;
+    key: string;
+    size?: number;
+    fileExtension?: string;
+};
+
+export type ProcessParseAttachmentOptions = {
+    instanceId: string; // form.instanceId (process record id)
+    activityInstanceId: string;
+    fieldId: string;
+    file: ProcessAttachmentFile;
+};
+
+export type ProcessAttachmentParseResult = {
+    appliedFields: string[]; // field IDs auto-filled into the form store
+    suggestedBy: string; // name of the parsed file
+};
+
 export type FetchOptions = {
     method?: string;
     body?: string | object;
@@ -221,6 +280,15 @@ export type DataformSubmitItemOptions = {
     viewId?: string;
 };
 
+export type DataformFieldOptions = {
+    instanceId: string;
+    fieldId: string;
+    /** Skip the server-side model lookup by supplying the field's type directly. */
+    fieldType?: string;
+    tableId?: string;
+    tableRowId?: string;
+};
+
 // ============================================
 // Board Types
 // ============================================
@@ -256,4 +324,13 @@ export type BoardSubmitItemOptions = {
 
 export type BoardDiscardItemOptions = {
     instanceId: string;
+};
+
+export type BoardFieldOptions = {
+    instanceId: string;
+    fieldId: string;
+    /** Skip the server-side model lookup by supplying the field's type directly. */
+    fieldType?: string;
+    tableId?: string;
+    tableRowId?: string;
 };

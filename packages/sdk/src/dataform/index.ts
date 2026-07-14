@@ -1,4 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
+import { Form } from "../form";
 import { requireFieldAsync } from "../utils/validation";
 import {
     DataformItem,
@@ -9,7 +10,8 @@ import {
     DataformGetItemOptions,
     DataformDeleteItemOptions,
     DataformDiscardItemOptions,
-    DataformSubmitItemOptions
+    DataformSubmitItemOptions,
+    DataformFieldOptions
 } from "../types/external";
 
 export class Dataform extends BaseSDK {
@@ -163,5 +165,58 @@ export class Dataform extends BaseSDK {
             flowId: this._id,
             viewId: options?.viewId || ""
         });
+    }
+
+    /**
+     * Initialize a form with all necessary data (schema, item data, form store)
+     * This is the recommended way to create a custom form for dataform records
+     * It automatically handles fetching schema, item data, and initializing the form store
+     *
+     * @param instanceId - Optional instance ID of the dataform record. If omitted, creates a new record
+     * @param viewId - Optional view ID to scope the form's schema/permissions to a specific view
+     * @returns Promise with Form instance ready to use
+     *
+     * @example
+     * // Load existing record
+     * const dataform = kf.app.getDataform("EmpMaster");
+     * const form = await dataform.initForm("emp_123");
+     * const data = await form.toJSON();
+     *
+     * // Load existing record scoped to a view
+     * const form = await dataform.initForm("emp_123", "EmpMaster_View");
+     *
+     * // Create new record
+     * const form = await dataform.initForm();
+     * await form.updateField({ firstName: "John" });
+     */
+    initForm(instanceId?: string, viewId?: string): Promise<Form> {
+        return this._postMessageAsync(LISTENER_CMDS.DATAFORM_INIT_FORM, {
+            flowId: this._id,
+            instanceId: instanceId || "",
+            viewId: viewId || ""
+        }).then((response: any) => {
+            // The response contains the storeId, return a Form instance
+            return new Form(
+                response.storeId || instanceId || "",
+                this._id,
+                response.itemId || instanceId
+            );
+        });
+    }
+
+    getFieldOptions(
+        options?: DataformFieldOptions
+    ): Promise<DataformQueryResponse> {
+        return this._postMessageAsync(
+            LISTENER_CMDS.DATAFORM_GET_FIELD_OPTIONS,
+            {
+                flowId: this._id,
+                instanceId: options?.instanceId || "",
+                fieldId: options?.fieldId || "",
+                fieldType: options?.fieldType,
+                tableId: options?.tableId,
+                tableRowId: options?.tableRowId
+            }
+        );
     }
 }

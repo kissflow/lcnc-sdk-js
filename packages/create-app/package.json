@@ -1,0 +1,47 @@
+{
+  "name": "@kissflow/create-kf-app",
+  "version": "0.1.14",
+  "description": "CLI that scaffolds a Kissflow custom app project.",
+  "main": "index.js",
+  "bin": {
+    "create-kf-app": "bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "files": [
+    "bin",
+    "scaffolders",
+    "package.json",
+    "README.md",
+    "!./node_modules/**"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lcnc",
+    "OrangeScape",
+    "no-code",
+    "low-code",
+    "platform",
+    "react",
+    "cli",
+    "kissflow",
+    "scaffolder",
+    "vite",
+    "webpack"
+  ],
+  "engines": {
+    "node": ">=18.14.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "5.3.0",
+    "ejs": "3.1.9",
+    "inquirer": "9.2.13",
+    "prettier": "3.2.5"
+  }
+}

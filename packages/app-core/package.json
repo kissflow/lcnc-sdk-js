@@ -1,0 +1,48 @@
+{
+    "name": "@kissflow/app-core",
+    "version": "0.3.0",
+    "description": "Kissflow App UI framework runtime: SDK bootstrap, file-based routing host, and route sync with the Kissflow parent URL.",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "bin": {
+        "kf-sync": "bin/kf-sync.js",
+        "kf-import-page": "bin/kf-import-page.js"
+    },
+    "files": [
+        "dist",
+        "bin"
+    ],
+    "scripts": {
+        "build": "rm -rf dist && tsc -p tsconfig.json",
+        "dev": "tsc -p tsconfig.json --watch",
+        "prepublishOnly": "npm run build"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "peerDependencies": {
+        "react": "^18.2.0 || ^19.0.0",
+        "react-dom": "^18.2.0 || ^19.0.0",
+        "react-router-dom": "^6.22.0"
+    },
+    "dependencies": {
+        "@kissflow/lowcode-client-sdk": "workspace:*"
+    },
+    "devDependencies": {
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-router-dom": "^6.22.0",
+        "typescript": "^5.4.0"
+    },
+    "license": "ISC"
+}
