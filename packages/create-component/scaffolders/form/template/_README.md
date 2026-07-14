@@ -157,6 +157,22 @@ visibleSections.map((section) => {
 })
 ```
 
+The reference implementation doesn't hand-roll `<input>`s like the snippet above —
+`src/form/shared.jsx` resolves each field to a component via
+`getFieldComponent(field.Type, field.Widget)` (`src/components/fields/index.js`), or
+`getTableFieldComponent` for child-table cells. Most field types are resolved purely by
+`Type`; a few also key off `Widget`. Two worth calling out:
+
+- **Geolocation** (`Type: 'Geolocation'`) renders `GeolocationField` — opens the host's
+  native map picker via `window.kf.client.pickLocation()` and stores
+  `{ Address, Latitude, Longitude, City, State, Country, ZipCode, Area, PlaceId }`
+  (matches the SDK's `GeolocationValue` type). Cleared with a `null` value.
+- **Scanner** (`Type: 'Scanner'`, or any other field with `Widget: 'Scanner'`) renders
+  `ScannerField` — opens the host's barcode/QR scanner via
+  `window.kf.client.openScanner()` and stores the decoded string. Set
+  `field.ScanFromStorage` to let the user decode from an uploaded image instead of the
+  live camera.
+
 ## Usage Examples
 
 ### Basic form with field updates
