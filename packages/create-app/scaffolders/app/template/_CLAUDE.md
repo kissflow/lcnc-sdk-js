@@ -1,7 +1,7 @@
 # Building <%= projectName %> (Kissflow App UI)
 
 This is a **custom UI for a Kissflow app** — a Vite + React SPA
-(`@abdul-kissflow/app-core`) that renders full-screen inside Kissflow and talks to it
+(`@kissflow/app-core`) that renders full-screen inside Kissflow and talks to it
 through the Kissflow SDK.
 
 ## Your role
@@ -18,7 +18,7 @@ app's data and what the developer wants, then build and refine pages for it.
 
 **Do NOT** (out of scope — don't go here unless the developer explicitly asks):
 
--   Don't modify `@abdul-kissflow/app-core`, the SDK, or anything in `node_modules` — the
+-   Don't modify `@kissflow/app-core`, the SDK, or anything in `node_modules` — the
     framework is a black box you build **on top of**, not something to "improve".
 -   Don't hand-edit `lib/kf-context.md` / `lib/kf-schema.json` — they're generated;
     refresh with `npm run kf:sync`.
@@ -83,7 +83,7 @@ Kissflow browser URL mirrors the route automatically — never call the SDK for 
 ## Talking to Kissflow (in the browser)
 
 ```jsx
-import { useKf } from "@abdul-kissflow/app-core";
+import { useKf } from "@kissflow/app-core";
 const kf = useKf(); // initialized SDK
 kf.user;
 kf.account; // current user / account

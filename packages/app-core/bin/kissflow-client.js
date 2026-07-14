@@ -2,7 +2,7 @@
  * Kissflow REST API client (server-to-server, access-key auth).
  *
  * Used by the `kf-sync` CLI to read an app's data models and roles. This is a
- * BUILD-TIME tool — it is NOT the in-iframe runtime SDK (`@abdul-kissflow/app-core`'s
+ * BUILD-TIME tool — it is NOT the in-iframe runtime SDK (`@kissflow/app-core`'s
  * `useKf`). It talks to Kissflow's admin REST API with an access key pair.
  */
 export class KissflowClient {

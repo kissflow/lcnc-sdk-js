@@ -1,7 +1,7 @@
 # <%= projectName %>
 
 A full custom UI for your Kissflow app, built with
-[`@abdul-kissflow/app-core`](https://www.npmjs.com/package/@abdul-kissflow/app-core) — a Vite +
+[`@kissflow/app-core`](https://www.npmjs.com/package/@kissflow/app-core) — a Vite +
 React framework with **folder-based routing** (`src/pages/**`) that renders inside
 Kissflow and keeps the browser URL in sync with your routes.
 
@@ -37,7 +37,7 @@ the contents of `src/pages/` with your own app.
 ## Use the Kissflow SDK
 
 ```jsx
-import { useKf } from "@abdul-kissflow/app-core";
+import { useKf } from "@kissflow/app-core";
 
 function MyComponent() {
     const kf = useKf();

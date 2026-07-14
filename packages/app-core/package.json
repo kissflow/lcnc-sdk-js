@@ -1,5 +1,5 @@
 {
-    "name": "@abdul-kissflow/app-core",
+    "name": "@kissflow/app-core",
     "version": "0.3.0",
     "description": "Kissflow App UI framework runtime: SDK bootstrap, file-based routing host, and route sync with the Kissflow parent URL.",
     "type": "module",
@@ -34,7 +34,7 @@
         "react-router-dom": "^6.22.0"
     },
     "dependencies": {
-        "@abdul-kissflow/lowcode-client-sdk": "workspace:*"
+        "@kissflow/lowcode-client-sdk": "workspace:*"
     },
     "devDependencies": {
         "@types/react": "^19.0.0",

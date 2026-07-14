@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@abdul-kissflow/lowcode-client-sdk": "latest"
+    "@kissflow/lowcode-client-sdk": "latest"
   },
   "engines": {
     "node": "^18.0.0 || >=20.0.0"

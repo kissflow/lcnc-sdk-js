@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useKf, usePageTitle } from "@abdul-kissflow/app-ui";
+import { useKf, usePageTitle } from "@kissflow/app-core";
 import {
   LayoutDashboard,
   PanelsTopLeft,

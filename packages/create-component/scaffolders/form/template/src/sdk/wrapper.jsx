@@ -1,4 +1,4 @@
-import KFSDK from "@abdul-kissflow/lowcode-client-sdk";
+import KFSDK from "@kissflow/lowcode-client-sdk";
 import React, { useState, useEffect } from "react";
 
 let kf;

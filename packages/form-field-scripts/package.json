@@ -1,5 +1,5 @@
 {
-    "name": "@abdul-kissflow/form-field-scripts",
+    "name": "@kissflow/form-field-scripts",
     "version": "0.0.7",
     "publishConfig": {
         "access": "public"
@@ -37,7 +37,7 @@
         "@babel/core": "7.23.3",
         "@babel/preset-env": "7.22.9",
         "@babel/preset-react": "7.22.5",
-        "@abdul-kissflow/form-field-config": "workspace:^",
+        "@kissflow/form-field-config": "workspace:^",
         "ajv": "8.13.0",
         "archiver": "^7.0.1",
         "babel-loader": "9.1.3",

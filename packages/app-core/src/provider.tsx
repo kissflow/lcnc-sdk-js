@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import KFSDK from "@abdul-kissflow/lowcode-client-sdk";
+import KFSDK from "@kissflow/lowcode-client-sdk";
 
 import { KfContext } from "./context";
 

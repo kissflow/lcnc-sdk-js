@@ -15,7 +15,7 @@ import {
     SUPPORTED_REACT_VERSION,
     SUPPORTED_REACT_DOM_VERSION,
     FORM_FIELD_PROJECT_CONFIG_SCHEMA,
-} from '@abdul-kissflow/form-field-config'
+} from '@kissflow/form-field-config'
 import { getMandatoryModules } from './helpers.js'
 
 import {

@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import type KFSDK from "@abdul-kissflow/lowcode-client-sdk";
+import type KFSDK from "@kissflow/lowcode-client-sdk";
 
 /** The initialized Kissflow SDK instance (`kf`). */
 export type KfInstance = Awaited<ReturnType<typeof KFSDK.initialize>>;

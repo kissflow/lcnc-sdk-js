@@ -20,11 +20,11 @@ import {
 import {
   SUPPORTED_REACT_DOM_VERSION,
   SUPPORTED_REACT_VERSION
-} from "@abdul-kissflow/form-field-config";
+} from "@kissflow/form-field-config";
 import {
   getFormFieldPlatformKey,
   getFormFieldComponentKey
-} from "@abdul-kissflow/form-field-config/helpers";
+} from "@kissflow/form-field-config/helpers";
 import { getFormFieldConfig, getProjectTemplatePath } from "./helpers.js";
 
 const createProject = async ({

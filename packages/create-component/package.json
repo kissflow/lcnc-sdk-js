@@ -1,5 +1,5 @@
 {
-  "name": "@abdul-kissflow/create-kf-component",
+  "name": "@kissflow/create-kf-component",
   "version": "0.0.12",
   "description": "CLI that scaffolds Kissflow custom page, form, and form-field component projects.",
   "main": "index.js",
@@ -39,7 +39,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@abdul-kissflow/form-field-config": "workspace:^",
+    "@kissflow/form-field-config": "workspace:^",
     "chalk": "5.3.0",
     "ejs": "3.1.9",
     "inquirer": "9.2.13",

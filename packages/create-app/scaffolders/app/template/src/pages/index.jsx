@@ -1,4 +1,4 @@
-import { usePageTitle } from "@abdul-kissflow/app-ui";
+import { usePageTitle } from "@kissflow/app-core";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import {
   ArrowUpRight,

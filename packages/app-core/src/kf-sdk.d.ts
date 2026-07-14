@@ -1,9 +1,9 @@
-// The published @abdul-kissflow/lowcode-client-sdk ships bundled *ambient* typings
+// The published @kissflow/lowcode-client-sdk ships bundled *ambient* typings
 // (its default export lives in an internal `declare module "index"` block), so
-// `import KFSDK from "@abdul-kissflow/lowcode-client-sdk"` isn't consumable as a module
+// `import KFSDK from "@kissflow/lowcode-client-sdk"` isn't consumable as a module
 // by TypeScript. This shim declares the surface the framework relies on.
 // (Follow-up: have the SDK build emit a proper module entry `.d.ts`.)
-declare module "@abdul-kissflow/lowcode-client-sdk" {
+declare module "@kissflow/lowcode-client-sdk" {
     interface KfPage {
         setRoute(path: string): void;
         getRoute(): string;

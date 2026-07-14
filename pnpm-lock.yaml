@@ -22,7 +22,7 @@ importers:
 
   packages/app-core:
     dependencies:
-      '@abdul-kissflow/lowcode-client-sdk':
+      '@kissflow/lowcode-client-sdk':
         specifier: workspace:*
         version: link:../sdk
     devDependencies:
@@ -62,7 +62,7 @@ importers:
 
   packages/create-component:
     dependencies:
-      '@abdul-kissflow/form-field-config':
+      '@kissflow/form-field-config':
         specifier: workspace:^
         version: link:../form-field-config
       chalk:
@@ -89,9 +89,6 @@ importers:
 
   packages/form-field-scripts:
     dependencies:
-      '@abdul-kissflow/form-field-config':
-        specifier: workspace:^
-        version: link:../form-field-config
       '@babel/core':
         specifier: 7.23.3
         version: 7.23.3
@@ -101,6 +98,9 @@ importers:
       '@babel/preset-react':
         specifier: 7.22.5
         version: 7.22.5(@babel/core@7.23.3)
+      '@kissflow/form-field-config':
+        specifier: workspace:^
+        version: link:../form-field-config
       ajv:
         specifier: 8.13.0
         version: 8.13.0

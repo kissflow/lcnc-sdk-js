@@ -1,5 +1,5 @@
 {
-    "name": "@abdul-kissflow/form-field-config",
+    "name": "@kissflow/form-field-config",
     "version": "0.0.2",
     "publishConfig": {
         "access": "public"
