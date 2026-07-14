@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Loader2, PenLine, Upload, X } from "lucide-react";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 const SIGNATURE_PICKER_OPTIONS = {
   fileExtensions: ["JPG", "JPEG", "PNG"],
@@ -169,13 +170,7 @@ export function SignatureField({
 
   return (
     <div className="space-y-2">
-      <label
-        htmlFor={field.Id}
-        className="block text-sm font-semibold text-foreground"
-      >
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} htmlFor={field.Id} />
 
       {/* Display */}
       {!isEditing && (
