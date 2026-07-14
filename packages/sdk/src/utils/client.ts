@@ -1,5 +1,10 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import { FilePickerOptions, UploadableFile } from "../types/internal";
+import { GeolocationValue } from "../types/external";
+import {
+    FilePickerOptions,
+    ScannerOptions,
+    UploadableFile
+} from "../types/internal";
 
 export class Client extends BaseSDK {
     /**
@@ -118,6 +123,58 @@ export class Client extends BaseSDK {
     openFilePicker(options: FilePickerOptions) {
         return this._postMessageAsync(LISTENER_CMDS.FILEPICKER_OPEN, {
             options
+        });
+    }
+
+    /**
+     * Open the platform's barcode/QR scanner and resolve with the decoded text.
+     *
+     * The scanner UI (camera stream + decoding) runs in the parent window, which
+     * owns the camera permission — the iframe itself never accesses the camera.
+     * Camera-permission prompts and denials are handled inside the scanner UI;
+     * they are not surfaced as errors here.
+     *
+     * Resolves with `null` if the user closes the scanner without a successful
+     * scan (including the scanner's own inactivity timeout).
+     *
+     * Note: currently supported in web custom app UIs; the mobile (PWA) custom
+     * UI does not host the scanner portal yet.
+     *
+     * @param options - Scanner configuration (e.g. `localFileScan` to allow
+     * decoding from an uploaded image instead of the camera).
+     * @returns A promise that resolves with the decoded string, or `null` if the
+     * scanner was closed without scanning.
+     *
+     * @example
+     * const code = await kf.client.openScanner({ localFileScan: true });
+     * if (code) onChange(code);
+     */
+    openScanner(options: ScannerOptions = {}) {
+        return this._postMessageAsync(LISTENER_CMDS.SCANNER_OPEN, {
+            options
+        });
+    }
+
+    /**
+     * Open the platform's native Geolocation map picker (search, current-location
+     * detection, marker drag, reverse-geocoding) in a modal over the custom
+     * form/component. Runs in the parent window, which owns the Google Maps API
+     * key — the iframe itself never needs one.
+     *
+     * Resolves with `null` if the user closes the picker without selecting a
+     * location.
+     *
+     * @param value - Optional current geolocation value to pre-select on the map.
+     * @returns A promise that resolves with the picked location object, or
+     * `null` if the picker was closed without a selection.
+     *
+     * @example
+     * const location = await kf.client.pickLocation();
+     * if (location) onChange(location);
+     */
+    pickLocation(value?: GeolocationValue) {
+        return this._postMessageAsync(LISTENER_CMDS.GEOLOCATION_OPEN, {
+            value
         });
     }
 

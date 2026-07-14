@@ -51,6 +51,11 @@ export interface FilePickerOptions {
     };
 }
 
+export interface ScannerOptions {
+    /** Allow decoding from an uploaded image instead of the camera. */
+    localFileScan?: boolean;
+}
+
 /** Minimal shape of a browser File/Blob object, avoids requiring the DOM lib. */
 export interface UploadableFile {
     name: string;

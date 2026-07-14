@@ -75,6 +75,25 @@ export type ProcessItem = {
 };
 
 // ============================================
+// Form Field Value Types
+// ============================================
+
+// The value shape a Geolocation field is stored/read as across the platform
+// (native forms and custom forms alike) — Latitude/Longitude are stringified
+// on save, matching the native Geolocation field's saved representation.
+export type GeolocationValue = {
+    Address?: string;
+    Latitude: string;
+    Longitude: string;
+    City?: string;
+    State?: string;
+    Country?: string;
+    ZipCode?: string;
+    Area?: string;
+    PlaceId?: string;
+};
+
+// ============================================
 // Process Types
 // ============================================
 
