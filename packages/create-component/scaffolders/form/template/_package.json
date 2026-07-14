@@ -27,9 +27,9 @@
     "date-fns": "^4.4.0",
     "lucide-react": "^0.555.0",
     "radix-ui": "^1.6.2",
-    "react": "^18.2.0",
+    "react": "^19.0.0",
     "react-day-picker": "^10.0.1",
-    "react-dom": "^18.2.0",
+    "react-dom": "^19.0.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17"
   },
@@ -37,8 +37,8 @@
     "node": "^18.0.0 || >=20.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.64",
-    "@types/react-dom": "^18.2.21",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.2.1",
     "archiver": "^7.0.1",
     "baseline-browser-mapping": "^2.9.0",

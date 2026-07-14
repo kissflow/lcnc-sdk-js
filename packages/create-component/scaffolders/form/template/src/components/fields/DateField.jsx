@@ -43,7 +43,7 @@ export function DateField({
         {field.Required && <span className="text-destructive ml-1">*</span>}
       </label>
       <Popover>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <Button
             id={field.Id}
             type="button"
