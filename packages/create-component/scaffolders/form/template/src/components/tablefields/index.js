@@ -18,6 +18,8 @@ import { TableLookupField } from "./TableLookupField.jsx";
 import { TableSequenceNumberField } from "./TableSequenceNumberField.jsx";
 import { TableAggregationField } from "./TableAggregationField.jsx";
 import { TableSignatureField } from "./TableSignatureField.jsx";
+import { TableScannerField } from "./TableScannerField.jsx";
+import { TableGeolocationField } from "./TableGeolocationField.jsx";
 
 const TABLE_FIELD_MAP = {
   Text: TableTextField,
@@ -44,17 +46,26 @@ const TABLE_FIELD_MAP = {
   Attachment: TableAttachmentField,
   Checklist: TableChecklistField,
   Lookup: TableLookupField,
-  RemoteLookup: TableLookupField
+  RemoteLookup: TableLookupField,
+  Scanner: TableScannerField,
+  Geolocation: TableGeolocationField
 };
 
 export function getTableFieldComponent(fieldType, widget) {
-  if (widget === "Aggregation") return TableAggregationField;
-  if (
-    fieldType === "Lookup" ||
-    fieldType === "RemoteLookup" ||
-    fieldType === "Reference"
-  )
+  if (widget === "Aggregation") {
+    return TableAggregationField;
+  }
+
+  if (fieldType === "Lookup" || fieldType === "Reference") {
     return TableLookupField;
-  if (fieldType === "Select" && widget === "Radio") return TableSelectField;
+  }
+
+  if (fieldType === "Select" && widget === "Radio") {
+    return TableSelectField;
+  }
+
+  if (widget === "Scanner") {
+    return TableScannerField;
+  }
   return TABLE_FIELD_MAP[fieldType] ?? TableTextField;
 }

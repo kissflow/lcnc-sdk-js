@@ -22,6 +22,8 @@ import { SmartAttachmentField } from "./SmartAttachmentField";
 import { ChecklistField } from "./ChecklistField";
 import { LookupField } from "./LookupField";
 import { SignatureField } from "./SignatureField.jsx";
+import { ScannerField } from "./ScannerField.jsx";
+import { GeolocationField } from "./GeolocationField.jsx";
 
 // Field type -> component
 const FIELD_MAP = {
@@ -50,7 +52,9 @@ const FIELD_MAP = {
   Checklist: ChecklistField,
   Lookup: LookupField,
   RemoteLookup: LookupField,
-  Signature: SignatureField
+  Signature: SignatureField,
+  Scanner: ScannerField,
+  Geolocation: GeolocationField
 };
 
 /**
@@ -71,8 +75,12 @@ export function getFieldComponent(fieldType, widget) {
     return AggregationField;
   }
 
-  if (fieldType === "Reference") {
+  if (fieldType === "Lookup" || fieldType === "Reference") {
     return LookupField;
+  }
+
+  if (widget === "Scanner") {
+    return ScannerField;
   }
 
   return FIELD_MAP[fieldType] || TextField;

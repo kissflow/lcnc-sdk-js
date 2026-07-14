@@ -6,8 +6,10 @@ store. It drives standalone **dataform**, **board**, and **process** records —
 their child tables — from a single dynamic configuration.
 
 For a complete, production-ready reference implementation, see
-[`src/form/index.jsx`](./src/form/index.jsx) (layout in
-[`src/form/layout.jsx`](./src/form/layout.jsx), workflow action bar in
+[`src/form/index.jsx`](./src/form/index.jsx) (header in
+[`src/form/FormHeader.jsx`](./src/form/FormHeader.jsx), body in
+[`src/form/FormBody.jsx`](./src/form/FormBody.jsx), action bar in
+[`src/form/FormAction.jsx`](./src/form/FormAction.jsx) and
 [`src/form/ProcessActions.jsx`](./src/form/ProcessActions.jsx)).
 
 ## Quick Start
@@ -16,14 +18,15 @@ For a complete, production-ready reference implementation, see
 import { useForm } from './hooks/useForm'
 
 export function MyCustomForm() {
-    const { formData, config, updateField, save, errors, isDirty } = useForm({
+    const { formData, config, updateField, isSaving, errors } = useForm({
         flowType: 'dataform',
         flowId: 'EmpMaster',
         instanceId: 'emp_123', // omit to create a new record
     })
 
     // Render fields from `config.sections`, read values from `formData`,
-    // push changes with `updateField`, persist with `save`.
+    // push changes with `updateField` — every call autosaves immediately,
+    // `isSaving` just reflects that in-flight request.
 }
 ```
 
@@ -61,23 +64,21 @@ An object containing:
 | `formData`                                   | object         | Current values, keyed by field ID. Child-table rows live at `formData[tableId]`.              |
 | `config`                                     | object         | Form configuration — `{ formPermission, sections }` (see below).                              |
 | `errors`                                     | object         | Validation errors (nested — see _Error Handling_).                                            |
-| `loading`                                    | boolean        | True during initial load and while saving.                                                    |
+| `loading`                                    | boolean        | True during initial load and while `runAction()` is in flight.                                |
 | `error`                                      | string \| null | General error message if an operation failed.                                                 |
-| `isDirty`                                    | boolean        | True if the form has unsaved changes.                                                         |
+| `isSaving`                                   | boolean        | True while an `updateField`/`updateFields` autosave request is in flight. There is no "unsaved changes" state — every edit persists on its own. |
 | `isNewRecord`                                | boolean        | True when no `instanceId` was provided.                                                       |
-| `updateField(fieldId, value)`                | function       | `=> Promise<boolean>`. Validates, updates data, and refreshes field state.                    |
-| `updateFields(updates)`                      | function       | `=> Promise<boolean>`. Batch update of `{ fieldId: value }`.                                  |
+| `updateField(fieldId, value)`                | function       | `=> Promise<boolean>`. Validates, autosaves, and refreshes field state.                       |
+| `updateFields(updates)`                      | function       | `=> Promise<boolean>`. Batch autosave of `{ fieldId: value }`.                                |
 | `getField(fieldId)`                          | function       | `=> Promise<object>`. Full details for one field.                                             |
 | `getFieldOptions(fieldId, tableId?, rowId?)` | function       | `=> Promise<object[]>`. Dropdown/select options; pass `tableId` + `rowId` for a table cell.   |
 | `getFormData()`                              | function       | `=> Promise<object>`. Latest data straight from the store.                                    |
 | `parseAttachment(fieldId, file)`             | function       | `=> Promise<{ appliedFields, suggestedBy }>`. **Process only** — AI Smart Attachment parsing. |
-| `save()`                                     | function       | `=> Promise<boolean>`. Validates, then finalizes new dataform/board records (see _Saving vs Submitting_). |
-| `reset()`                                    | function       | `=> void`. Reverts to last saved data and clears errors.                                      |
+| `runAction(action, extra?)`                  | function       | `=> Promise<boolean>`. Single dispatcher for every lifecycle action, resolved from `flowType` — see _Actions_. |
 | `getTable(tableId)`                          | function       | Returns child-table operations (see _Child Tables_).                                          |
 | `processStatus`                              | string         | **Process only** — the item's current status (`Draft`, `InProgress`, `Completed`, …).          |
 | `isStartStep`                                | boolean        | **Process only** — true when the current activity is the process's start step.                |
-| `formActions`                                | object[]       | **Process only** — ordered workflow-action descriptors for the current step (see _Process Workflow Actions_). Empty array for dataform/board. |
-| `runProcessAction(action, extra?)`           | function       | `=> Promise<boolean>`. **Process only** — executes a workflow transition (see _Process Workflow Actions_). |
+| `formActions`                                | object[]       | **Process only** — ordered workflow-action descriptors for the current step (see _Actions_). Empty array for dataform/board. |
 | `getReassignees(query?)`                     | function       | `=> Promise<object[]>`. **Process only** — candidate assignees for the Reassign action.        |
 
 ## The `config` object
@@ -164,31 +165,37 @@ visibleSections.map((section) => {
 import { useForm } from './hooks/useForm'
 
 export function EmployeeForm() {
-    const { formData, updateField, save, isDirty, loading, isNewRecord } =
+    const { formData, updateField, runAction, isSaving, loading, isNewRecord } =
         useForm({
             flowType: 'dataform',
             flowId: 'EmpMaster',
             instanceId: 'emp_123',
         })
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const success = await save()
-        if (success) console.log('Form saved!')
+    // Only a new record needs an explicit Submit — runAction('submit')
+    // finalizes the draft. An existing record has nothing to do here; every
+    // updateField call already autosaved.
+    const handleSubmit = async () => {
+        if (!isNewRecord) return
+        const success = await runAction('submit')
+        if (success) console.log('Record submitted!')
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
             <h2>{isNewRecord ? 'New Employee' : 'Edit Employee'}</h2>
+            {isSaving && <span>Saving…</span>}
             <input
                 value={formData.firstName || ''}
                 onChange={(e) => updateField('firstName', e.target.value)}
                 placeholder="First Name"
             />
-            <button disabled={loading || !isDirty}>
-                {loading ? 'Saving...' : 'Save'}
-            </button>
-        </form>
+            {isNewRecord && (
+                <button onClick={handleSubmit} disabled={loading}>
+                    {loading ? 'Submitting...' : 'Submit'}
+                </button>
+            )}
+        </div>
     )
 }
 ```
@@ -196,11 +203,11 @@ export function EmployeeForm() {
 ### New record
 
 ```javascript
-const { save, isNewRecord } = useForm({
+const { runAction, isNewRecord } = useForm({
     flowType: 'dataform',
     flowId: 'EmpMaster',
 })
-// No instanceId => isNewRecord === true; save() finalizes the draft record.
+// No instanceId => isNewRecord === true; runAction('submit') finalizes the draft record.
 ```
 
 ## Saving vs Submitting (dataform / board)
@@ -210,27 +217,30 @@ creates a real **draft** record on the backend, and every `updateField` / `updat
 call autosaves straight to that draft (there's no separate "unsaved changes buffered
 client-side" state to worry about).
 
-Because of that autosave, `save()` behaves differently depending on `isNewRecord`:
+Because of that autosave, `runAction('submit')` behaves differently depending on
+`isNewRecord`:
 
 - **Existing record** (`isNewRecord === false`): fields already autosaved as you edited
-  them, so `save()` only validates.
+  them, so `runAction('submit')` only validates.
 - **New record** (`isNewRecord === true`, `flowType` `dataform` or `board`): the draft
-  still needs to be **finalized** — `save()` validates, then calls the SDK's `submitItem`
-  to turn the draft into a submitted record, and flips `isNewRecord` to `false`.
+  still needs to be **finalized** — `runAction('submit')` validates, then calls the SDK's
+  `submitItem` to turn the draft into a submitted record, and flips `isNewRecord` to
+  `false`.
 
-If your UI only has one button for dataform/board, label it based on `isNewRecord`
-(`'Submit'` for a new record, `'Save'` for an existing one) — see
-`src/form/layout.jsx`'s footer bar for the reference pattern.
+Only show a footer action for a **new** dataform/board record — Submit
+(`runAction('submit')`) and Discard (`runAction('discard')`); an existing record has no
+footer action at all, since there's nothing left to persist. See
+`src/form/FormAction.jsx` for the reference pattern (it returns `null` once `isNewRecord`
+is `false`), and `src/form/FormHeader.jsx` for how to surface autosave status
+(`isSaving`) instead of a Save button.
 
 This finalize step does not apply to `flowType: 'process'` — process forms always expose
-a separate `submit` workflow action (see _Process Workflow Actions_), so `save()` stays
-validate-only for every process status and just leaves the item wherever it is in the
-workflow.
+a separate `submit` workflow action (see _Actions_ below).
 
 ### Displaying validation errors
 
 ```javascript
-const { formData, errors, updateField, save } = useForm({
+const { formData, errors, updateField } = useForm({
     flowType: 'dataform',
     flowId: 'EmpMaster',
 })
@@ -241,8 +251,10 @@ const { formData, errors, updateField, save } = useForm({
     type="email"
 />
 {errors.email && <span className="error">{errors.email[0]}</span>}
-<button onClick={() => save()}>Save</button>
 ```
+
+`errors` refreshes on every `updateField` call — no separate "Save" click needed to see
+them.
 
 ### Multiple field updates
 
@@ -256,15 +268,21 @@ await updateFields({
 })
 ```
 
-### Reset
+### Discard a draft
 
 ```javascript
-const { reset, isDirty } = useForm({
+const { runAction, isNewRecord } = useForm({
     flowType: 'dataform',
     flowId: 'EmpMaster',
 })
-reset() // reverts to last saved data, clears errors, sets isDirty to false
+// Only meaningful while isNewRecord is true — deletes the draft outright
+// (Dataform/Board) or runs the process `discard` workflow action.
+if (isNewRecord) await runAction('discard')
 ```
+
+There's no `reset()` — since every field autosaves immediately, there's no
+local "unsaved changes" buffer to revert to. `runAction('discard')` is the
+equivalent of "I don't want this record" for a still-in-progress draft.
 
 ## Child Tables
 
@@ -334,45 +352,51 @@ const { appliedFields, suggestedBy } = await parseAttachment(
 
 Calling it for a non-process flow throws.
 
-## Process Workflow Actions (process only)
+## Actions
+
+`runAction(action, extra?)` is the **single dispatcher for every lifecycle action** —
+it resolves its behavior from `flowType` internally, so the same function works
+uniformly for a Discard button, a Submit button, and every process workflow button. This
+is deliberate: don't special-case which function to call per flow type in your UI: always
+call `runAction(action, extra?)`.
+
+- **Dataform/board**: only `'submit'` and `'discard'` are supported (see _Saving vs
+  Submitting_ and _Discard a draft_ above).
+- **Process**: `action` is one of `submit`, `reject`, `sendback`, `reassign`, `withdraw`,
+  `restart`, `discard`. `extra` carries action-specific payload: `{ comment }` for
+  reject/sendback/withdraw, `{ stepId, comment }` for sendback, `{ reassignTo, comment,
+  reassignType }` for reassign. `submit`/`reject`/`sendback`/`reassign` validate the form
+  first and return `false` (without transitioning) if there are errors — these persist
+  data alongside the transition (a comment, a corrected field). `withdraw`/`restart`/
+  `discard` skip validation — they're exit/reset actions with no data of their own to
+  lose.
 
 For `flowType: 'process'`, `formActions` gives you the ordered list of workflow actions
 valid at the item's **current step** — resolved from `processStatus` + `isStartStep`
-(e.g. a fresh Draft item shows `save`, `discard`, `submit`; an approver's step shows
-`save`, `reassign`, `sendback`, `reject`, `submit`). Dataform/board always return `[]`.
+(e.g. a fresh Draft item shows `discard`, `submit`; an approver's step shows `reassign`,
+`sendback`, `reject`, `submit`). There is no `save` action in this list — every field
+edit already autosaved, so only real workflow transitions are listed. Dataform/board
+always return `[]` for `formActions` (their Discard/Submit buttons aren't step-dependent
+the way process actions are).
 
 ```javascript
 const {
     formActions,     // [{ key, label, primary?, destructive?, requiresComment?, requiresReassignee?, confirm? }, ...]
-    runProcessAction,
+    runAction,
     getReassignees,
-    save,
 } = useForm({ flowType: 'process', flowId: 'PurchaseOrder', instanceId, activityInstanceId })
 
 formActions.map((action) => (
-    <button
-        key={action.key}
-        onClick={() =>
-            action.key === 'save'
-                ? save()
-                : runProcessAction(action.key, { comment, reassignTo })
-        }
-    >
+    <button key={action.key} onClick={() => runAction(action.key, { comment, reassignTo })}>
         {action.label}
     </button>
 ))
 ```
 
-- `runProcessAction(action, extra?)` — `action` is one of `submit`, `reject`, `sendback`,
-  `reassign`, `withdraw`, `restart`, `discard` (**not** `save` — that's the plain `save()`
-  above). `extra` carries action-specific payload: `{ comment }` for reject/sendback/withdraw,
-  `{ stepId, comment }` for sendback, `{ reassignTo, comment, reassignType }` for reassign.
-  `submit` validates the form first and returns `false` (without transitioning) if there are
-  errors, mirroring `save()`.
-- Each descriptor's `requiresComment` / `requiresReassignee` / `confirm` flags tell you
-  whether to open a confirmation modal before calling `runProcessAction` — see
-  `ProcessActions.jsx` for the reference modal.
-- `getReassignees(query?)` returns candidate users for the Reassign picker.
+Each descriptor's `requiresComment` / `requiresReassignee` / `confirm` flags tell you
+whether to open a confirmation modal before calling `runAction` — see
+`ProcessActions.jsx` for the reference modal. `getReassignees(query?)` returns candidate
+users for the Reassign picker.
 
 ## Error Handling
 
@@ -397,21 +421,28 @@ Two levels of errors:
     }
     ```
 
-    `save()` inspects this whole structure and returns `false` (setting `error`) if any
-    `_root` field or any table-row field has messages. When binding a single field's error
-    in the UI, read it from the shape your render layer normalises (the reference
+    The validated branches of `runAction` (`submit`/`reject`/`sendback`/`reassign`)
+    inspect this whole structure and return `false` (setting `error`) if any `_root`
+    field or any table-row field has messages. When binding a single field's error in the
+    UI, read it from the shape your render layer normalises (the reference
     `src/form/index.jsx` passes each field its own `errors[fieldId]`).
 
     **Hidden fields are filtered out automatically.** The underlying `getValidationErrors()`
-    validates every field regardless of visibility, which would otherwise block `save()` /
-    `runProcessAction('submit')` on a required field the user can't even see. `useForm`
+    validates every field regardless of visibility, which would otherwise block
+    `runAction('submit')` on a required field the user can't even see. `useForm`
     cross-references the current `config.sections` (including per-field `IsHidden` and
     per-section `IsHidden`) and strips out errors for anything not currently visible before
     they ever reach `errors` or the has-errors check — you don't need to filter them yourself.
 
 ## Loading State
 
-`loading` is `true` during the initial load and during `save()`. Use it to disable the form:
+Two different signals, don't conflate them:
+
+- `loading` — `true` during the initial load and while `runAction()` is in flight.
+- `isSaving` — `true` only while a field autosave (`updateField`/`updateFields`) is in
+  flight. This is what a header-style "Saving…" indicator should watch (see
+  `src/form/FormHeader.jsx` for the reference pattern) — it's typically a much shorter,
+  much more frequent blip than `loading`.
 
 ```javascript
 <button disabled={loading}>{loading ? 'Loading...' : 'Submit'}</button>
@@ -422,9 +453,14 @@ Two levels of errors:
 1. **Render from `config.sections`** rather than hard-coding fields — permissions and
    visibility stay correct as rules evaluate.
 2. **Respect `formPermission === 'View'`** and each field's `IsReadOnly` / `IsHidden`.
-3. **Always surface validation errors** before/after `save()`.
-4. **Show `loading`** to disable interaction during async work.
-5. **Track `isDirty`** to warn before navigating away with unsaved changes.
+3. **Always surface validation errors** before/after `runAction('submit')`.
+4. **Show `loading`** to disable interaction during async work; show `isSaving`
+   separately as a lightweight autosave indicator (don't block input on it).
+5. **Don't build a Save button for existing records** — every `updateField`/
+   `updateFields` call already persisted. Only new dataform/board records need a visible
+   Submit/Discard pair (see _Saving vs Submitting_, _Discard a draft_).
+6. **Always call `runAction(action, extra?)`** rather than special-casing which function
+   to call per flow type — it resolves the right behavior internally.
 
 ## Troubleshooting
 
@@ -440,7 +476,7 @@ Ensure the component is rendered inside the SDK wrapper (`window.kf` must exist)
 
 ### Validation errors not updating
 
-They refresh automatically after `updateField` / `updateFields` / `save`. No extra call needed.
+They refresh automatically after `updateField` / `updateFields` / `runAction`. No extra call needed.
 
 ### Table rows not showing
 

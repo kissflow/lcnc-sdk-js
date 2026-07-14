@@ -7,6 +7,7 @@ import {
   PopoverTrigger
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { FieldError } from "./FieldError.jsx";
 
 const userId = (user) => user?._id || user;
 const userLabel = (user) => user?.Name || user?.name || user?.Email || user;
@@ -148,18 +149,7 @@ export function MultiUserSelectField({
           </ScrollArea>
         </PopoverContent>
       </Popover>
-      {error && (
-        <p className="text-sm text-destructive font-medium flex items-center gap-1.5">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M18.101 12.93a1 1 0 00-1.414-1.414L10 15.586 7.707 13.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8.5-8.5z"
-              clipRule="evenodd"
-            />
-          </svg>
-          {Array.isArray(error) ? error[0] : error}
-        </p>
-      )}
+      <FieldError error={error} />
     </div>
   );
 }
