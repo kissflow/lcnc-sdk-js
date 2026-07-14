@@ -24,7 +24,26 @@ function Example() {
 | `kf.env`                     | `{ isMobile }`                                                          |
 | `kf.context.watchParams(cb)` | subscribe to params the host passes in                                  |
 
-Use `kf.user.AppRoles` to gate UI by role (role ids/names are in `lib/kf-context.md`).
+Use `kf.user.AppRoles` to gate UI by role (role ids/names are in `lib/kf-context.md`) — different
+roles should get different UI, not the same screen with buttons hidden.
+
+### Roles — dev-only role switching (build a role switcher)
+
+For testing role-gated UI in a **dev** account:
+
+| Method | Returns / does |
+| --- | --- |
+| `await kf.app.getRoles()` | `{ roles, currentRoles }` — all app roles + the user's current role(s). **Dev only.** |
+| `await kf.app.switchRole({ roleId })` | switches the active role **live** (platform picks it up, no reload). Accepts `{ roleId }` or `{ roleName }` from `getRoles()`. **Dev only — blocked/no-op in production.** |
+
+```js
+const { roles } = await kf.app.getRoles();
+await kf.app.switchRole({ roleId: roles[1]._id }); // now viewing as that role
+```
+
+Put a small switcher (a `Select`/`DropdownMenu` over `roles`) **in the app shell**, then re-fetch.
+**Guard it to dev:** these throw outside a dev account — wrap `getRoles()` in a try/catch and only
+render the switcher when it resolves, so it simply doesn't appear in production.
 
 ---
 

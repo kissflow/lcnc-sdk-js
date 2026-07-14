@@ -2,19 +2,22 @@
 
 Two rules above all:
 
-1. **The bundled demo (Acme dashboard) is a *wiring* reference, not a design template.**
-   It shows how routing, the layout shell, the theme system, and the SDK connect —
-   nothing more. **Don't reskin it.** Before building, delete `src/pages/*` and
-   `src/data/*` and design fresh for *this* app's domain and data models
-   (`lib/kf-context.md`). A finance-approvals app and a field-inspection app should look
-   like different products, not the demo with renamed labels.
+1. **Everything you can SEE is a *wiring reference* — build the app's own UI, don't inherit the demo.**
+   The Acme dashboard (`src/pages/*`, `src/data/*`) **and the shell** (`src/components/app-shell.jsx`)
+   exist only to show HOW the pieces connect — routing, the `<KfApp layout=…>` mechanism, navigation
+   (`NAV_ITEMS` → `KfLink` / `useKfRouter`), the theme system, dark mode, the mobile drawer, the SDK.
+   **None of it is a base to tweak.** Before building: **delete `src/pages/*` + `src/data/*`, and
+   rebuild `src/components/app-shell.jsx` from scratch** for THIS app. Learn the nav + global wiring
+   from the default, then design your own shell and screens. A finance-approvals app and a
+   field-inspection app must look like **different products** — not the demo with renamed labels and
+   a recoloured sidebar.
 
-   **Keep `src/components/ui/*` (the shadcn/ui primitives) as your library** — but
-   `src/components/app-shell.jsx` and `src/components/form/*` are **starting points to ADAPT,
-   not fixtures to keep.** Shipping either one essentially unchanged (recoloured at most) is the
-   single biggest reason generated apps feel generic — see "Adapt the shell + the record form".
+   **The only things you keep as-is:** the shadcn/ui primitives in `src/components/ui/*` (your
+   component library) and the app-ui framework wiring (`KfApp` / `layout`, `KfLink`, `useKfRouter`,
+   the theme registry, the dynamic `Form` engine). The shell, the navigation, the pages, and how a
+   record form is presented are **all yours to design** — see "Build the app's shell + record form".
 
-2. **Design for a 2025 bar.** Generated UIs tend to look dated. Hit the bar below.
+2. **Design for a 2026 bar.** Generated UIs tend to look dated. Hit the bar below.
 
 ---
 
@@ -94,26 +97,46 @@ Pick the structure from what the app *does* and its data — don't default to
 - A single entity to manage → **focused form / detail page**, no nav at all.
 
 Match navigation to scope: 1–2 areas need no sidebar (just a header); 3+ areas warrant
-the shell's sidebar or top tabs. Don't add chrome you don't need.
+a sidebar or top tabs. Don't add chrome you don't need.
 
-## Adapt the shell + the record form — MANDATORY
+## Build the app's shell + record form — MANDATORY (don't inherit the defaults)
 
-Two scaffold pieces are working *starting points*, not finished UI, and the default failure is
-shipping them almost untouched. Don't:
+The scaffold's `app-shell.jsx` and the dynamic `Form` are **references + working defaults, not a
+base to tweak.** The #1 reason generated apps all look the same is shipping the default shell with
+new colours and nav items. Instead:
 
-- **App shell (`src/components/app-shell.jsx`)** — do NOT merely recolour it and add nav items.
-  Pick the shell that fits THIS app + audience and rebuild it accordingly: a consumer / mobile
-  app usually wants a **bottom tab-bar**; an admin/ops tool a **sidebar**; a single-purpose tool
-  just a **top header** (or no chrome — see Structure above). Restructure the header (brand,
-  search, profile, notifications, role switch), the nav shape, and the content frame to the
-  domain. Two different apps must have visibly different shells — not the same sidebar in a
-  different colour.
-- **Record form (`src/components/form`)** — the dynamic Form renders every field generically;
-  that is a functional default, not a designed form. For each record you MUST adapt it to the
-  app + the flow: group and order fields into meaningful **sections**, de-emphasise or hide the
-  noise, choose the right chrome for the context (inline panel vs `Dialog` vs `Sheet` vs full
-  page), and style it with the app's tokens, spacing, and section headers so it reads as built
-  for this app. Never drop the raw default Form into a modal and call it done.
+- **App shell (`src/components/app-shell.jsx`) — REBUILD it for this app.** The default only exists
+  to show the mechanics (the `layout` prop, `NAV_ITEMS` → `KfLink`, dark toggle, theme switcher,
+  mobile drawer). Design the shell the app actually needs: pick the pattern from the audience + use
+  case — a consumer / mobile app → a **bottom tab-bar**; an admin / ops tool → a **sidebar**; a
+  focused single-purpose tool → a **top header** (or no chrome at all — see Structure). Design the
+  brand, the nav shape + labels + icons, and the global chrome (search, profile, notifications, a
+  dev role switcher — see below) from the domain. **Two different apps must have visibly different
+  shells.** Litmus test: if your shell is the default sidebar with a new logo + colours, you haven't
+  done this.
+  - **Global concerns live in the shell** — app-wide providers, the theme + dark toggle, the
+    top-level navigation, and (in dev) the role switcher. Anything every screen needs goes here.
+- **Record form (`src/components/form`) — design it per record.** The dynamic Form renders every
+  field generically; that's a functional default, not a designed form. For each record you MUST
+  group + order fields into meaningful **sections**, hide the noise, choose the right chrome (inline
+  panel vs `Dialog` vs `Sheet` vs full page), and style it with the app's tokens + section headers.
+  Never drop the raw default Form into a modal and call it done.
+
+## Role-gate the UI — and add a dev role switcher
+
+Kissflow apps are multi-role, and each role should get a **different UI** — not the same screen with
+buttons hidden. Gate nav, pages, and actions by role using `kf.user.AppRoles` (role ids/names are in
+`lib/kf-context.md`): a Passenger and an Admin should get different navigation and different screens.
+
+To build + test those role-specific views in **dev**, use the SDK's dev-only role switch:
+- `const { roles, currentRoles } = await kf.app.getRoles()` — all app roles + the user's current role(s).
+- `await kf.app.switchRole({ roleId })` (or `{ roleName }`) — switches the active role **live** (the
+  platform picks it up, no reload). **Dev accounts only — blocked / no-op in production.**
+
+**Put a small role switcher in the shell** (a `Select` / `DropdownMenu` over `roles` that calls
+`switchRole`, then re-fetches) so testers can flip roles in dev. **Guard it to dev:** the methods
+throw outside a dev account, so wrap `getRoles()` in a try/catch and only render the switcher when it
+resolves — it then simply doesn't appear in production.
 
 ## Data patterns — multi-flow reads & derived metrics
 
@@ -139,7 +162,8 @@ Two patterns that keep multi-flow, report-derived apps robust:
 
 ## Polish checklist (before you call it done)
 
-- [ ] Looks nothing like the demo dashboard.
+- [ ] Looks nothing like the demo dashboard — and the **shell is purpose-built** (not the default sidebar recoloured).
+- [ ] Nav, pages & actions are **role-gated** (`kf.user.AppRoles`); a **dev role switcher** is in the shell.
 - [ ] Built on shadcn/ui primitives (+ custom components where the domain needs them).
 - [ ] Zero hardcoded colours — semantic tokens only; works in light **and** dark.
 - [ ] Loading + empty + error states for every data view.

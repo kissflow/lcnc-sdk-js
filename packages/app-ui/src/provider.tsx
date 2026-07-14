@@ -4,16 +4,9 @@ import KFSDK from "@abdul-kissflow/lowcode-client-sdk";
 import { KfContext } from "./context";
 
 import type { KfContextValue, KfInstance } from "./context";
-import type { KfSchema } from "./offline/schema";
 import type { ReactNode } from "react";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// TEMPORARILY SIMPLIFIED: the app runs ONLY inside Kissflow, against the real SDK.
-// The offline-mock / live-proxy / role-switcher dev modes are disabled. The full
-// original 3-mode implementation is preserved in `provider.tsx.orig` next to this
-// file — to restore it, copy that back over this file (and re-enable the
-// `kfLiveProxy()` plugin in vite.config.js + the `devSchema` wiring if needed).
-// ─────────────────────────────────────────────────────────────────────────────
+// SDK-only, frame-aware: the app runs ONLY inside Kissflow, against the real SDK.
 
 interface KfProviderProps {
     children: ReactNode;
@@ -21,12 +14,6 @@ interface KfProviderProps {
     loader?: ReactNode;
     /** Rendered when not running inside Kissflow (or the SDK fails to init). */
     fallback?: ReactNode;
-    /**
-     * Synced app schema. Currently IGNORED — offline/live dev mode is disabled, so
-     * the app only runs inside the Kissflow iframe. Kept on the prop so callers
-     * don't need to change; re-enable via `provider.tsx.orig`.
-     */
-    devSchema?: KfSchema;
 }
 
 type Mode = "init" | "online" | "error";

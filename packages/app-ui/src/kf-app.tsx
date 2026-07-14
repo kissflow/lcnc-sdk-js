@@ -7,7 +7,6 @@ import { RouteSync } from "./route-sync";
 
 import type { ComponentType, ReactNode } from "react";
 import type { RouteObject } from "react-router-dom";
-import type { KfSchema } from "./offline/schema";
 
 interface KfAppProps {
   /** Route table — typically `import routes from "~react-pages"`. */
@@ -21,12 +20,6 @@ interface KfAppProps {
   layout?: ComponentType<{ children: ReactNode }>;
   loader?: ReactNode;
   fallback?: ReactNode;
-  /**
-   * Synced app schema (`import schema from "./lib/kf-schema.json"`). Enables
-   * offline dev mode: outside Kissflow the app boots against a mock seeded from
-   * this schema, with a role switcher. Ignored in production / inside Kissflow.
-   */
-  devSchema?: KfSchema;
 }
 
 function RoutedApp({ routes }: { routes: Array<RouteObject> }) {
@@ -54,7 +47,7 @@ function PageTitleProvider({ children }: { children: ReactNode }) {
  * createRoot(el).render(<KfApp routes={routes} layout={AppShell} />);
  * ```
  */
-export function KfApp({ routes, layout: Layout, loader, fallback, devSchema }: KfAppProps) {
+export function KfApp({ routes, layout: Layout, loader, fallback }: KfAppProps) {
   const content = (
     <Suspense fallback={loader ?? null}>
       <RoutedApp routes={routes} />
@@ -62,7 +55,7 @@ export function KfApp({ routes, layout: Layout, loader, fallback, devSchema }: K
   );
 
   return (
-    <KfProvider loader={loader} fallback={fallback} devSchema={devSchema}>
+    <KfProvider loader={loader} fallback={fallback}>
       <PageTitleProvider>
         <MemoryRouter>
           <RouteSync />
