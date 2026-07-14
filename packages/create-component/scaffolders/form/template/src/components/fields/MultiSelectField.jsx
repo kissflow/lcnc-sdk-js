@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FieldError } from "./FieldError.jsx";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 export function MultiSelectField({
   field,
@@ -68,10 +69,7 @@ export function MultiSelectField({
 
   return (
     <div className="min-w-0 space-y-2">
-      <label className="block text-sm font-semibold text-foreground">
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <button

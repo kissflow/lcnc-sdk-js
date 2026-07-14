@@ -6,6 +6,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { FieldError } from "./FieldError.jsx";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 export function BooleanField({
   field,
@@ -23,13 +24,7 @@ export function BooleanField({
 
   return (
     <div className="space-y-2">
-      <label
-        htmlFor={field.Id}
-        className="block text-sm font-semibold text-foreground"
-      >
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} htmlFor={field.Id} />
       <Select
         value={value ? "true" : "false"}
         onValueChange={handleChange}

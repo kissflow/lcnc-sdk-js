@@ -154,7 +154,7 @@ export function SectionTable({
               <th key={col.Id} className={t.thClass}>
                 {col.Name}
                 {col.Required && (
-                  <span className="text-destructive ml-0.5">*</span>
+                  <span className="text-destructive ml-1">*</span>
                 )}
               </th>
             ))}

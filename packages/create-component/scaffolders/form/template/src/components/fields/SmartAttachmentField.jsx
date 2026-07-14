@@ -8,6 +8,7 @@ import {
   FileImage
 } from "lucide-react";
 import { FieldError } from "./FieldError.jsx";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 // Matches the platform's SMART_ATTACHMENT_WIDGET constants
 // (widgets/common/src/libs/document.parser.service.js)
@@ -106,14 +107,13 @@ export function SmartAttachmentField({
 
   return (
     <div className="space-y-2">
-      <label
+      <FieldLabel
+        field={field}
         htmlFor={field.Id}
         className="flex items-center gap-1.5 text-sm font-semibold text-foreground"
       >
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
         <Sparkles className="w-3.5 h-3.5 text-info" />
-      </label>
+      </FieldLabel>
       <div
         id={field.Id}
         className="space-y-2 border border-input rounded-lg p-3"

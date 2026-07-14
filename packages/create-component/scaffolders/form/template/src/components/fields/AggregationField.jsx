@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 const formatValue = (type, value) => {
   if (value === null || value === undefined || value === "") return "";
@@ -20,13 +21,7 @@ export function AggregationField({ field, value }) {
 
   return (
     <div className="space-y-2">
-      <label
-        htmlFor={field.Id}
-        className="block text-sm font-semibold text-foreground"
-      >
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} htmlFor={field.Id} />
       <div className="relative">
         {isCurrency && (
           <span className="absolute left-3 top-2.5 text-muted-foreground text-sm">

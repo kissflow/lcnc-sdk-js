@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FieldError } from "./FieldError.jsx";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 export function NumberField({
   field,
@@ -11,13 +12,7 @@ export function NumberField({
 }) {
   return (
     <div className="space-y-2">
-      <label
-        htmlFor={field.Id}
-        className="block text-sm font-semibold text-foreground"
-      >
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} htmlFor={field.Id} />
       <Input
         id={field.Id}
         type="number"

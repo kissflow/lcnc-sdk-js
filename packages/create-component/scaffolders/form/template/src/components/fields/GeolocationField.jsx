@@ -1,6 +1,7 @@
 import { Loader2, MapPin, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FieldError } from "./FieldError.jsx";
+import { FieldLabel } from "./FieldLabel.jsx";
 import { useGeolocationPicker } from "./useGeolocationPicker.js";
 
 export function GeolocationField({
@@ -29,13 +30,7 @@ export function GeolocationField({
 
   return (
     <div className="space-y-2">
-      <label
-        htmlFor={field.Id}
-        className="block text-sm font-semibold text-foreground"
-      >
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} htmlFor={field.Id} />
 
       {value?.Latitude && value?.Longitude ? (
         <div

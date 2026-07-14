@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Plus, X, Check } from "lucide-react";
 import { FieldError } from "./FieldError.jsx";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 export function ChecklistField({
   field,
@@ -92,10 +93,7 @@ export function ChecklistField({
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-semibold text-foreground">
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} />
 
       <div className="border border-input rounded-lg p-3 space-y-2">
         {/* Progress bar — only when there are items */}

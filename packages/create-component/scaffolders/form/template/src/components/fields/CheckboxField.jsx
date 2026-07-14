@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FieldError } from "./FieldError.jsx";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 export function CheckboxField({
   field,
@@ -41,10 +42,7 @@ export function CheckboxField({
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-semibold text-foreground">
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} />
       <div className="space-y-2 border border-input rounded-lg p-3">
         {loading ? (
           <p className="text-sm text-muted-foreground">Loading options...</p>

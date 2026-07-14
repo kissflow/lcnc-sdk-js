@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FieldError } from "./FieldError.jsx";
+import { FieldLabel } from "./FieldLabel.jsx";
 
 // Value: full record object { _id, Name, ...displayFields } or null.
 
@@ -151,10 +152,7 @@ export function LookupField({
 
   return (
     <div className="min-w-0 space-y-2">
-      <label className="block text-sm font-semibold text-foreground">
-        {field.Name}
-        {field.Required && <span className="text-destructive ml-1">*</span>}
-      </label>
+      <FieldLabel field={field} />
 
       {/* Trigger */}
       <button
