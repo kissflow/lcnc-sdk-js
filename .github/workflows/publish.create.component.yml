@@ -31,14 +31,14 @@ jobs:
           version: 9.15.0
 
       - name: Install dependencies
-        run: pnpm install --filter=create-kf-component --frozen-lockfile --strict-peer-dependencies=false
+        run: pnpm install --filter=@kissflow/create-component --frozen-lockfile --strict-peer-dependencies=false
 
       - name: git config
         run: |
           git config --global user.email "saravanan.10393@gmail.com"
           git config --global user.name "sara"
 
-      - name: Publish create-kf-component to npm registry
+      - name: Publish create-component to npm registry
         run: pnpm publish:create-component
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -14,7 +14,7 @@ import { isValidPackageName, makeDirectory } from "../scaffolders/utils.js";
 import { join } from "path";
 
 // Non-interactive flags (so AI agents / CI can scaffold in one command):
-//   create-kf-component --target page --name my-page --yes
+//   create-component --target page --name my-page --yes
 // Any value not supplied as a flag falls back to an interactive prompt, unless
 // --yes is set (then a missing required value is an error instead of a prompt).
 const { values: flags } = parseArgs({
