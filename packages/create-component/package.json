@@ -1,6 +1,6 @@
 {
   "name": "create-kf-component",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "CLI that scaffolds Kissflow custom page, form, and form-field component projects.",
   "main": "index.js",
   "bin": {
