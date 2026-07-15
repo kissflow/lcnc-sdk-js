@@ -10,7 +10,7 @@ import { isValidPackageName, makeDirectory } from "../scaffolders/utils.js";
 import { join } from "path";
 
 // Non-interactive flags (so AI agents / CI can scaffold in one command):
-//   create-kf-app --name my-app --yes
+//   create-app --name my-app --yes
 // Any value not supplied as a flag falls back to an interactive prompt, unless
 // --yes is set (then a missing required value is an error instead of a prompt).
 const { values: flags } = parseArgs({

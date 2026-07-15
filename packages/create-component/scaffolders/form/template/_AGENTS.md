@@ -3,7 +3,7 @@
 Guidance for AI coding agents (Claude Code and others) working in this project.
 This is a **Kissflow custom Form component** — a standalone Vite/React app that
 gets embedded as an iframe inside a Kissflow process/dataform/board form,
-scaffolded via `create-kf-component --target form`.
+scaffolded via `create-component --target form`.
 
 For the full `useForm` hook API (parameters, actions, error handling, child
 tables, etc.) see [`README.md`](./README.md) — read it before touching

@@ -1,10 +1,10 @@
 {
-  "name": "create-kf-component",
+  "name": "@kissflow/create-component",
   "version": "0.1.0",
   "description": "CLI that scaffolds Kissflow custom page, form, and form-field component projects.",
   "main": "index.js",
   "bin": {
-    "create-kf-component": "bin/index.js"
+    "create-component": "bin/index.js"
   },
   "publishConfig": {
     "access": "public"
