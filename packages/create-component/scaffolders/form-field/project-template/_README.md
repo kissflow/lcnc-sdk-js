@@ -1,6 +1,6 @@
 # <%= projectName %>
 
-This is a Kissflow's custom form field project, scaffolded using `@kissflow/create-kf-component`.
+This is a Kissflow's custom form field project, scaffolded using `create-kf-component`.
 
 ### To install dependencies,
 
