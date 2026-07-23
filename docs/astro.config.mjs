@@ -27,8 +27,20 @@ export default defineConfig({
                     link: '/gettingstarted',
                 },
                 {
-                    label: 'Utilities',
-                    link: '/utils',
+                    label: 'Build',
+                    autogenerate: { directory: 'build' },
+                },
+                {
+                    label: 'Account & User',
+                    autogenerate: { directory: 'account' },
+                },
+                {
+                    label: 'Client',
+                    autogenerate: { directory: 'client' },
+                },
+                {
+                    label: 'API',
+                    link: '/api',
                 },
                 {
                     label: 'Context',
@@ -41,10 +53,6 @@ export default defineConfig({
                 {
                     label: 'Application',
                     autogenerate: { directory: 'app' },
-                },
-                {
-                    label: 'Custom Component',
-                    autogenerate: { directory: 'components' },
                 },
                 {
                     label: 'Formatter',

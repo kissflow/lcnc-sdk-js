@@ -1,5 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import { Form } from "../form";
+import { CustomComponentForm } from "../form";
 import { requireFieldAsync } from "../utils/validation";
 import {
     DataformItem,
@@ -15,7 +15,7 @@ import {
 } from "../types/external";
 
 export class Dataform extends BaseSDK {
-    private _id: string;
+    protected _id: string;
 
     constructor(flowId: string) {
         super();
@@ -167,6 +167,33 @@ export class Dataform extends BaseSDK {
         });
     }
 
+    getFieldOptions(
+        options?: DataformFieldOptions
+    ): Promise<DataformQueryResponse> {
+        return this._postMessageAsync(
+            LISTENER_CMDS.DATAFORM_GET_FIELD_OPTIONS,
+            {
+                flowId: this._id,
+                instanceId: options?.instanceId || "",
+                fieldId: options?.fieldId || "",
+                fieldType: options?.fieldType,
+                tableId: options?.tableId,
+                tableRowId: options?.tableRowId,
+                pageNumber: options?.pageNumber,
+                pageSize: options?.pageSize,
+                searchValue: options?.searchValue
+            }
+        );
+    }
+}
+
+/**
+ * Dataform with custom-component-only capabilities.
+ *
+ * Returned by `kf.app.getDataform()` inside a custom component. Adds `initForm`,
+ * which is not available in the Low/No-code (Run Script) SDKs.
+ */
+export class CustomComponentDataform extends Dataform {
     /**
      * Initialize a form with all necessary data (schema, item data, form store)
      * This is the recommended way to create a custom form for dataform records
@@ -189,34 +216,18 @@ export class Dataform extends BaseSDK {
      * const form = await dataform.initForm();
      * await form.updateField({ firstName: "John" });
      */
-    initForm(instanceId?: string, viewId?: string): Promise<Form> {
+    initForm(instanceId?: string, viewId?: string): Promise<CustomComponentForm> {
         return this._postMessageAsync(LISTENER_CMDS.DATAFORM_INIT_FORM, {
             flowId: this._id,
             instanceId: instanceId || "",
             viewId: viewId || ""
         }).then((response: any) => {
             // The response contains the storeId, return a Form instance
-            return new Form(
+            return new CustomComponentForm(
                 response.storeId || instanceId || "",
                 this._id,
                 response.itemId || instanceId
             );
         });
-    }
-
-    getFieldOptions(
-        options?: DataformFieldOptions
-    ): Promise<DataformQueryResponse> {
-        return this._postMessageAsync(
-            LISTENER_CMDS.DATAFORM_GET_FIELD_OPTIONS,
-            {
-                flowId: this._id,
-                instanceId: options?.instanceId || "",
-                fieldId: options?.fieldId || "",
-                fieldType: options?.fieldType,
-                tableId: options?.tableId,
-                tableRowId: options?.tableRowId
-            }
-        );
     }
 }

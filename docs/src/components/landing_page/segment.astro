@@ -1,7 +1,7 @@
 ---
 import CustomCard from "./card.astro";
 import { LinkButton, CardGrid } from "@astrojs/starlight/components";
-import { API_PLATFORM_URL, SDK_DOCS_URL } from "~/constants";
+import { API_PLATFORM_URL, SDK_DOCS_URL, BUILD_URL } from "~/constants";
 
 console.log("dev check ----- ", import.meta.env.DEV);
 ---
@@ -43,7 +43,7 @@ console.log("dev check ----- ", import.meta.env.DEV);
   <CustomCard
     title={"Kissflow SDK"}
       description={
-      "Make use of our feature-rich development kit to achieve manual no-code tasks using Javascript."}
+      "Interact with Kissflow from event-editor scripts and the custom Apps & Components you build, using JavaScript."}
   >
     <Fragment slot="list">
       <ul>
@@ -54,7 +54,7 @@ console.log("dev check ----- ", import.meta.env.DEV);
           <b>Flexible development toolkit.</b>
         </li>
         <li>
-          <b>Seamless interaction between components and your app.</b>
+          <b>Works in the event editor and in custom Apps & Components.</b>
         </li>
       </ul>
     </Fragment>
@@ -68,6 +68,72 @@ console.log("dev check ----- ", import.meta.env.DEV);
         iconPlacement="end"
       >
         Explore our SDK resources
+      </LinkButton>
+    </Fragment>
+  </CustomCard>
+
+
+  <CustomCard
+    title={"Custom App"}
+    description={
+      "Build a standalone custom UI that runs as its own app inside Kissflow."}
+  >
+    <Fragment slot="list">
+      <ul>
+        <li>
+          <b>Scaffold with @kissflow/create-app.</b>
+        </li>
+        <li>
+          <b>A full-page custom UI for your app.</b>
+        </li>
+        <li>
+          <b>Import directly into Kissflow as a zip.</b>
+        </li>
+      </ul>
+    </Fragment>
+
+    <Fragment slot="action">
+      <LinkButton
+        class={"card-button"}
+        href={`${BUILD_URL}/custom-app`}
+        variant="primary"
+        icon="right-arrow"
+        iconPlacement="end"
+      >
+        Build a custom App
+      </LinkButton>
+    </Fragment>
+  </CustomCard>
+
+
+  <CustomCard
+    title={"Custom Component"}
+    description={
+      "Build reusable Page, Form, and Form field custom components embedded within Kissflow."}
+  >
+    <Fragment slot="list">
+      <ul>
+        <li>
+          <b>Scaffold with @kissflow/create-component.</b>
+        </li>
+        <li>
+          <b>Page, Form, and Form field types.</b>
+        </li>
+        <li>
+          <b>Import directly into Kissflow as a zip.</b>
+        </li>
+      </ul>
+    </Fragment>
+
+    <Fragment slot="action">
+      <LinkButton
+        class={"card-button"}
+        href={`${BUILD_URL}/custom-component/about`}
+        variant="primary"
+        icon="right-arrow"
+        iconPlacement="end"
+      >
+        Build a custom component
       </LinkButton>
     </Fragment>
   </CustomCard>

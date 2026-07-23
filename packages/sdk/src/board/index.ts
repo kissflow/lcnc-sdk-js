@@ -1,5 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import { Form } from "../form";
+import { CustomComponentForm } from "../form";
 import {
     BoardItem,
     BoardGetItemOptions,
@@ -15,7 +15,7 @@ import {
 import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
 
 export class Board extends BaseSDK {
-    private _id: string;
+    protected _id: string;
 
     constructor(flowId: string) {
         super();
@@ -175,41 +175,6 @@ export class Board extends BaseSDK {
     }
 
     /**
-     * Initialize a form for a board item with all necessary setup
-     * Fetches schema, item data, creates and initializes the form store
-     *
-     * @param instanceId - Optional instance ID. If omitted, creates a new board item
-     * @param viewId - Optional view ID to scope the form's schema/permissions to a specific view
-     * @returns Promise with Form instance ready to use
-     *
-     * @example
-     * // Create new board item
-     * const board = kf.app.getBoard("Inventory");
-     * const form = await board.initForm();
-     * await form.updateField({ Name: "New Item" });
-     *
-     * // Edit existing board item
-     * const form = await board.initForm("item_123");
-     * const data = await form.toJSON();
-     *
-     * // Edit existing board item scoped to a view
-     * const form = await board.initForm("item_123", "Inventory_View");
-     */
-    initForm(instanceId?: string, viewId?: string): Promise<Form> {
-        return this._postMessageAsync(LISTENER_CMDS.BOARD_INIT_FORM, {
-            flowId: this._id,
-            instanceId: instanceId || "",
-            viewId: viewId || ""
-        }).then((response: any) => {
-            return new Form(
-                response.storeId || instanceId || "",
-                this._id,
-                response.itemId || instanceId
-            );
-        });
-    }
-
-    /**
      * Get field options for dropdown/lookup fields
      * @param options - Field options (instanceId, fieldId)
      * @returns Promise containing the field options
@@ -233,7 +198,53 @@ export class Board extends BaseSDK {
             fieldId: options.fieldId,
             fieldType: options.fieldType,
             tableId: options?.tableId,
-            tableRowId: options?.tableRowId
+            tableRowId: options?.tableRowId,
+            pageNumber: options?.pageNumber,
+            pageSize: options?.pageSize,
+            searchValue: options?.searchValue
+        });
+    }
+}
+
+/**
+ * Board with custom-component-only capabilities.
+ *
+ * Returned by `kf.app.getBoard()` inside a custom component. Adds `initForm`,
+ * which is not available in the Low/No-code (Run Script) SDKs.
+ */
+export class CustomComponentBoard extends Board {
+    /**
+     * Initialize a form for a board item with all necessary setup
+     * Fetches schema, item data, creates and initializes the form store
+     *
+     * @param instanceId - Optional instance ID. If omitted, creates a new board item
+     * @param viewId - Optional view ID to scope the form's schema/permissions to a specific view
+     * @returns Promise with Form instance ready to use
+     *
+     * @example
+     * // Create new board item
+     * const board = kf.app.getBoard("Inventory");
+     * const form = await board.initForm();
+     * await form.updateField({ Name: "New Item" });
+     *
+     * // Edit existing board item
+     * const form = await board.initForm("item_123");
+     * const data = await form.toJSON();
+     *
+     * // Edit existing board item scoped to a view
+     * const form = await board.initForm("item_123", "Inventory_View");
+     */
+    initForm(instanceId?: string, viewId?: string): Promise<CustomComponentForm> {
+        return this._postMessageAsync(LISTENER_CMDS.BOARD_INIT_FORM, {
+            flowId: this._id,
+            instanceId: instanceId || "",
+            viewId: viewId || ""
+        }).then((response: any) => {
+            return new CustomComponentForm(
+                response.storeId || instanceId || "",
+                this._id,
+                response.itemId || instanceId
+            );
         });
     }
 }

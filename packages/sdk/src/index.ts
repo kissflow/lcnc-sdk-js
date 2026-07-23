@@ -1,12 +1,12 @@
 import { BaseSDK, LISTENER_CMDS } from "./core";
 
-import { Application, Page, CustomComponent } from "./app";
+import { CustomComponentApplication, Page, CustomComponent } from "./app";
 import { Client, Formatter } from "./utils";
 
 import { userObject, accountObject, environmentObject } from "./types/external";
 
 class CustomComponentSDK extends BaseSDK {
-	app: Application;
+	app: CustomComponentApplication;
 	page: Page;
 	user: userObject;
 	account: accountObject;
@@ -32,7 +32,7 @@ class CustomComponentSDK extends BaseSDK {
 			{},
 			true,
 			(data) => {
-				this.app = new Application(data, true);
+				this.app = new CustomComponentApplication(data, true);
 				this.page = new Page(data, true);
 				this.context = new CustomComponent(data.componentId);
 				this.client = new Client();

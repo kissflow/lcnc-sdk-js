@@ -7,7 +7,7 @@ sidebar:
 
 - The property `kf.app.page.popup` returns the active popup instance opened inside the page.
 - The property `kf.app.page.popup._id` lets you the get ID of the popup.
-- The method `kf.app.page.openPopup(id)` returns this popup class instance.
+- The method `kf.app.page.openPopup(id)` opens the popup; it does not return the popup instance. Use `kf.app.page.popup` afterward to access the active popup.
 
 Following methods are available for a popup instance:
 
@@ -44,7 +44,7 @@ Popup parameters are optional.
 
 ### Returns
 
-Returns an instance of [Popup](/app/page/popup/).
+This command does not return a [Popup](/app/page/popup/) instance. Use the `kf.app.page.popup` property afterward to access the active popup instance.
 
 ## Popup parameters
 
@@ -89,6 +89,24 @@ This command retrieves one of the popup parameter’s values.
 ```js
 let value = await kf.app.page.popup.getParameter("parameterId");
 ```
+
+## Get component
+
+This command lets you retrieve a component instance scoped to the popup.
+
+###### Parameters
+
+| Parameter   | Type   | Description                 |
+| ----------- | ------ | ---------------------------- |
+| componentId | String | Unique ID of the Component. |
+
+###### Syntax
+
+```js
+let componentInstance = await kf.app.page.popup.getComponent(componentId);
+```
+
+Returns a [component instance](/app/page/component/).
 
 ## Close popup
 
