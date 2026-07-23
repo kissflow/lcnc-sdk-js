@@ -15,4 +15,5 @@ A table’s class instance offers the following methods:
 4. deleteRows()
 5. getRow()
 6. getRows()
-7. toJSON()
+7. getSelectedRows()
+8. toJSON()

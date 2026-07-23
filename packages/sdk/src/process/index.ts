@@ -1,5 +1,5 @@
 import { BaseSDK, LISTENER_CMDS } from "../core";
-import { Form } from "../form";
+import { CustomComponentForm } from "../form";
 import {
     ProcessItem,
     ProcessGetItemOptions,
@@ -28,7 +28,7 @@ import {
 import { requireFieldAsync, requireFieldsAsync } from "../utils/validation";
 
 export class Process extends BaseSDK {
-    private _id: string;
+    protected _id: string;
 
     constructor(flowId: string) {
         super();
@@ -502,40 +502,6 @@ export class Process extends BaseSDK {
         });
     }
 
-    /**
-     * Initialize a form with all necessary data (schema, item data, form store)
-     * This is the recommended way to create a custom form for dataform records
-     * It automatically handles fetching schema, item data, and initializing the form store
-     *
-     * @param instanceId - Optional instance ID of the dataform record. If omitted, creates a new record
-     * @returns Promise with Form instance ready to use
-     *
-     * @example
-     * // Load existing record
-     * const dataform = kf.app.getDataform("EmpMaster");
-     * const form = await dataform.initForm("emp_123");
-     * const data = await form.toJSON();
-     *
-     * // Create new record
-     * const form = await dataform.initForm();
-     * await form.updateField({ firstName: "John" });
-     */
-    initForm(instanceId?: string, activityInstanceId?: string): Promise<Form> {
-        return this._postMessageAsync(LISTENER_CMDS.PROCESS_INIT_FORM, {
-            flowId: this._id,
-            instanceId: instanceId || "",
-            activityInstanceId: activityInstanceId || ""
-        }).then((response: any) => {
-            // The response contains the storeId, return a Form instance
-            return new Form(
-                response.storeId || instanceId || "",
-                this._id,
-                response.itemId || instanceId,
-                response.activityInstanceId || activityInstanceId
-            );
-        });
-    }
-
     getFieldOptions(
         options?: ProcessFieldOptions
     ): Promise<ProcessQueryResponse> {
@@ -546,7 +512,10 @@ export class Process extends BaseSDK {
             fieldId: options?.fieldId || "",
             fieldType: options?.fieldType,
             tableId: options?.tableId,
-            tableRowId: options?.tableRowId
+            tableRowId: options?.tableRowId,
+            pageNumber: options?.pageNumber,
+            pageSize: options?.pageSize,
+            searchValue: options?.searchValue
         });
     }
 
@@ -579,6 +548,48 @@ export class Process extends BaseSDK {
             activityInstanceId: options.activityInstanceId,
             fieldId: options.fieldId,
             file: options.file
+        });
+    }
+}
+
+/**
+ * Process with custom-component-only capabilities.
+ *
+ * Returned by `kf.app.getProcess()` inside a custom component. Adds `initForm`,
+ * which is not available in the Low/No-code (Run Script) SDKs.
+ */
+export class CustomComponentProcess extends Process {
+    /**
+     * Initialize a form with all necessary data (schema, item data, form store)
+     * This is the recommended way to create a custom form for process instances
+     * It automatically handles fetching schema, item data, and initializing the form store
+     *
+     * @param instanceId - Optional instance ID of the process record. If omitted, creates a new instance
+     * @param activityInstanceId - Optional activity (task) instance the form is being filled for
+     * @returns Promise with Form instance ready to use
+     *
+     * @example
+     * // Start a new process instance
+     * const form = await process.initForm();
+     * await form.updateField({ LeaveType: "Annual" });
+     *
+     * // Continue an in-progress task
+     * const form = await process.initForm("item_123", "act_456");
+     * const data = await form.toJSON();
+     */
+    initForm(instanceId?: string, activityInstanceId?: string): Promise<CustomComponentForm> {
+        return this._postMessageAsync(LISTENER_CMDS.PROCESS_INIT_FORM, {
+            flowId: this._id,
+            instanceId: instanceId || "",
+            activityInstanceId: activityInstanceId || ""
+        }).then((response: any) => {
+            // The response contains the storeId, return a Form instance
+            return new CustomComponentForm(
+                response.storeId || instanceId || "",
+                this._id,
+                response.itemId || instanceId,
+                response.activityInstanceId || activityInstanceId
+            );
         });
     }
 }

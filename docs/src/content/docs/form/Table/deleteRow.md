@@ -30,5 +30,5 @@ worktableInstance.deleteRow(“table_row_Id”);
 
 :::note[Note]
 For bulk operations involving the deletion of more than a row, use the
-[deleteRow()](/form/table/deleterows/) instead.
+[deleteRows()](/form/table/deleterows/) instead.
 :::

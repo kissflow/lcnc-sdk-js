@@ -16,13 +16,12 @@ This command lets you open a specific page inside an app.
 ### Syntax
 
 ```js
-const pageInstance = kf.app.openPage("pageId");
+kf.app.openPage("pageId");
 ```
 
 ### Returns
 
-The above command returns the
-[Page instance](/app/page/).
+The above command does not return a [Page instance](/app/page/) — it resolves once the navigation request has been acknowledged. To interact with the opened page, retrieve its instance separately, for example via [`getComponent`](/app/page/component/).
 
 ### Example scenario
 

@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-Returns an instance of the Table class, providing access to methods such as addRow(), addRows(), deleteRow(), deleteRows(), getRow(), getRows(), and toJSON().
+Returns an instance of the Table class, providing access to methods such as addRow(), addRows(), deleteRow(), deleteRows(), getRow(), getRows(), getSelectedRows(), and toJSON().
 
 ### Parameter
 
@@ -16,7 +16,7 @@ Returns an instance of the Table class, providing access to methods such as addR
 ### Syntax
 
 ```js
-const tableInstance = kf.context.getTable(fieldId);
+const tableInstance = kf.context.getTable(tableId);
 ```
 
 ### Example

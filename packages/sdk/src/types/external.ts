@@ -202,7 +202,7 @@ export type ProcessDiscardItemOptions = {
     instanceId: string;
 };
 
-export type ProcessFieldOptions = {
+export type ProcessFieldOptions = BaseQueryOptions & {
     instanceId: string;
     activityInstanceId: string;
     fieldId: string;
@@ -280,7 +280,7 @@ export type DataformSubmitItemOptions = {
     viewId?: string;
 };
 
-export type DataformFieldOptions = {
+export type DataformFieldOptions = BaseQueryOptions & {
     instanceId: string;
     fieldId: string;
     /** Skip the server-side model lookup by supplying the field's type directly. */
@@ -326,7 +326,7 @@ export type BoardDiscardItemOptions = {
     instanceId: string;
 };
 
-export type BoardFieldOptions = {
+export type BoardFieldOptions = BaseQueryOptions & {
     instanceId: string;
     fieldId: string;
     /** Skip the server-side model lookup by supplying the field's type directly. */

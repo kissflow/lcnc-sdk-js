@@ -37,6 +37,10 @@ componentInstance.refresh();
 
 This command hides a component from a page.
 
+:::note[Deprecated]
+`hide()` is deprecated. Use condition visibility instead.
+:::
+
 ###### Syntax
 
 ```js
@@ -46,6 +50,10 @@ componentInstance.hide();
 ### Show
 
 This command renders a component that has been hidden previously in a page.
+
+:::note[Deprecated]
+`show()` is deprecated. Use condition visibility instead.
+:::
 
 ###### Syntax
 
