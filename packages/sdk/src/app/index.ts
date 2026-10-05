@@ -7,6 +7,7 @@ import { AppContext } from "../types/internal";
 import { rolesObject } from "../types/external";
 
 import { DecisionTable } from "./decisiontable";
+import { Agent } from "./agent";
 import { Dataform } from "../dataform";
 import { Board } from "../board";
 import { Process } from "../process";
@@ -47,6 +48,18 @@ export class Application extends BaseSDK {
 
 	getDecisionTable(flowId: string): DecisionTable {
 		return new DecisionTable(flowId);
+	}
+
+	/**
+	 * Get a published Custom Agent of this app by its id. The handle sends no request until you call one
+	 * of its methods; see {@link Agent}.
+	 *
+	 * @example
+	 * const agent = kf.app.getAgent("AgXXXXXXXXXX");
+	 * const { ExecutionId } = await agent.execute({ inputData: { request: "Two desks" } });
+	 */
+	getAgent(agentId: string): Agent {
+		return new Agent(agentId);
 	}
 
 	getDataform(flowId: string): Dataform {
@@ -131,5 +144,6 @@ class AppVariable extends BaseSDK {
 }
 
 export * from "./component";
+export { Agent };
 export { Page };
 export * from "./popup";
