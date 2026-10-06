@@ -411,9 +411,10 @@ export type AgentExecution = {
 
 /**
  * How an Agent call fails: `error` is the message text and `errorCode` either the platform code
- * (`KISSFLOW_ERROR_…`) or one of the SDK's own codes: `AGENT_HOST_TIMEOUT`, `AGENT_REQUEST_NOT_SENT`,
+ * (`KISSFLOW_ERROR_…`) or an `AGENT_…` code, including `AGENT_HOST_TIMEOUT`, `AGENT_REQUEST_NOT_SENT`,
  * `AGENT_EXECUTE_OUTCOME_UNKNOWN` (a run may have started), `AGENT_EXECUTE_NOT_SENT` (no run started),
- * `AGENT_HOST_UNSUPPORTED`, `AGENT_WATCH_INVALID_EVENT` and `AGENT_OBSERVATION_STOPPED`.
+ * `AGENT_HOST_UNSUPPORTED`, `AGENT_WATCH_INVALID_EVENT`, `AGENT_OBSERVATION_STOPPED`, and from the host
+ * `AGENT_READ_TIMEOUT` and `AGENT_OFFLINE`. The list may grow; fall back to `error` for an unknown code.
  */
 export type AgentError = {
     isError: true;

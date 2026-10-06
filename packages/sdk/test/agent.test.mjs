@@ -244,3 +244,33 @@ test("a stop the host cannot receive still ends the watch and reports the error"
 	await flush();
 	assert.deepEqual(errors.map((e) => e.errorCode), ["AGENT_HOST_UNSUPPORTED"]);
 });
+
+// The reply cleanup lives in the message listener every SDK consumer shares, so it is checked on ordinary
+// requests and on long-lived registrations too, not only on Agent calls.
+
+test("an ordinary request settles once; a repeated or unknown reply is ignored", async () => {
+	const settled = [];
+	kf.api("/flow/2/Ac1/items").then((value) => settled.push(value));
+	const sent = lastPosted("API");
+	reply(sent, { Data: [1] });
+	reply(sent, { Data: [2] });
+	send({ _req: { _id: "api-unknown", command: "API" }, resp: { Data: [3] } });
+	await flush();
+	assert.deepEqual(settled, [{ Data: [1] }]);
+});
+
+test("a long-lived registration keeps its events after requests settle, even a reply carrying its id", async () => {
+	const changes = [];
+	kf.context.watchParams((params) => changes.push(params));
+	const paramsChanged = (eventParams) =>
+		send({ isEvent: true, target: "CC1", eventName: "onCustomComponentParamsChange", eventParams });
+	paramsChanged({ step: 1 });
+	const request = kf.api("/flow/2/Ac1/items");
+	reply(lastPosted("API"), { Data: [] });
+	await request;
+	// A reply addressed to the registration's own id, as NDEFReader's commands are.
+	send({ _req: { _id: "CC1", command: "WINDOW_NDEF_READER_SCAN" }, resp: {} });
+	paramsChanged({ step: 2 });
+	await flush();
+	assert.deepEqual(changes, [{ step: 1 }, { step: 2 }]);
+});

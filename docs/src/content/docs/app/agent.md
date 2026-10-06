@@ -130,10 +130,12 @@ stop();
 ### Errors
 
 Methods reject (and `onWatchError` receives) `{ isError: true, error, errorCode }`.
-`errorCode` is a platform code (`KISSFLOW_ERROR_…`) or one of:
+`errorCode` is a platform code (`KISSFLOW_ERROR_…`) or an `AGENT_…` code, including:
 `AGENT_HOST_TIMEOUT`, `AGENT_REQUEST_NOT_SENT`, `AGENT_EXECUTE_OUTCOME_UNKNOWN`,
 `AGENT_EXECUTE_NOT_SENT`, `AGENT_HOST_UNSUPPORTED`, `AGENT_WATCH_INVALID_EVENT`,
-`AGENT_OBSERVATION_STOPPED`.
+`AGENT_OBSERVATION_STOPPED`, `AGENT_READ_TIMEOUT` (Kissflow did not answer a read in
+time; try again) and `AGENT_OFFLINE` (a read while the user is offline). Show the
+`error` text for a code you do not handle.
 
 ##### Example
 
