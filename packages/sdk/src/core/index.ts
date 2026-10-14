@@ -6,6 +6,10 @@ export function generateId(prefix = "lcncsdk") {
 	return `${prefix}-${nanoid()}`;
 }
 export const globalInstances = {};
+// Ids _postMessageAsync registered, so cleanup only ever removes entries it made.
+// Instances register themselves here too, under ids from the same generator
+// (see window/NDEFReader), so the key alone cannot tell the two apart.
+const pendingRequestIds = new Set<string>();
 
 function processResponse(req: object, resp: object) {
 	if (
@@ -47,9 +51,16 @@ function onMessage(event) {
 		let { _req: req, resp } = data;
 		if (req?._id) {
 			let targetInstance = globalInstances[req._id];
-			// A bounded request that timed out or was cancelled has no entry left for a late reply;
-			// dispatching anyway would throw in the one message listener every consumer shares.
-			if (targetInstance) targetInstance._dispatchMessageEvents(req, resp);
+			// Only _postMessageAsync registers an entry, and only the first reply finds it:
+			// a late or duplicate reply, or any reply to a _postMessage command, has none.
+			// Dispatching without this check turns those into a TypeError in the one message
+			// listener every consumer shares.
+			if (targetInstance) {
+				targetInstance._dispatchMessageEvents(req, resp);
+				if (pendingRequestIds.delete(req._id)) {
+					Reflect.deleteProperty(globalInstances, req._id);
+				}
+			}
 		}
 	}
 }
@@ -72,8 +83,9 @@ export class EventBase {
 
 	_removeEventListener(eventName: string, callBack?: any) {
 		if (callBack) {
-			let index = this.#listeners[eventName].findIndex(callBack);
-			index > -1 && this.#listeners[eventName].splice(index, 1);
+			const listeners = this.#listeners[eventName] || [];
+			const index = listeners.indexOf(callBack);
+			index > -1 && listeners.splice(index, 1);
 			return;
 		}
 		Reflect.deleteProperty(this.#listeners, eventName);
@@ -117,6 +129,7 @@ export class BaseSDK extends EventBase {
 			postMessage({ _id, command, ...args });
 
 			globalInstances[_id] = this;
+			pendingRequestIds.add(_id);
 
 			this._addEventListener(_id, async (data: any) => {
 				if (data?.errorMessage || data?.isError) {
@@ -150,6 +163,7 @@ export class BaseSDK extends EventBase {
 			settled = true;
 			clearTimeout(timer);
 			this._removeEventListener(_id);
+			pendingRequestIds.delete(_id);
 			Reflect.deleteProperty(globalInstances, _id);
 		};
 		const promise = new Promise((resolve, reject) => {
@@ -158,6 +172,7 @@ export class BaseSDK extends EventBase {
 				reject(options.timeoutError);
 			}, options.timeoutMs);
 			globalInstances[_id] = this;
+			pendingRequestIds.add(_id);
 			this._addEventListener(_id, (data: any) => {
 				release();
 				if (data?.errorMessage || data?.isError) reject(data);

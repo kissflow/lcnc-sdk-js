@@ -134,8 +134,11 @@ Methods reject (and `onWatchError` receives) `{ isError: true, error, errorCode 
 `AGENT_HOST_TIMEOUT`, `AGENT_REQUEST_NOT_SENT`, `AGENT_EXECUTE_OUTCOME_UNKNOWN`,
 `AGENT_EXECUTE_NOT_SENT`, `AGENT_HOST_UNSUPPORTED`, `AGENT_WATCH_INVALID_EVENT`,
 `AGENT_OBSERVATION_STOPPED`, `AGENT_READ_TIMEOUT` (Kissflow did not answer a read in
-time; try again) and `AGENT_OFFLINE` (a read while the user is offline). Show the
-`error` text for a code you do not handle.
+time; try again), `AGENT_OFFLINE` (a read while the user is offline),
+`AGENT_INVALID_REQUEST` (an Agent or run id that is not an id), `AGENT_NOT_IN_APP`
+(called outside an app), `AGENT_WATCH_ID_IN_USE`, `AGENT_UNEXPECTED_RESPONSE` and
+`AGENT_REQUEST_FAILED` (a network or unclassified failure). Show the `error` text for
+a code you do not handle.
 
 ##### Example
 
