@@ -398,13 +398,13 @@ export type AgentExecutionAccepted = {
 export type AgentExecution = {
     ExecutionId: string;
     Status: AgentExecutionStatus;
-    Stage: string;
+    Stage?: string;
     /** Present on `Completed`: one row per item, keyed by output `Key`. */
     Output?: { items: Array<Record<string, string | number | boolean>> };
     /** Present on `Failed`. */
     Error?: { Code: string; Retryable: boolean; Details?: unknown };
     Warnings?: Array<Record<string, unknown>>;
-    CreatedAt: string;
+    CreatedAt?: string;
     StartedAt?: string;
     CompletedAt?: string;
 };

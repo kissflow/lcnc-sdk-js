@@ -23,7 +23,7 @@
 		{
 			"label": "run custom agent",
 			"documentation": "Runs a published Custom Agent of this app and handles its result when it finishes",
-			"insertText": "const agent = kf.app.getAgent(\"${1:agentId}\");\nconst { ExecutionId } = await agent.execute({ inputData: { ${2:inputKey}: ${3:value} } });\nconst stopWatching = agent.onExecutionComplete(\n\tExecutionId,\n\t(execution) => {\n\t\tif (execution.Status === \"Failed\") return;\n\t\tconst items = execution.Output.items;\n\t},\n\t(error) => console.warn(error.errorCode)\n);"
+			"insertText": "let agentInstance = kf.app.getAgent(\"${1:agentId}\");\n let { ExecutionId } = await agentInstance.execute({ inputData: { ${2:inputKey}: ${3:value} } });\n let stopWatching = agentInstance.onExecutionComplete(ExecutionId, (execution) => { let items = execution.Output?.items; }, (error) => console.warn(error.errorCode));"
 		},
 		{
 			"label": "get local variable",

@@ -13,7 +13,7 @@ instance sends no request.
 
 ##### Parameters
 
-| Parameter | Type   |
+| Parameter | type   |
 | --------- | ------ |
 | agentId   | String |
 
@@ -61,7 +61,7 @@ finishes: use `onExecutionComplete` or `getExecution` for the result.
 
 ##### Parameters
 
-| Parameter         | Type   | Description                                        |
+| Parameter         | type   | Description                                        |
 | ----------------- | ------ | -------------------------------------------------- |
 | options.inputData | Object | Values keyed by the input `Key`s in the contract.  |
 

@@ -24,6 +24,7 @@
         "serve": "http-server -p 8080",
         "prepare": "pnpm run build",
         "publish-canary": "pnpm publish --tag canary",
+        "pretest": "pnpm run build",
         "test": "node --test \"test/*.test.mjs\""
     },
     "publishConfig": {

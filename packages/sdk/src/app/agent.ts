@@ -22,6 +22,15 @@ function sdkError(errorCode: string, error: string): AgentError {
 	return { isError: true, error, errorCode };
 }
 
+// The app's own callback runs inside the message listener every SDK call shares; its error must not escape there.
+function notify<T>(callback: ((value: T) => void) | undefined, value: T) {
+	try {
+		callback?.(value);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
 const NOT_SENT = sdkError("AGENT_REQUEST_NOT_SENT", "The request could not be sent to the host.");
 
 /**
@@ -147,13 +156,13 @@ export class Agent extends BaseSDK {
 			if (settled) return;
 			end();
 			tellHostToStop();
-			onWatchError?.(error);
+			notify(onWatchError, error);
 		};
 		const listener = (params: AgentExecution | AgentError) => {
 			if (settled) return;
 			if ((params as AgentError)?.isError) {
 				end();
-				onWatchError?.(params as AgentError);
+				notify(onWatchError, params as AgentError);
 				return;
 			}
 			const execution = params as AgentExecution;
@@ -162,7 +171,7 @@ export class Agent extends BaseSDK {
 				return;
 			}
 			end();
-			onComplete(execution);
+			notify(onComplete, execution);
 		};
 
 		this.activeWatches += 1;
