@@ -9,12 +9,13 @@ import {
 } from "../types/external";
 
 // A read that the host never answers fails instead of hanging (an older host ignores these commands).
-const READ_TIMEOUT_MS = 30_000;
+const READ_TIMEOUT_MS = 75_000;
 // Long enough for a slow acceptance; after it the run may or may not have started.
 const EXECUTE_TIMEOUT_MS = 60_000;
-const WATCH_ACK_TIMEOUT_MS = 15_000;
-// The host stops observing 330 s after registration; this covers a host that stops answering.
-const WATCH_DEADLINE_MS = 360_000;
+const WATCH_ACK_TIMEOUT_MS = 60_000;
+// The host stops observing 330 s after registration, after one last read of up to 60 s; this covers a host that
+// stops answering.
+const WATCH_DEADLINE_MS = 420_000;
 
 const TERMINAL_STATUSES = ["Completed", "Failed"];
 
@@ -115,7 +116,7 @@ export class Agent extends BaseSDK {
 	 * Be told once when a run finishes. `onComplete` gets the run on `Completed` or `Failed` (read
 	 * `Status`: a failed run is a result, not an error). `onWatchError` gets what stopped the
 	 * observation instead: an unsupported host, an access or network failure, or the observation limit
-	 * (`AGENT_OBSERVATION_STOPPED`, after about five minutes; the run may still finish, so read it later
+	 * (`AGENT_OBSERVATION_STOPPED`, after about six minutes; the run may still finish, so read it later
 	 * with {@link getExecution}). At most one of the two is called, at most once.
 	 *
 	 * Returns a function that stops observing. It never cancels the run.

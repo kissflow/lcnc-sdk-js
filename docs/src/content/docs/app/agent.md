@@ -107,7 +107,7 @@ const execution = await agent.getExecution(executionId);
 Calls `onComplete` once when the run finishes, with the same object
 `getExecution` returns. A `Failed` run is a result, so read `Status`.
 `onWatchError` is called instead if observation stops: the host does not
-support it, access was refused, or about five minutes passed
+support it, access was refused, or about six minutes passed
 (`AGENT_OBSERVATION_STOPPED`; the run may still finish, so read it again
 later). Returns a function that stops observing; it never cancels the run.
 

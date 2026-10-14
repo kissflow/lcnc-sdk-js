@@ -92,10 +92,10 @@ test("a host that never answers fails with a bounded error, and its late reply i
 	const agent = kf.app.getAgent("AgOne");
 	const contract = agent.getContract();
 	const run = agent.execute({ inputData: {} });
-	mock.timers.tick(30_000);
-	await assert.rejects(contract, { errorCode: "AGENT_HOST_TIMEOUT" });
-	mock.timers.tick(30_000);
+	mock.timers.tick(60_000);
 	await assert.rejects(run, { errorCode: "AGENT_EXECUTE_OUTCOME_UNKNOWN" });
+	mock.timers.tick(15_000);
+	await assert.rejects(contract, { errorCode: "AGENT_HOST_TIMEOUT" });
 	// Neither late reply may reach a listener or throw inside the shared message listener.
 	reply(lastPosted("CUSTOM_AGENT_GET_CONTRACT"), { AgentId: "AgOne", Definition: {}, Readiness: {} });
 	reply(lastPosted("CUSTOM_AGENT_EXECUTE"), { ExecutionId: "late", Status: "Queued" });
@@ -137,7 +137,7 @@ test("an old host that never acknowledges the watch reports unsupported and is t
 	const errors = [];
 	kf.app.getAgent("AgOne").onExecutionComplete("Ac1::Ae3", () => assert.fail("must not complete"), (error) => errors.push(error));
 	const watch = lastPosted("CUSTOM_AGENT_WATCH_EXECUTION");
-	mock.timers.tick(15_000);
+	mock.timers.tick(60_000);
 	await flush();
 	assert.deepEqual(errors.map((e) => e.errorCode), ["AGENT_HOST_UNSUPPORTED"]);
 	assert.equal(lastPosted("CUSTOM_AGENT_STOP_WATCH").watchId, watch.watchId);
@@ -153,7 +153,7 @@ test("observation stops after the client deadline when the host goes quiet", asy
 	const watch = lastPosted("CUSTOM_AGENT_WATCH_EXECUTION");
 	reply(watch, { Watching: true });
 	await flush();
-	mock.timers.tick(359_999);
+	mock.timers.tick(419_999);
 	assert.equal(errors.length, 0);
 	mock.timers.tick(1);
 	assert.deepEqual(errors.map((e) => e.errorCode), ["AGENT_OBSERVATION_STOPPED"]);
@@ -240,7 +240,7 @@ test("a stop the host cannot receive still ends the watch and reports the error"
 	const errors = [];
 	kf.app.getAgent("AgOne").onExecutionComplete("Ac1::Ae9", () => assert.fail("must not complete"), (error) => errors.push(error));
 	unsendable.add("CUSTOM_AGENT_STOP_WATCH");
-	mock.timers.tick(15_000);
+	mock.timers.tick(60_000);
 	await flush();
 	assert.deepEqual(errors.map((e) => e.errorCode), ["AGENT_HOST_UNSUPPORTED"]);
 });
