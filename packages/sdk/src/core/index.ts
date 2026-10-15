@@ -11,11 +11,18 @@ export const globalInstances = {};
 // (see window/NDEFReader), so the key alone cannot tell the two apart.
 const pendingRequestIds = new Set<string>();
 
+// Replies that are envelopes in their own right: a single key is still the whole answer.
+const ENVELOPE_COMMANDS = new Set([
+	LISTENER_CMDS.API,
+	LISTENER_CMDS.CUSTOM_FUNCTION_RUN,
+	LISTENER_CMDS.CUSTOM_FUNCTION_GET_RUN
+]);
+
 function processResponse(req: object, resp: object) {
 	if (
 		resp &&
 		Object.keys(resp).length === 1 &&
-		req.command !== LISTENER_CMDS.API
+		!ENVELOPE_COMMANDS.has(req.command)
 	) {
 		let value = Object.values(resp)[0];
 		if (value === "undefined") return undefined;
@@ -40,6 +47,8 @@ function onMessage(event) {
 		if (data?.isEvent) {
 			const { target, eventParams, eventName, eventConfig = {} } = data;
 			let targetInstance = globalInstances[target];
+			// An event for a target that never registered, or already went away, is not ours to throw on.
+			if (!targetInstance) return;
 			targetInstance._dispatchEvent(eventName, eventParams);
 			if (eventConfig.once) {
 				targetInstance._removeEventListener(eventName);
