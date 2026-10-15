@@ -334,3 +334,27 @@ export type BoardFieldOptions = {
     tableId?: string;
     tableRowId?: string;
 };
+
+/** The terminal states a Custom Function run ends in, plus the two it passes through. */
+export type RunStatus = "Queued" | "Running" | "Success" | "Failed" | "TimedOut";
+
+/**
+ * What a Custom Function run looks like from the SDK.
+ *
+ * An Interactive function resolves with the terminal envelope directly. A
+ * Background function resolves with `Queued` and only `RunId`; fetch the rest
+ * with `getFunctionRun`, or wait for it with `onFunctionRunComplete`.
+ */
+export type RunEnvelope = {
+	RunId: string;
+	Status: RunStatus;
+	/** Whatever the function returned. Only constrained when its output contract names properties. */
+	Result?: unknown;
+	Error?: { Code?: string; Message: string };
+};
+
+/**
+ * What `onFunctionRunComplete`'s error callback receives when the host could not watch the run.
+ * `error` carries the text; `errorCode` is the platform code when the failure was an API answer.
+ */
+export type RunWatchError = { isError: true; error?: string; errorCode?: string };

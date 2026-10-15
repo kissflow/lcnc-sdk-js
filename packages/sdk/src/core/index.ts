@@ -6,12 +6,23 @@ export function generateId(prefix = "lcncsdk") {
 	return `${prefix}-${nanoid()}`;
 }
 export const globalInstances = {};
+// Ids _postMessageAsync registered, so cleanup only ever removes entries it made.
+// Instances register themselves here too, under ids from the same generator
+// (see window/NDEFReader), so the key alone cannot tell the two apart.
+const pendingRequestIds = new Set<string>();
+
+// Replies that are envelopes in their own right: a single key is still the whole answer.
+const ENVELOPE_COMMANDS = new Set([
+	LISTENER_CMDS.API,
+	LISTENER_CMDS.CUSTOM_FUNCTION_RUN,
+	LISTENER_CMDS.CUSTOM_FUNCTION_GET_RUN
+]);
 
 function processResponse(req: object, resp: object) {
 	if (
 		resp &&
 		Object.keys(resp).length === 1 &&
-		req.command !== LISTENER_CMDS.API
+		!ENVELOPE_COMMANDS.has(req.command)
 	) {
 		let value = Object.values(resp)[0];
 		if (value === "undefined") return undefined;
@@ -36,6 +47,8 @@ function onMessage(event) {
 		if (data?.isEvent) {
 			const { target, eventParams, eventName, eventConfig = {} } = data;
 			let targetInstance = globalInstances[target];
+			// An event for a target that never registered, or already went away, is not ours to throw on.
+			if (!targetInstance) return;
 			targetInstance._dispatchEvent(eventName, eventParams);
 			if (eventConfig.once) {
 				targetInstance._removeEventListener(eventName);
@@ -45,7 +58,16 @@ function onMessage(event) {
 		let { _req: req, resp } = data;
 		if (req?._id) {
 			let targetInstance = globalInstances[req._id];
-			targetInstance._dispatchMessageEvents(req, resp);
+			// Only _postMessageAsync registers an entry, and only the first reply finds it:
+			// a late or duplicate reply, or any reply to a _postMessage command, has none.
+			// Dispatching without this check turns those into a TypeError in the one message
+			// listener every consumer shares.
+			if (targetInstance) {
+				targetInstance._dispatchMessageEvents(req, resp);
+				if (pendingRequestIds.delete(req._id)) {
+					Reflect.deleteProperty(globalInstances, req._id);
+				}
+			}
 		}
 	}
 }
@@ -68,8 +90,9 @@ export class EventBase {
 
 	_removeEventListener(eventName: string, callBack?: any) {
 		if (callBack) {
-			let index = this.#listeners[eventName].findIndex(callBack);
-			index > -1 && this.#listeners[eventName].splice(index, 1);
+			const listeners = this.#listeners[eventName] || [];
+			const index = listeners.indexOf(callBack);
+			index > -1 && listeners.splice(index, 1);
 			return;
 		}
 		Reflect.deleteProperty(this.#listeners, eventName);
@@ -113,6 +136,7 @@ export class BaseSDK extends EventBase {
 			postMessage({ _id, command, ...args });
 
 			globalInstances[_id] = this;
+			pendingRequestIds.add(_id);
 
 			this._addEventListener(_id, async (data: any) => {
 				if (data?.errorMessage || data?.isError) {

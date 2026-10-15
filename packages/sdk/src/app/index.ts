@@ -1,10 +1,11 @@
-import { BaseSDK, LISTENER_CMDS } from "../core";
+import { BaseSDK, globalInstances, LISTENER_CMDS } from "../core";
+import { EVENT_TYPES } from "../core/constants";
 import { CreateProxy } from "../core/proxy";
 
 import { Page } from "./page";
 
 import { AppContext } from "../types/internal";
-import { rolesObject } from "../types/external";
+import { rolesObject, RunEnvelope, RunWatchError } from "../types/external";
 
 import { DecisionTable } from "./decisiontable";
 import { Dataform } from "../dataform";
@@ -19,6 +20,7 @@ export class Application extends BaseSDK {
 	constructor(props: AppContext, isCustomComponent: boolean = false) {
 		super();
 		this._id = props.appId;
+		globalInstances[this._id] = this;
 		this.page = new Page(props);
 		// /* Note: Synchronous variable read/write is not supported for custom components
 		//  * as it is not possible to use Atomics.wait in the main thread and iframe thread
@@ -43,6 +45,94 @@ export class Application extends BaseSDK {
 			pageId,
 			pageParams
 		});
+	}
+
+	/**
+	 * Run a published Custom Function by name.
+	 *
+	 * An Interactive function resolves with its terminal envelope. A Background
+	 * function resolves as soon as it is queued, with `Status: "Queued"` and a
+	 * `RunId`; use {@link getFunctionRun} or {@link onFunctionRunComplete} for its result.
+	 *
+	 * A refused run rejects with the platform's SDK error shape: the message
+	 * text is in `error` and the code (`KISSFLOW_ERROR_…`) in `errorCode`.
+	 *
+	 * Custom Functions are application-scoped: this is reachable from page,
+	 * component and flow event scripts that run inside an application, where
+	 * `kf.app` exists. There is no `kf.app` outside one.
+	 *
+	 * @example
+	 * const run = await kf.app.runFunction("review_expense_claim", { claimId });
+	 */
+	runFunction(name: string, parameters?: Record<string, unknown>): Promise<RunEnvelope> {
+		return this._postMessageAsync(LISTENER_CMDS.CUSTOM_FUNCTION_RUN, {
+			name,
+			parameters: parameters ?? {}
+		}) as Promise<RunEnvelope>;
+	}
+
+	/**
+	 * Fetch a run's current state, including its `Result` once it has one.
+	 *
+	 * @example
+	 * const run = await kf.app.getFunctionRun(runId);
+	 * if (run.Status === "Success") use(run.Result);
+	 */
+	getFunctionRun(runId: string): Promise<RunEnvelope> {
+		return this._postMessageAsync(LISTENER_CMDS.CUSTOM_FUNCTION_GET_RUN, {
+			runId
+		}) as Promise<RunEnvelope>;
+	}
+
+	/**
+	 * Be told when a Background run reaches a terminal state.
+	 *
+	 * Fires `callBack` once with the run's envelope. "Complete" means the run
+	 * stopped, not that it worked: it fires on `Failed` and `TimedOut` just as
+	 * it does on `Success`, so read `Status` before trusting `Result`. If the
+	 * host cannot watch the run at all, `onError` is called instead of
+	 * `callBack` ever firing.
+	 *
+	 * Returns a function that unsubscribes. The callback lives only as long as
+	 * the script that registered it: form events end their script after 60 s
+	 * and a page event ends the previous one when it fires again, while a
+	 * Background run may take up to 600 s. Prefer polling {@link getFunctionRun} from a
+	 * script that outlives the run, or re-attach after the script restarts.
+	 *
+	 * @example
+	 * const stop = kf.app.onFunctionRunComplete(run.RunId, (done) => show(done), (err) => warn(err));
+	 * // later, e.g. on unmount — the host stops watching the run too
+	 * stop();
+	 */
+	onFunctionRunComplete(
+		runId: string,
+		callBack: (run: RunEnvelope) => void,
+		onError?: (error: RunWatchError) => void
+	): () => void {
+		const eventName = `${EVENT_TYPES.CUSTOM_FUNCTION_RUN_COMPLETE}:${runId}`;
+		const listener = (params: RunEnvelope | RunWatchError) => {
+			if (params && (params as { isError?: boolean }).isError) {
+				onError?.(params as RunWatchError);
+				return;
+			}
+			callBack(params as RunEnvelope);
+		};
+		this._postMessage(
+			LISTENER_CMDS.CUSTOM_FUNCTION_ON_RUN_COMPLETE,
+			{
+				id: this._id,
+				runId,
+				eventName,
+				eventConfig: {
+					once: true
+				}
+			},
+			listener
+		);
+		return () => {
+			this._removeEventListener(eventName, listener);
+			this._postMessage(LISTENER_CMDS.CUSTOM_FUNCTION_STOP_WATCH, { id: this._id, runId, eventName });
+		};
 	}
 
 	getDecisionTable(flowId: string): DecisionTable {
