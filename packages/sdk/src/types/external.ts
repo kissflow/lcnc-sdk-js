@@ -358,7 +358,11 @@ export type AgentOutputField = {
     Description?: string;
 };
 
-/** A file for an `Attachment` input: exactly one of `Key` (a Kissflow attachment) or `Url` (https). */
+/**
+ * A file for an `Attachment` input: exactly one of `Key` (a Kissflow attachment) or `Url` (https).
+ * A file from `openFilePicker` or `uploadFile` has lowercase keys: pass
+ * `{ Key: file.key, FileName: file.name, Size: file.size }`.
+ */
 export type AgentAttachmentValue =
     | { Key: string; Url?: never; FileName: string; Size?: number; ContentType?: string }
     | { Url: string; Key?: never; FileName: string; Size?: number; ContentType?: string };

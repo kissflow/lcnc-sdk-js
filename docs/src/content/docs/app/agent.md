@@ -66,7 +66,16 @@ finishes: use `onExecutionComplete` or `getExecution` for the result.
 | options.inputData | Object | Values keyed by the input `Key`s in the contract.  |
 
 An `Attachment` input takes one file: `{ Key, FileName, Size? }` for a Kissflow
-attachment, or `{ Url, FileName }` for an `https` URL.
+attachment, or `{ Url, FileName }` for an `https` URL. A file from
+`kf.client.openFilePicker` or `uploadFile` has lowercase keys, so map it; passing
+it as it is fails with a validation error.
+
+```js
+const file = await kf.client.uploadFile(fileInput.files[0]);
+await agent.execute({
+  inputData: { invoice: { Key: file.key, FileName: file.name, Size: file.size } },
+});
+```
 
 ##### Syntax
 
@@ -77,7 +86,9 @@ const { ExecutionId, Status } = await agent.execute({
 ```
 
 `execute` is never retried. If it fails with `AGENT_EXECUTE_OUTCOME_UNKNOWN`,
-the run may still have started; `AGENT_EXECUTE_NOT_SENT` means it did not.
+the run may still have started; `AGENT_EXECUTE_NOT_SENT` means it did not. App
+code cannot list runs, so after `AGENT_EXECUTE_OUTCOME_UNKNOWN` tell the user
+the request may still be in progress instead of starting another run.
 
 ### Get execution
 
@@ -144,6 +155,13 @@ a code you do not handle.
 
 The callbacks live as long as the page, component or script that registered
 them; stop observing when it goes away.
+
+Form, field, gallery and table scripts are stopped after one minute, and they
+and page event scripts also stop when the next script starts on the same form,
+component or page. A pending call or observation ends with the script, and
+neither callback is called. In those scripts, don't wait for the result: keep
+the `ExecutionId` (for example, on the item) and read it later with
+`getExecution`, or run the Agent from a custom component or custom page.
 
 ```js
 const agent = kf.app.getAgent("AgXXXXXXXXXX");

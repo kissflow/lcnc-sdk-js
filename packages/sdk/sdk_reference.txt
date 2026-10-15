@@ -308,14 +308,17 @@ Methods:
 
   execute({ inputData }) → Promise<{ ExecutionId, Status }>
     - inputData (Record<inputKey, value>, REQUIRED keys = the Required inputs): Attachment value = { Key, FileName, Size? } or { Url, FileName }
+    - A file from kf.client.openFilePicker / uploadFile has lowercase keys: pass { Key: file.key, FileName: file.name, Size: file.size }, never the file object itself (validation error)
     - Resolves when the run is ACCEPTED, not finished. Never retried: AGENT_EXECUTE_OUTCOME_UNKNOWN = a run may have started; AGENT_EXECUTE_NOT_SENT = it did not.
+    - App code cannot list runs: after AGENT_EXECUTE_OUTCOME_UNKNOWN tell the user the request may still be in progress; do not start another run automatically.
 
   getExecution(executionId) → Promise<AgentExecution>
     - Returns: { ExecutionId, Status: "Queued" | "NotStarted" | "Running" | "Completed" | "Failed", Output?: { items: [{ outputKey: value }] }, Error?: { Code, Retryable }, CreatedAt, StartedAt?, CompletedAt? }
 
   onExecutionComplete(executionId, onComplete, onWatchError?) → () => void
-    - onComplete(execution) fires once on Completed OR Failed (check Status); onWatchError({ isError, error, errorCode }) if observation stops (e.g. AGENT_OBSERVATION_STOPPED after ~5 min — read it later with getExecution)
+    - onComplete(execution) fires once on Completed OR Failed (check Status); onWatchError({ isError, error, errorCode }) if observation stops (e.g. AGENT_OBSERVATION_STOPPED after ~6 min — read it later with getExecution)
     - Returns stop(): stops observing, never cancels the run. Call it on unmount.
+    - Form, field, gallery and table scripts are stopped after 1 minute, and they and page event scripts also stop when the next script starts on the same form/component/page; a pending call or watch then ends silently (neither callback fires). In those scripts do not wait for the result: keep the ExecutionId and read it later with getExecution, or run the Agent from a custom component.
     - Example:
         const agent = kf.app.getAgent("AgXXXXXXXXXX");
         const { ExecutionId } = await agent.execute({ inputData: { request: "Two desks" } });

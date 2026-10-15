@@ -75,7 +75,9 @@ export class Agent extends BaseSDK {
 	 * use {@link onExecutionComplete} or {@link getExecution} for the result.
 	 *
 	 * Never retried: if the call fails with `AGENT_EXECUTE_OUTCOME_UNKNOWN`, a run may still have
-	 * started. `AGENT_EXECUTE_NOT_SENT` means it was not sent (for example, the user is offline).
+	 * started, and app code cannot list runs to find it: tell the user the request may still be in
+	 * progress instead of starting another. `AGENT_EXECUTE_NOT_SENT` means it was not sent (for
+	 * example, the user is offline).
 	 *
 	 * @example
 	 * const { ExecutionId } = await agent.execute({ inputData: { request: "Two desks", amount: 54000 } });
@@ -118,6 +120,11 @@ export class Agent extends BaseSDK {
 	 * observation instead: an unsupported host, an access or network failure, or the observation limit
 	 * (`AGENT_OBSERVATION_STOPPED`, after about six minutes; the run may still finish, so read it later
 	 * with {@link getExecution}). At most one of the two is called, at most once.
+	 *
+	 * Neither is called if the script that registered them stops first: form, field, gallery and
+	 * table scripts stop after one minute, and they and page event scripts stop when the next script
+	 * starts on the same form, component or page. In those scripts, keep the `ExecutionId` and read
+	 * it later with {@link getExecution}.
 	 *
 	 * Returns a function that stops observing. It never cancels the run.
 	 *
