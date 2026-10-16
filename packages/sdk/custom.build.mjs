@@ -31,6 +31,7 @@ const CLASS_MAPPINGS = {
     Formatter: { name: "Formatter" },
     LowcodeSDK: { name: "kf", staticDeclarations: true },
     DecisionTable: { name: "DecisionTable" },
+    Agent: { name: "Agent" },
     Dataform: { name: "Dataform" },
     Board: { name: "Board" },
     Process: { name: "Process" }
