@@ -39,6 +39,11 @@ jobs:
             - name: Run build
               run: pnpm run build:sdk
 
+            # The tests run against the build above, so a broken bundle is never published.
+            - name: Run tests
+              working-directory: packages/sdk
+              run: node --test "test/*.test.mjs"
+
             # disabled automatic version pump as it is conflicting with internal versioning
             # - name: pump package version
             #   run:  pnpm version patch

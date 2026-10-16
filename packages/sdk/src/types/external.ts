@@ -334,3 +334,96 @@ export type BoardFieldOptions = {
     tableId?: string;
     tableRowId?: string;
 };
+
+// ============================================
+// Custom Agent Types
+// ============================================
+
+export type AgentInputDataType = "Text" | "Number" | "Boolean" | "Attachment";
+
+export type AgentOutputDataType = "string" | "number" | "boolean";
+
+export type AgentInputField = {
+    Key: string;
+    Name: string;
+    DataType: AgentInputDataType;
+    Required: boolean;
+    Description?: string;
+};
+
+export type AgentOutputField = {
+    Key: string;
+    Name: string;
+    DataType: AgentOutputDataType;
+    Description?: string;
+};
+
+/**
+ * A file for an `Attachment` input: exactly one of `Key` (a Kissflow attachment) or `Url` (https).
+ * A file from `openFilePicker` or `uploadFile` has lowercase keys: pass
+ * `{ Key: file.key, FileName: file.name, Size: file.size }`.
+ */
+export type AgentAttachmentValue =
+    | { Key: string; Url?: never; FileName: string; Size?: number; ContentType?: string }
+    | { Url: string; Key?: never; FileName: string; Size?: number; ContentType?: string };
+
+export type AgentInputValue = string | number | boolean | AgentAttachmentValue;
+
+/** The Agent's published invocation contract. */
+export type AgentContract = {
+    AgentId: string;
+    Definition: {
+        Name: string;
+        Description?: string;
+        Icon?: Record<string, unknown>;
+        Inputs: AgentInputField[];
+        Outputs: AgentOutputField[];
+        MaxOutputItems: number;
+    };
+    Readiness: {
+        Ready: boolean;
+        Issues: Array<{ Code: string; Path: string; Message: string }>;
+    };
+};
+
+export type AgentExecuteOptions = {
+    /** Values keyed by input `Key`, as declared in the contract. */
+    inputData: Record<string, AgentInputValue>;
+};
+
+/** More statuses may be added; treat any status other than `Completed` or `Failed` as still in progress. */
+export type AgentExecutionStatus = "Queued" | "NotStarted" | "Running" | "Completed" | "Failed" | (string & {});
+
+/** What `execute` resolves with once the run is accepted, before it has finished. */
+export type AgentExecutionAccepted = {
+    ExecutionId: string;
+    Status: AgentExecutionStatus;
+};
+
+export type AgentExecution = {
+    ExecutionId: string;
+    Status: AgentExecutionStatus;
+    Stage?: string;
+    /** Present on `Completed`: one row per item, keyed by output `Key`. */
+    Output?: { items: Array<Record<string, string | number | boolean>> };
+    /** Present on `Failed`. */
+    Error?: { Code: string; Retryable: boolean; Details?: unknown };
+    Warnings?: Array<Record<string, unknown>>;
+    CreatedAt?: string;
+    StartedAt?: string;
+    CompletedAt?: string;
+};
+
+/**
+ * How an Agent call fails: `error` is the message text and `errorCode` either the platform code
+ * (`KISSFLOW_ERROR_…`) or an `AGENT_…` code, including `AGENT_HOST_TIMEOUT`, `AGENT_REQUEST_NOT_SENT`,
+ * `AGENT_EXECUTE_OUTCOME_UNKNOWN` (a run may have started), `AGENT_EXECUTE_NOT_SENT` (no run started),
+ * `AGENT_HOST_UNSUPPORTED`, `AGENT_WATCH_INVALID_EVENT`, `AGENT_OBSERVATION_STOPPED`, and from the host
+ * `AGENT_READ_TIMEOUT` and `AGENT_OFFLINE`. The list may grow; fall back to `error` for an unknown code.
+ * There is no `message`: read `error` for the text.
+ */
+export type AgentError = {
+    isError: true;
+    error?: string;
+    errorCode?: string;
+};
