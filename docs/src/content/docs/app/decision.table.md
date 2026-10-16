@@ -1,6 +1,8 @@
 ---
 title: Decision table
 description: Usage of Decision table
+sidebar:
+  order: 90
 ---
 
 A decision table is a systematic and structured representation of complex

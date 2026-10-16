@@ -4,7 +4,7 @@ export class Form extends BaseSDK {
     // The Zustand form store's lookup key — internal only, used to route the
     // store-bound commands below. Never expose this as `instanceId`: that
     // name is reserved for the real record id (see below).
-    private storeId: string;
+    protected storeId: string;
     private flowId: string;
     type: string;
     // The real record id and (process-only) activity instance id — what a
@@ -45,6 +45,26 @@ export class Form extends BaseSDK {
             data: args
         });
     }
+    getTable(tableId: string) {
+        return new Table(
+            this.storeId,
+            this.flowId,
+            this.instanceId,
+            tableId,
+            this.activityInstanceId
+        );
+    }
+}
+
+/**
+ * Form with custom-component-only capabilities.
+ *
+ * Returned by `initForm()` on the custom-component Board/Dataform/Process
+ * accessors. Adds the form-state readers (`getValidationErrors`,
+ * `getFormConfiguration`, `getFieldState`), which are not available on the
+ * base `Form` exposed via `kf.context` in the Low/No-code (Run Script) SDKs.
+ */
+export class CustomComponentForm extends Form {
     getValidationErrors() {
         return this._postMessageAsync(
             LISTENER_CMDS.GET_FORM_VALIDATION_ERRORS,
@@ -65,15 +85,6 @@ export class Form extends BaseSDK {
             storeId: this.storeId,
             instanceId: this.instanceId
         });
-    }
-    getTable(tableId: string) {
-        return new Table(
-            this.storeId,
-            this.flowId,
-            this.instanceId,
-            tableId,
-            this.activityInstanceId
-        );
     }
 }
 

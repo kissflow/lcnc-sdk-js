@@ -17,5 +17,5 @@ Deletes multiple rows from the specified [table instance](/form/gettable/).
 
 ```js
 let rows = ["rowId1", "rowId2"];
-tableInstance.deleteRow(rows);
+tableInstance.deleteRows(rows);
 ```

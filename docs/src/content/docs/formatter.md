@@ -1,6 +1,6 @@
 ---
 title: Formatter
-description: Formatter usages
+description: Convert values to Kissflow's date, number, currency, and boolean formats.
 ---
 
 When the queried data type does not align with Kissflow’s pre-defined data types, you must format them accordingly. Here are a few formatters that you can choose from.

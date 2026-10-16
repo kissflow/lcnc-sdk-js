@@ -1,16 +1,16 @@
 ---
 title: Context
-description: Context usage
+description: How the polymorphic kf.context resolves in each execution context.
 ---
 
-The `kf.context` method lets you access specific method based on the entity
-where you're using it.
+The `kf.context` accessor lets you access methods specific to the entity where
+you're using it.
 
-Context methods are polymorphic, it has different classes pre-initialized based
-on execution context.
+`kf.context` is polymorphic — it is pre-initialized with a different class based
+on the execution context.
 
-For example, if you're calling `kf.context` inside, you'll be able to access
-methods such as `getFields`, `updateFields`, `getTable`, etc.
+For example, when you call `kf.context` inside a form event, you'll be able to
+access methods such as `getField`, `updateField`, `getTable`, etc.
 
 Below are the places where you can use `kf.context`
 
@@ -19,7 +19,7 @@ Below are the places where you can use `kf.context`
 When `kf.context` is used inside a custom component code, `watchParams` method
 can be used to subscribe for the changes happen through mapped params
 
-Please refer more about [`watchParams` here](/component#watch-params)
+Please refer more about [`watchParams` here](/build/custom-component/page/#watch-params)
 
 ### Form
 
@@ -48,11 +48,12 @@ Please refer more about [Rows and its methods](/form/table/row/)
 ### Page (onLoad, unLoad)
 
 When `kf.context` is used inside a page on load and unload event, the methods
-such as getParameter, setVariable, getVariables can be accessed from it.
+such as getParameter, getAllParameters, getVariable, and setVariable can be
+accessed from it.
 
 ```js
 // Make some api call and change the local variable based on that
-kf.context.updateVariable("variableName", "some value");
+kf.context.setVariable("variableName", "some value");
 ```
 
 Please refer more about [Page and its method](/app/page/)
