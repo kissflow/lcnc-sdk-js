@@ -93,8 +93,9 @@ the request may still be in progress instead of starting another run.
 ### Get execution
 
 Reads a run's current state. `Output.items` is present once the run is
-`Completed`, `Error` once it is `Failed`. People who are not the app's
-developers can read only their own runs.
+`Completed`, `Error` once it is `Failed`. More statuses may be added, so treat
+any status other than `Completed` or `Failed` as still in progress. People who
+are not the app's developers can read only their own runs.
 
 ##### Syntax
 
@@ -141,6 +142,7 @@ stop();
 ### Errors
 
 Methods reject (and `onWatchError` receives) `{ isError: true, error, errorCode }`.
+There is no `message`: read `error` for the text and `errorCode` to decide what to do.
 `errorCode` is a platform code (`KISSFLOW_ERROR_…`) or an `AGENT_…` code, including:
 `AGENT_HOST_TIMEOUT`, `AGENT_REQUEST_NOT_SENT`, `AGENT_EXECUTE_OUTCOME_UNKNOWN`,
 `AGENT_EXECUTE_NOT_SENT`, `AGENT_HOST_UNSUPPORTED`, `AGENT_WATCH_INVALID_EVENT`,

@@ -391,7 +391,8 @@ export type AgentExecuteOptions = {
     inputData: Record<string, AgentInputValue>;
 };
 
-export type AgentExecutionStatus = "Queued" | "NotStarted" | "Running" | "Completed" | "Failed";
+/** More statuses may be added; treat any status other than `Completed` or `Failed` as still in progress. */
+export type AgentExecutionStatus = "Queued" | "NotStarted" | "Running" | "Completed" | "Failed" | (string & {});
 
 /** What `execute` resolves with once the run is accepted, before it has finished. */
 export type AgentExecutionAccepted = {
@@ -419,6 +420,7 @@ export type AgentExecution = {
  * `AGENT_EXECUTE_OUTCOME_UNKNOWN` (a run may have started), `AGENT_EXECUTE_NOT_SENT` (no run started),
  * `AGENT_HOST_UNSUPPORTED`, `AGENT_WATCH_INVALID_EVENT`, `AGENT_OBSERVATION_STOPPED`, and from the host
  * `AGENT_READ_TIMEOUT` and `AGENT_OFFLINE`. The list may grow; fall back to `error` for an unknown code.
+ * There is no `message`: read `error` for the text.
  */
 export type AgentError = {
     isError: true;
