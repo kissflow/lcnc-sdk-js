@@ -36,6 +36,11 @@
 			"insertText": "let stop = kf.app.onFunctionRunComplete(\"${1:runId}\", (run) => {\n\t${2:// run.Status, run.Result}\n}, (err) => {\n\t${3:// err.error}\n});"
 		},
 		{
+			"label": "run custom agent",
+			"documentation": "Runs a published Custom Agent of this app and handles its result when it finishes",
+			"insertText": "let agentInstance = kf.app.getAgent(\"${1:agentId}\");\n let { ExecutionId } = await agentInstance.execute({ inputData: { ${2:inputKey}: ${3:value} } });\n let stopWatching = agentInstance.onExecutionComplete(ExecutionId, (execution) => { let items = execution.Output?.items; }, (error) => console.warn(error.errorCode));"
+		},
+		{
 			"label": "get local variable",
 			"documentation": "Get value of the local variable",
 			"insertText": "let variableName = await kf.app.page.getVariable(\"${1:variableId}\")"

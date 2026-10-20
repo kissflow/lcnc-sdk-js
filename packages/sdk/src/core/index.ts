@@ -47,7 +47,7 @@ function onMessage(event) {
 		if (data?.isEvent) {
 			const { target, eventParams, eventName, eventConfig = {} } = data;
 			let targetInstance = globalInstances[target];
-			// An event for a target that never registered, or already went away, is not ours to throw on.
+			// A handle that stopped listening (or a late event after it settled) has no entry left.
 			if (!targetInstance) return;
 			targetInstance._dispatchEvent(eventName, eventParams);
 			if (eventConfig.once) {
@@ -149,6 +149,55 @@ export class BaseSDK extends EventBase {
 				}
 			});
 		});
+	}
+
+	/**
+	 * Like _postMessageAsync, but settles with `timeoutError` when the host does not reply within
+	 * `timeoutMs` (a host that does not know the command fails loudly instead of hanging), with
+	 * `sendError` when the message cannot be posted, and can be cancelled. Every path releases the
+	 * timer and the reply registration; a reply that arrives afterwards finds no entry and is ignored.
+	 * `cancel()` leaves the promise unsettled: the caller that cancels has stopped waiting for it.
+	 */
+	_postMessageBounded(
+		command: string,
+		args: object,
+		options: { timeoutMs: number; timeoutError: object; sendError: object }
+	): { promise: Promise<any>; cancel: () => void } {
+		const _id = generateId(command.toLowerCase());
+		let timer: ReturnType<typeof setTimeout> | undefined;
+		let settled = false;
+		const release = () => {
+			settled = true;
+			clearTimeout(timer);
+			this._removeEventListener(_id);
+			pendingRequestIds.delete(_id);
+			Reflect.deleteProperty(globalInstances, _id);
+		};
+		const promise = new Promise((resolve, reject) => {
+			timer = setTimeout(() => {
+				release();
+				reject(options.timeoutError);
+			}, options.timeoutMs);
+			globalInstances[_id] = this;
+			pendingRequestIds.add(_id);
+			this._addEventListener(_id, (data: any) => {
+				release();
+				if (data?.errorMessage || data?.isError) reject(data);
+				else resolve(data);
+			});
+			try {
+				postMessage({ _id, command, ...args });
+			} catch (error) {
+				release();
+				reject(options.sendError);
+			}
+		});
+		return {
+			promise,
+			cancel: () => {
+				if (!settled) release();
+			}
+		};
 	}
 
 	_postMessage(command: string, args, callBack?) {
