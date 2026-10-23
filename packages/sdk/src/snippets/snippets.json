@@ -21,6 +21,21 @@
 			"insertText": "let decisionTableInstance = kf.app.getDecisionTable(\"${1:flowId}\");\n let decisionOutput = await decisionTableInstance.evaluate({ conditionField1: \"value\", conditionField2: \"value\" });"
 		},
 		{
+			"label": "run custom function",
+			"documentation": "Run a Custom Function; a Background function returns only RunId and Status: \"Queued\"",
+			"insertText": "let run = await kf.app.runFunction(\"${1:functionName}\", { ${2:key}: \"${3:value}\" });"
+		},
+		{
+			"label": "get custom function run",
+			"documentation": "Fetch a Custom Function run's status, and its Result once it has one",
+			"insertText": "let run = await kf.app.getFunctionRun(\"${1:runId}\");"
+		},
+		{
+			"label": "on custom function run complete",
+			"documentation": "Called once when a Background run reaches Success, Failed or TimedOut; the returned function unsubscribes",
+			"insertText": "let stop = kf.app.onFunctionRunComplete(\"${1:runId}\", (run) => {\n\t${2:// run.Status, run.Result}\n}, (err) => {\n\t${3:// err.error}\n});"
+		},
+		{
 			"label": "run custom agent",
 			"documentation": "Runs a published Custom Agent of this app and handles its result when it finishes",
 			"insertText": "let agentInstance = kf.app.getAgent(\"${1:agentId}\");\n let { ExecutionId } = await agentInstance.execute({ inputData: { ${2:inputKey}: ${3:value} } });\n let stopWatching = agentInstance.onExecutionComplete(ExecutionId, (execution) => { let items = execution.Output?.items; }, (error) => console.warn(error.errorCode));"
