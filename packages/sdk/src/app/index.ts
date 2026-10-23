@@ -13,6 +13,30 @@ import { Dataform } from "../dataform";
 import { Board } from "../board";
 import { Process } from "../process";
 
+// A read the host never answers fails instead of hanging (an older host ignores these commands).
+const READ_TIMEOUT_MS = 30_000;
+// An Interactive run may take up to 30 s on the service; the rest covers the host round trip.
+const RUN_TIMEOUT_MS = 45_000;
+const WATCH_ACK_TIMEOUT_MS = 60_000;
+// The host stops observing 600 s after the watch starts, after one last read; this covers a host that
+// stops answering.
+const WATCH_DEADLINE_MS = 690_000;
+
+function sdkError(errorCode: string, error: string): RunWatchError {
+	return { isError: true, error, errorCode };
+}
+
+// The app's own callback runs inside the message listener every SDK call shares; its error must not escape there.
+function notify<T>(callback: ((value: T) => void) | undefined, value: T) {
+	try {
+		callback?.(value);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+const NOT_SENT = sdkError("FUNCTION_REQUEST_NOT_SENT", "The request could not be sent to the host.");
+
 export class Application extends BaseSDK {
 	page: Page;
 	// variable: AppVariable;
@@ -58,6 +82,9 @@ export class Application extends BaseSDK {
 	 *
 	 * A refused run rejects with the platform's SDK error shape: the message
 	 * text is in `error` and the code (`KISSFLOW_ERROR_…`) in `errorCode`.
+	 * A host that does not answer within 45 s rejects with
+	 * `FUNCTION_RUN_OUTCOME_UNKNOWN`: the run may still have started, so tell
+	 * the user instead of starting another.
 	 *
 	 * Custom Functions are application-scoped: this is reachable from page,
 	 * component and flow event scripts that run inside an application, where
@@ -67,10 +94,18 @@ export class Application extends BaseSDK {
 	 * const run = await kf.app.runFunction("review_expense_claim", { claimId });
 	 */
 	runFunction(name: string, parameters?: Record<string, unknown>): Promise<RunEnvelope> {
-		return this._postMessageAsync(LISTENER_CMDS.CUSTOM_FUNCTION_RUN, {
-			name,
-			parameters: parameters ?? {}
-		}) as Promise<RunEnvelope>;
+		return this._postMessageBounded(
+			LISTENER_CMDS.CUSTOM_FUNCTION_RUN,
+			{ name, parameters: parameters ?? {} },
+			{
+				timeoutMs: RUN_TIMEOUT_MS,
+				timeoutError: sdkError(
+					"FUNCTION_RUN_OUTCOME_UNKNOWN",
+					"The host did not answer the run; it may still have started."
+				),
+				sendError: sdkError("FUNCTION_RUN_NOT_SENT", "The run request could not be sent to the host.")
+			}
+		).promise as Promise<RunEnvelope>;
 	}
 
 	/**
@@ -81,9 +116,15 @@ export class Application extends BaseSDK {
 	 * if (run.Status === "Success") use(run.Result);
 	 */
 	getFunctionRun(runId: string): Promise<RunEnvelope> {
-		return this._postMessageAsync(LISTENER_CMDS.CUSTOM_FUNCTION_GET_RUN, {
-			runId
-		}) as Promise<RunEnvelope>;
+		return this._postMessageBounded(
+			LISTENER_CMDS.CUSTOM_FUNCTION_GET_RUN,
+			{ runId },
+			{
+				timeoutMs: READ_TIMEOUT_MS,
+				timeoutError: sdkError("FUNCTION_HOST_TIMEOUT", "The host did not answer the run request."),
+				sendError: NOT_SENT
+			}
+		).promise as Promise<RunEnvelope>;
 	}
 
 	/**
@@ -93,7 +134,10 @@ export class Application extends BaseSDK {
 	 * stopped, not that it worked: it fires on `Failed` and `TimedOut` just as
 	 * it does on `Success`, so read `Status` before trusting `Result`. If the
 	 * host cannot watch the run at all, `onError` is called instead of
-	 * `callBack` ever firing.
+	 * `callBack` ever firing: an older host (`FUNCTION_HOST_UNSUPPORTED`), a
+	 * refusal, or the watch limit (`FUNCTION_OBSERVATION_STOPPED`, after about
+	 * ten minutes; the run may still finish, so read it later with
+	 * {@link getFunctionRun}). At most one of the two is called, at most once.
 	 *
 	 * Returns a function that unsubscribes. The callback lives only as long as
 	 * the script that registered it: form events end their script after 60 s
@@ -114,34 +158,73 @@ export class Application extends BaseSDK {
 		const watchId = generateId("functionwatch");
 		const eventName = `${EVENT_TYPES.CUSTOM_FUNCTION_RUN_COMPLETE}:${watchId}`;
 		let settled = false;
+		let deadline: ReturnType<typeof setTimeout> | null = null;
+		let registration: { promise: Promise<any>; cancel: () => void } | null = null;
 
 		const end = () => {
 			settled = true;
+			if (deadline) clearTimeout(deadline);
+			registration?.cancel();
 			this._removeEventListener(eventName);
 			this.activeWatches -= 1;
 			if (this.activeWatches === 0) Reflect.deleteProperty(globalInstances, this._id);
+		};
+		// Best effort: the host may already be gone, and local cleanup must not depend on it.
+		const tellHostToStop = () => {
+			try {
+				this._postMessage(LISTENER_CMDS.CUSTOM_FUNCTION_STOP_WATCH, { id: this._id, runId, watchId, eventName });
+			} catch {
+				// Nothing left to release on this side.
+			}
+		};
+		const fail = (error: RunWatchError) => {
+			if (settled) return;
+			end();
+			tellHostToStop();
+			notify(onError, error);
 		};
 		const listener = (params: RunEnvelope | RunWatchError) => {
 			if (settled) return;
 			end();
 			if ((params as RunWatchError)?.isError) {
-				onError?.(params as RunWatchError);
+				notify(onError, params as RunWatchError);
 				return;
 			}
-			callBack(params as RunEnvelope);
+			notify(callBack, params as RunEnvelope);
 		};
 
 		this.activeWatches += 1;
 		globalInstances[this._id] = this;
-		this._postMessage(
+		this._addEventListener(eventName, listener);
+		registration = this._postMessageBounded(
 			LISTENER_CMDS.CUSTOM_FUNCTION_ON_RUN_COMPLETE,
 			{ id: this._id, runId, watchId, eventName },
-			listener
+			{
+				timeoutMs: WATCH_ACK_TIMEOUT_MS,
+				timeoutError: sdkError("FUNCTION_HOST_UNSUPPORTED", "The host did not start watching the run."),
+				sendError: NOT_SENT
+			}
 		);
+		registration.promise.then(
+			(acknowledged) => {
+				if (settled) return;
+				// The host replies { Watching: true }, which reaches here unwrapped as `true`.
+				if (acknowledged !== true) {
+					fail(sdkError("FUNCTION_HOST_UNSUPPORTED", "The host did not start watching the run."));
+					return;
+				}
+				deadline = setTimeout(
+					() => fail(sdkError("FUNCTION_OBSERVATION_STOPPED", "Stopped checking the run; read it again later.")),
+					WATCH_DEADLINE_MS
+				);
+			},
+			(error: RunWatchError) => fail(error)
+		);
+
 		return () => {
 			if (settled) return;
 			end();
-			this._postMessage(LISTENER_CMDS.CUSTOM_FUNCTION_STOP_WATCH, { id: this._id, runId, watchId, eventName });
+			tellHostToStop();
 		};
 	}
 

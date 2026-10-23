@@ -1,6 +1,6 @@
 // Behaviour of kf.app.runFunction / getFunctionRun / onFunctionRunComplete against a fake host,
 // over the built ES module. Run after `pnpm run build`: node --test test/
-import { test, beforeEach, afterEach } from "node:test";
+import { test, beforeEach, afterEach, mock } from "node:test";
 import assert from "node:assert/strict";
 
 const HOST_ORIGIN = "https://host.example";
@@ -35,6 +35,9 @@ function lastPosted(command) {
 	const found = posted.filter((m) => m.command === command);
 	return found[found.length - 1];
 }
+const flush = () => new Promise((resolve) => setImmediate(resolve));
+// Real timers still pending in this process — how a test proves a cancelled wait left nothing behind.
+const pendingTimers = () => process.getActiveResourcesInfo().filter((kind) => kind === "Timeout").length;
 
 const initializing = kf.initialize();
 reply(posted.find((m) => m.command === "CC_INITIALIZE"), {
@@ -49,6 +52,7 @@ beforeEach(() => {
 	listenerErrors.length = 0;
 });
 afterEach(() => {
+	mock.timers.reset();
 	assert.deepEqual(listenerErrors, [], "the shared message listener must never throw");
 });
 
@@ -86,7 +90,20 @@ test("a refused run rejects with the host's error and code", async () => {
 	await assert.rejects(pending, { isError: true, errorCode: "KISSFLOW_ERROR_04901" });
 });
 
-test("onFunctionRunComplete asks the host to watch under its own id, delivers the terminal run once, then ignores more", () => {
+test("a host that never answers fails with a bounded error, and its late reply is ignored", async () => {
+	mock.timers.enable({ apis: ["setTimeout"] });
+	const run = kf.app.runFunction("fn");
+	const read = kf.app.getFunctionRun("Run1");
+	mock.timers.tick(30_000);
+	await assert.rejects(read, { errorCode: "FUNCTION_HOST_TIMEOUT" });
+	mock.timers.tick(15_000);
+	await assert.rejects(run, { errorCode: "FUNCTION_RUN_OUTCOME_UNKNOWN" });
+	reply(lastPosted("CUSTOM_FUNCTION_RUN"), RUN);
+	reply(lastPosted("CUSTOM_FUNCTION_GET_RUN"), RUN);
+	assert.deepEqual(listenerErrors, []);
+});
+
+test("onFunctionRunComplete asks the host to watch under its own id, delivers the terminal run once, then ignores more", async () => {
 	const done = [];
 	const errors = [];
 	kf.app.onFunctionRunComplete("Run1", (run) => done.push(run), (error) => errors.push(error));
@@ -94,20 +111,74 @@ test("onFunctionRunComplete asks the host to watch under its own id, delivers th
 	assert.equal(watch.runId, "Run1");
 	assert.match(watch.watchId, /^functionwatch-/);
 	assert.equal(watch.eventName, `onCustomFunctionRunComplete:${watch.watchId}`);
+	reply(watch, { Watching: true });
+	await flush();
 	event(watch.id, watch.eventName, RUN);
 	event(watch.id, watch.eventName, { ...RUN, Status: "Failed" });
 	assert.deepEqual(done, [RUN]);
 	assert.deepEqual(errors, []);
 });
 
-test("a watch the host could not set up reaches onError, never the callback", () => {
+test("a watch the host refuses reaches onError, never the callback, and nothing is left waiting", async () => {
+	const before = pendingTimers();
 	const done = [];
 	const errors = [];
 	kf.app.onFunctionRunComplete("Run2", (run) => done.push(run), (error) => errors.push(error));
 	const watch = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
-	event(watch.id, watch.eventName, { isError: true, error: "No signed-in user", errorCode: "KISSFLOW_ERROR_04903" });
+	reply(watch, { isError: true, error: "Custom functions are available only inside an app" });
+	await flush();
 	assert.deepEqual(done, []);
-	assert.deepEqual(errors, [{ isError: true, error: "No signed-in user", errorCode: "KISSFLOW_ERROR_04903" }]);
+	assert.deepEqual(errors, [{ isError: true, error: "Custom functions are available only inside an app" }]);
+	assert.equal(pendingTimers(), before);
+	assert.equal(posted.filter((m) => m.command === "CUSTOM_FUNCTION_STOP_WATCH").length, 1);
+});
+
+test("a host that never acknowledges the watch is reported as unsupported", async () => {
+	mock.timers.enable({ apis: ["setTimeout"] });
+	const errors = [];
+	kf.app.onFunctionRunComplete("Run2", () => assert.fail("must not complete"), (error) => errors.push(error));
+	mock.timers.tick(60_000);
+	await flush();
+	assert.deepEqual(errors.map((e) => e.errorCode), ["FUNCTION_HOST_UNSUPPORTED"]);
+	assert.equal(posted.filter((m) => m.command === "CUSTOM_FUNCTION_STOP_WATCH").length, 1);
+});
+
+test("an error event after the acknowledgement reaches onError, once", async () => {
+	const errors = [];
+	kf.app.onFunctionRunComplete("Run2", () => assert.fail("must not complete"), (error) => errors.push(error));
+	const watch = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
+	reply(watch, { Watching: true });
+	await flush();
+	const stopped = { isError: true, error: "Stopped checking the run; read it again later", errorCode: "FUNCTION_OBSERVATION_STOPPED" };
+	event(watch.id, watch.eventName, stopped);
+	event(watch.id, watch.eventName, stopped);
+	assert.deepEqual(errors, [stopped]);
+});
+
+test("a watch the host stops answering ends at the deadline with a stopped error", async () => {
+	mock.timers.enable({ apis: ["setTimeout"] });
+	const errors = [];
+	kf.app.onFunctionRunComplete("Run2", () => assert.fail("must not complete"), (error) => errors.push(error));
+	reply(lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE"), { Watching: true });
+	await flush();
+	mock.timers.tick(689_999);
+	assert.deepEqual(errors, []);
+	mock.timers.tick(1);
+	assert.deepEqual(errors.map((e) => e.errorCode), ["FUNCTION_OBSERVATION_STOPPED"]);
+});
+
+test("stopping before the host acknowledges cancels the registration too", async () => {
+	const before = pendingTimers();
+	const errors = [];
+	const stop = kf.app.onFunctionRunComplete("Run2", () => assert.fail("must not complete"), (error) => errors.push(error));
+	const watch = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
+	assert.equal(pendingTimers(), before + 1, "waiting for the acknowledgement");
+	stop();
+	assert.equal(pendingTimers(), before, "stop released the acknowledgement wait");
+	reply(watch, { Watching: true });
+	await flush();
+	assert.deepEqual(errors, []);
+	assert.equal(pendingTimers(), before, "a late acknowledgement starts no deadline");
 });
 
 test("the returned unsubscribe tells the host to stop and drops a later event", () => {
