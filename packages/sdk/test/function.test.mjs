@@ -167,6 +167,21 @@ test("a watch the host stops answering ends at the deadline with a stopped error
 	assert.deepEqual(errors.map((e) => e.errorCode), ["FUNCTION_OBSERVATION_STOPPED"]);
 });
 
+test("a non-terminal or foreign event fails the watch instead of completing it", async () => {
+	for (const bad of [{ RunId: "Run1", Status: "Running" }, { ...RUN, RunId: "RunOther" }]) {
+		const done = [];
+		const errors = [];
+		kf.app.onFunctionRunComplete("Run1", (run) => done.push(run), (error) => errors.push(error));
+		const watch = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
+		reply(watch, { Watching: true });
+		await flush();
+		event(watch.id, watch.eventName, bad);
+		assert.deepEqual(done, []);
+		assert.deepEqual(errors.map((e) => e.errorCode), ["FUNCTION_WATCH_INVALID_EVENT"]);
+		assert.equal(lastPosted("CUSTOM_FUNCTION_STOP_WATCH").watchId, watch.watchId);
+	}
+});
+
 test("stopping before the host acknowledges cancels the registration too", async () => {
 	const before = pendingTimers();
 	const errors = [];
@@ -203,9 +218,10 @@ test("two watches on one run are told apart: stopping one leaves the other liste
 	const second = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
 	assert.notEqual(first.watchId, second.watchId);
 	stopFirst();
-	event(first.id, first.eventName, RUN);
-	event(second.id, second.eventName, RUN);
-	assert.deepEqual(done, [["second", RUN]]);
+	const run = { ...RUN, RunId: "Run4" };
+	event(first.id, first.eventName, run);
+	event(second.id, second.eventName, run);
+	assert.deepEqual(done, [["second", run]]);
 });
 
 test("the app stops being an event target once its last watch ends", () => {

@@ -5,7 +5,7 @@ import { CreateProxy } from "../core/proxy";
 import { Page } from "./page";
 
 import { AppContext } from "../types/internal";
-import { rolesObject, RunEnvelope, RunWatchError } from "../types/external";
+import { rolesObject, RunEnvelope, RunStatus, RunWatchError } from "../types/external";
 
 import { DecisionTable } from "./decisiontable";
 import { Agent } from "./agent";
@@ -36,6 +36,8 @@ function notify<T>(callback: ((value: T) => void) | undefined, value: T) {
 }
 
 const NOT_SENT = sdkError("FUNCTION_REQUEST_NOT_SENT", "The request could not be sent to the host.");
+
+const TERMINAL_STATUSES: RunStatus[] = ["Success", "Failed", "TimedOut"];
 
 export class Application extends BaseSDK {
 	page: Page;
@@ -185,12 +187,18 @@ export class Application extends BaseSDK {
 		};
 		const listener = (params: RunEnvelope | RunWatchError) => {
 			if (settled) return;
-			end();
 			if ((params as RunWatchError)?.isError) {
+				end();
 				notify(onError, params as RunWatchError);
 				return;
 			}
-			notify(callBack, params as RunEnvelope);
+			const run = params as RunEnvelope;
+			if (run?.RunId !== runId || TERMINAL_STATUSES.indexOf(run?.Status) === -1) {
+				fail(sdkError("FUNCTION_WATCH_INVALID_EVENT", "The host reported something other than a finished run."));
+				return;
+			}
+			end();
+			notify(callBack, run);
 		};
 
 		this.activeWatches += 1;
