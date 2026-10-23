@@ -86,14 +86,14 @@ test("a refused run rejects with the host's error and code", async () => {
 	await assert.rejects(pending, { isError: true, errorCode: "KISSFLOW_ERROR_04901" });
 });
 
-test("onFunctionRunComplete asks the host to watch, delivers the terminal run once, then ignores more", () => {
+test("onFunctionRunComplete asks the host to watch under its own id, delivers the terminal run once, then ignores more", () => {
 	const done = [];
 	const errors = [];
 	kf.app.onFunctionRunComplete("Run1", (run) => done.push(run), (error) => errors.push(error));
 	const watch = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
 	assert.equal(watch.runId, "Run1");
-	assert.equal(watch.eventName, "onCustomFunctionRunComplete:Run1");
-	assert.deepEqual(watch.eventConfig, { once: true });
+	assert.match(watch.watchId, /^functionwatch-/);
+	assert.equal(watch.eventName, `onCustomFunctionRunComplete:${watch.watchId}`);
 	event(watch.id, watch.eventName, RUN);
 	event(watch.id, watch.eventName, { ...RUN, Status: "Failed" });
 	assert.deepEqual(done, [RUN]);
@@ -117,11 +117,34 @@ test("the returned unsubscribe tells the host to stop and drops a later event", 
 	stop();
 	const stopped = lastPosted("CUSTOM_FUNCTION_STOP_WATCH");
 	assert.deepEqual(
-		{ id: stopped.id, runId: stopped.runId, eventName: stopped.eventName },
-		{ id: watch.id, runId: "Run3", eventName: watch.eventName }
+		{ id: stopped.id, runId: stopped.runId, watchId: stopped.watchId, eventName: stopped.eventName },
+		{ id: watch.id, runId: "Run3", watchId: watch.watchId, eventName: watch.eventName }
 	);
 	event(watch.id, watch.eventName, RUN);
 	assert.deepEqual(done, []);
+});
+
+test("two watches on one run are told apart: stopping one leaves the other listening", () => {
+	const done = [];
+	const stopFirst = kf.app.onFunctionRunComplete("Run4", (run) => done.push(["first", run]));
+	const first = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
+	kf.app.onFunctionRunComplete("Run4", (run) => done.push(["second", run]));
+	const second = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
+	assert.notEqual(first.watchId, second.watchId);
+	stopFirst();
+	event(first.id, first.eventName, RUN);
+	event(second.id, second.eventName, RUN);
+	assert.deepEqual(done, [["second", RUN]]);
+});
+
+test("the app stops being an event target once its last watch ends", () => {
+	const done = [];
+	const stop = kf.app.onFunctionRunComplete("Run5", (run) => done.push(run));
+	const watch = lastPosted("CUSTOM_FUNCTION_ON_RUN_COMPLETE");
+	stop();
+	event(watch.id, "onCustomFunctionRunComplete:anything", RUN);
+	assert.deepEqual(done, []);
+	assert.deepEqual(listenerErrors, []);
 });
 
 test("an event for a target that never registered is ignored, not thrown", () => {

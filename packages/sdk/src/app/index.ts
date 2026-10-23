@@ -1,4 +1,4 @@
-import { BaseSDK, globalInstances, LISTENER_CMDS } from "../core";
+import { BaseSDK, generateId, globalInstances, LISTENER_CMDS } from "../core";
 import { EVENT_TYPES } from "../core/constants";
 import { CreateProxy } from "../core/proxy";
 
@@ -17,11 +17,12 @@ export class Application extends BaseSDK {
 	page: Page;
 	// variable: AppVariable;
 	_id: string;
+	// Event target for run completion events; registered only while a watch is active.
+	private activeWatches = 0;
 
 	constructor(props: AppContext, isCustomComponent: boolean = false) {
 		super();
 		this._id = props.appId;
-		globalInstances[this._id] = this;
 		this.page = new Page(props);
 		// /* Note: Synchronous variable read/write is not supported for custom components
 		//  * as it is not possible to use Atomics.wait in the main thread and iframe thread
@@ -110,29 +111,37 @@ export class Application extends BaseSDK {
 		callBack: (run: RunEnvelope) => void,
 		onError?: (error: RunWatchError) => void
 	): () => void {
-		const eventName = `${EVENT_TYPES.CUSTOM_FUNCTION_RUN_COMPLETE}:${runId}`;
+		const watchId = generateId("functionwatch");
+		const eventName = `${EVENT_TYPES.CUSTOM_FUNCTION_RUN_COMPLETE}:${watchId}`;
+		let settled = false;
+
+		const end = () => {
+			settled = true;
+			this._removeEventListener(eventName);
+			this.activeWatches -= 1;
+			if (this.activeWatches === 0) Reflect.deleteProperty(globalInstances, this._id);
+		};
 		const listener = (params: RunEnvelope | RunWatchError) => {
-			if (params && (params as { isError?: boolean }).isError) {
+			if (settled) return;
+			end();
+			if ((params as RunWatchError)?.isError) {
 				onError?.(params as RunWatchError);
 				return;
 			}
 			callBack(params as RunEnvelope);
 		};
+
+		this.activeWatches += 1;
+		globalInstances[this._id] = this;
 		this._postMessage(
 			LISTENER_CMDS.CUSTOM_FUNCTION_ON_RUN_COMPLETE,
-			{
-				id: this._id,
-				runId,
-				eventName,
-				eventConfig: {
-					once: true
-				}
-			},
+			{ id: this._id, runId, watchId, eventName },
 			listener
 		);
 		return () => {
-			this._removeEventListener(eventName, listener);
-			this._postMessage(LISTENER_CMDS.CUSTOM_FUNCTION_STOP_WATCH, { id: this._id, runId, eventName });
+			if (settled) return;
+			end();
+			this._postMessage(LISTENER_CMDS.CUSTOM_FUNCTION_STOP_WATCH, { id: this._id, runId, watchId, eventName });
 		};
 	}
 
