@@ -335,6 +335,33 @@ export type BoardFieldOptions = {
     tableRowId?: string;
 };
 
+/** The terminal states a Custom Function run ends in, plus the two it passes through. */
+export type RunStatus = "Queued" | "Running" | "Success" | "Failed" | "TimedOut";
+
+/**
+ * What a Custom Function run looks like from the SDK.
+ *
+ * An Interactive function resolves with the terminal envelope directly. A
+ * Background function resolves with `Queued` and only `RunId`; fetch the rest
+ * with `getFunctionRun`, or wait for it with `onFunctionRunComplete`.
+ */
+export type RunEnvelope = {
+	RunId: string;
+	Status: RunStatus;
+	/** Whatever the function returned. Only constrained when its output contract names properties. */
+	Result?: unknown;
+	Error?: { Code?: string; Message: string };
+};
+
+/**
+ * How a Custom Function call fails: `error` is the message text and `errorCode` either the platform
+ * code (`KISSFLOW_ERROR_…`) or a `FUNCTION_…` code, including `FUNCTION_HOST_TIMEOUT`,
+ * `FUNCTION_REQUEST_NOT_SENT`, `FUNCTION_RUN_OUTCOME_UNKNOWN` (a run may have started),
+ * `FUNCTION_RUN_NOT_SENT` (no run started), `FUNCTION_HOST_UNSUPPORTED`, `FUNCTION_WATCH_INVALID_EVENT`
+ * and `FUNCTION_OBSERVATION_STOPPED`. The list may grow; fall back to `error` for an unknown code.
+ */
+export type RunWatchError = { isError: true; error?: string; errorCode?: string };
+
 // ============================================
 // Custom Agent Types
 // ============================================
