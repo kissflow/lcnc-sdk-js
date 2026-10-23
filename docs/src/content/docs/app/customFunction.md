@@ -46,7 +46,9 @@ already there. A Background function resolves with `Status: "Queued"` and only
 `onFunctionRunComplete`.
 
 A refused run rejects with the platform's SDK error shape: the message text is
-in `error` and the code (`KISSFLOW_ERROR_…`) in `errorCode`.
+in `error` and the code (`KISSFLOW_ERROR_…`) in `errorCode`. A host that does
+not answer within 45 s rejects with `FUNCTION_RUN_OUTCOME_UNKNOWN`: the run may
+still have started, so tell the user instead of starting another.
 
 ##### Example
 
@@ -77,7 +79,8 @@ const run = await kf.app.getFunctionRun(runId);
 
 ##### Return
 
-The run envelope described above.
+The run envelope described above. A host that does not answer within 30 s
+rejects with `FUNCTION_HOST_TIMEOUT`.
 
 ##### Example
 
@@ -96,7 +99,16 @@ Calls `callBack` once, when the run reaches a terminal state. "Complete" means
 the run stopped, not that it worked: it fires on `Failed` and `TimedOut` just
 as it does on `Success`, so read `Status` before trusting `Result`. If the host
 cannot watch the run at all, `onError` is called instead and `callBack` never
-fires.
+fires. At most one of the two is called, at most once.
+
+`onError` receives `{ isError, error, errorCode }`. `errorCode` is the
+platform code (`KISSFLOW_ERROR_…`) when the host refused the watch, or one of:
+
+| Code                          | Meaning                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------ |
+| `FUNCTION_HOST_UNSUPPORTED`   | The host did not start watching; it predates this SDK.                   |
+| `FUNCTION_OBSERVATION_STOPPED`| The watch ended after about 10 min. Read the run with `getFunctionRun`.  |
+| `FUNCTION_WATCH_INVALID_EVENT`| The host reported something other than a finished run.                   |
 
 ##### Parameters
 

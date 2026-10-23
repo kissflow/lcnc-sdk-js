@@ -354,8 +354,11 @@ export type RunEnvelope = {
 };
 
 /**
- * What `onFunctionRunComplete`'s error callback receives when the host could not watch the run.
- * `error` carries the text; `errorCode` is the platform code when the failure was an API answer.
+ * How a Custom Function call fails: `error` is the message text and `errorCode` either the platform
+ * code (`KISSFLOW_ERROR_…`) or a `FUNCTION_…` code, including `FUNCTION_HOST_TIMEOUT`,
+ * `FUNCTION_REQUEST_NOT_SENT`, `FUNCTION_RUN_OUTCOME_UNKNOWN` (a run may have started),
+ * `FUNCTION_RUN_NOT_SENT` (no run started), `FUNCTION_HOST_UNSUPPORTED`, `FUNCTION_WATCH_INVALID_EVENT`
+ * and `FUNCTION_OBSERVATION_STOPPED`. The list may grow; fall back to `error` for an unknown code.
  */
 export type RunWatchError = { isError: true; error?: string; errorCode?: string };
 
