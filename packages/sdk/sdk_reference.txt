@@ -326,6 +326,22 @@ Methods:
           if (run.Status === "Completed") render(run.Output.items);
         });
 
+--- Class: Report ---
+Description: A flow report of the current app (Form, Process, Case or Board flow; Datasets and lists have no reports). One call returns the report's calculated data instead of every record.
+Instantiation: const report = kf.app.getReport("Process", "FlowId", "ReportId");   (no request until a method is called)
+
+Methods:
+
+  getData({ pageNumber?, pageSize?, payload? }?) → Promise<{ Data, ... }>
+    - pageNumber defaults to 1, pageSize to 50; payload carries extra filters as the report screen sends them
+    - Example:
+        const report = kf.app.getReport("Process", "Leave_Request_A00", "Requests_by_status_x1Yz");
+        const { Data } = await report.getData();
+
+  getCount({ payload? }?) → Promise<number>
+
+  getFields() → Promise<any>
+
 --- Class: Application ---
 Description: Top-level SDK object for accessing flows, variables, and navigation. Available as kf.app.
 
@@ -335,6 +351,7 @@ Methods:
   getBoard(flowId)       → Board     — flowId (REQUIRED)
   getProcess(flowId)     → Process   — flowId (REQUIRED)
   getAgent(agentId)      → Agent     — agentId (REQUIRED)
+  getReport(flowType, flowId, reportId) → Report — all REQUIRED; flowType: Form | Process | Case | Board
   getVariable(key)       → Promise<any>
   setVariable(key, val?) → Promise<void>
   openPage(pageId, pageParams?) → Promise<void>

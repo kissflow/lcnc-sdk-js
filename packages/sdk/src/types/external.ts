@@ -249,6 +249,28 @@ export type DataformQueryOptions = BaseQueryOptions & {
 
 export type DataformQueryResponse = QueryResponse;
 
+// ============================================
+// Report Types
+// ============================================
+
+export type ReportFlowType = "Form" | "Process" | "Case" | "Board";
+
+export type ReportQueryOptions = {
+    pageNumber?: number;
+    pageSize?: number;
+    payload?: PayloadOptions;
+};
+
+export type ReportCountOptions = {
+    payload?: PayloadOptions;
+};
+
+export type ReportDataResponse = {
+    Data: any[];
+    Columns?: any[];
+    [key: string]: any;
+};
+
 export type DataformCreateItemOptions = {
     data?: object;
     viewId?: string;
