@@ -47,7 +47,7 @@ let result = await report.getData({ pageSize: 20 });
 
 ### Get count
 
-Returns the number of rows the report would return.
+Returns the number of rows a **tabular** report would return. Chart and card reports have no row count, so the service answers with an error; read their numbers with `getData()`.
 
 ```js
 let count = await report.getCount();
@@ -55,7 +55,7 @@ let count = await report.getCount();
 
 ### Get fields
 
-Returns the report's fields: its dimensions and measures.
+Returns the fields of a **tabular** report. A chart or card report returns an empty list; its dimensions and values come back with `getData()`.
 
 ```js
 let fields = await report.getFields();

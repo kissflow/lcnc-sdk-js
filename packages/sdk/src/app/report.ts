@@ -41,12 +41,12 @@ export class Report extends BaseSDK {
 		});
 	}
 
-	/** The number of rows the report would return. */
+	/** The number of rows a tabular report would return. Chart and card reports have no row count; use getData(). */
 	getCount(options?: ReportCountOptions): Promise<number> {
 		return this._send(LISTENER_CMDS.REPORT_GET_COUNT, { payload: options?.payload || {} });
 	}
 
-	/** The report's fields: its dimensions and measures. */
+	/** The fields of a tabular report. Empty for chart and card reports; use getData(). */
 	getFields(): Promise<any> {
 		return this._send(LISTENER_CMDS.REPORT_GET_FIELDS, {});
 	}
