@@ -32,12 +32,12 @@ test("getReport sends nothing until a method is called", () => {
 	assert.equal(posted.length, 0);
 });
 
-test("getData sends the report's ids with paging and filters, and resolves with the host's answer", async () => {
-	const pending = kf.app.getReport("Process", "Leave_A00", "Rpt1").getData({ pageSize: 10, payload: { Filters: { AND: [] } } });
+test("getData sends the report's ids with paging and an empty payload, and resolves with the host's answer", async () => {
+	const pending = kf.app.getReport("Process", "Leave_A00", "Rpt1").getData({ pageSize: 10 });
 	const sent = lastPosted("REPORT_GET_DATA");
 	assert.deepEqual(
 		{ flowType: sent.flowType, flowId: sent.flowId, reportId: sent.reportId, pageNumber: sent.pageNumber, pageSize: sent.pageSize, payload: sent.payload },
-		{ flowType: "Process", flowId: "Leave_A00", reportId: "Rpt1", pageNumber: 1, pageSize: 10, payload: { Filters: { AND: [] } } }
+		{ flowType: "Process", flowId: "Leave_A00", reportId: "Rpt1", pageNumber: 1, pageSize: 10, payload: {} }
 	);
 	replyWrapped(sent, { Data: [{ label: "Approved", value: 4 }] });
 	assert.deepEqual(await pending, { Data: [{ label: "Approved", value: 4 }] });

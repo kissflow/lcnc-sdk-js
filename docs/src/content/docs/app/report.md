@@ -36,7 +36,7 @@ Returns the report's calculated rows.
 | ------------------ | ------ | ---------------------------------------------------- |
 | options.pageNumber | Number | Page to read. Defaults to 1                          |
 | options.pageSize   | Number | Rows per page. Defaults to 50                        |
-| options.payload    | Object | Extra filters, in the same shape the report screen sends |
+| options.payload    | Object | Sent to the report service as the request body. It does not filter a chart or card report |
 
 ##### Syntax
 
