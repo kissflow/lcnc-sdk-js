@@ -265,9 +265,18 @@ export type ReportCountOptions = {
     payload?: PayloadOptions;
 };
 
+// Which of these keys come back depends on the report's type: a chart has Columns and Values, a card has
+// FieldMapping and Values (its Data is empty when nothing matches), a tabular report has Columns, Id and Name,
+// a pivot has Columns, Rows, Values and Formatting. Each Data row is keyed by the Id of its Columns/Values entry.
 export type ReportDataResponse = {
     Data: any[];
     Columns?: any[];
+    Rows?: any[];
+    Values?: any[];
+    FieldMapping?: any[];
+    Formatting?: any[];
+    Id?: string;
+    Name?: string;
     [key: string]: any;
 };
 
