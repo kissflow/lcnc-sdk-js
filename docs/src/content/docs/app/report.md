@@ -34,8 +34,8 @@ Returns the report's calculated rows.
 
 | Parameter          | type   | Description                                          |
 | ------------------ | ------ | ---------------------------------------------------- |
-| options.pageNumber | Number | Page to read. Defaults to 1                          |
-| options.pageSize   | Number | Rows per page. Defaults to 50                        |
+| options.pageNumber | Number | Page to read, a whole number from 1. Defaults to 1   |
+| options.pageSize   | Number | Rows per page, a whole number from 1 to 100. Defaults to 50 |
 | options.payload    | Object | Sent to the report service as the request body. To filter at read time, pass the report's parameters in it: `{ FilterParam: { "$<parameter name>": "text" } }`. See Filtering at read time |
 
 ##### Syntax

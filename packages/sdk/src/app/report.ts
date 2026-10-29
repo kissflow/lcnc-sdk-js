@@ -31,7 +31,7 @@ export class Report extends BaseSDK {
 
 	/**
 	 * The report's calculated rows: groups and their values for a chart, the aggregate for a card.
-	 * @param options - pageNumber (default 1), pageSize (default 50), payload (sent as the request body; filter at read time with the report's parameters, { FilterParam: { "$name": "text" } }; a falsy value is skipped, so send 0 as "0")
+	 * @param options - pageNumber (a whole number from 1, default 1), pageSize (a whole number from 1 to 100, default 50), payload (sent as the request body; filter at read time with the report's parameters, { FilterParam: { "$name": "text" } }; a falsy value is skipped, so send 0 as "0")
 	 */
 	getData(options?: ReportQueryOptions): Promise<ReportDataResponse> {
 		return this._send(LISTENER_CMDS.REPORT_GET_DATA, {
