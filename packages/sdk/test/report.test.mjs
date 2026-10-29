@@ -44,10 +44,10 @@ test("getData sends the report's ids with paging and an empty payload, and resol
 });
 
 test("getCount and getFields send their own commands", async () => {
-	const report = kf.app.getReport("Board", "Tasks_A00", "Rpt2");
+	const report = kf.app.getReport("Case", "Tasks_A00", "Rpt2");
 	const count = report.getCount();
 	const countSent = lastPosted("REPORT_GET_COUNT");
-	assert.deepEqual([countSent.flowType, countSent.reportId, countSent.payload], ["Board", "Rpt2", {}]);
+	assert.deepEqual([countSent.flowType, countSent.reportId, countSent.payload], ["Case", "Rpt2", {}]);
 	replyWrapped(countSent, 12);
 	assert.equal(await count, 12);
 
@@ -60,6 +60,7 @@ test("getCount and getFields send their own commands", async () => {
 test("missing ids and flows without reports are refused before anything is sent", async () => {
 	await assert.rejects(kf.app.getReport("Process", "", "Rpt1").getData(), { message: "flowId is required" });
 	await assert.rejects(kf.app.getReport("Process", "Leave_A00", "").getCount(), { message: "reportId is required" });
-	await assert.rejects(kf.app.getReport("Dataset", "Holidays_A00", "Rpt1").getData(), { message: "flowType must be one of Form, Process, Case, Board" });
+	await assert.rejects(kf.app.getReport("Dataset", "Holidays_A00", "Rpt1").getData(), { message: "flowType must be one of Form, Process, Case" });
+	await assert.rejects(kf.app.getReport("Board", "Tasks_A00", "Rpt1").getData(), { message: "flowType must be one of Form, Process, Case" });
 	assert.equal(posted.length, 0);
 });

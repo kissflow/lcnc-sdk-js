@@ -7,8 +7,8 @@ import {
 	ReportDataResponse
 } from "../types/external";
 
-// Reports belong to a Form (DataForm), Process or Case flow; a Board is a Case flow.
-const REPORT_FLOW_TYPES: ReportFlowType[] = ["Form", "Process", "Case", "Board"];
+// Reports belong to a Form (DataForm), Process or Case flow.
+const REPORT_FLOW_TYPES: ReportFlowType[] = ["Form", "Process", "Case"];
 
 /**
  * A flow report of the current app. The handle sends no request until you call one of its methods.

@@ -253,7 +253,7 @@ export type DataformQueryResponse = QueryResponse;
 // Report Types
 // ============================================
 
-export type ReportFlowType = "Form" | "Process" | "Case" | "Board";
+export type ReportFlowType = "Form" | "Process" | "Case";
 
 export type ReportQueryOptions = {
     pageNumber?: number;

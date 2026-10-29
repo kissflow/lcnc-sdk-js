@@ -327,7 +327,7 @@ Methods:
         });
 
 --- Class: Report ---
-Description: A flow report of the current app (Form, Process, Case or Board flow; Datasets and lists have no reports). One call returns the report's calculated data instead of every record.
+Description: A flow report of the current app (Form, Process or Case flow; Datasets and lists have no reports). One call returns the report's calculated data instead of every record.
 Instantiation: const report = kf.app.getReport("Process", "FlowId", "ReportId");   (no request until a method is called)
 
 Methods:
@@ -351,7 +351,7 @@ Methods:
   getBoard(flowId)       → Board     — flowId (REQUIRED)
   getProcess(flowId)     → Process   — flowId (REQUIRED)
   getAgent(agentId)      → Agent     — agentId (REQUIRED)
-  getReport(flowType, flowId, reportId) → Report — all REQUIRED; flowType: Form | Process | Case | Board
+  getReport(flowType, flowId, reportId) → Report — all REQUIRED; flowType: Form | Process | Case
   getVariable(key)       → Promise<any>
   setVariable(key, val?) → Promise<void>
   openPage(pageId, pageParams?) → Promise<void>
