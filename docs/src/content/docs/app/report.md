@@ -36,7 +36,7 @@ Returns the report's calculated rows.
 | ------------------ | ------ | ---------------------------------------------------- |
 | options.pageNumber | Number | Page to read. Defaults to 1                          |
 | options.pageSize   | Number | Rows per page. Defaults to 50                        |
-| options.payload    | Object | Sent to the report service as the request body. It does not filter a chart or card report |
+| options.payload    | Object | Sent to the report service as the request body. To filter at read time, pass the report's parameters in it: `{ FilterParam: { "$<parameter name>": "text" } }`. See Filtering at read time |
 
 ##### Syntax
 
@@ -45,6 +45,29 @@ let report = kf.app.getReport("Process", "Leave_Request_A00", "Requests_by_statu
 let result = await report.getData({ pageSize: 20 });
 ```
 
+##### Filtering at read time
+
+A report filters by its own definition. A condition in that definition can be left open as a **parameter**: a named
+value the reader sets when reading. Send parameters under `FilterParam`, each name starting with `$`:
+
+```js
+let result = await report.getData({ payload: { FilterParam: { "$status": "Completed", "$min": "3" } } });
+```
+
+- A parameter you do not send is skipped, so the report stays whole.
+- Send values as **text**, in the form the field takes. Kissflow skips a condition whose value is falsy and reads a wrong
+  form as no filter, so the report comes back whole with no error. A number `0`, `""`, `false` and `[]` are skipped; `"0"` and
+  `"false"` are values. A date is `YYYY-MM-DD`. A date-time is `YYYY-MM-DDTHH:mm:ssZ` with no milliseconds. A boolean is
+  `"true"` or `"false"` in lowercase. A user is the id as text.
+- A list for a "part of" condition may be an array, `"a,b"` or `'["a","b"]'`. A person is `{ "_id": "..." }`.
+- A date range is two parameters, one on "greater than or equal to" and one on "less than or equal to". A "between"
+  condition with a parameter fails with a 500.
+- The `$` is part of the name, and a name the report does not declare is ignored without an error.
+- `"Other"` means "is empty".
+- A chart also has a parameter named after the field it groups by: `$` plus the `Id` of `Columns[0]` in its answer.
+- Parameters work on every report type, and on a table's `getCount()`. Any other payload key (`Filter`,
+  `ComponentFilter`) is ignored.
+
 ##### Shape of the data
 
 `getData()` returns the report service's answer as it is. The keys other than `Data` depend on the
@@ -52,15 +75,13 @@ report's type, so read them before you read the rows.
 
 | Report type | Keys besides `Data` | What `Data` holds |
 | ----------- | ------------------- | ----------------- |
-| Chart       | `Columns` (the group), `Values`, sometimes `Rows` | One row per group. The group is under the `Id` of `Columns[0]`, each number under the `Id` of its entry in `Values` |
-| Card (Simple, Icon, KPI, Comparison) | `FieldMapping` (label, description, icon, number format), `Values` | One row with the number under the `Id` of `Values[0]`. No row at all when no record matches |
+| Chart (any of the 14 views) | `Columns` (the group), `Values`, and `Rows` when the chart has a series | One row per group. The group is under the `Id` of `Columns[0]`, each number under the `Id` of its entry in `Values`. With a series and one measure, each segment is its own key: `{ "Column_…": "Annual", "Completed": 6, "InProgress": 7 }` |
+| Card (Simple, Icon, KPI, Comparison) | `FieldMapping` (label, description, icon, number format, prefix, suffix), `Values` | One row with the number under the `Id` of `Values[0]`. A KPI or Comparison card also has its target under `Values[1]`, and a KPI card adds `ABSOLUTE_DIFFERENCE`. No row at all when no record matches |
 | Tabular     | `Columns`, `Id`, `Name` | One row per record, each field under the `Id` of its entry in `Columns`, plus the record's `_id`. A user field arrives as a string |
-| Pivot       | `Columns`, `Rows`, `Values`, `Formatting`, `DrilledMembers`, `FieldFilters` | Rows with their values as strings |
+| Pivot       | `Columns`, `Rows`, `Values`, `Formatting`, `DrilledMembers`, `FieldFilters` | Flat rows, one per row-by-column group, keyed by the `Column_`, `Row_` and `Value_` ids |
 
-Every type also returns `Appearance`, `Filter`, `Sort`, `PageSize` and `Style`. A KPI card adds the
-computed differences (absolute and percent difference, percentage of target and of change) to its row.
-
-The pivot shape is taken from the report service's code and has not been run against a live app.
+Every type also returns `Appearance`, `Filter`, `Sort`, `PageSize` and `Style`. A date grouped by
+month, year or day arrives as a number (10 for October).
 
 ```js
 // A chart report: the label of each group and its value
