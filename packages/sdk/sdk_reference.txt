@@ -333,14 +333,20 @@ Instantiation: const report = kf.app.getReport("Process", "FlowId", "ReportId");
 Methods:
 
   getData({ pageNumber?, pageSize?, payload? }?) → Promise<{ Data, ... }>
-    - pageNumber defaults to 1, pageSize to 50; payload carries extra filters as the report screen sends them
+    - pageNumber is a whole number from 1 (default 1); pageSize is a whole number from 1 to 100 (default 50)
+    - payload is the request body. To filter at read time, pass the report's parameters: { FilterParam: { "$name": "text" } }.
+      Values are sent as text; a falsy value (0, "", false) is skipped, so send "0" or "false". Any other key is ignored.
     - Example:
         const report = kf.app.getReport("Process", "Leave_Request_A00", "Requests_by_status_x1Yz");
         const { Data } = await report.getData();
 
   getCount({ payload? }?) → Promise<number>
 
-  getFields() → Promise<any>
+  getFields() → Promise<Array<{ Id: string, Name: string, ... }>>   (tabular reports only; empty for chart and card reports)
+
+  Errors: a missing flowId or reportId, or a flowType other than Form | Process | Case, rejects with { message } before
+  anything is sent. A failed read rejects with { isError: true, error, statusCode? }: `error` is the text (message is a
+  generic one), and statusCode is the HTTP status (403 means no access). getCount() on a chart or card report fails this way.
 
 --- Class: Application ---
 Description: Top-level SDK object for accessing flows, variables, and navigation. Available as kf.app.

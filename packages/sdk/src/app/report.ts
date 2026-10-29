@@ -4,6 +4,7 @@ import {
 	ReportFlowType,
 	ReportQueryOptions,
 	ReportCountOptions,
+	ReportField,
 	ReportDataResponse
 } from "../types/external";
 
@@ -47,7 +48,7 @@ export class Report extends BaseSDK {
 	}
 
 	/** The fields of a tabular report. Empty for chart and card reports; use getData(). */
-	getFields(): Promise<any> {
+	getFields(): Promise<ReportField[]> {
 		return this._send(LISTENER_CMDS.REPORT_GET_FIELDS, {});
 	}
 

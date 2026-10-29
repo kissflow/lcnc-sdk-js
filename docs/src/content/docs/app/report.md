@@ -101,10 +101,25 @@ Returns the number of rows a **tabular** report would return. Chart and card rep
 let count = await report.getCount();
 ```
 
+### Errors
+
+A call is refused before anything is sent when `flowId` or `reportId` is missing or `flowType` is not one of the three:
+the promise rejects with `{ message }`.
+
+A read that fails rejects with `{ isError: true, error, statusCode }`:
+
+| Key        | Meaning                                                                                              |
+| ---------- | ---------------------------------------------------------------------------------------------------- |
+| error      | The reason, as text. Read this one: `message` is a generic text                                      |
+| statusCode | The HTTP status when the report service answered. `403` means the user has no access to the report. Missing when the request never reached the service |
+
+`getCount()` on a chart or card report fails this way.
+
 ### Get fields
 
 Returns the fields of a **tabular** report. A chart or card report returns an empty list; its dimensions and values come back with `getData()`.
 
 ```js
 let fields = await report.getFields();
+// [{ Id: "Column-…", Name: "Leave Type", … }]
 ```
