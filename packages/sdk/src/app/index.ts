@@ -5,13 +5,14 @@ import { CreateProxy } from "../core/proxy";
 import { Page } from "./page";
 
 import { AppContext } from "../types/internal";
-import { rolesObject, RunEnvelope, RunStatus, RunWatchError } from "../types/external";
+import { rolesObject, ReportFlowType, RunEnvelope, RunStatus, RunWatchError } from "../types/external";
 
 import { DecisionTable } from "./decisiontable";
 import { Dataform, CustomComponentDataform } from "../dataform";
 import { Board, CustomComponentBoard } from "../board";
 import { Process, CustomComponentProcess } from "../process";
 import { Agent } from "./agent";
+import { Report } from "./report";
 
 // A read the host never answers fails instead of hanging (an older host ignores these commands).
 const READ_TIMEOUT_MS = 30_000;
@@ -252,6 +253,17 @@ export class Application extends BaseSDK {
 		return new Agent(agentId);
 	}
 
+	/**
+	 * Get a flow report of this app: one call returns the report's calculated data instead of every record.
+	 *
+	 * @example
+	 * const report = kf.app.getReport("Process", "Leave_Request_A00", "Requests_by_status_x1Yz");
+	 * const { Data } = await report.getData();
+	 */
+	getReport(flowType: ReportFlowType, flowId: string, reportId: string): Report {
+		return new Report(flowType, flowId, reportId);
+	}
+
 	getDataform(flowId: string): Dataform {
 		return new Dataform(flowId);
 	}
@@ -356,5 +368,6 @@ class AppVariable extends BaseSDK {
 
 export * from "./component";
 export { Agent };
+export { Report };
 export { Page };
 export * from "./popup";

@@ -249,6 +249,51 @@ export type DataformQueryOptions = BaseQueryOptions & {
 
 export type DataformQueryResponse = QueryResponse;
 
+// ============================================
+// Report Types
+// ============================================
+
+export type ReportFlowType = "Form" | "Process" | "Case";
+
+// The request body of a report read. Only FilterParam is read: it sets the report's open parameters, each named with
+// a leading $ and sent as text ({ "$status": "Completed" }). Any other key is ignored.
+export type ReportPayload = {
+    FilterParam?: Record<string, string | string[] | object>;
+};
+
+export type ReportQueryOptions = {
+    pageNumber?: number;
+    pageSize?: number;
+    payload?: ReportPayload;
+};
+
+export type ReportCountOptions = {
+    payload?: ReportPayload;
+};
+
+// A field of a tabular report. The report service may add keys such as Type.
+export type ReportField = {
+    Id: string;
+    Name: string;
+    [key: string]: any;
+};
+
+// Which of these keys come back depends on the report's type: a chart has Columns and Values (and Rows with a
+// series), a card has FieldMapping and Values (its Data is empty when nothing matches), a tabular report has
+// Columns, Id and Name, a pivot has Columns, Rows, Values and Formatting. Each Data row is keyed by the Id of its
+// Columns, Rows or Values entry.
+export type ReportDataResponse = {
+    Data: any[];
+    Columns?: any[];
+    Rows?: any[];
+    Values?: any[];
+    FieldMapping?: any[];
+    Formatting?: any[];
+    Id?: string;
+    Name?: string;
+    [key: string]: any;
+};
+
 export type DataformCreateItemOptions = {
     data?: object;
     viewId?: string;

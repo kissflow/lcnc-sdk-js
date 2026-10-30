@@ -32,6 +32,7 @@ const CLASS_MAPPINGS = {
     LowcodeSDK: { name: "kf", staticDeclarations: true },
     DecisionTable: { name: "DecisionTable" },
     Agent: { name: "Agent" },
+    Report: { name: "Report" },
     Dataform: { name: "Dataform" },
     Board: { name: "Board" },
     Process: { name: "Process" }
