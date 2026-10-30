@@ -41,6 +41,11 @@
 			"insertText": "let agentInstance = kf.app.getAgent(\"${1:agentId}\");\n let { ExecutionId } = await agentInstance.execute({ inputData: { ${2:inputKey}: ${3:value} } });\n let stopWatching = agentInstance.onExecutionComplete(ExecutionId, (execution) => { let items = execution.Output?.items; }, (error) => console.warn(error.errorCode));"
 		},
 		{
+			"label": "read report",
+			"documentation": "Reads a flow report's calculated data in one call",
+			"insertText": "const report = kf.app.getReport(\"${1|Process,Form,Case|}\", \"${2:flowId}\", \"${3:reportId}\");\nconst { Data } = await report.getData();"
+		},
+		{
 			"label": "get local variable",
 			"documentation": "Get value of the local variable",
 			"insertText": "let variableName = await kf.app.page.getVariable(\"${1:variableId}\")"
