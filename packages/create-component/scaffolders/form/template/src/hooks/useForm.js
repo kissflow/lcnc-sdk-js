@@ -770,9 +770,7 @@ export function useForm({
           await refresh();
         },
         updateRow: async (rowId, fieldId, value) => {
-          await (
-            await getSDKTable()
-          )
+          await (await getSDKTable())
             .getRow(rowId)
             .updateField({ [fieldId]: value });
           await refresh();

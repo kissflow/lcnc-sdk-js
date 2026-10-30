@@ -67,7 +67,7 @@ const { Data, count, Columns } = await form.getItems({
 }); // returns { Columns, Data, count }
 
 const item = await form.getItem({ itemId: "id_123" });
-const created = await form.createItem({ data: { Name: "New", Amount: 10 } });
+const created = await form.createItem({ data: { Field1: "New", Amount: 10 } });
 const updated = await form.updateItem({
     itemId: "id_123",
     data: { Amount: 20 }
@@ -128,8 +128,8 @@ const { Data, count, Columns } = await board.getItems({
     viewId: "AllItems_View"
 });
 const item = await board.getItem({ instanceId: "id_123" });
-const created = await board.createItem({ data: { Name: "New Item" } });
-await board.updateItem({ instanceId: "id_123", data: { Name: "Updated" } });
+const created = await board.createItem({ data: { Field1: "New Item" } });
+await board.updateItem({ instanceId: "id_123", data: { Field1: "Updated" } });
 await board.deleteItem({ instanceId: "id_123" });
 await board.submitItem({ instanceId: "id_123" });
 await board.discardItem({ instanceId: "id_123" });

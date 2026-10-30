@@ -8,11 +8,11 @@ import { AppContext } from "../types/internal";
 import { rolesObject, ReportFlowType, RunEnvelope, RunStatus, RunWatchError } from "../types/external";
 
 import { DecisionTable } from "./decisiontable";
+import { Dataform, CustomComponentDataform } from "../dataform";
+import { Board, CustomComponentBoard } from "../board";
+import { Process, CustomComponentProcess } from "../process";
 import { Agent } from "./agent";
 import { Report } from "./report";
-import { Dataform } from "../dataform";
-import { Board } from "../board";
-import { Process } from "../process";
 
 // A read the host never answers fails instead of hanging (an older host ignores these commands).
 const READ_TIMEOUT_MS = 30_000;
@@ -268,11 +268,11 @@ export class Application extends BaseSDK {
 		return new Dataform(flowId);
 	}
 
-	getBoard(flowId: string) {
+	getBoard(flowId: string): Board {
 		return new Board(flowId);
 	}
 
-	getProcess(flowId: string) {
+	getProcess(flowId: string): Process {
 		return new Process(flowId);
 	}
 
@@ -317,6 +317,27 @@ export class Application extends BaseSDK {
 			roleId: args.roleId,
 			roleName: args.roleName
 		}) as Promise<rolesObject>;
+	}
+}
+
+/**
+ * Application with custom-component-only capabilities.
+ *
+ * Used by the custom-component SDK (`kf.app`). Its flow accessors return the
+ * `CustomComponent*` variants, which expose `initForm` — a method that the
+ * Low/No-code (Run Script) SDKs deliberately do not have.
+ */
+export class CustomComponentApplication extends Application {
+	getDataform(flowId: string): CustomComponentDataform {
+		return new CustomComponentDataform(flowId);
+	}
+
+	getBoard(flowId: string): CustomComponentBoard {
+		return new CustomComponentBoard(flowId);
+	}
+
+	getProcess(flowId: string): CustomComponentProcess {
+		return new CustomComponentProcess(flowId);
 	}
 }
 

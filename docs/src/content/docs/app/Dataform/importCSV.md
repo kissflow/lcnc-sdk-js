@@ -1,43 +1,27 @@
 ---
-title: Dataform
-description: Usage of dataform methods
+title: Import CSV
+description: Launch the import CSV popup for a dataform
+sidebar:
+  order: 31
 ---
-
-In Kissflow apps, dataforms gather and store data, enabling users to submit data into an app.
-
-To begin with, get dataform instance using `getDataform` method from app's interface.
-
-##### Parameters
-
-| Parameter  | Type   |
-| ---------- | ------ |
-| dataformId | String |
-
-##### Syntax
-
-```js
-let dataformInstance = kf.app.getDataform(dataformId);
-```
-
-### Import CSV
 
 Launches the import CSV popup, where you can upload CSV file and map its columns to
 the corresponding fields.
 
-##### Parameters
+### Parameters
 
 | Parameters    | Type   | Description                                                              |
 | ------------- | ------ | ------------------------------------------------------------------------ |
 | defaultValues | Object | An object with keys as field Id and its values in respective data types. |
 
-##### Syntax
+### Syntax
 
 ```js
 let defaultValues = { fieldId: "value" };
 dataformInstance.importCSV(defaultValues);
 ```
 
-##### Example
+### Example
 
 Consider a scenario where certain fields are not visible to the user (hidden in form visibility). In that case, default values can be used to populate data in these hidden fields.
 
@@ -46,7 +30,7 @@ Consider a scenario where certain fields are not visible to the user (hidden in 
 const dfInstance = kf.app.getDataform("Product_Dataform_A00"); // Product_Dataform_A00 is the flow_id.
 
 // Set field values for specific fields of the dataform
-let defaultValues = { location: "India" }; // Location is the the field_id of a field inside the dataform.
+let defaultValues = { location: "India" }; // Location is the field_id of a field inside the dataform.
 
 // Pass the field config into the import sdk method
 dfInstance.importCSV(defaultValues); // All records imported through this importer would have the Location field set as India.
