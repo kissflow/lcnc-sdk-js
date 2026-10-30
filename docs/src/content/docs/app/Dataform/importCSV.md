@@ -30,7 +30,7 @@ Consider a scenario where certain fields are not visible to the user (hidden in 
 const dfInstance = kf.app.getDataform("Product_Dataform_A00"); // Product_Dataform_A00 is the flow_id.
 
 // Set field values for specific fields of the dataform
-let defaultValues = { location: "India" }; // Location is the the field_id of a field inside the dataform.
+let defaultValues = { location: "India" }; // Location is the field_id of a field inside the dataform.
 
 // Pass the field config into the import sdk method
 dfInstance.importCSV(defaultValues); // All records imported through this importer would have the Location field set as India.

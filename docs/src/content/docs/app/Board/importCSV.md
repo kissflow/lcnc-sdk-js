@@ -32,7 +32,7 @@ these hidden fields.
 const boardInstance = kf.app.getBoard("Asset_Tracking_A00"); // Asset_Tracking_A00 is the flow_id
 
 // Set field values for specific fields of the board
-let defaultValues = { location: "India" }; // Location is the the field_id of a field inside the board
+let defaultValues = { location: "India" }; // Location is the field_id of a field inside the board
 
 // Pass the field config into the import sdk method
 boardInstance.importCSV(defaultValues); // All records imported through this importer would have Location field set as India
